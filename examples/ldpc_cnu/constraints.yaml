@@ -1,0 +1,15 @@
+# examples/ldpc_cnu/constraints.yaml
+
+hardware_constraints:
+  target_device: "xczu7ev-ffvc1156-2-e"
+  clock_target_mhz: 250
+  max_dsp: 64
+  max_bram_18k: 32
+  target_ii: 1
+
+algorithm_metrics:
+  evaluator_type: "BERCurveEvaluator"
+  kernel_type: "channel_coding"
+  tolerance:
+    sign_error_rate: 0.01
+    snr_penalty_db: 0.1

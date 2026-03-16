@@ -1,0 +1,14 @@
+# examples/fir_16tap/constraints.yaml
+
+hardware_constraints:
+  target_device: "xcu200-fsgd2104-2-e"
+  clock_target_mhz: 300
+  max_dsp: 16
+  max_bram_18k: 2
+  target_ii: 1
+
+algorithm_metrics:
+  evaluator_type: "WaveformEvaluator"
+  tolerance:
+    nmse_db: -60.0
+    max_overflows: 0
