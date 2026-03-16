@@ -47,13 +47,13 @@ pip install numpy scipy networkx openai pyyaml
 
 ```bash
 # FIR 16-tap 低通滤波器
-python examples/fir_16tap/run.py
+python run.py fir_16tap
 
 # LDPC 校验节点更新（默认度数 dc=8）
-python examples/ldpc_cnu/run.py
+python run.py ldpc_cnu
 
 # 调整校验节点度数
-python examples/ldpc_cnu/run.py --dc 16
+python run.py ldpc_cnu --dc 16
 ```
 
 运行后会依次输出每个阶段的进度和各变体的验证结果：
@@ -75,7 +75,7 @@ python examples/ldpc_cnu/run.py --dc 16
 
 ### 目录结构
 
-每个示例至少包含两个文件：
+每个示例至少包含两个文件，由根目录 `run.py` 统一调度：
 
 ```
 examples/
@@ -288,7 +288,7 @@ LLM 代理在生成变体时会从以下近似方法中选择：
 
 ### FIR 16-tap 低通滤波器
 
-**目录**：`examples/fir_16tap/`
+**运行方式**：`python run.py fir_16tap`
 
 16 阶对称 FIR 低通滤波器，使用对称系数减少乘法器数量。
 
@@ -299,7 +299,7 @@ LLM 代理在生成变体时会从以下近似方法中选择：
 
 ### LDPC 校验节点更新（CNU）
 
-**目录**：`examples/ldpc_cnu/`
+**运行方式**：`python run.py ldpc_cnu`
 
 LDPC Min-Sum 译码器的校验节点更新单元，度数 `dc=8`。
 
