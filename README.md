@@ -53,8 +53,7 @@ HLS Schedule Dialect (完整调度信息)
 
 ```bash
 pip install numpy scipy networkx openai pyyaml
-# 可选（L1 验证需要）: g++
-# 可选（L2/L3 验证需要）: Vitis HLS
+
 ```
 
 ### 一键运行示例
@@ -349,12 +348,12 @@ FormaSyn/
 │   ├── algo_hw_dialect.py    # IR 第2层：算法-硬件映射
 │   └── schedule_dialect.py  # IR 第3层：HLS 调度 + pragma
 ├── agent/
+│   ├── base_agent.py         # 统一 LLM client/base 配置
+│   ├── codegen_agent.py      # Schedule Dialect -> HLS C++ 代码生成
 │   ├── dse_agent.py          # LLM 设计空间探索代理
 │   └── knowledge_prompt.py  # 通信算法领域知识
 ├── solver/
 │   └── roofline_solver.py   # 屋顶线模型资源估算与调度
-├── codegen/
-│   └── hls_codegen.py       # HLS C++ 代码生成
 ├── mlc/
 │   ├── mlc_frontend.py      # 不规则访问分析
 │   └── mlc_backend.py       # BRAM 映射代码生成
@@ -379,15 +378,27 @@ FormaSyn/
 默认使用 Claude API（通过 AllAI 代理）：
 
 ```python
-# agent/dse_agent.py
-agent = DSEAgent(
+# agent/base_agent.py + agent/dse_agent.py
+agent = DSEAgent(  # 或 ScheduleCodegenAgent(...)
     model="claude-sonnet-4-5-20250929",
-    api_base="https://api.tryallai.com/v1",
-    max_variants=8,      # 每轮生成的变体数量
+    max_variants=8,  # DSEAgent 参数
 )
 ```
 
-如需切换模型，修改 `dse_agent.py` 中的 `model` 参数即可。
+`api_key` 与 `base_url` 统一在 `agent/base_agent.py` 中配置。
+如需切换模型，修改各 agent 构造参数中的 `model` 即可。
+
+## 代码生成产物目录
+
+`run.py` 在每个变体验证前会先调用 `ScheduleCodegenAgent`，固定覆盖写到：
+
+```text
+examples/<example_name>/<variant_id>/
+├── kernel.cpp
+├── kernel.h
+├── metadata.json
+└── prompt.txt
+```
 
 ## 许可证
 

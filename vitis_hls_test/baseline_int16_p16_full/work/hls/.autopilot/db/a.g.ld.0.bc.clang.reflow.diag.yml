@@ -1,0 +1,107 @@
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 37, Column: 22 }
+Function:        _Z6kernel6ap_intILi8EERS0_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_37_3
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 30, Column: 19 }
+Function:        _Z6kernel6ap_intILi8EERS0_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_30_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 20, Column: 19 }
+Function:        _Z6kernel6ap_intILi8EERS0_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_20_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernel6ap_intILi8EERS0_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_37_3
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:37:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernel6ap_intILi8EERS0_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_30_2
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:30:19'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernel6ap_intILi8EERS0_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_20_1
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:20:19'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '15'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_kernel_ir
+Args:            
+  - Callee:          'kernel(ap_int<8>, ap_int<8>&)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_kernel_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: kernel.cpp, Line: 12, Column: 0 }
+Function:        _Z6kernel6ap_intILi8EERS0_
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          _ZZ6kernel6ap_intILi8EERS0_E4taps
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...

@@ -1,0 +1,68 @@
+  **** HLS Build v2025.1 6135595
+INFO: [HLS 200-2005] Using work_dir /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work 
+INFO: [HLS 200-2176] Writing Vitis IDE component file /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/vitis-comp.json
+INFO: [HLS 200-10] Creating and opening component '/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work'.
+INFO: [HLS 200-1611] Setting target device to 'xc7z020-clg400-1'
+INFO: [HLS 200-1505] Using default flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2025.1%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-2174] Applying component config ini file /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/hls_config.cfg
+INFO: [HLS 200-1465] Applying config ini 'syn.file=kernel.cpp' from /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/hls_config.cfg(7)
+INFO: [HLS 200-10] Adding design file '/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/kernel.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'tb.file=kernel_tb.cpp' from /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/hls_config.cfg(8)
+INFO: [HLS 200-10] Adding test bench file '/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/kernel_tb.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'syn.top=kernel' from /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/hls_config.cfg(6)
+INFO: [HLS 200-1465] Applying config ini 'flow_target=vitis' from /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/hls_config.cfg(5)
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2025.1%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_latency=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_rtl -register_reset_num=3
+INFO: [HLS 200-1465] Applying config ini 'part=xc7z020clg400-1' from /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/hls_config.cfg(1)
+INFO: [HLS 200-1465] Applying config ini 'clock=10ns' from /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/hls_config.cfg(4)
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-2176] Writing Vitis IDE component file /home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/vitis-comp.json
+cp4 WARNING: [COSIM] found non-self-synchronizing top I/O x_in cp4
+INFO: [COSIM 212-47] Using XSIM for RTL simulation.
+INFO: [COSIM 212-14] Instrumenting C test bench ...
+   Build using "/tools/Xilinx/2025.1/Vitis/lnx64/tools/vcxx/libexec//clang++"
+   Compiling apatb_kernel.cpp
+   Compiling kernel.cpp_pre.cpp.tb.cpp
+   Compiling kernel_tb.cpp_pre.cpp.tb.cpp
+   Compiling apatb_kernel_ir.ll
+   Generating cosim.tv.exe
+INFO: [COSIM 212-302] Starting C TB testing ... 
+PASS
+INFO: [COSIM 212-333] Generating C post check test bench ...
+INFO: [COSIM 212-12] Generating RTL test bench ...
+INFO: [COSIM 212-1] *** C/RTL co-simulation file generation completed. ***
+INFO: [COSIM 212-323] Starting verilog simulation. 
+INFO: [COSIM 212-15] Starting XSIM ...
+Vivado Simulator v2025.1.0
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /tools/Xilinx/2025.1/Vivado/bin/unwrapped/lnx64.o/xelab xil_defaultlib.apatb_kernel_top xil_defaultlib.glbl -Oenable_linking_all_libraries -prj kernel.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm -L floating_point_v7_1_20 -L floating_point_v7_0_25 --lib ieee_proposed=./ieee_proposed -L uvm -relax -i ./svr -i ./svtb -i ./file_agent -i ./kernel_subsystem -s kernel 
+Multi-threading is on. Using 127 slave threads.
+WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by AMD, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the "-mt off -v 1" switches to see more information from the C compiler. The following environment variables have been detected:
+    LIBRARY_PATH
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/kernel.autotb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module apatb_kernel_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/kernel.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module kernel
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/kernel_control_s_axi.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module kernel_control_s_axi
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/dataflow_monitor.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dataflow_monitor
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/file_agent/file_agent_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/axivip/axi_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/axivip/axi_if.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/kernel_subsystem/kernel_subsystem_pkg.sv" into library xil_defaultlib
+ERROR: [VRFC 10-2989] 'allsvr_input_done' is not declared [./kernel_subsystem/kernel_reference_model.sv:83]
+ERROR: [VRFC 10-2989] 'allsvr_output_done' is not declared [./kernel_subsystem/kernel_reference_model.sv:111]
+ERROR: [VRFC 10-8530] package 'kernel_subsystem_pkg' is ignored due to previous errors [/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full/work/hls/sim/verilog/kernel_subsystem/kernel_subsystem_pkg.sv:13]
+ERROR: Please check the snapshot name which is created during 'xelab',the current snapshot name "xsim.dir/kernel/xsimk" does not exist 
+ERROR: [COSIM 212-4] *** C/RTL co-simulation finished: FAIL ***
+ERROR: 
+INFO: [HLS 200-112] Total CPU user time: 15.06 seconds. Total CPU system time: 3.75 seconds. Total elapsed time: 18.8 seconds; peak allocated memory: 325.910 MB.

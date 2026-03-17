@@ -1,226 +1,196 @@
-"""Tests for HLSCodeGenerator: HLSScheduleDialect → Vitis HLS C++ code."""
+"""Tests for ScheduleCodegenAgent: HLSScheduleDialect -> artifact files."""
 
 from __future__ import annotations
 
+import json
+import os
 import shutil
 import subprocess
 import tempfile
-import os
+from unittest.mock import MagicMock, patch
 
 import pytest
 
-from FormaSyn.codegen.hls_codegen import HLSCodeGenerator
-from FormaSyn.ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
+from FormaSyn.agent.codegen_agent import ScheduleCodegenAgent
+from FormaSyn.ir.schedule_dialect import HLSScheduleDialect
 
-
-# ---------------------------------------------------------------------------
-# Shared fixture
-# ---------------------------------------------------------------------------
 
 @pytest.fixture
 def ldpc_schedule() -> HLSScheduleDialect:
-    """Return the built-in LDPC Min-Sum CNU example schedule."""
     return HLSScheduleDialect.example_ldpc_cnu()
 
 
 @pytest.fixture
-def generator() -> HLSCodeGenerator:
-    return HLSCodeGenerator()
+def artifact_root() -> str:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        yield tmpdir
 
 
-# ---------------------------------------------------------------------------
-# generate() — structural checks
-# ---------------------------------------------------------------------------
-
-class TestGenerate:
-    def test_returns_string(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert isinstance(code, str)
-        assert len(code) > 0
-
-    def test_contains_banner(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "[FormaSyn Generated Code]" in code
-        assert "variant_id=min_sum_int8_p8" in code
-
-    def test_contains_includes(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "#include <ap_int.h>" in code
-        assert "#include <ap_fixed.h>" in code
-
-    def test_contains_typedef(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "typedef" in code
-
-    def test_function_name_default(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "void kernel(" in code
-
-    def test_function_name_custom(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule, function_name="ldpc_cnu")
-        assert "void ldpc_cnu(" in code
-
-    def test_contains_input_param(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "msg_in[8]" in code
-
-    def test_contains_output_params(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "xor_reduce[1]" in code
-        assert "min_reduce[1]" in code
+@pytest.fixture
+def codegen_agent(artifact_root: str) -> ScheduleCodegenAgent:
+    return ScheduleCodegenAgent(model="test-model", artifact_root=artifact_root)
 
 
-# ---------------------------------------------------------------------------
-# Pragma checks (required by spec)
-# ---------------------------------------------------------------------------
-
-class TestPragmas:
-    def test_pipeline_ii_pragma(self, generator, ldpc_schedule):
-        """Spec requirement: output must contain '#pragma HLS PIPELINE II=1'."""
-        code = generator.generate(ldpc_schedule)
-        assert "#pragma HLS PIPELINE II=1" in code
-
-    def test_array_partition_input(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "ARRAY_PARTITION variable=msg_in complete" in code
-
-    def test_unroll_pragma_in_map(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "#pragma HLS UNROLL" in code
+def _mock_response(content: str) -> MagicMock:
+    msg = MagicMock()
+    msg.content = content
+    choice = MagicMock()
+    choice.message = msg
+    resp = MagicMock()
+    resp.choices = [choice]
+    return resp
 
 
-# ---------------------------------------------------------------------------
-# Value Reuse Pattern checks (required by spec)
-# ---------------------------------------------------------------------------
-
-class TestMinSumValueReuse:
-    def test_contains_min1_idx(self, generator, ldpc_schedule):
-        """Spec requirement: output must contain 'min1_idx'."""
-        code = generator.generate(ldpc_schedule)
-        assert "min1_idx" in code
-
-    def test_contains_out_mag_shift(self, generator, ldpc_schedule):
-        """Spec requirement: output must contain 'out_mag >> 2'."""
-        code = generator.generate(ldpc_schedule)
-        assert "out_mag >> 2" in code
-
-    def test_contains_min1_min2(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "min1" in code
-        assert "min2" in code
-
-    def test_value_reuse_comment(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "Min-Sum Value Reuse Pattern" in code
-
-    def test_scale_comment(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "scale * 0.75" in code
-
-
-# ---------------------------------------------------------------------------
-# XOR reduce checks
-# ---------------------------------------------------------------------------
-
-class TestXorReduce:
-    def test_xor_operator_present(self, generator, ldpc_schedule):
-        code = generator.generate(ldpc_schedule)
-        assert "^=" in code
-
-    def test_address_mapping_injected(self, generator, ldpc_schedule):
-        """The address_mapping_code snippet must appear inside the loop."""
-        code = generator.generate(ldpc_schedule)
-        assert "col_idx" in code
+def _sample_codegen_json() -> str:
+    payload = {
+        "tool_calls": [
+            {
+                "tool": "write_file",
+                "path": "kernel.cpp",
+                "content": (
+                    "#include <ap_int.h>\n"
+                    "#include <ap_fixed.h>\n"
+                    "#include <hls_stream.h>\n\n"
+                    "void kernel(ap_int<8> msg_in[8], ap_int<1> xor_reduce[1], ap_int<7> min_reduce[1]) {\n"
+                    "  #pragma HLS PIPELINE II=1\n"
+                    "  xor_reduce[0] = msg_in[0] & 1;\n"
+                    "  min_reduce[0] = msg_in[0] & 127;\n"
+                    "}\n"
+                ),
+            },
+            {
+                "tool": "write_file",
+                "path": "kernel.h",
+                "content": (
+                    "#ifndef FORMASYN_KERNEL_H\n"
+                    "#define FORMASYN_KERNEL_H\n"
+                    "#include <ap_int.h>\n"
+                    "#include <ap_fixed.h>\n"
+                    "void kernel(ap_int<8> msg_in[8], ap_int<1> xor_reduce[1], ap_int<7> min_reduce[1]);\n"
+                    "#endif  // FORMASYN_KERNEL_H\n"
+                ),
+            },
+        ],
+    }
+    return json.dumps(payload, ensure_ascii=False)
 
 
-# ---------------------------------------------------------------------------
-# generate_header()
-# ---------------------------------------------------------------------------
+class TestScheduleCodegenAgent:
+    def test_generate_writes_artifacts(
+        self,
+        codegen_agent: ScheduleCodegenAgent,
+        ldpc_schedule: HLSScheduleDialect,
+    ) -> None:
+        with patch.object(
+            codegen_agent._client.chat.completions,
+            "create",
+            return_value=_mock_response(_sample_codegen_json()),
+        ):
+            artifacts = codegen_agent.generate(
+                ldpc_schedule,
+                example_name="ldpc_cnu",
+                function_name="kernel",
+            )
 
-class TestGenerateHeader:
-    def test_returns_string(self, generator, ldpc_schedule):
-        hdr = generator.generate_header(ldpc_schedule, "kernel")
-        assert isinstance(hdr, str)
+        assert os.path.isdir(artifacts.output_dir)
+        assert os.path.isfile(artifacts.kernel_cpp_path)
+        assert os.path.isfile(artifacts.kernel_h_path)
+        assert os.path.isfile(artifacts.metadata_path)
+        assert os.path.isfile(artifacts.prompt_path)
 
-    def test_include_guard(self, generator, ldpc_schedule):
-        hdr = generator.generate_header(ldpc_schedule, "kernel")
-        assert "#ifndef FORMASYN_KERNEL_H" in hdr
-        assert "#define FORMASYN_KERNEL_H" in hdr
-        assert "#endif" in hdr
+        metadata = json.loads(
+            open(artifacts.metadata_path, encoding="utf-8").read()
+        )
+        assert metadata["variant_id"] == "min_sum_int8_p8"
+        assert metadata["example_name"] == "ldpc_cnu"
+        assert metadata["function_name"] == "kernel"
+        assert metadata["model"] == "test-model"
+        assert metadata["schedule_summary"]["expected_ii"] == 1
 
-    def test_function_declaration(self, generator, ldpc_schedule):
-        hdr = generator.generate_header(ldpc_schedule, "kernel")
-        assert "void kernel(" in hdr
-        assert hdr.rstrip().endswith(f"#endif  // FORMASYN_KERNEL_H")
+    def test_generate_calls_llm_with_model(
+        self,
+        codegen_agent: ScheduleCodegenAgent,
+        ldpc_schedule: HLSScheduleDialect,
+    ) -> None:
+        with patch.object(
+            codegen_agent._client.chat.completions,
+            "create",
+            return_value=_mock_response(_sample_codegen_json()),
+        ) as mock_create:
+            codegen_agent.generate(ldpc_schedule, example_name="ldpc_cnu")
 
-    def test_contains_typedefs(self, generator, ldpc_schedule):
-        hdr = generator.generate_header(ldpc_schedule, "kernel")
-        assert "typedef" in hdr
+        assert mock_create.call_args[1]["model"] == "test-model"
 
-    def test_no_function_body(self, generator, ldpc_schedule):
-        """Header must have declaration (ending with ;), not a definition."""
-        hdr = generator.generate_header(ldpc_schedule, "kernel")
-        assert ");" in hdr
-        # Must not contain opening brace of a function body
-        # (exclude the #ifndef/#define lines which don't have braces)
-        lines_with_brace = [
-            l for l in hdr.splitlines()
-            if "{" in l and not l.strip().startswith("#")
-        ]
-        assert len(lines_with_brace) == 0
+    def test_generate_overwrites_fixed_variant_dir(
+        self,
+        codegen_agent: ScheduleCodegenAgent,
+        ldpc_schedule: HLSScheduleDialect,
+    ) -> None:
+        first = {
+            "tool_calls": [
+                {
+                    "tool": "write_file",
+                    "path": "kernel.cpp",
+                    "content": "#include <ap_int.h>\n#include <ap_fixed.h>\n#include <hls_stream.h>\nvoid kernel(ap_int<8> in0[8], ap_int<1> out0[1], ap_int<7> out1[1]){out0[0]=0;out1[0]=0;}\n",
+                },
+                {
+                    "tool": "write_file",
+                    "path": "kernel.h",
+                    "content": "#ifndef FORMASYN_KERNEL_H\n#define FORMASYN_KERNEL_H\nvoid kernel(ap_int<8> in0[8], ap_int<1> out0[1], ap_int<7> out1[1]);\n#endif  // FORMASYN_KERNEL_H\n",
+                },
+            ],
+        }
+        second = {
+            "tool_calls": [
+                {
+                    "tool": "write_file",
+                    "path": "kernel.cpp",
+                    "content": "#include <ap_int.h>\n#include <ap_fixed.h>\n#include <hls_stream.h>\nvoid kernel(ap_int<8> in0[8], ap_int<1> out0[1], ap_int<7> out1[1]){out0[0]=1;out1[0]=1;}\n",
+                },
+                {
+                    "tool": "write_file",
+                    "path": "kernel.h",
+                    "content": "#ifndef FORMASYN_KERNEL_H\n#define FORMASYN_KERNEL_H\nvoid kernel(ap_int<8> in0[8], ap_int<1> out0[1], ap_int<7> out1[1]);\n#endif  // FORMASYN_KERNEL_H\n",
+                },
+            ],
+        }
 
+        with patch.object(
+            codegen_agent._client.chat.completions,
+            "create",
+            return_value=_mock_response(json.dumps(first)),
+        ):
+            artifacts = codegen_agent.generate(ldpc_schedule, example_name="ldpc_cnu")
 
-# ---------------------------------------------------------------------------
-# dtype helpers
-# ---------------------------------------------------------------------------
+        with patch.object(
+            codegen_agent._client.chat.completions,
+            "create",
+            return_value=_mock_response(json.dumps(second)),
+        ):
+            codegen_agent.generate(ldpc_schedule, example_name="ldpc_cnu")
 
-class TestDtypeHelpers:
-    def test_ap_int_alias(self, generator):
-        assert generator._dtype_to_alias("ap_int<8>") == "ap_int_8_t"
+        new_cpp = open(artifacts.kernel_cpp_path, encoding="utf-8").read()
+        assert "out0[0]=1;" in new_cpp
 
-    def test_ap_int_1_alias(self, generator):
-        assert generator._dtype_to_alias("ap_int<1>") == "ap_int_1_t"
+    def test_fallback_when_api_fails(
+        self,
+        codegen_agent: ScheduleCodegenAgent,
+        ldpc_schedule: HLSScheduleDialect,
+    ) -> None:
+        with patch.object(
+            codegen_agent._client.chat.completions,
+            "create",
+            side_effect=Exception("api down"),
+        ):
+            artifacts = codegen_agent.generate(ldpc_schedule, example_name="ldpc_cnu")
 
-    def test_ap_fixed_alias(self, generator):
-        assert generator._dtype_to_alias("ap_fixed<16,4>") == "ap_fixed_16_4_t"
+        assert "#include <ap_int.h>" in artifacts.kernel_cpp
+        assert "void kernel(" in artifacts.kernel_cpp
+        assert os.path.isfile(artifacts.kernel_cpp_path)
+        assert os.path.isfile(artifacts.kernel_h_path)
 
-    def test_float64_alias(self, generator):
-        assert generator._dtype_to_alias("float64") == "double"
-
-    def test_float64_hls(self, generator):
-        assert generator._dtype_to_hls("float64") == "double"
-
-    def test_ap_int_hls_passthrough(self, generator):
-        assert generator._dtype_to_hls("ap_int<8>") == "ap_int<8>"
-
-
-# ---------------------------------------------------------------------------
-# Topological ordering
-# ---------------------------------------------------------------------------
-
-class TestTopoSort:
-    def test_input_node_first(self, generator, ldpc_schedule):
-        order = generator._topo_sort(ldpc_schedule)
-        msg_in_idx = order.index("msg_in")
-        sign_map_idx = order.index("sign_map")
-        abs_map_idx = order.index("abs_map")
-        assert msg_in_idx < sign_map_idx
-        assert msg_in_idx < abs_map_idx
-
-    def test_reduce_after_map(self, generator, ldpc_schedule):
-        order = generator._topo_sort(ldpc_schedule)
-        sign_map_idx = order.index("sign_map")
-        xor_reduce_idx = order.index("xor_reduce")
-        assert sign_map_idx < xor_reduce_idx
-
-
-# ---------------------------------------------------------------------------
-# Optional: g++ syntax check with mock headers
-# ---------------------------------------------------------------------------
 
 _MOCK_AP_INT_H = """\
-// Minimal mock of Vitis HLS ap_int.h for syntax-only checking.
-// Uses native integer aliases so all arithmetic/bitwise operators work.
 #pragma once
 #include <cstdint>
 template<int W> using ap_int  = int;
@@ -239,28 +209,30 @@ template<typename T> struct hls_stream {};
 """
 
 
-@pytest.mark.skipif(
-    shutil.which("g++") is None,
-    reason="g++ not found on PATH",
-)
-def test_syntax_check_with_gpp(generator, ldpc_schedule):
-    """Compile-check with g++ using mock HLS headers (no real Vitis HLS needed)."""
-    code = generator.generate(ldpc_schedule, function_name="kernel")
+@pytest.mark.skipif(shutil.which("g++") is None, reason="g++ not found on PATH")
+def test_generated_cpp_syntax_check(
+    codegen_agent: ScheduleCodegenAgent,
+    ldpc_schedule: HLSScheduleDialect,
+) -> None:
+    with patch.object(
+        codegen_agent._client.chat.completions,
+        "create",
+        return_value=_mock_response(_sample_codegen_json()),
+    ):
+        artifacts = codegen_agent.generate(ldpc_schedule, example_name="ldpc_cnu")
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        # Write mock headers
         for fname, content in [
-            ("ap_int.h",     _MOCK_AP_INT_H),
-            ("ap_fixed.h",   _MOCK_AP_FIXED_H),
+            ("ap_int.h", _MOCK_AP_INT_H),
+            ("ap_fixed.h", _MOCK_AP_FIXED_H),
             ("hls_stream.h", _MOCK_HLS_STREAM_H),
         ]:
-            with open(os.path.join(tmpdir, fname), "w") as f:
+            with open(os.path.join(tmpdir, fname), "w", encoding="utf-8") as f:
                 f.write(content)
 
-        # Write generated code
         src_path = os.path.join(tmpdir, "kernel.cpp")
-        with open(src_path, "w") as f:
-            f.write(code)
+        with open(src_path, "w", encoding="utf-8") as f:
+            f.write(artifacts.kernel_cpp)
 
         result = subprocess.run(
             ["g++", "-std=c++14", "-fsyntax-only", f"-I{tmpdir}", src_path],

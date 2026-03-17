@@ -1,7 +1,8 @@
 """L1 Checker: second-level verification via Vitis HLS C simulation.
 
-Runs the generated HLS C++ through ``v++ --mode hls --csim`` with a generated
-testbench, then compares the simulated outputs against the golden model.
+Runs the generated HLS C++ through Vitis HLS C simulation (prefer
+``vitis-run --mode hls --csim``; fallback to legacy ``v++ --mode hls --csim``)
+with a generated testbench, then compares simulated outputs against golden.
 
 Metric dispatch by kernel_type:
   - channel_coding  -> sign_error_rate, snr_penalty_db
@@ -17,6 +18,7 @@ import logging
 import math
 import os
 import re
+import shutil
 import subprocess
 import tempfile
 from dataclasses import dataclass, field
@@ -114,9 +116,9 @@ class L1Checker:
         golden_outputs: dict[str, list[float]],
         csr_data: Optional[dict[str, list[int]]],
     ) -> dict[str, list[float]]:
-        """Run ``v++ --csim`` and parse printed output vectors."""
+        """Run HLS C simulation and parse printed output vectors."""
         if not self._vitis_available():
-            raise _CompileError("v++ not found on PATH")
+            raise _CompileError("Neither vitis-run nor v++ found on PATH")
 
         function_name = self._extract_function_name(hls_cpp_code)
         testbench = self._generate_testbench(
@@ -136,21 +138,13 @@ class L1Checker:
             f.write(hls_cpp_code)
         with open(tb_path, "w", encoding="utf-8") as f:
             f.write(testbench)
+        self._ensure_local_kernel_header(hls_cpp_code, tmp_dir)
         with open(cfg_path, "w", encoding="utf-8") as f:
             f.write(self._generate_hls_config(function_name, src_name, tb_name))
 
+        cmd = self._build_csim_cmd(cfg_path, work_dir)
         proc = subprocess.run(
-            [
-                "v++",
-                "-c",
-                "--mode",
-                "hls",
-                "--config",
-                cfg_path,
-                "--work_dir",
-                work_dir,
-                "--csim",
-            ],
+            cmd,
             capture_output=True,
             text=True,
             cwd=tmp_dir,
@@ -164,18 +158,124 @@ class L1Checker:
         parse_text = "\n".join(chunk for chunk in (combined, report_text) if chunk)
 
         if proc.returncode != 0:
-            raise _CompileError(parse_text or "v++ csim failed")
+            raise _CompileError(parse_text or "HLS csim failed")
 
         outputs = _parse_output(parse_text)
         if not outputs:
             raise _CompileError("CSim completed but produced no @@OUTPUT records")
         return outputs
 
+    def _run_host_sim(
+        self,
+        hls_cpp_code: str,
+        test_inputs: dict[str, list[float]],
+        golden_outputs: dict[str, list[float]],
+        csr_data: Optional[dict[str, list[int]]],
+    ) -> dict[str, list[float]]:
+        """Run host-only simulation via g++ with lightweight HLS header mocks."""
+        if shutil.which("g++") is None:
+            raise _CompileError("v++ not found and g++ not found on PATH")
+
+        clean = self._strip_hls_specifics(hls_cpp_code)
+        testbench = self._generate_testbench(
+            clean, test_inputs, golden_outputs, csr_data
+        )
+        stdout = self._compile_and_run(clean, testbench)
+        outputs = _parse_output(stdout)
+        if not outputs:
+            raise _CompileError("Host simulation completed but produced no @@OUTPUT records")
+        return outputs
+
+    @staticmethod
+    def _strip_hls_specifics(code: str) -> str:
+        """Remove pragmas unsupported by host g++ simulation."""
+        stripped: list[str] = []
+        for line in code.splitlines():
+            if line.lstrip().startswith("#pragma HLS"):
+                continue
+            stripped.append(line)
+        return "\n".join(stripped) + "\n"
+
+    def _compile_and_run(self, hls_cpp_code: str, testbench_code: str) -> str:
+        """Compile kernel + testbench with g++ and return stdout."""
+        with tempfile.TemporaryDirectory(prefix="formasyn_hostsim_") as tmpdir:
+            kernel_path = os.path.join(tmpdir, "kernel.cpp")
+            tb_path = os.path.join(tmpdir, "kernel_tb.cpp")
+            exe_path = os.path.join(tmpdir, "sim.out")
+
+            with open(kernel_path, "w", encoding="utf-8") as f:
+                f.write(hls_cpp_code)
+            with open(tb_path, "w", encoding="utf-8") as f:
+                f.write(testbench_code)
+
+            self._write_mock_hls_headers(tmpdir)
+
+            try:
+                proc = subprocess.run(
+                    [
+                        "g++",
+                        "-std=c++14",
+                        "-O2",
+                        f"-I{tmpdir}",
+                        kernel_path,
+                        tb_path,
+                        "-o",
+                        exe_path,
+                    ],
+                    capture_output=True,
+                    text=True,
+                )
+            except FileNotFoundError as exc:
+                raise _CompileError("g++ not found on PATH") from exc
+            if proc.returncode != 0:
+                raise _CompileError(proc.stderr.strip() or "g++ compile failed")
+
+            try:
+                run_proc = subprocess.run(
+                    [exe_path],
+                    capture_output=True,
+                    text=True,
+                )
+            except FileNotFoundError as exc:
+                raise _CompileError("host simulator binary not found") from exc
+            if run_proc.returncode != 0:
+                raise _CompileError(run_proc.stderr.strip() or "host simulation failed")
+
+            return run_proc.stdout
+
+    @staticmethod
+    def _write_mock_hls_headers(out_dir: str) -> None:
+        """Write minimal HLS compatibility headers for host simulation."""
+        headers = {
+            "ap_int.h": (
+                "#pragma once\n"
+                "#include <cstdint>\n"
+                "template<int W> using ap_int = int;\n"
+                "template<int W> using ap_uint = unsigned int;\n"
+            ),
+            "ap_fixed.h": (
+                "#pragma once\n"
+                "#include \"ap_int.h\"\n"
+                "template<int W, int I=0> using ap_fixed = double;\n"
+            ),
+            "hls_stream.h": (
+                "#pragma once\n"
+                "template<typename T> struct hls_stream {};\n"
+            ),
+        }
+        for name, content in headers.items():
+            with open(os.path.join(out_dir, name), "w", encoding="utf-8") as f:
+                f.write(content)
+
     @staticmethod
     def _vitis_available() -> bool:
+        return L1Checker._tool_available("vitis-run") or L1Checker._tool_available("v++")
+
+    @staticmethod
+    def _tool_available(tool: str) -> bool:
         try:
             proc = subprocess.run(
-                ["v++", "--version"],
+                [tool, "--version"],
                 capture_output=True,
                 text=True,
                 timeout=10,
@@ -183,6 +283,59 @@ class L1Checker:
         except (FileNotFoundError, subprocess.TimeoutExpired):
             return False
         return proc.returncode == 0
+
+    def _build_csim_cmd(self, cfg_path: str, work_dir: str) -> list[str]:
+        """Build a command for HLS C simulation across Vitis versions."""
+        if self._tool_available("vitis-run"):
+            return [
+                "vitis-run",
+                "--mode",
+                "hls",
+                "--csim",
+                "--config",
+                cfg_path,
+                "--work_dir",
+                work_dir,
+            ]
+        return [
+            "v++",
+            "-c",
+            "--mode",
+            "hls",
+            "--config",
+            cfg_path,
+            "--work_dir",
+            work_dir,
+            "--csim",
+        ]
+
+    @staticmethod
+    def _ensure_local_kernel_header(hls_cpp_code: str, out_dir: str) -> None:
+        """Generate ``kernel.h`` when source/testbench includes it."""
+        if '#include "kernel.h"' not in hls_cpp_code:
+            return
+
+        signature = L1Checker._extract_function_signature(hls_cpp_code)
+        preamble = L1Checker._extract_preamble(hls_cpp_code)
+
+        preamble_lines: list[str] = []
+        for raw in preamble.splitlines():
+            line = raw.strip()
+            if line.startswith("#include") and '"kernel.h"' in line:
+                continue
+            preamble_lines.append(raw.rstrip())
+
+        header_lines = ["#pragma once"]
+        if preamble_lines:
+            header_lines.append("")
+            header_lines.extend(preamble_lines)
+        header_lines.append("")
+        header_lines.append(signature + ";")
+        header_lines.append("")
+        header = "\n".join(header_lines)
+
+        with open(os.path.join(out_dir, "kernel.h"), "w", encoding="utf-8") as f:
+            f.write(header)
 
     def _compute_metrics(
         self,

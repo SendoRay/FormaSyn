@@ -1,0 +1,3 @@
+relativeroot=/home/chengzhy/FormaSyn/vitis_hls_test/baseline_int16_p16_full
+original_argv=--mode hls --cosim --config hls_config.cfg --work_dir work 
+

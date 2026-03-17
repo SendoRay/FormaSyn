@@ -145,14 +145,12 @@ class L3Checker:
         csr_data: Optional[dict[str, list[int]]],
     ) -> dict[str, float]:
         """Evaluate channel coding quality: sign_error_rate vs golden."""
-        from FormaSyn.checker.l1_checker import L1Checker, _replace_hls_types
+        from FormaSyn.checker.l1_checker import L1Checker
 
         clean = L1Checker._strip_hls_specifics(hls_cpp)
         checker = L1Checker(kernel_type="channel_coding")
-        tb = checker._generate_testbench(clean, test_inputs, self._golden, csr_data)
-
         try:
-            outputs = checker._compile_and_run(tb)
+            outputs = checker._run_host_sim(clean, test_inputs, self._golden, csr_data)
         except Exception as e:
             logger.warning("L3 quality sim 编译/运行失败: %s", str(e)[:200])
             return {"sign_error_rate": 1.0, "snr_penalty_db": 100.0}
@@ -171,10 +169,8 @@ class L3Checker:
 
         clean = L1Checker._strip_hls_specifics(hls_cpp)
         checker = L1Checker(kernel_type=self._kernel_type)
-        tb = checker._generate_testbench(clean, test_inputs, self._golden, csr_data)
-
         try:
-            outputs = checker._compile_and_run(tb)
+            outputs = checker._run_host_sim(clean, test_inputs, self._golden, csr_data)
         except Exception as e:
             logger.warning("L3 quality sim 编译/运行失败: %s", str(e)[:200])
             return {"nmse_db": 0.0}

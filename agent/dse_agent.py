@@ -15,8 +15,7 @@ import re
 from dataclasses import dataclass
 from typing import Optional, TypedDict
 
-from openai import OpenAI
-
+from FormaSyn.agent.base_agent import BaseAgent
 from FormaSyn.agent.knowledge_prompt import COMM_KNOWLEDGE_PROMPT
 from FormaSyn.ir.math_dialect import MathDialect
 
@@ -97,7 +96,7 @@ _INTENT_SCHEMA_TEXT = """\
 # DSEAgent
 # ---------------------------------------------------------------------------
 
-class DSEAgent:
+class DSEAgent(BaseAgent):
     """LLM-based design-space exploration agent.
 
     Builds structured prompts from MathDialect + QuantSpec, calls an LLM via
@@ -109,12 +108,8 @@ class DSEAgent:
         model: str = "claude-sonnet-4-5-20250929",
         max_variants: int = 8,
     ) -> None:
-        self._model = model
+        super().__init__(model=model)
         self._max_variants = max_variants
-        self._client = OpenAI(
-            api_key="sk-fgiM17i17hA5lYtIhuPf9MGMkEN27dJA4SVE2CsXWxtNovU4",
-            base_url="https://api.tryallai.com/v1",
-        )
 
     # -- Prompt builders -----------------------------------------------------
 
@@ -298,23 +293,18 @@ class DSEAgent:
 
         logger.info(
             "调用 LLM 生成变体意图 (model=%s, kernel=%s)",
-            self._model,
+            self.model,
             dialect.kernel_name,
         )
 
         try:
-            response = self._client.chat.completions.create(
-                model=self._model,
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
+            raw = self._chat_completion(
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
             )
         except Exception:
             logger.exception("LLM API 调用失败")
             return []
-
-        raw = response.choices[0].message.content or ""
         logger.debug("LLM 原始响应 (%d chars): %s", len(raw), raw[:500])
 
         intents = self._parse_response(raw)

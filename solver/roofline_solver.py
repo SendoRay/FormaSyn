@@ -98,11 +98,14 @@ class RooflineSolver:
         dsp_count: int = 1728,
         freq_mhz: int = 250,
         ddr_bw_gbps: float = 19.2,
+        enforce_budget: bool = False,
     ) -> None:
         self.bram_kb = bram_kb
         self.dsp_count = dsp_count
         self.freq_mhz = freq_mhz
         self.ddr_bw_gbps = ddr_bw_gbps
+        # Roadmap mode: keep schedule generation but skip hard resource gating.
+        self.enforce_budget = enforce_budget
 
     # ------------------------------------------------------------------
     # Internal estimation helpers
@@ -222,16 +225,17 @@ class RooflineSolver:
             )
 
         max_bram18 = (self.bram_kb * 1024 * 8) // self.BRAM18_BITS
-        if total_dsp > self.dsp_count * 0.9:
-            raise ResourceOverflowError(
-                f"DSP 超限: 估算 {total_dsp}, "
-                f"预算 {int(self.dsp_count * 0.9)} (90% of {self.dsp_count})"
-            )
-        if total_bram > max_bram18 * 0.8:
-            raise ResourceOverflowError(
-                f"BRAM 超限: 估算 {total_bram} 块, "
-                f"预算 {int(max_bram18 * 0.8)} 块 (80% of {max_bram18})"
-            )
+        if self.enforce_budget:
+            if total_dsp > self.dsp_count * 0.9:
+                raise ResourceOverflowError(
+                    f"DSP 超限: 估算 {total_dsp}, "
+                    f"预算 {int(self.dsp_count * 0.9)} (90% of {self.dsp_count})"
+                )
+            if total_bram > max_bram18 * 0.8:
+                raise ResourceOverflowError(
+                    f"BRAM 超限: 估算 {total_bram} 块, "
+                    f"预算 {int(max_bram18 * 0.8)} 块 (80% of {max_bram18})"
+                )
 
         schedule = HLSScheduleDialect(
             variant_id=dialect.variant_id,
