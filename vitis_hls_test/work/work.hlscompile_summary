@@ -1,0 +1,245 @@
+<ENTRY>
+{
+ "thisFile": "/home/chengzhy/vitis_hls_test/work/work.hlscompile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Wed Mar 11 08:59:32 2026",
+ "timestampMillis": "1773219572717",
+ "buildStep": {
+  "cmdId": "eb75f638-e31e-4b95-9821-435278d901b0",
+  "name": "v++",
+  "logFile": "/home/chengzhy/vitis_hls_test/work/logs/work.steps.log",
+  "commandLine": "/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/v++  -c --mode hls --config hls_cofig.cfg --work_dir work ",
+  "args": [
+   "-c",
+   "--mode",
+   "hls",
+   "--config",
+   "hls_cofig.cfg",
+   "--work_dir",
+   "work"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/chengzhy/vitis_hls_test/hls_cofig.cfg",
+    "content": "part=xc7z020clg400-1\n\n[hls]\nclock=10ns\nflow_target=vitis\nsyn.top=vec_add\nsyn.file=vec_add.cpp\ntb.file=vec_add_tb.cpp"
+   }
+  ],
+  "cwd": "/home/chengzhy/vitis_hls_test"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Wed Mar 11 08:59:32 2026",
+ "timestampMillis": "1773219572718",
+ "status": {
+  "cmdId": "eb75f638-e31e-4b95-9821-435278d901b0",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Wed Mar 11 08:59:58 2026",
+ "timestampMillis": "1773219598034",
+ "buildSummary": {
+  "hardwarePlatform": "",
+  "hardwareDsa": "",
+  "platformDirectory": "",
+  "runtime": "",
+  "systemConfig": "",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "vec_add",
+     "file": "/home/chengzhy/vitis_hls_test/work/vec_add.zip",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/chengzhy/vitis_hls_test/vec_add.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "2025.1"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Wed Mar 11 08:59:58 2026",
+ "timestampMillis": "1773219598035",
+ "buildStep": {
+  "cmdId": "fdb62a90-210f-45c3-954d-c0aa192025e4",
+  "name": "",
+  "logFile": "/home/chengzhy/vitis_hls_test/work/hls/hls.log",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/chengzhy/vitis_hls_test"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Wed Mar 11 08:59:58 2026",
+ "timestampMillis": "1773219598035",
+ "status": {
+  "cmdId": "fdb62a90-210f-45c3-954d-c0aa192025e4",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 08:59:58 2026",
+ "timestampMillis": "1773219598035",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/hls/hls_data.json",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 08:59:58 2026",
+ "timestampMillis": "1773219598036",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/hls/syn/report/csynth.rpt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 08:59:58 2026",
+ "timestampMillis": "1773219598036",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/hls/syn/report/csynth.xml",
+  "name": "",
+  "fileType": "XML",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 09:00:10 2026",
+ "timestampMillis": "1773219610980",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_DATAFLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 09:00:10 2026",
+ "timestampMillis": "1773219610980",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_FUNCTION_CALL_GRAPH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 09:00:10 2026",
+ "timestampMillis": "1773219610981",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_SCHEDULE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Wed Mar 11 09:00:10 2026",
+ "timestampMillis": "1773219610981",
+ "status": {
+  "cmdId": "fdb62a90-210f-45c3-954d-c0aa192025e4",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Wed Mar 11 09:00:57 2026",
+ "timestampMillis": "1773219657890",
+ "status": {
+  "cmdId": "eb75f638-e31e-4b95-9821-435278d901b0",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 09:00:57 2026",
+ "timestampMillis": "1773219657956",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/reports/v++_compile_work_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Mar 11 09:00:57 2026",
+ "timestampMillis": "1773219657957",
+ "report": {
+  "path": "/home/chengzhy/vitis_hls_test/work/reports/.db/v++_compile_work_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

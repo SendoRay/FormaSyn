@@ -1,0 +1,13 @@
+---
+MainSourceFile:  /home/chengzhy/vitis_hls_test/work/hls/.autopilot/db/vec_add.pp.0.cpp
+Diagnostics:     
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_3_1:  '
+    FileOffset:      3
+    FilePath:        vec_add.cpp
+    Replacements:    
+      - FilePath:        /home/chengzhy/vitis_hls_test/work/hls/.autopilot/db/vec_add.pp.0.cpp
+        Offset:          9650
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_3_1: '
+...

@@ -9,6 +9,7 @@ hardware_constraints:
 
 algorithm_metrics:
   evaluator_type: "WaveformEvaluator"
+  kernel_type: "filtering"
   tolerance:
     nmse_db: -60.0
     max_overflows: 0

@@ -14,6 +14,10 @@
 ```
 用户定义算法 (FormulaGraph)
         ↓
+ExampleSpec 注册 (输入 / 参数 / kernel_type / 可选 CSR 钩子)
+        ↓
+统一执行管线 run.py::run_example(...)
+        ↓
    Math Dialect (纯数学 DAG)
         ↓
 LLM 代理生成意图 JSON (多变体)
@@ -28,10 +32,20 @@ HLS Schedule Dialect (完整调度信息)
         ↓
   HLS C++ 代码 (.cpp / .h)
         ↓
+  逐变体验证（超资源变体仅 SKIP）
+        ↓
   L1 → L2 → L3 三级验证
         ↓
     通过的最优变体
 ```
+
+当前 `run.py` 不再为每个算法单独维护一套 `run_xxx()` 流程。不同示例只通过 `ExampleSpec` 提供少量差异化信息，例如：
+
+- 如何构造 `FormulaGraph`
+- 如何生成测试输入
+- 是否需要额外 CLI 参数
+- 是否需要从图结构提取 `csr_data`
+- `constraints.yaml` 中声明的 `kernel_type` 与容差指标
 
 ## 快速开始
 
@@ -64,6 +78,7 @@ python run.py ldpc_cnu --dc 16
 ==> [3/5] 调用 LLM 生成硬件变体意图 ...
     生成 8 个变体
 ==> [4/5] 编译并验证各变体 ...
+    [SKIP] baseline_int16_p16_full  reason=BRAM 超限: 估算 26 块, 预算 12 块
     [PASS] min_sum_int8_p8   metrics={'nmse_db': -63.2, 'max_overflows': 0}
     [PASS] offset_ms_int10   metrics={'nmse_db': -71.5, 'max_overflows': 0}
     [FAIL] spa_int16_p1      metrics={'nmse_db': -58.1, 'max_overflows': 0}
@@ -71,11 +86,13 @@ python run.py ldpc_cnu --dc 16
 ==> [5/5] 完成：5/8 个变体通过 L1 验证
 ```
 
+说明：如果某个候选变体在 `RooflineSolver` 阶段估算出 DSP / BRAM 超预算，当前实现会把该变体标记为 `SKIP` 并继续尝试后续变体，不会因为单个失败中断整轮探索。
+
 ## 添加新算子示例
 
 ### 目录结构
 
-每个示例至少包含两个文件，由根目录 `run.py` 统一调度：
+每个示例至少包含两个文件，由根目录 `run.py` 的统一执行器调度：
 
 ```
 examples/
@@ -119,10 +136,21 @@ hardware_constraints:
 
 algorithm_metrics:
   evaluator_type: "WaveformEvaluator"     # 见下方评估器说明
+  kernel_type: "filtering"                # 交给统一 L1 流程选择 metric
   tolerance:
     nmse_db: -60.0                        # 归一化均方误差阈值（dB，越小越严格）
     max_overflows: 0                      # 允许溢出次数
 ```
+
+### 新增示例的接入方式
+
+新增算法时，不建议再写新的 `run_xxx_kernel()` 或复制一份执行流程。推荐做法是：
+
+1. 在 `examples/<name>/kernel.py` 中提供构图函数。
+2. 在 `examples/<name>/constraints.yaml` 中声明硬件约束、`kernel_type` 和容差。
+3. 如果需要额外参数、测试输入生成逻辑或 `csr_data` 提取逻辑，在 `run.py` 的 `ExampleSpec` 注册表中补一条描述。
+
+这样新增示例只引入“算法差异”，不会复制 DSE、roofline、代码生成和验证流水线本身。
 
 ## DSL 算子参考
 
