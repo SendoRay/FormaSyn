@@ -16,3 +16,4 @@ env/
 ENV/
 
 .DS_Store
+.gitignore

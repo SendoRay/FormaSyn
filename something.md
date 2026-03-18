@@ -488,3 +488,5 @@ https://docs.amd.com/r/zh-CN/ug1702-vitis-accelerated-reference   找到更合�
 
 
 
+你确定你改的和我给你的目录一样吗  第一个 你没有吧核心代码放在一个formasyn/ 的文件夹下面 然后这样使用起来轻松点  第二个  你的 agent依旧没有 dignostic的逻辑  第三个 你的 feedback             
+里面为什么还有 pragama_tuner的代码  很明显 你没有理解 @formasyn.md    
