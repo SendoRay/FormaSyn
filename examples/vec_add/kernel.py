@@ -9,7 +9,7 @@ Data flow::
 
 from __future__ import annotations
 
-import FormaSyn.dsl as fp
+import FormaSyn.formasyn.dsl as fp
 
 VEC_LEN = 16
 

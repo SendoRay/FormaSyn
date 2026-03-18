@@ -10,7 +10,7 @@ Data flow::
 
 from __future__ import annotations
 
-import FormaSyn.dsl as fp
+import FormaSyn.formasyn.dsl as fp
 
 COEFFS: list[float] = [
     0.003, 0.008, 0.025, 0.063,

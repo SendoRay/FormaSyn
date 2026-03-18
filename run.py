@@ -24,19 +24,25 @@ PARENT = ROOT.parent
 if str(PARENT) not in sys.path:
     sys.path.insert(0, str(PARENT))
 
-from FormaSyn.agent.codegen_agent import ScheduleCodegenAgent
-from FormaSyn.agent.dse_agent import DSEAgent, QuantSpec as AgentQuantSpec
-from FormaSyn.checker.diagnostic import FailureContext, FailureStage
-from FormaSyn.checker.l1_checker import L1Checker
-from FormaSyn.checker.l2_checker import L2Checker
-from FormaSyn.checker.l3_checker import L3Checker
-from FormaSyn.dsl.parser import parse
-from FormaSyn.dsl.template_engine import TemplateEngine
-from FormaSyn.feedback.deep_loop import DeepLoopGenerator
-from FormaSyn.feedback.pragma_tuner import PragmaTuner
-from FormaSyn.golden.generator import GoldenModelGenerator
-from FormaSyn.golden.quant_analyzer import QuantizationAnalyzer
-from FormaSyn.solver.roofline_solver import ResourceOverflowError, RooflineSolver
+from FormaSyn.formasyn.agent.codegen_agent import ScheduleCodegenAgent
+from FormaSyn.formasyn.agent.dse_agent import DSEAgent, QuantSpec as AgentQuantSpec
+from FormaSyn.formasyn.checker.diagnostic import FailureContext, FailureStage
+from FormaSyn.formasyn.checker.l1_checker import L1Checker
+from FormaSyn.formasyn.checker.l2_checker import L2Checker
+from FormaSyn.formasyn.checker.l3_checker import L3Checker
+from FormaSyn.formasyn.checker.pre_checker import PreChecker
+from FormaSyn.formasyn.feedback.relaxers import (
+    QuantizationRelaxer,
+    RelaxerChain,
+    ResourceRelaxer,
+    TilingAdjuster,
+)
+from FormaSyn.formasyn.dsl.parser import parse
+from FormaSyn.formasyn.dsl.template_engine import TemplateEngine
+from FormaSyn.formasyn.feedback.loop import FeedbackLoop
+from FormaSyn.formasyn.golden.generator import GoldenModelGenerator
+from FormaSyn.formasyn.golden.quant_analyzer import QuantizationAnalyzer
+from FormaSyn.formasyn.solver.roofline_solver import ResourceOverflowError, RooflineSolver
 from examples.fir_16tap.kernel import build_fir_16tap
 from examples.ldpc_cnu.kernel import build_ldpc_cnu, get_test_inputs
 from examples.vec_add.kernel import build_vec_add, get_test_inputs as get_vec_add_test_inputs
@@ -230,12 +236,13 @@ def _evaluate_variant(
     l1: L1Checker,
     l2: L2Checker,
     l3: L3Checker,
-    tuner: PragmaTuner,
+    feedback_loop: FeedbackLoop,
     golden_outputs,
     test_inputs,
     *,
     example_name: str,
     csr_data: dict | None = None,
+    relaxer_chain: RelaxerChain | None = None,
 ) -> tuple[bool, list[FailureContext]]:
     """Run one variant through L1/L2/L3 and feedback fast-loop."""
     failures: list[FailureContext] = []
@@ -264,6 +271,42 @@ def _evaluate_variant(
         vname,
         csr_data=csr_data,
     )
+
+    # L1 失败恢复：使用 QuantizationRelaxer
+    if not l1_result.passed and relaxer_chain is not None:
+        failure = l1_result.failure or _default_failure(FailureStage.L1_NUMERIC, vname, "L1 failed")
+        print(f"    [RELAX] {vname}  stage=L1  尝试恢复...")
+
+        relax_result = relaxer_chain.try_relax(algo_hw, failure)
+        if relax_result.success:
+            algo_hw = relax_result.new_ir
+            for action in relax_result.actions:
+                print(f"    [ACTION] {action.description}")
+
+            # 重新生成 schedule 和 artifacts
+            try:
+                schedule = solver.solve(algo_hw)
+                artifacts = codegen_agent.generate(
+                    schedule,
+                    example_name=example_name,
+                )
+                hls_cpp = artifacts.kernel_cpp
+                hls_hdr = artifacts.kernel_h
+                print(f"    [ARTIFACT] {vname}  dir={artifacts.output_dir} (relaxed)")
+
+                # 重新运行 L1
+                l1_result = l1.check(
+                    hls_cpp,
+                    golden_outputs,
+                    test_inputs,
+                    vname,
+                    csr_data=csr_data,
+                )
+            except Exception as exc:
+                print(f"    [RELAX_FAIL] {vname}  stage=L1  reason={exc}")
+                failures.append(failure)
+                return False, failures
+
     if not l1_result.passed:
         print(f"    [FAIL] {vname}  stage=L1  metrics={l1_result.metrics}")
         failures.append(
@@ -280,13 +323,21 @@ def _evaluate_variant(
 
         while (
             failure is not None
-            and retries < tuner.MAX_RETRIES
+            and retries < 3  # MAX_RETRIES
         ):
-            tuned_schedule, actions = tuner.tune(tuned_schedule, failure)
-            if not actions:
+            # 使用 feedback_loop 进行 pragma 调整
+            loop_result = feedback_loop.recover(tuned_schedule, failure)
+            if not loop_result.success:
                 break
+
+            tuned_schedule = loop_result.new_ir
+            if not loop_result.actions_taken:
+                break
+
             retries += 1
-            print(f"    [TUNE] {vname}  retry={retries}  actions={len(actions)}")
+            print(f"    [TUNE] {vname}  retry={retries}  actions={len(loop_result.actions_taken)}")
+            for action in loop_result.actions_taken:
+                print(f"           {action}")
 
             artifacts = codegen_agent.generate(
                 tuned_schedule,
@@ -346,10 +397,19 @@ def _run_with_feedback(
     *,
     example_name: str,
     csr_data: dict | None = None,
+    relaxer_chain: RelaxerChain | None = None,
 ) -> tuple[list[str], int, int]:
     """Run intents in iterative deep-loop mode until pass or iteration cap."""
-    deep_loop = DeepLoopGenerator(max_iterations=_max_feedback_rounds(kernel_type))
-    tuner = PragmaTuner()
+    feedback_loop = FeedbackLoop(max_iterations=_max_feedback_rounds(kernel_type))
+
+    # 创建默认的 RelaxerChain（如果未提供）
+    if relaxer_chain is None:
+        relaxer_chain = RelaxerChain([
+            QuantizationRelaxer(),
+            ResourceRelaxer(),
+            TilingAdjuster(),
+        ])
+
     feedback_text: str | None = None
     variant_budget = _initial_variant_budget(kernel_type, len(math_dialect.nodes))
 
@@ -389,11 +449,12 @@ def _run_with_feedback(
                 l1,
                 l2,
                 l3,
-                tuner,
+                feedback_loop,
                 golden_outputs,
                 test_inputs,
                 example_name=example_name,
                 csr_data=csr_data,
+                relaxer_chain=relaxer_chain,
             )
             if ok:
                 passed_variants.append(intent["variant_name"])
@@ -403,15 +464,14 @@ def _run_with_feedback(
         if passed_variants:
             break
 
-        if agent is None or not round_failures or not deep_loop.can_iterate:
+        if agent is None or not round_failures or not feedback_loop.can_iterate:
             break
 
-        feedback = deep_loop.generate_feedback(round_failures)
-        feedback_text = feedback.feedback_text
+        feedback_text = feedback_loop.generate_feedback_for_llm(round_failures)
         variant_budget = _next_variant_budget(variant_budget, round_failures)
         print(
-            f"    [DEEP] 进入第 {feedback.iteration} 轮反馈迭代，"
-            f"失败样本={len(feedback.failed_variants)}"
+            f"    [DEEP] 进入第 {feedback_loop.iteration} 轮反馈迭代，"
+            f"失败样本={len(round_failures)}"
             f"，下一轮 budget={variant_budget}"
         )
 

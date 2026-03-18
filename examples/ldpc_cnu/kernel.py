@@ -22,7 +22,7 @@ from typing import Any
 import numpy as np
 from scipy import sparse
 
-import FormaSyn.dsl as fp
+import FormaSyn.formasyn.dsl as fp
 
 
 def build_ldpc_cnu(dc: int = 8) -> fp.FormulaGraph:
