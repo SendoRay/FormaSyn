@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 VALID_MAP_FUNCS: set[str] = {
     "multiply", "tanh", "atanh", "sign", "abs",
-    "lut", "clamp", "quantize", "xor_reduce",
+    "lut", "clamp", "quantize", "xor_reduce", "add",
 }
 
 VALID_REDUCE_OPS: set[str] = {"add", "mul", "min", "max", "xor"}

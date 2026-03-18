@@ -209,8 +209,18 @@ class GoldenModelGenerator:
         src_name = self._src_ref(src, dialect)
         size = self._flat_size(node)
         func = node.op_detail.get("func", "")
-
-        expr = self._map_expr(func, node.op_detail, f"{src_name}[i]")
+        if func == "add":
+            params = node.op_detail.get("func_params", {})
+            other_expr = "0.0"
+            if len(sources) > 1:
+                other_expr = f"{self._src_ref(sources[1], dialect)}[i]"
+            elif isinstance(params.get("other_ref"), str):
+                other_expr = f"{params['other_ref']}[i]"
+            elif "coeff" in params:
+                other_expr = str(params["coeff"])
+            expr = f"{src_name}[i] + {other_expr}"
+        else:
+            expr = self._map_expr(func, node.op_detail, f"{src_name}[i]")
 
         return [
             f"for (int i = 0; i < {size}; i++) {{",

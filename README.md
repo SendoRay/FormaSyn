@@ -67,6 +67,9 @@ python run.py ldpc_cnu
 
 # 调整校验节点度数
 python run.py ldpc_cnu --dc 16
+
+# 向量加法（c = a + b）
+python run.py vec_add
 ```
 
 运行后会依次输出每个阶段的进度和各变体的验证结果：

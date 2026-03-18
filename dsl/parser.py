@@ -136,6 +136,14 @@ def parse(graph: FormulaGraph) -> MathDialect:
         input_nodes: list[str] = []
         if input_ref and input_ref in signal_to_node:
             input_nodes.append(signal_to_node[input_ref])
+        if isinstance(op, MapOp):
+            other_ref = op.func_params.get("other_ref")
+            if (
+                isinstance(other_ref, str)
+                and other_ref in signal_to_node
+                and signal_to_node[other_ref] not in input_nodes
+            ):
+                input_nodes.append(signal_to_node[other_ref])
 
         is_irregular = False
         csr_ref = None

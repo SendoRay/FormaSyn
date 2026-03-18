@@ -29,6 +29,22 @@ _VALID_APPROX_METHODS = frozenset({
     "lut_tanh",
 })
 
+_KERNEL_ALLOWED_METHODS: dict[str, frozenset[str]] = {
+    "channel_coding": _VALID_APPROX_METHODS,
+    "filtering": frozenset({"spa_exact"}),
+    "transform": frozenset({"spa_exact"}),
+    "detection": frozenset({"spa_exact"}),
+    "sync": frozenset({"spa_exact"}),
+}
+
+_DEFAULT_MAX_VARIANTS: dict[str, int] = {
+    "channel_coding": 8,
+    "filtering": 4,
+    "transform": 4,
+    "detection": 4,
+    "sync": 4,
+}
+
 
 # ---------------------------------------------------------------------------
 # Data structures
@@ -76,7 +92,7 @@ _INTENT_SCHEMA_TEXT = """\
 {{
   "variant_name": "string — 变体名，如 min_sum_int8_p8",
   "rationale": "string — 自然语言解释为什么选这个策略",
-  "approx_method": "string — 枚举值，只能是以下之一: spa_exact, min_sum, offset_min_sum, normalized_min_sum, lut_tanh",
+  "approx_method": "string — 枚举值，只能是以下之一: {allowed_methods}",
   "scale_factor": "float — 仅 normalized_min_sum 使用，范围 [0.6, 0.9]；其他方法填 1.0",
   "offset_beta": "float — 仅 offset_min_sum 使用，范围 [0.1, 0.5]；其他方法填 0.0",
   "parallelism": "int — 并行度，必须是 2 的幂次（1, 2, 4, 8, ...），不超过 domain_size",
@@ -87,7 +103,8 @@ _INTENT_SCHEMA_TEXT = """\
 输出要求：
 - 直接输出 JSON 数组，不要包含任何 Markdown 代码块标记（如 ```json）
 - 不要在 JSON 之前或之后添加任何解释文字
-- 数组长度不超过 {max_variants} 个变体
+- 数组长度不超过 {max_variants} 个变体，允许少于该上限
+- 优先返回“高质量且互补”的方案，不要为了凑数量返回重复方案
 - 变体之间应覆盖不同的权衡策略（精度 vs 资源、高并行 vs 低并行等）
 """
 
@@ -106,16 +123,28 @@ class DSEAgent(BaseAgent):
     def __init__(
         self,
         model: str = "claude-sonnet-4-5-20250929",
-        max_variants: int = 8,
+        max_variants: int | None = None,
+        kernel_type: str = "channel_coding",
     ) -> None:
         super().__init__(model=model)
-        self._max_variants = max_variants
+        self._kernel_type = kernel_type
+        self._allowed_methods = _KERNEL_ALLOWED_METHODS.get(
+            kernel_type, frozenset({"spa_exact"})
+        )
+        self._max_variants = (
+            max_variants
+            if max_variants is not None
+            else _DEFAULT_MAX_VARIANTS.get(kernel_type, 4)
+        )
 
     # -- Prompt builders -----------------------------------------------------
 
-    def _build_system_prompt(self) -> str:
+    def _build_system_prompt(self, max_variants: Optional[int] = None) -> str:
+        max_count = max_variants if max_variants is not None else self._max_variants
+        allowed_methods = ", ".join(sorted(self._allowed_methods))
         schema_section = _INTENT_SCHEMA_TEXT.format(
-            max_variants=self._max_variants,
+            max_variants=max_count,
+            allowed_methods=allowed_methods,
         )
         return f"{COMM_KNOWLEDGE_PROMPT}\n\n{schema_section}"
 
@@ -178,7 +207,7 @@ class DSEAgent(BaseAgent):
 
     # -- Response parsing ----------------------------------------------------
 
-    def _parse_response(self, raw: str) -> list[IntentJSON]:
+    def _parse_response(self, raw: str, max_variants: Optional[int] = None) -> list[IntentJSON]:
         """Extract and validate IntentJSON array from LLM response text."""
         raw = raw.strip()
 
@@ -224,10 +253,10 @@ class DSEAgent(BaseAgent):
                 enable_saturation=bool(item.get("enable_saturation", True)),
             ))
 
-        return validated[: self._max_variants]
+        max_count = max_variants if max_variants is not None else self._max_variants
+        return validated[: max_count]
 
-    @staticmethod
-    def _validate_intent(item: dict, idx: int) -> list[str]:
+    def _validate_intent(self, item: dict, idx: int) -> list[str]:
         """Return a list of validation error messages (empty means valid)."""
         errors: list[str] = []
 
@@ -239,9 +268,9 @@ class DSEAgent(BaseAgent):
             return errors
 
         method = item["approx_method"]
-        if method not in _VALID_APPROX_METHODS:
+        if method not in self._allowed_methods:
             errors.append(
-                f"approx_method='{method}' 不在合法枚举 {sorted(_VALID_APPROX_METHODS)} 中"
+                f"approx_method='{method}' 不在合法枚举 {sorted(self._allowed_methods)} 中"
             )
 
         p = item["parallelism"]
@@ -274,6 +303,7 @@ class DSEAgent(BaseAgent):
         quant_specs: dict[str, QuantSpec],
         hw_constraint: str,
         feedback_text: Optional[str] = None,
+        max_variants: Optional[int] = None,
     ) -> list[IntentJSON]:
         """Call the LLM and return validated variant intents.
 
@@ -286,7 +316,7 @@ class DSEAgent(BaseAgent):
         Returns:
             A list of validated IntentJSON dicts (at most max_variants).
         """
-        system_prompt = self._build_system_prompt()
+        system_prompt = self._build_system_prompt(max_variants=max_variants)
         user_prompt = self._build_user_prompt(
             dialect, quant_specs, hw_constraint, feedback_text,
         )
@@ -307,7 +337,7 @@ class DSEAgent(BaseAgent):
             return []
         logger.debug("LLM 原始响应 (%d chars): %s", len(raw), raw[:500])
 
-        intents = self._parse_response(raw)
+        intents = self._parse_response(raw, max_variants=max_variants)
         logger.info(
             "成功解析 %d 个变体意图 (kernel=%s)",
             len(intents),

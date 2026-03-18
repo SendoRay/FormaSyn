@@ -340,6 +340,40 @@ class TestDSEAgentParsing:
         assert result[0]["enable_saturation"] is True
         assert result[0]["quant_overrides"] == {}
 
+    def test_filtering_kernel_rejects_ldpc_only_methods(self) -> None:
+        filtering_agent = DSEAgent(
+            model="test-model",
+            max_variants=4,
+            kernel_type="filtering",
+        )
+        raw = json.dumps([_make_valid_intent(approx_method="min_sum")])
+        result = filtering_agent._parse_response(raw)
+        assert result == []
+
+    def test_generate_intents_honors_round_override_max_variants(
+        self,
+        ldpc_dialect: MathDialect,
+        sample_quant_specs: dict[str, QuantSpec],
+    ) -> None:
+        agent = DSEAgent(model="test-model", max_variants=4)
+        intents_data = [
+            _make_valid_intent(variant_name=f"v{i}")
+            for i in range(4)
+        ]
+        with patch.object(
+            agent._client.chat.completions, "create",
+            return_value=TestDSEAgentGenerateIntents()._mock_response(
+                json.dumps(intents_data)
+            ),
+        ):
+            result = agent.generate_intents(
+                ldpc_dialect,
+                sample_quant_specs,
+                "xczu7ev",
+                max_variants=2,
+            )
+        assert len(result) == 2
+
 
 # ---------------------------------------------------------------------------
 # DSEAgent.generate_intents (with mocked LLM)

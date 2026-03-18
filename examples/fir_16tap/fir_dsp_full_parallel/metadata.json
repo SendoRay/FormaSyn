@@ -1,0 +1,20 @@
+{
+  "variant_id": "fir_dsp_full_parallel",
+  "example_name": "fir_16tap",
+  "function_name": "kernel",
+  "model": "claude-sonnet-4-5-20250929",
+  "base_url": "https://api.tryallai.com/v1",
+  "generated_at_utc": "2026-03-18T01:26:55.607868+00:00",
+  "schedule_summary": {
+    "node_count": 4,
+    "input_nodes": [
+      "x_in"
+    ],
+    "output_nodes": [
+      "y_out"
+    ],
+    "expected_ii": 1,
+    "total_dsp_estimate": 0,
+    "total_bram_estimate": 18
+  }
+}

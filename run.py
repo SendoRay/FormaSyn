@@ -5,6 +5,7 @@ Usage::
     python run.py fir_16tap
     python run.py ldpc_cnu
     python run.py ldpc_cnu --dc 16
+    python run.py vec_add
 """
 
 from __future__ import annotations
@@ -38,6 +39,7 @@ from FormaSyn.golden.quant_analyzer import QuantizationAnalyzer
 from FormaSyn.solver.roofline_solver import ResourceOverflowError, RooflineSolver
 from examples.fir_16tap.kernel import build_fir_16tap
 from examples.ldpc_cnu.kernel import build_ldpc_cnu, get_test_inputs
+from examples.vec_add.kernel import build_vec_add, get_test_inputs as get_vec_add_test_inputs
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
@@ -49,6 +51,8 @@ FIR_TEST_INPUTS: dict[str, list[float]] = {
         -0.3, 0.7, 0.0, -0.2, 0.5, -0.4, 0.9, -0.6,
     ],
 }
+
+VEC_ADD_TEST_INPUTS: dict[str, list[float]] = get_vec_add_test_inputs()
 
 
 @dataclass(frozen=True)
@@ -113,9 +117,47 @@ def _default_failure(stage: FailureStage, variant_id: str, summary: str) -> Fail
     return FailureContext(failed_at=stage, variant_id=variant_id, summary=summary)
 
 
-def _fallback_intents() -> list[dict[str, object]]:
+def _fallback_intents(
+    kernel_type: str,
+    max_variants: int,
+) -> list[dict[str, object]]:
     """Deterministic local intents when LLM client is unavailable."""
-    return [
+    if kernel_type != "channel_coding":
+        pool = [
+            {
+                "variant_name": "fallback_spa_p1",
+                "rationale": "local fallback",
+                "approx_method": "spa_exact",
+                "scale_factor": 1.0,
+                "offset_beta": 0.0,
+                "parallelism": 1,
+                "quant_overrides": {},
+                "enable_saturation": True,
+            },
+            {
+                "variant_name": "fallback_spa_p2",
+                "rationale": "local fallback",
+                "approx_method": "spa_exact",
+                "scale_factor": 1.0,
+                "offset_beta": 0.0,
+                "parallelism": 2,
+                "quant_overrides": {},
+                "enable_saturation": True,
+            },
+            {
+                "variant_name": "fallback_spa_p4",
+                "rationale": "local fallback",
+                "approx_method": "spa_exact",
+                "scale_factor": 1.0,
+                "offset_beta": 0.0,
+                "parallelism": 4,
+                "quant_overrides": {},
+                "enable_saturation": True,
+            },
+        ]
+        return pool[:max_variants]
+
+    pool = [
         {
             "variant_name": "fallback_spa_p1",
             "rationale": "local fallback",
@@ -147,6 +189,35 @@ def _fallback_intents() -> list[dict[str, object]]:
             "enable_saturation": True,
         },
     ]
+    return pool[:max_variants]
+
+
+def _initial_variant_budget(kernel_type: str, node_count: int) -> int:
+    if kernel_type == "channel_coding":
+        return max(4, min(8, node_count))
+    return max(1, min(4, node_count))
+
+
+def _max_feedback_rounds(kernel_type: str) -> int:
+    return 3 if kernel_type == "channel_coding" else 1
+
+
+def _next_variant_budget(
+    current: int,
+    failures: list[FailureContext],
+) -> int:
+    if not failures:
+        return current
+    signatures = {
+        (f.failed_at.value if isinstance(f.failed_at, FailureStage) else str(f.failed_at), f.summary)
+        for f in failures
+    }
+    diversity = len(signatures)
+    if diversity <= 1:
+        return max(1, current // 2)
+    if diversity < current:
+        return max(1, current - 1)
+    return current
 
 
 def _evaluate_variant(
@@ -263,6 +334,7 @@ def _run_with_feedback(
     math_dialect,
     quant_specs,
     hw_constraint_text: str,
+    kernel_type: str,
     solver: RooflineSolver,
     engine: TemplateEngine,
     codegen_agent: ScheduleCodegenAgent,
@@ -276,9 +348,10 @@ def _run_with_feedback(
     csr_data: dict | None = None,
 ) -> tuple[list[str], int, int]:
     """Run intents in iterative deep-loop mode until pass or iteration cap."""
-    deep_loop = DeepLoopGenerator()
+    deep_loop = DeepLoopGenerator(max_iterations=_max_feedback_rounds(kernel_type))
     tuner = PragmaTuner()
     feedback_text: str | None = None
+    variant_budget = _initial_variant_budget(kernel_type, len(math_dialect.nodes))
 
     passed_variants: list[str] = []
     total_variants = 0
@@ -287,15 +360,19 @@ def _run_with_feedback(
     while True:
         rounds += 1
         if agent is None:
-            intents = _fallback_intents()
+            intents = _fallback_intents(kernel_type, variant_budget)
         else:
             intents = agent.generate_intents(
                 math_dialect,
                 _to_agent_quant_specs(quant_specs),
                 hw_constraint_text,
                 feedback_text=feedback_text,
+                max_variants=variant_budget,
             )
-        print(f"    Round {rounds}: 生成 {len(intents)} 个变体")
+            if not intents:
+                print("    [WARN] LLM 未返回有效变体，切换本地 fallback intents")
+                intents = _fallback_intents(kernel_type, variant_budget)
+        print(f"    Round {rounds}: 生成 {len(intents)} 个变体 (budget={variant_budget})")
         if not intents:
             break
 
@@ -331,9 +408,11 @@ def _run_with_feedback(
 
         feedback = deep_loop.generate_feedback(round_failures)
         feedback_text = feedback.feedback_text
+        variant_budget = _next_variant_budget(variant_budget, round_failures)
         print(
             f"    [DEEP] 进入第 {feedback.iteration} 轮反馈迭代，"
             f"失败样本={len(feedback.failed_variants)}"
+            f"，下一轮 budget={variant_budget}"
         )
 
     return passed_variants, total_variants, rounds
@@ -374,11 +453,12 @@ def run_example(spec: ExampleSpec, args: argparse.Namespace) -> None:
     )
 
     hw = _load_constraints(spec.name)
+    kernel_type = _get_kernel_type(hw)
     hw_constraint_text = yaml.dump(hw["hardware_constraints"])
 
     print("==> [3/5] 调用 LLM 生成硬件变体意图 ...")
     try:
-        agent: DSEAgent | None = DSEAgent()
+        agent: DSEAgent | None = DSEAgent(kernel_type=kernel_type)
     except Exception as exc:
         print(f"    [WARN] LLM 客户端不可用，使用本地 fallback intents: {exc}")
         agent = None
@@ -388,7 +468,7 @@ def run_example(spec: ExampleSpec, args: argparse.Namespace) -> None:
     solver = _build_solver(hw)
     codegen_agent = ScheduleCodegenAgent(artifact_root=EXAMPLES_DIR)
     l1 = L1Checker(
-        kernel_type=_get_kernel_type(hw),
+        kernel_type=kernel_type,
         tolerance=hw["algorithm_metrics"]["tolerance"],
     )
     l2 = _build_l2_checker(hw)
@@ -399,6 +479,7 @@ def run_example(spec: ExampleSpec, args: argparse.Namespace) -> None:
         math_dialect,
         quant_specs,
         hw_constraint_text,
+        kernel_type,
         solver,
         engine,
         codegen_agent,
@@ -446,6 +527,11 @@ EXAMPLE_SPECS: dict[str, ExampleSpec] = {
         get_test_inputs=_get_ldpc_inputs,
         add_arguments=_add_ldpc_args,
         get_csr_data=_get_ldpc_csr_data,
+    ),
+    "vec_add": ExampleSpec(
+        name="vec_add",
+        build_graph=lambda args: build_vec_add(),
+        get_test_inputs=lambda args: VEC_ADD_TEST_INPUTS,
     ),
 }
 

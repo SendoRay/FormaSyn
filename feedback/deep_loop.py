@@ -45,9 +45,14 @@ class DeepLoopGenerator:
 
     MAX_DEEP_ITERATIONS: int = 3
 
-    def __init__(self) -> None:
+    def __init__(self, max_iterations: Optional[int] = None) -> None:
         self._history: list[FailureContext] = []
         self._iteration: int = 0
+        self._max_iterations = (
+            max_iterations
+            if max_iterations is not None
+            else self.MAX_DEEP_ITERATIONS
+        )
 
     @property
     def iteration(self) -> int:
@@ -55,7 +60,7 @@ class DeepLoopGenerator:
 
     @property
     def can_iterate(self) -> bool:
-        return self._iteration < self.MAX_DEEP_ITERATIONS
+        return self._iteration < self._max_iterations
 
     def generate_feedback(
         self, failures: list[FailureContext]

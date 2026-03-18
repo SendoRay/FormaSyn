@@ -1,0 +1,2 @@
+"""Vector-add example package."""
+

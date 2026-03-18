@@ -1,11 +1,7 @@
-"""L2 Checker: Vitis HLS C-Sim + csynth resource/timing verification.
+"""L2 Checker: Vitis HLS csynth resource/timing verification.
 
-Requires Vitis HLS to be installed and on PATH. When EDA tools are not
-available, the checker returns a skip result instead of failing.
-
-Two sub-checks:
-  - C-Sim: precise ap_int/ap_fixed numeric validation
-  - csynth: resource utilisation (DSP/BRAM/LUT/FF) + timing (II, clock)
+Uses the same flow as ``vitis_hls_test``:
+``v++ -c --mode hls --config hls_config.cfg --work_dir work``.
 """
 
 from __future__ import annotations
@@ -15,7 +11,8 @@ import os
 import re
 import subprocess
 import tempfile
-from dataclasses import dataclass, field
+import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 from typing import Optional
 
 from FormaSyn.checker.diagnostic import (
@@ -68,7 +65,7 @@ class L2Result:
 
 
 class L2Checker:
-    """L2 verification via Vitis HLS C-Sim and csynth.
+    """L2 verification via Vitis HLS csynth.
 
     Args:
         hw_budget: Resource budget as {'dsp': N, 'bram': N, 'lut': N, 'ff': N}.
@@ -93,7 +90,7 @@ class L2Checker:
         variant_id: str,
         function_name: str = "kernel",
     ) -> L2Result:
-        """Run Vitis HLS C-Sim + csynth on the generated code.
+        """Run Vitis HLS csynth on the generated code.
 
         If Vitis HLS is not installed, returns a skipped result.
 
@@ -109,13 +106,13 @@ class L2Checker:
         result = L2Result(variant_id=variant_id)
 
         if not self._vitis_available():
-            logger.info("Vitis HLS 不可用，跳过 L2 验证 [%s]", variant_id)
+            logger.info("v++ 不可用，跳过 L2 验证 [%s]", variant_id)
             result.skipped = True
             result.passed = True
             return result
 
         try:
-            synth = self._run_vitis_hls(
+            synth = self._run_csynth(
                 hls_cpp_code, hls_header_code, function_name, variant_id
             )
         except _VitisError as e:
@@ -153,95 +150,126 @@ class L2Checker:
 
     @staticmethod
     def _vitis_available() -> bool:
-        """Check if Vitis HLS command is on PATH."""
+        """Check if v++ command is on PATH."""
         try:
             subprocess.run(
-                ["vitis_hls", "-version"],
+                ["v++", "--version"],
                 capture_output=True, text=True, timeout=10,
             )
             return True
-        except (FileNotFoundError, subprocess.TimeoutExpired):
+        except (
+            FileNotFoundError,
+            NotADirectoryError,
+            PermissionError,
+            subprocess.TimeoutExpired,
+            OSError,
+        ):
             return False
 
-    def _run_vitis_hls(
+    def _run_csynth(
         self,
         cpp_code: str,
         header_code: str,
         function_name: str,
         variant_id: str,
     ) -> SynthReport:
-        """Create a Vitis HLS project, run csynth, parse the report."""
+        """Run ``v++ --mode hls`` csynth and parse the synthesis report."""
         work_dir = tempfile.mkdtemp(prefix="formasyn_l2_")
         src_path = os.path.join(work_dir, f"{function_name}.cpp")
         hdr_path = os.path.join(work_dir, f"{function_name}.h")
+        cfg_path = os.path.join(work_dir, "hls_config.cfg")
+        vpp_work_dir = os.path.join(work_dir, "work")
 
         with open(src_path, "w", encoding="utf-8") as f:
             f.write(cpp_code)
         with open(hdr_path, "w", encoding="utf-8") as f:
             f.write(header_code)
+        with open(cfg_path, "w", encoding="utf-8") as f:
+            f.write(self._generate_hls_config(function_name, src_path))
 
-        clock_ns = round(1000.0 / self._clock_mhz, 2)
-        tcl_script = self._generate_tcl(
-            work_dir, src_path, function_name, clock_ns
-        )
-        tcl_path = os.path.join(work_dir, "run.tcl")
-        with open(tcl_path, "w", encoding="utf-8") as f:
-            f.write(tcl_script)
-
-        proc = subprocess.run(
-            ["vitis_hls", "-f", tcl_path],
-            capture_output=True, text=True,
-            cwd=work_dir, timeout=600,
-        )
+        cmd = [
+            "v++",
+            "-c",
+            "--mode",
+            "hls",
+            "--config",
+            cfg_path,
+            "--work_dir",
+            vpp_work_dir,
+        ]
+        try:
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                cwd=work_dir,
+                timeout=1200,
+            )
+        except (FileNotFoundError, NotADirectoryError, PermissionError, OSError) as exc:
+            raise _VitisError(str(exc)) from exc
         if proc.returncode != 0:
-            raise _VitisError(proc.stderr)
+            raise _VitisError(proc.stderr or proc.stdout or "v++ csynth failed")
 
-        return self._parse_csynth_report(work_dir, function_name)
+        return self._parse_csynth_report(vpp_work_dir)
 
-    @staticmethod
-    def _generate_tcl(
-        work_dir: str,
-        src_path: str,
+    def _generate_hls_config(
+        self,
         function_name: str,
-        clock_ns: float,
+        src_path: str,
     ) -> str:
-        """Generate a Vitis HLS TCL script for csynth."""
-        return f"""\
-open_project -reset hls_proj
-set_top {function_name}
-add_files {src_path}
-open_solution -reset "sol1"
-set_part xczu7ev-ffvc1156-2-e
-create_clock -period {clock_ns} -name default
-csynth_design
-exit
-"""
+        """Generate ``hls_config.cfg`` for the v++ HLS flow."""
+        clock_ns = round(1000.0 / self._clock_mhz, 2)
+        return (
+            "part=xc7z020clg400-1\n\n"
+            "[hls]\n"
+            f"clock={clock_ns}ns\n"
+            "flow_target=vitis\n"
+            f"syn.top={function_name}\n"
+            f"syn.file={src_path}\n"
+        )
 
     @staticmethod
-    def _parse_csynth_report(work_dir: str, function_name: str) -> SynthReport:
-        """Parse the csynth XML/text report."""
+    def _parse_csynth_report(work_dir: str) -> SynthReport:
+        """Parse csynth XML report from ``work/hls/syn/report``."""
         report = SynthReport()
-        rpt_dir = os.path.join(
-            work_dir, "hls_proj", "sol1", "syn", "report"
-        )
-        rpt_path = os.path.join(rpt_dir, f"{function_name}_csynth.rpt")
+        rpt_dir = os.path.join(work_dir, "hls", "syn", "report")
+        xml_path = os.path.join(rpt_dir, "csynth.xml")
+        txt_path = os.path.join(rpt_dir, "csynth.rpt")
 
-        if not os.path.isfile(rpt_path):
-            logger.warning("综合报告不存在: %s", rpt_path)
+        if os.path.isfile(xml_path):
+            try:
+                tree = ET.parse(xml_path)
+                root = tree.getroot()
+                report.bram = int(root.findtext(".//AreaEstimates/Resources/BRAM_18K", "0"))
+                report.dsp = int(root.findtext(".//AreaEstimates/Resources/DSP", "0"))
+                report.ff = int(root.findtext(".//AreaEstimates/Resources/FF", "0"))
+                report.lut = int(root.findtext(".//AreaEstimates/Resources/LUT", "0"))
+                report.achieved_ii = int(
+                    root.findtext(".//PerformanceEstimates/SummaryOfOverallLatency/Interval-max", "1")
+                )
+                report.clock_period_ns = float(
+                    root.findtext(".//PerformanceEstimates/SummaryOfTimingAnalysis/EstimatedClockPeriod", "0.0")
+                )
+                return report
+            except (ET.ParseError, ValueError) as exc:
+                logger.warning("解析 csynth.xml 失败，回退到文本报告: %s", exc)
+
+        if not os.path.isfile(txt_path):
+            logger.warning("综合报告不存在: %s", txt_path)
             return report
 
-        with open(rpt_path, "r", encoding="utf-8") as f:
+        with open(txt_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        dsp_match = re.search(r"DSP\s*[|:]\s*(\d+)", content)
-        if dsp_match:
+        dsp_match = re.search(r"\|\s*\+\s*kernel\s*\|.*?\|\s*(\d+|-)\s*\|", content)
+        if dsp_match and dsp_match.group(1).isdigit():
             report.dsp = int(dsp_match.group(1))
 
-        bram_match = re.search(r"BRAM_18K\s*[|:]\s*(\d+)", content)
-        if bram_match:
+        bram_match = re.search(r"\|\s*\+\s*kernel\s*\|.*?\|\s*(\d+|-)\s*\|\s*(\d+|-)\s*\|", content)
+        if bram_match and bram_match.group(1).isdigit():
             report.bram = int(bram_match.group(1))
 
-        ii_match = re.search(r"II\s*[=:]\s*(\d+)", content)
+        ii_match = re.search(r"\|\s*\+\s*kernel\s*\|.*?\|\s*(\d+)\s*\|", content)
         if ii_match:
             report.achieved_ii = int(ii_match.group(1))
 

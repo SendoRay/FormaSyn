@@ -427,7 +427,7 @@ class L1Checker:
         """Generate a standalone Vitis HLS csim testbench."""
         preamble = self._extract_preamble(hls_cpp)
         signature = self._extract_function_signature(hls_cpp)
-        param_types = self._extract_param_types(signature)
+        param_specs = self._extract_param_specs(signature)
 
         lines = [
             "#include <cstdio>",
@@ -439,16 +439,66 @@ class L1Checker:
             "int main() {",
         ]
 
-        for name, values in inputs.items():
-            dtype = param_types.get(name, "double")
-            arr_str = ", ".join(self._format_literal(v, dtype) for v in values)
-            lines.append(f"    {dtype} {name}[] = {{{arr_str}}};")
+        golden_keys = list(golden.keys())
+        unmatched_golden = [k for k in golden_keys]
+        output_bindings: list[dict[str, object]] = []
 
-        for name, values in golden.items():
-            dtype = param_types.get(name, "double")
+        for spec in param_specs:
+            name = spec["name"]
+            dtype = spec["dtype"]
+            decl_type = spec["decl_type"]
+            is_array = bool(spec["is_array"])
+            array_len = int(spec["array_len"])
+
+            if name in inputs:
+                values = inputs[name]
+                if is_array:
+                    arr_str = ", ".join(
+                        self._format_literal(v, dtype) for v in values
+                    )
+                    lines.append(f"    {decl_type} {name}[] = {{{arr_str}}};")
+                else:
+                    value = values[0] if values else 0.0
+                    lines.append(
+                        f"    {decl_type} {name} = {self._format_literal(value, dtype)};"
+                    )
+                continue
+
+            golden_name = name if name in golden else None
+            if golden_name is None and unmatched_golden:
+                golden_name = unmatched_golden[0]
+            if golden_name is None:
+                continue
+            if golden_name in unmatched_golden:
+                unmatched_golden.remove(golden_name)
+
+            values = golden[golden_name]
             arr_str = ", ".join(self._format_literal(v, "double") for v in values)
-            lines.append(f"    double golden_{name}[] = {{{arr_str}}};")
-            lines.append(f"    {dtype} {name}[{len(values)}] = {{0}};")
+            lines.append(f"    double golden_{golden_name}[] = {{{arr_str}}};")
+
+            if is_array:
+                alloc_len = len(values)
+                if array_len > 0:
+                    alloc_len = array_len
+                lines.append(f"    {decl_type} {name}[{alloc_len}] = {{0}};")
+                output_bindings.append(
+                    {
+                        "golden_name": golden_name,
+                        "var_name": name,
+                        "length": len(values),
+                        "is_scalar": False,
+                    }
+                )
+            else:
+                lines.append(f"    {decl_type} {name} = 0;")
+                output_bindings.append(
+                    {
+                        "golden_name": golden_name,
+                        "var_name": name,
+                        "length": 1,
+                        "is_scalar": True,
+                    }
+                )
 
         if csr_data is not None:
             rp = ", ".join(str(x) for x in csr_data["row_ptr"])
@@ -456,21 +506,31 @@ class L1Checker:
             lines.append(f"    int row_ptr[] = {{{rp}}};")
             lines.append(f"    int col_idx[] = {{{ci}}};")
 
-        args: list[str] = list(inputs.keys()) + list(golden.keys())
+        args: list[str] = [spec["name"] for spec in param_specs]
         if csr_data is not None:
             args.extend(["row_ptr", "col_idx"])
         lines.append(f"    {self._extract_function_name(hls_cpp)}({', '.join(args)});")
         lines.append("")
         lines.append("    int mismatch_count = 0;")
 
-        for name, values in golden.items():
-            lines.append(f'    printf("{_OUTPUT_PREFIX}{name}:");')
-            lines.append(f"    for (int i = 0; i < {len(values)}; i++) {{")
+        for binding in output_bindings:
+            gname = str(binding["golden_name"])
+            var = str(binding["var_name"])
+            length = int(binding["length"])
+            is_scalar = bool(binding["is_scalar"])
+            lines.append(f'    printf("{_OUTPUT_PREFIX}{gname}:");')
+            lines.append(f"    for (int i = 0; i < {length}; i++) {{")
             lines.append("        if (i > 0) printf(\",\");")
-            lines.append(f'        printf("%.17g", (double){name}[i]);')
-            lines.append(
-                f"        mismatch_count += (std::fabs((double){name}[i] - golden_{name}[i]) > 1e-9);"
-            )
+            if is_scalar:
+                lines.append(f'        printf("%.17g", (double){var});')
+                lines.append(
+                    f"        mismatch_count += (std::fabs((double){var} - golden_{gname}[i]) > 1e-9);"
+                )
+            else:
+                lines.append(f'        printf("%.17g", (double){var}[i]);')
+                lines.append(
+                    f"        mismatch_count += (std::fabs((double){var}[i] - golden_{gname}[i]) > 1e-9);"
+                )
             lines.append("    }")
             lines.append('    printf("\\n");')
 
@@ -547,6 +607,64 @@ class L1Checker:
             if ptr_match:
                 param_types[ptr_match.group(2)] = ptr_match.group(1).strip()
         return param_types
+
+    @staticmethod
+    def _extract_param_specs(signature: str) -> list[dict[str, object]]:
+        """Extract ordered parameter specs from function signature."""
+        params_str = signature[signature.find("(") + 1: signature.rfind(")")]
+        params = L1Checker._split_params(params_str)
+        specs: list[dict[str, object]] = []
+
+        for param in params:
+            p = param.strip()
+            if not p:
+                continue
+
+            array_match = re.match(
+                r"(.+?)\s+([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]$",
+                p,
+            )
+            if array_match:
+                dtype = array_match.group(1).strip()
+                specs.append(
+                    {
+                        "name": array_match.group(2),
+                        "dtype": dtype,
+                        "decl_type": dtype.replace("&", "").strip(),
+                        "is_array": True,
+                        "array_len": int(array_match.group(3)),
+                    }
+                )
+                continue
+
+            ref_match = re.match(r"(.+?)\s*&\s*([A-Za-z_]\w*)$", p)
+            if ref_match:
+                dtype = (ref_match.group(1).strip() + "&").strip()
+                specs.append(
+                    {
+                        "name": ref_match.group(2),
+                        "dtype": dtype,
+                        "decl_type": ref_match.group(1).strip(),
+                        "is_array": False,
+                        "array_len": 1,
+                    }
+                )
+                continue
+
+            ptr_match = re.match(r"(.+?)\s+([A-Za-z_]\w*)$", p)
+            if ptr_match:
+                dtype = ptr_match.group(1).strip()
+                specs.append(
+                    {
+                        "name": ptr_match.group(2),
+                        "dtype": dtype,
+                        "decl_type": dtype.replace("&", "").strip(),
+                        "is_array": False,
+                        "array_len": 1,
+                    }
+                )
+
+        return specs
 
     @staticmethod
     def _split_params(params_str: str) -> list[str]:
