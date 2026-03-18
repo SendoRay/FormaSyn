@@ -27,10 +27,3 @@ def build_vec_add() -> fp.FormulaGraph:
     )
     return graph
 
-
-def get_test_inputs() -> dict[str, list[float]]:
-    """Provide deterministic sample vectors for c = a + b."""
-    a = [float(i) for i in range(VEC_LEN)]
-    b = [float(2 * i - 5) for i in range(VEC_LEN)]
-    return {"a": a, "b": b}
-

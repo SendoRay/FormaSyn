@@ -1,9 +1,18 @@
-"""Unified entry point for built-in FormaSyn examples.
+"""FormaSyn 主入口：串联所有模块执行 DSE 流水线。
+
+按照 formasyn.md 定义的流程：
+1. 输入阶段：命令行参数 + constraints.yaml + test_data.yaml
+2. DSL 到算法 IR：parser.py → MathDialect
+3. Golden 基线与量化建议：generator.py + quant_analyzer.py
+4. LLM 设计空间探索：dse_agent.py → IntentJSON[]
+5. 模板渲染与硬件映射：template_engine.py + roofline_solver.py + mlc_frontend/backend.py
+6. 代码生成：codegen_agent.py → HLS C++
+7. 三层验证：L1/L2/L3 checker
+8. 失败反馈：diagnostic.py + loop.py
 
 Usage::
 
     python run.py fir_16tap
-    python run.py ldpc_cnu
     python run.py ldpc_cnu --dc 16
     python run.py vec_add
 """
@@ -12,8 +21,8 @@ from __future__ import annotations
 
 import argparse
 import logging
-from pathlib import Path
 import sys
+from pathlib import Path
 from dataclasses import dataclass
 from typing import Any, Callable
 
@@ -25,583 +34,562 @@ if str(PARENT) not in sys.path:
     sys.path.insert(0, str(PARENT))
 
 from FormaSyn.formasyn.agent.codegen_agent import ScheduleCodegenAgent
-from FormaSyn.formasyn.agent.dse_agent import DSEAgent, QuantSpec as AgentQuantSpec
+from FormaSyn.formasyn.agent.dse_agent import DSEAgent
 from FormaSyn.formasyn.checker.diagnostic import FailureContext, FailureStage
 from FormaSyn.formasyn.checker.l1_checker import L1Checker
 from FormaSyn.formasyn.checker.l2_checker import L2Checker
 from FormaSyn.formasyn.checker.l3_checker import L3Checker
 from FormaSyn.formasyn.checker.pre_checker import PreChecker
-from FormaSyn.formasyn.feedback.relaxers import (
-    QuantizationRelaxer,
-    RelaxerChain,
-    ResourceRelaxer,
-    TilingAdjuster,
-)
 from FormaSyn.formasyn.dsl.parser import parse
 from FormaSyn.formasyn.dsl.template_engine import TemplateEngine
 from FormaSyn.formasyn.feedback.loop import FeedbackLoop
 from FormaSyn.formasyn.golden.generator import GoldenModelGenerator
 from FormaSyn.formasyn.golden.quant_analyzer import QuantizationAnalyzer
 from FormaSyn.formasyn.solver.roofline_solver import ResourceOverflowError, RooflineSolver
-from examples.fir_16tap.kernel import build_fir_16tap
-from examples.ldpc_cnu.kernel import build_ldpc_cnu, get_test_inputs
-from examples.vec_add.kernel import build_vec_add, get_test_inputs as get_vec_add_test_inputs
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+logger = logging.getLogger(__name__)
 
 EXAMPLES_DIR = ROOT / "examples"
 
-FIR_TEST_INPUTS: dict[str, list[float]] = {
-    "x_in": [
-        0.1, 0.3, -0.5, 0.8, 0.2, -0.1, 0.4, 0.6,
-        -0.3, 0.7, 0.0, -0.2, 0.5, -0.4, 0.9, -0.6,
-    ],
-}
 
-VEC_ADD_TEST_INPUTS: dict[str, list[float]] = get_vec_add_test_inputs()
+# ---------------------------------------------------------------------------
+# 配置加载
+# ---------------------------------------------------------------------------
 
-
-@dataclass(frozen=True)
-class ExampleSpec:
-    """Per-example hooks consumed by the shared execution pipeline."""
+@dataclass
+class ExampleConfig:
+    """示例配置：从 constraints.yaml 和 test_data.yaml 加载。"""
 
     name: str
-    build_graph: Callable[[argparse.Namespace], Any]
-    get_test_inputs: Callable[[argparse.Namespace], dict[str, list[float]]]
-    add_arguments: Callable[[argparse.ArgumentParser], None] | None = None
-    get_csr_data: Callable[[Any], dict[str, list[int]] | None] | None = None
+    constraints: dict
+    test_data: dict[str, list[float]]
+
+    @property
+    def hardware_constraints(self) -> dict:
+        return self.constraints.get("hardware_constraints", {})
+
+    @property
+    def algorithm_metrics(self) -> dict:
+        return self.constraints.get("algorithm_metrics", {})
+
+    @property
+    def kernel_type(self) -> str:
+        return self.algorithm_metrics.get("kernel_type", "filtering")
+
+    @property
+    def tolerance(self) -> dict:
+        return self.algorithm_metrics.get("tolerance", {})
 
 
-def _load_constraints(example_name: str) -> dict:
-    with (EXAMPLES_DIR / example_name / "constraints.yaml").open() as f:
-        return yaml.safe_load(f)
+def load_example_config(example_name: str) -> ExampleConfig:
+    """加载示例的 constraints.yaml 和 test_data.yaml。"""
+    # 加载 constraints.yaml
+    constraints_path = EXAMPLES_DIR / example_name / "constraints.yaml"
+    if not constraints_path.exists():
+        raise FileNotFoundError(f"未找到约束文件: {constraints_path}")
 
+    with constraints_path.open() as f:
+        constraints = yaml.safe_load(f)
 
-def _build_solver(hw: dict) -> RooflineSolver:
-    return RooflineSolver(
-        bram_kb=hw["hardware_constraints"]["max_bram_18k"] * 18,
-        dsp_count=hw["hardware_constraints"]["max_dsp"],
-        freq_mhz=hw["hardware_constraints"]["clock_target_mhz"],
-        enforce_budget=False,
+    # 加载 test_data.yaml
+    test_data_path = EXAMPLES_DIR / example_name / "test_data.yaml"
+    if not test_data_path.exists():
+        raise FileNotFoundError(f"未找到测试数据文件: {test_data_path}")
+
+    with test_data_path.open() as f:
+        test_data = yaml.safe_load(f)
+
+    # 处理 test_data 中的场景（如果有）
+    if isinstance(test_data, dict) and "test_scenarios" in test_data:
+        # 使用默认场景
+        for scenario in test_data["test_scenarios"]:
+            if scenario.get("scenario") == "default":
+                test_data = {k: v for k, v in scenario.items() if k != "scenario"}
+                break
+        else:
+            # 使用第一个场景
+            test_data = {k: v for k, v in test_data["test_scenarios"][0].items() if k != "scenario"}
+
+    return ExampleConfig(
+        name=example_name,
+        constraints=constraints,
+        test_data=test_data,
     )
 
 
-def _build_l2_checker(hw: dict) -> L2Checker:
-    h = hw["hardware_constraints"]
+# ---------------------------------------------------------------------------
+# Checker 构建
+# ---------------------------------------------------------------------------
+
+def build_l1_checker(config: ExampleConfig) -> L1Checker:
+    """构建 L1 Checker。"""
+    return L1Checker(
+        kernel_type=config.kernel_type,
+        tolerance=config.tolerance,
+    )
+
+
+def build_l2_checker(config: ExampleConfig) -> L2Checker:
+    """构建 L2 Checker。"""
+    hw = config.hardware_constraints
     budget = {
-        "dsp": h["max_dsp"],
-        "bram": h["max_bram_18k"],
+        "dsp": hw.get("max_dsp", 999999),
+        "bram": hw.get("max_bram_18k", 999999),
     }
     return L2Checker(
         hw_budget=budget,
-        target_ii=h.get("target_ii", 1),
-        clock_mhz=h.get("clock_target_mhz", 250),
+        target_ii=hw.get("target_ii", 1),
+        clock_mhz=hw.get("clock_target_mhz", 250),
     )
 
 
-def _build_l3_checker(hw: dict, golden_outputs: dict[str, list[float]]) -> L3Checker:
+def build_l3_checker(config: ExampleConfig, golden_outputs: dict[str, list[float]]) -> L3Checker:
+    """构建 L3 Checker。"""
     return L3Checker(
-        kernel_type=_get_kernel_type(hw),
-        quality_target=hw.get("algorithm_metrics", {}).get("tolerance", {}),
+        kernel_type=config.kernel_type,
+        quality_target=config.tolerance,
         golden_outputs=golden_outputs,
     )
 
 
-def _to_agent_quant_specs(quant_specs: dict) -> dict[str, AgentQuantSpec]:
-    """Convert analyzer QuantSpec objects into the DSEAgent prompt format."""
-    return {
-        node_id: AgentQuantSpec(**spec.to_dse_format())
-        for node_id, spec in quant_specs.items()
-    }
+# ---------------------------------------------------------------------------
+# 主流水线
+# ---------------------------------------------------------------------------
+
+@dataclass
+class PipelineResult:
+    """流水线执行结果。"""
+
+    passed_variants: list[str]
+    total_variants: int
+    rounds: int
+    all_failures: list[FailureContext]
 
 
-def _get_kernel_type(hw: dict) -> str:
-    return hw.get("algorithm_metrics", {}).get("kernel_type", "filtering")
+class FormaSynPipeline:
+    """FormaSyn DSE 流水线。
 
+    按照 formasyn.md 定义的流程执行：
+    1. DSL → MathDialect
+    2. MathDialect → Golden + QuantSpec
+    3. MathDialect + QuantSpec → IntentJSON[] (via DSEAgent)
+    4. IntentJSON → AlgoHWDialect → ScheduleDialect
+    5. ScheduleDialect → HLS C++
+    6. HLS C++ → L1/L2/L3 验证
+    7. 失败 → Diagnostic + Loop 反馈
+    """
 
-def _default_failure(stage: FailureStage, variant_id: str, summary: str) -> FailureContext:
-    return FailureContext(failed_at=stage, variant_id=variant_id, summary=summary)
+    def __init__(
+        self,
+        config: ExampleConfig,
+        graph: Any,
+        *,
+        max_rounds: int = 3,
+        use_dse: bool = True,
+    ) -> None:
+        """初始化流水线。
 
+        Args:
+            config: 示例配置。
+            graph: FormulaGraph 输入。
+            max_rounds: 最大反馈轮数。
+            use_dse: 是否启用 DSE（设计空间探索），False 时仅运行 baseline。
+        """
+        self.config = config
+        self.graph = graph
+        self.max_rounds = max_rounds
+        self.use_dse = use_dse
 
-def _fallback_intents(
-    kernel_type: str,
-    max_variants: int,
-) -> list[dict[str, object]]:
-    """Deterministic local intents when LLM client is unavailable."""
-    if kernel_type != "channel_coding":
-        pool = [
-            {
-                "variant_name": "fallback_spa_p1",
-                "rationale": "local fallback",
-                "approx_method": "spa_exact",
-                "scale_factor": 1.0,
-                "offset_beta": 0.0,
-                "parallelism": 1,
-                "quant_overrides": {},
-                "enable_saturation": True,
-            },
-            {
-                "variant_name": "fallback_spa_p2",
-                "rationale": "local fallback",
-                "approx_method": "spa_exact",
-                "scale_factor": 1.0,
-                "offset_beta": 0.0,
-                "parallelism": 2,
-                "quant_overrides": {},
-                "enable_saturation": True,
-            },
-            {
-                "variant_name": "fallback_spa_p4",
-                "rationale": "local fallback",
-                "approx_method": "spa_exact",
-                "scale_factor": 1.0,
-                "offset_beta": 0.0,
-                "parallelism": 4,
-                "quant_overrides": {},
-                "enable_saturation": True,
-            },
-        ]
-        return pool[:max_variants]
+        # 初始化模块
+        self.pre_checker = PreChecker()
+        self.engine = TemplateEngine()
+        self.solver = RooflineSolver(
+            bram_kb=config.hardware_constraints.get("max_bram_18k", 32) * 18,
+            dsp_count=config.hardware_constraints.get("max_dsp", 64),
+            freq_mhz=config.hardware_constraints.get("clock_target_mhz", 250),
+            enforce_budget=False,
+        )
+        self.codegen_agent = ScheduleCodegenAgent(artifact_root=EXAMPLES_DIR)
 
-    pool = [
-        {
-            "variant_name": "fallback_spa_p1",
-            "rationale": "local fallback",
+        # 初始化 DSE Agent（如果启用 DSE）
+        self.dse_agent: DSEAgent | None = None
+        if use_dse:
+            try:
+                self.dse_agent = DSEAgent(kernel_type=config.kernel_type)
+            except Exception as e:
+                logger.warning(f"LLM 客户端不可用: {e}，将使用最小可行配置")
+
+    def run(self) -> PipelineResult:
+        """执行完整的 DSE 流水线。"""
+        logger.info(f"==> [1/7] 解析算法 {self.config.name} 到 Math Dialect ...")
+        math_dialect = parse(self.graph)
+
+        # 提取 CSR 数据（如果有）
+        csr_data = self._extract_csr_data()
+
+        logger.info("==> [2/7] 生成黄金参考模型并分析量化参数 ...")
+        gen = GoldenModelGenerator()
+        golden_cpp = gen.generate(math_dialect)
+        golden_outputs = gen.compile_and_run(
+            golden_cpp, self.config.test_data, math_dialect, csr_data=csr_data
+        )
+        quant_specs = QuantizationAnalyzer().analyze(
+            gen, math_dialect, self.config.test_data, csr_data=csr_data
+        )
+
+        logger.info("==> [3/7] 初始化验证流水线 ...")
+        l1 = build_l1_checker(self.config)
+        l2 = build_l2_checker(self.config)
+        l3 = build_l3_checker(self.config, golden_outputs)
+
+        logger.info("==> [4/7] 开始设计空间探索与验证 ...")
+        passed_variants: list[str] = []
+        all_failures: list[FailureContext] = []
+        total_variants = 0
+        rounds = 0
+
+        feedback_loop = FeedbackLoop(max_iterations=self.max_rounds)
+        feedback_text: str | None = None
+
+        while rounds < self.max_rounds:
+            rounds += 1
+            logger.info(f"=== Round {rounds} ===")
+
+            # 生成变体意图
+            intents = self._generate_intents(math_dialect, quant_specs, feedback_text)
+            if not intents:
+                logger.warning("没有生成任何变体意图，结束流程")
+                break
+
+            logger.info(f"生成了 {len(intents)} 个变体意图")
+
+            # 评估每个变体
+            round_failures: list[FailureContext] = []
+            for intent in intents:
+                total_variants += 1
+                variant_name = intent["variant_name"]
+                logger.info(f"  评估变体: {variant_name}")
+
+                success, failure = self._evaluate_variant(
+                    intent, math_dialect, quant_specs,
+                    l1, l2, l3, feedback_loop,
+                    golden_outputs, csr_data,
+                )
+
+                if success:
+                    passed_variants.append(variant_name)
+                    logger.info(f"    [PASS] {variant_name}")
+                else:
+                    round_failures.append(failure)
+                    logger.info(f"    [FAIL] {variant_name}: {failure.summary}")
+
+            # 如果有通过的变体，结束
+            if passed_variants:
+                break
+
+            # 如果没有更多迭代机会，结束
+            if not feedback_loop.can_iterate or self.dse_agent is None:
+                break
+
+            # 生成反馈并继续
+            feedback_text = feedback_loop.generate_feedback_for_llm(round_failures)
+            all_failures.extend(round_failures)
+            logger.info(f"  生成反馈文本，准备下一轮迭代")
+
+        all_failures.extend(round_failures)
+
+        return PipelineResult(
+            passed_variants=passed_variants,
+            total_variants=total_variants,
+            rounds=rounds,
+            all_failures=all_failures,
+        )
+
+    def _extract_csr_data(self) -> dict[str, list[int]] | None:
+        """从 FormulaGraph 中提取 CSR 数据（如果有）。"""
+        if hasattr(self.graph, 'graph_data') and self.graph.graph_data is not None:
+            h_matrix = self.graph.graph_data
+            if hasattr(h_matrix, 'indptr') and hasattr(h_matrix, 'indices'):
+                return {
+                    "row_ptr": h_matrix.indptr.tolist(),
+                    "col_idx": h_matrix.indices.tolist(),
+                }
+        return None
+
+    def _generate_intents(
+        self,
+        math_dialect,
+        quant_specs,
+        feedback_text: str | None = None,
+    ) -> list[dict]:
+        """生成变体意图。"""
+        hw_constraint_text = yaml.dump(self.config.hardware_constraints)
+
+        if self.dse_agent is None:
+            # LLM 不可用，返回最小可行配置
+            return [self._get_minimal_intent()]
+
+        try:
+            intents = self.dse_agent.generate_intents(
+                math_dialect,
+                quant_specs,
+                hw_constraint_text,
+                feedback_text=feedback_text,
+                max_variants=4,
+            )
+            if intents:
+                return intents
+        except Exception as e:
+            logger.warning(f"LLM 调用失败: {e}")
+
+        return [self._get_minimal_intent()]
+
+    def _get_minimal_intent(self) -> dict:
+        """返回最小可行配置的 Intent（当 LLM 不可用时）。"""
+        return {
+            "variant_name": "minimal_baseline",
+            "rationale": "最小可行配置 baseline",
             "approx_method": "spa_exact",
             "scale_factor": 1.0,
             "offset_beta": 0.0,
             "parallelism": 1,
             "quant_overrides": {},
             "enable_saturation": True,
-        },
-        {
-            "variant_name": "fallback_minsum_p4",
-            "rationale": "local fallback",
-            "approx_method": "min_sum",
-            "scale_factor": 1.0,
-            "offset_beta": 0.0,
-            "parallelism": 4,
-            "quant_overrides": {},
-            "enable_saturation": True,
-        },
-        {
-            "variant_name": "fallback_offset_p8",
-            "rationale": "local fallback",
-            "approx_method": "offset_min_sum",
-            "scale_factor": 1.0,
-            "offset_beta": 0.2,
-            "parallelism": 8,
-            "quant_overrides": {},
-            "enable_saturation": True,
-        },
-    ]
-    return pool[:max_variants]
+        }
 
+    def _evaluate_variant(
+        self,
+        intent: dict,
+        math_dialect,
+        quant_specs,
+        l1: L1Checker,
+        l2: L2Checker,
+        l3: L3Checker,
+        feedback_loop: FeedbackLoop,
+        golden_outputs: dict[str, list[float]],
+        csr_data: dict[str, list[int]] | None,
+    ) -> tuple[bool, FailureContext | None]:
+        """评估单个变体。
 
-def _initial_variant_budget(kernel_type: str, node_count: int) -> int:
-    if kernel_type == "channel_coding":
-        return max(4, min(8, node_count))
-    return max(1, min(4, node_count))
+        Returns:
+            (是否成功, 失败上下文)
+        """
+        variant_name = intent["variant_name"]
 
+        try:
+            # 1. 渲染 AlgoHWDialect
+            algo_hw = self.engine.render(intent, math_dialect, quant_specs)
 
-def _max_feedback_rounds(kernel_type: str) -> int:
-    return 3 if kernel_type == "channel_coding" else 1
-
-
-def _next_variant_budget(
-    current: int,
-    failures: list[FailureContext],
-) -> int:
-    if not failures:
-        return current
-    signatures = {
-        (f.failed_at.value if isinstance(f.failed_at, FailureStage) else str(f.failed_at), f.summary)
-        for f in failures
-    }
-    diversity = len(signatures)
-    if diversity <= 1:
-        return max(1, current // 2)
-    if diversity < current:
-        return max(1, current - 1)
-    return current
-
-
-def _evaluate_variant(
-    intent,
-    math_dialect,
-    quant_specs,
-    solver: RooflineSolver,
-    engine: TemplateEngine,
-    codegen_agent: ScheduleCodegenAgent,
-    l1: L1Checker,
-    l2: L2Checker,
-    l3: L3Checker,
-    feedback_loop: FeedbackLoop,
-    golden_outputs,
-    test_inputs,
-    *,
-    example_name: str,
-    csr_data: dict | None = None,
-    relaxer_chain: RelaxerChain | None = None,
-) -> tuple[bool, list[FailureContext]]:
-    """Run one variant through L1/L2/L3 and feedback fast-loop."""
-    failures: list[FailureContext] = []
-    vname = intent["variant_name"]
-
-    algo_hw = engine.render(intent, math_dialect, quant_specs)
-    try:
-        schedule = solver.solve(algo_hw)
-    except ResourceOverflowError as exc:
-        print(f"    [FAIL] {vname}  stage=roofline  reason={exc}")
-        failures.append(_default_failure(FailureStage.L2_CSYNTH, vname, str(exc)))
-        return False, failures
-
-    artifacts = codegen_agent.generate(
-        schedule,
-        example_name=example_name,
-    )
-    hls_cpp = artifacts.kernel_cpp
-    hls_hdr = artifacts.kernel_h
-    print(f"    [ARTIFACT] {vname}  dir={artifacts.output_dir}")
-
-    l1_result = l1.check(
-        hls_cpp,
-        golden_outputs,
-        test_inputs,
-        vname,
-        csr_data=csr_data,
-    )
-
-    # L1 失败恢复：使用 QuantizationRelaxer
-    if not l1_result.passed and relaxer_chain is not None:
-        failure = l1_result.failure or _default_failure(FailureStage.L1_NUMERIC, vname, "L1 failed")
-        print(f"    [RELAX] {vname}  stage=L1  尝试恢复...")
-
-        relax_result = relaxer_chain.try_relax(algo_hw, failure)
-        if relax_result.success:
-            algo_hw = relax_result.new_ir
-            for action in relax_result.actions:
-                print(f"    [ACTION] {action.description}")
-
-            # 重新生成 schedule 和 artifacts
+            # 2. 求解 ScheduleDialect
             try:
-                schedule = solver.solve(algo_hw)
-                artifacts = codegen_agent.generate(
-                    schedule,
-                    example_name=example_name,
+                schedule = self.solver.solve(algo_hw)
+            except ResourceOverflowError as exc:
+                return False, FailureContext(
+                    failed_at=FailureStage.L2_CSYNTH,
+                    variant_id=variant_name,
+                    summary=f"Roofline 求解失败: {exc}",
                 )
-                hls_cpp = artifacts.kernel_cpp
-                hls_hdr = artifacts.kernel_h
-                print(f"    [ARTIFACT] {vname}  dir={artifacts.output_dir} (relaxed)")
 
-                # 重新运行 L1
-                l1_result = l1.check(
-                    hls_cpp,
-                    golden_outputs,
-                    test_inputs,
-                    vname,
-                    csr_data=csr_data,
-                )
-            except Exception as exc:
-                print(f"    [RELAX_FAIL] {vname}  stage=L1  reason={exc}")
-                failures.append(failure)
-                return False, failures
-
-    if not l1_result.passed:
-        print(f"    [FAIL] {vname}  stage=L1  metrics={l1_result.metrics}")
-        failures.append(
-            l1_result.failure
-            or _default_failure(FailureStage.L1_NUMERIC, vname, "L1 failed")
-        )
-        return False, failures
-
-    l2_result = l2.check(hls_cpp, hls_hdr, vname)
-    if not l2_result.passed:
-        failure = l2_result.failure
-        tuned_schedule = schedule
-        retries = 0
-
-        while (
-            failure is not None
-            and retries < 3  # MAX_RETRIES
-        ):
-            # 使用 feedback_loop 进行 pragma 调整
-            loop_result = feedback_loop.recover(tuned_schedule, failure)
-            if not loop_result.success:
-                break
-
-            tuned_schedule = loop_result.new_ir
-            if not loop_result.actions_taken:
-                break
-
-            retries += 1
-            print(f"    [TUNE] {vname}  retry={retries}  actions={len(loop_result.actions_taken)}")
-            for action in loop_result.actions_taken:
-                print(f"           {action}")
-
-            artifacts = codegen_agent.generate(
-                tuned_schedule,
-                example_name=example_name,
+            # 3. 生成 HLS 代码
+            artifacts = self.codegen_agent.generate(
+                schedule,
+                example_name=self.config.name,
             )
             hls_cpp = artifacts.kernel_cpp
             hls_hdr = artifacts.kernel_h
-            print(f"    [ARTIFACT] {vname}  dir={artifacts.output_dir}")
-            l2_result = l2.check(hls_cpp, hls_hdr, vname)
-            if l2_result.passed:
-                break
-            failure = l2_result.failure
 
-        if not l2_result.passed:
-            print(f"    [FAIL] {vname}  stage=L2")
-            failures.append(
-                l2_result.failure
-                or _default_failure(FailureStage.L2_CSYNTH, vname, "L2 failed")
-            )
-            return False, failures
-
-    l3_result = l3.check(
-        hls_cpp,
-        vname,
-        test_inputs,
-        csr_data=csr_data,
-    )
-    if not l3_result.passed:
-        print(f"    [FAIL] {vname}  stage=L3  metrics={l3_result.quality_metrics}")
-        failures.append(
-            l3_result.failure
-            or _default_failure(FailureStage.L3_QUALITY, vname, "L3 failed")
-        )
-        return False, failures
-
-    print(
-        f"    [PASS] {vname}  "
-        f"l1={l1_result.metrics} l3={l3_result.quality_metrics}"
-    )
-    return True, failures
-
-
-def _run_with_feedback(
-    agent: DSEAgent | None,
-    math_dialect,
-    quant_specs,
-    hw_constraint_text: str,
-    kernel_type: str,
-    solver: RooflineSolver,
-    engine: TemplateEngine,
-    codegen_agent: ScheduleCodegenAgent,
-    l1: L1Checker,
-    l2: L2Checker,
-    l3: L3Checker,
-    golden_outputs,
-    test_inputs,
-    *,
-    example_name: str,
-    csr_data: dict | None = None,
-    relaxer_chain: RelaxerChain | None = None,
-) -> tuple[list[str], int, int]:
-    """Run intents in iterative deep-loop mode until pass or iteration cap."""
-    feedback_loop = FeedbackLoop(max_iterations=_max_feedback_rounds(kernel_type))
-
-    # 创建默认的 RelaxerChain（如果未提供）
-    if relaxer_chain is None:
-        relaxer_chain = RelaxerChain([
-            QuantizationRelaxer(),
-            ResourceRelaxer(),
-            TilingAdjuster(),
-        ])
-
-    feedback_text: str | None = None
-    variant_budget = _initial_variant_budget(kernel_type, len(math_dialect.nodes))
-
-    passed_variants: list[str] = []
-    total_variants = 0
-    rounds = 0
-
-    while True:
-        rounds += 1
-        if agent is None:
-            intents = _fallback_intents(kernel_type, variant_budget)
-        else:
-            intents = agent.generate_intents(
-                math_dialect,
-                _to_agent_quant_specs(quant_specs),
-                hw_constraint_text,
-                feedback_text=feedback_text,
-                max_variants=variant_budget,
-            )
-            if not intents:
-                print("    [WARN] LLM 未返回有效变体，切换本地 fallback intents")
-                intents = _fallback_intents(kernel_type, variant_budget)
-        print(f"    Round {rounds}: 生成 {len(intents)} 个变体 (budget={variant_budget})")
-        if not intents:
-            break
-
-        round_failures: list[FailureContext] = []
-        for intent in intents:
-            total_variants += 1
-            ok, failures = _evaluate_variant(
-                intent,
-                math_dialect,
-                quant_specs,
-                solver,
-                engine,
-                codegen_agent,
-                l1,
-                l2,
-                l3,
-                feedback_loop,
-                golden_outputs,
-                test_inputs,
-                example_name=example_name,
+            # 4. 准备验证环境
+            pre_result = self.pre_checker.prepare_environment(
+                example_name=self.config.name,
+                variant_id=variant_name,
+                hls_cpp_code=hls_cpp,
+                golden_outputs=golden_outputs,
+                test_inputs=self.config.test_data,
                 csr_data=csr_data,
-                relaxer_chain=relaxer_chain,
             )
-            if ok:
-                passed_variants.append(intent["variant_name"])
-            else:
-                round_failures.extend(failures)
 
-        if passed_variants:
-            break
+            if not pre_result.ready:
+                return False, FailureContext(
+                    failed_at=FailureStage.L1_COMPILE,
+                    variant_id=variant_name,
+                    summary=f"环境准备失败: {pre_result.error}",
+                )
 
-        if agent is None or not round_failures or not feedback_loop.can_iterate:
-            break
+            # 5. L1 验证
+            l1_result = l1.check(
+                hls_cpp,
+                golden_outputs,
+                self.config.test_data,
+                variant_name,
+                csr_data=csr_data,
+            )
 
-        feedback_text = feedback_loop.generate_feedback_for_llm(round_failures)
-        variant_budget = _next_variant_budget(variant_budget, round_failures)
-        print(
-            f"    [DEEP] 进入第 {feedback_loop.iteration} 轮反馈迭代，"
-            f"失败样本={len(round_failures)}"
-            f"，下一轮 budget={variant_budget}"
-        )
+            if not l1_result.passed:
+                failure = l1_result.failure or FailureContext(
+                    failed_at=FailureStage.L1_NUMERIC,
+                    variant_id=variant_name,
+                    summary="L1 数值验证失败",
+                )
 
-    return passed_variants, total_variants, rounds
+                # 尝试快速恢复
+                loop_result = feedback_loop.recover(algo_hw, failure)
+                if loop_result.success:
+                    algo_hw = loop_result.new_ir
+                    try:
+                        schedule = self.solver.solve(algo_hw)
+                        artifacts = self.codegen_agent.generate(
+                            schedule,
+                            example_name=self.config.name,
+                        )
+                        hls_cpp = artifacts.kernel_cpp
+                        l1_result = l1.check(
+                            hls_cpp,
+                            golden_outputs,
+                            self.config.test_data,
+                            variant_name,
+                            csr_data=csr_data,
+                        )
+                        if not l1_result.passed:
+                            return False, failure
+                    except Exception:
+                        return False, failure
+                else:
+                    return False, failure
+
+            # 6. L2 验证
+            l2_result = l2.check(hls_cpp, hls_hdr, variant_name)
+            if not l2_result.passed:
+                failure = l2_result.failure or FailureContext(
+                    failed_at=FailureStage.L2_CSYNTH,
+                    variant_id=variant_name,
+                    summary="L2 综合失败",
+                )
+
+                # 尝试快速恢复
+                loop_result = feedback_loop.recover(schedule, failure)
+                if loop_result.success:
+                    schedule = loop_result.new_ir
+                    artifacts = self.codegen_agent.generate(
+                        schedule,
+                        example_name=self.config.name,
+                    )
+                    hls_cpp = artifacts.kernel_cpp
+                    hls_hdr = artifacts.kernel_h
+                    l2_result = l2.check(hls_cpp, hls_hdr, variant_name)
+                    if not l2_result.passed:
+                        return False, failure
+                else:
+                    return False, failure
+
+            # 7. L3 验证
+            l3_result = l3.check(
+                hls_cpp,
+                variant_name,
+                self.config.test_data,
+                csr_data=csr_data,
+            )
+            if not l3_result.passed:
+                failure = l3_result.failure or FailureContext(
+                    failed_at=FailureStage.L3_QUALITY,
+                    variant_id=variant_name,
+                    summary="L3 质量验证失败",
+                )
+                return False, failure
+
+            return True, None
+
+        except Exception as e:
+            logger.exception(f"评估变体 {variant_name} 时发生异常")
+            return False, FailureContext(
+                failed_at=FailureStage.L1_COMPILE,
+                variant_id=variant_name,
+                summary=f"评估异常: {str(e)[:200]}",
+            )
 
 
-def _summarize_results(total_variants: int, passed: list[str], rounds: int) -> None:
-    print(
-        f"\n==> [5/5] 完成：{len(passed)}/{total_variants} 个变体通过"
-        f"（rounds={rounds}）"
-    )
-    if passed:
-        print("    通过的变体：", ", ".join(passed))
+def summarize_results(result: PipelineResult) -> None:
+    """汇总并打印结果。"""
+    print(f"\n==> [7/7] 完成：{len(result.passed_variants)}/{result.total_variants} 个变体通过 (rounds={result.rounds})")
+
+    if result.passed_variants:
+        print("    通过的变体：", ", ".join(result.passed_variants))
         return
 
-    print("    没有变体通过验证，请检查约束或调整参数")
+    print("    没有变体通过验证")
+    if result.all_failures:
+        print("\n    失败汇总：")
+        for failure in result.all_failures[:5]:  # 只显示前5个
+            print(f"      - [{failure.failed_at.value}] {failure.variant_id}: {failure.summary}")
+        if len(result.all_failures) > 5:
+            print(f"      ... 还有 {len(result.all_failures) - 5} 个失败")
+
     sys.exit(1)
 
 
-def run_example(spec: ExampleSpec, args: argparse.Namespace) -> None:
-    parse_desc = f"解析算法 {spec.name}"
-    if spec.name == "ldpc_cnu":
-        parse_desc += f" (dc={args.dc})"
-    print(f"==> [1/5] {parse_desc} 到 Math Dialect ...")
-
-    graph = spec.build_graph(args)
-    math_dialect = parse(graph)
-    test_inputs = spec.get_test_inputs(args)
-    csr_data = spec.get_csr_data(graph) if spec.get_csr_data else None
-
-    print("==> [2/5] 生成黄金参考模型并分析量化参数 ...")
-    gen = GoldenModelGenerator()
-    golden_cpp = gen.generate(math_dialect)
-    golden_outputs = gen.compile_and_run(
-        golden_cpp, test_inputs, math_dialect, csr_data=csr_data
-    )
-    quant_specs = QuantizationAnalyzer().analyze(
-        gen, math_dialect, test_inputs, csr_data=csr_data
-    )
-
-    hw = _load_constraints(spec.name)
-    kernel_type = _get_kernel_type(hw)
-    hw_constraint_text = yaml.dump(hw["hardware_constraints"])
-
-    print("==> [3/5] 调用 LLM 生成硬件变体意图 ...")
-    try:
-        agent: DSEAgent | None = DSEAgent(kernel_type=kernel_type)
-    except Exception as exc:
-        print(f"    [WARN] LLM 客户端不可用，使用本地 fallback intents: {exc}")
-        agent = None
-
-    print("==> [4/5] 编译并验证各变体（L1/L2/L3 + feedback）...")
-    engine = TemplateEngine()
-    solver = _build_solver(hw)
-    codegen_agent = ScheduleCodegenAgent(artifact_root=EXAMPLES_DIR)
-    l1 = L1Checker(
-        kernel_type=kernel_type,
-        tolerance=hw["algorithm_metrics"]["tolerance"],
-    )
-    l2 = _build_l2_checker(hw)
-    l3 = _build_l3_checker(hw, golden_outputs)
-
-    passed, total_variants, rounds = _run_with_feedback(
-        agent,
-        math_dialect,
-        quant_specs,
-        hw_constraint_text,
-        kernel_type,
-        solver,
-        engine,
-        codegen_agent,
-        l1,
-        l2,
-        l3,
-        golden_outputs,
-        test_inputs,
-        example_name=spec.name,
-        csr_data=csr_data,
-    )
-
-    _summarize_results(total_variants, passed, rounds)
-
+# ---------------------------------------------------------------------------
+# 命令行接口
+# ---------------------------------------------------------------------------
 
 def _add_ldpc_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--dc", type=int, default=8, help="校验节点度数（默认 8）")
 
 
-def _build_ldpc_graph(args: argparse.Namespace):
-    return build_ldpc_cnu(dc=args.dc)
+def _import_and_build(example_name: str, func_name: str, **kwargs) -> Any:
+    """动态导入并调用示例的 build 函数。"""
+    module = __import__(
+        f"examples.{example_name}.kernel",
+        fromlist=[func_name],
+    )
+    func = getattr(module, func_name)
+    return func(**kwargs)
 
 
-def _get_ldpc_inputs(args: argparse.Namespace) -> dict[str, list[float]]:
-    return get_test_inputs(dc=args.dc)
+@dataclass(frozen=True)
+class ExampleSpec:
+    """示例规格。"""
 
-
-def _get_ldpc_csr_data(graph) -> dict[str, list[int]]:
-    h_matrix = graph.graph_data
-    return {
-        "row_ptr": h_matrix.indptr.tolist(),
-        "col_idx": h_matrix.indices.tolist(),
-    }
+    name: str
+    build_graph: Callable[[argparse.Namespace], Any]
+    add_arguments: Callable[[argparse.ArgumentParser], None] | None = None
 
 
 EXAMPLE_SPECS: dict[str, ExampleSpec] = {
     "fir_16tap": ExampleSpec(
         name="fir_16tap",
-        build_graph=lambda args: build_fir_16tap(),
-        get_test_inputs=lambda args: FIR_TEST_INPUTS,
+        build_graph=lambda args: _import_and_build("fir_16tap", "build_fir_16tap"),
     ),
     "ldpc_cnu": ExampleSpec(
         name="ldpc_cnu",
-        build_graph=_build_ldpc_graph,
-        get_test_inputs=_get_ldpc_inputs,
+        build_graph=lambda args: _import_and_build("ldpc_cnu", "build_ldpc_cnu", dc=args.dc),
         add_arguments=_add_ldpc_args,
-        get_csr_data=_get_ldpc_csr_data,
     ),
     "vec_add": ExampleSpec(
         name="vec_add",
-        build_graph=lambda args: build_vec_add(),
-        get_test_inputs=lambda args: VEC_ADD_TEST_INPUTS,
+        build_graph=lambda args: _import_and_build("vec_add", "build_vec_add"),
     ),
 }
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Run a built-in FormaSyn example")
+    """构建命令行参数解析器。"""
+    parser = argparse.ArgumentParser(description="FormaSyn FPGA 编译器")
+    parser.add_argument(
+        "--baseline",
+        action="store_true",
+        help="仅运行 baseline 配置，不进行设计空间探索",
+    )
+    parser.add_argument(
+        "--max-rounds",
+        type=int,
+        default=3,
+        help="最大反馈迭代轮数（默认 3）",
+    )
+
     subparsers = parser.add_subparsers(dest="example", required=True)
 
     for name, spec in EXAMPLE_SPECS.items():
-        parser_i = subparsers.add_parser(name, help=f"Run the {name} example")
+        parser_i = subparsers.add_parser(name, help=f"运行 {name} 示例")
         if spec.add_arguments is not None:
             spec.add_arguments(parser_i)
 
@@ -609,11 +597,28 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    """主入口。"""
     args = build_parser().parse_args()
     spec = EXAMPLE_SPECS.get(args.example)
     if spec is None:
-        raise ValueError(f"Unsupported example: {args.example}")
-    run_example(spec, args)
+        raise ValueError(f"不支持的示例: {args.example}")
+
+    # 加载配置
+    config = load_example_config(spec.name)
+
+    # 构建 FormulaGraph
+    graph = spec.build_graph(args)
+
+    # 运行流水线
+    pipeline = FormaSynPipeline(
+        config=config,
+        graph=graph,
+        max_rounds=args.max_rounds,
+        use_dse=not args.baseline,
+    )
+
+    result = pipeline.run()
+    summarize_results(result)
 
 
 if __name__ == "__main__":

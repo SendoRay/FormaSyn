@@ -92,13 +92,3 @@ def _build_synthetic_h_matrix(
         (data, (rows, cols)), shape=(num_checks, num_vars)
     )
     return H
-
-
-def get_test_inputs(dc: int = 8) -> dict[str, list[float]]:
-    """Return representative test inputs for the LDPC CNU kernel.
-
-    Generates LLR-like values (log-likelihood ratios) in the range [-5, 5].
-    """
-    rng = np.random.default_rng(seed=2024)
-    msg_in = rng.uniform(-5.0, 5.0, size=dc).tolist()
-    return {"msg_in": msg_in}
