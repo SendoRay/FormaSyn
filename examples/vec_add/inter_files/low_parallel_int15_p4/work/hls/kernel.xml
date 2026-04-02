@@ -1,0 +1,93 @@
+<root versionMajor = "1" versionMinor = "5">
+  <kernel name="kernel" language="c" vlnv="xilinx.com:hls:kernel:1.0" attributes="" hash="" preferredWorkGroupSizeMultiple="0" workGroupSize="1" debug="false" compileOptions="" profileType="none" hwControlProtocol="ap_ctrl_chain">
+    <ports>
+      <port name="M_AXI_GMEM0_0" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM0_1" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM0_2" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM0_3" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM1_0" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM1_1" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM1_2" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM1_3" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="32"/>
+      <port name="M_AXI_GMEM2_0" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="64"/>
+      <port name="M_AXI_GMEM2_1" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="64"/>
+      <port name="M_AXI_GMEM2_2" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="64"/>
+      <port name="M_AXI_GMEM2_3" portType="addressable" mode="master" base="0x0" range="0xFFFFFFFF" dataWidth="64"/>
+      <port name="S_AXI_CONTROL" portType="addressable" mode="slave" base="0x0" range="0xA0" dataWidth="32"/>
+    </ports>
+    <args>
+      <arg id="0" name="a_0" addressQualifier="1" port="M_AXI_GMEM0_0" hostOffset="0x0" hostSize="0x8" offset="0x10" size="0x8" type="void*"/>
+      <arg id="1" name="a_1" addressQualifier="1" port="M_AXI_GMEM0_1" hostOffset="0x0" hostSize="0x8" offset="0x1C" size="0x8" type="void*"/>
+      <arg id="2" name="a_2" addressQualifier="1" port="M_AXI_GMEM0_2" hostOffset="0x0" hostSize="0x8" offset="0x28" size="0x8" type="void*"/>
+      <arg id="3" name="a_3" addressQualifier="1" port="M_AXI_GMEM0_3" hostOffset="0x0" hostSize="0x8" offset="0x34" size="0x8" type="void*"/>
+      <arg id="4" name="b_0" addressQualifier="1" port="M_AXI_GMEM1_0" hostOffset="0x0" hostSize="0x8" offset="0x40" size="0x8" type="void*"/>
+      <arg id="5" name="b_1" addressQualifier="1" port="M_AXI_GMEM1_1" hostOffset="0x0" hostSize="0x8" offset="0x4C" size="0x8" type="void*"/>
+      <arg id="6" name="b_2" addressQualifier="1" port="M_AXI_GMEM1_2" hostOffset="0x0" hostSize="0x8" offset="0x58" size="0x8" type="void*"/>
+      <arg id="7" name="b_3" addressQualifier="1" port="M_AXI_GMEM1_3" hostOffset="0x0" hostSize="0x8" offset="0x64" size="0x8" type="void*"/>
+      <arg id="8" name="c_0" addressQualifier="1" port="M_AXI_GMEM2_0" hostOffset="0x0" hostSize="0x8" offset="0x70" size="0x8" type="void*"/>
+      <arg id="9" name="c_1" addressQualifier="1" port="M_AXI_GMEM2_1" hostOffset="0x0" hostSize="0x8" offset="0x7C" size="0x8" type="void*"/>
+      <arg id="10" name="c_2" addressQualifier="1" port="M_AXI_GMEM2_2" hostOffset="0x0" hostSize="0x8" offset="0x88" size="0x8" type="void*"/>
+      <arg id="11" name="c_3" addressQualifier="1" port="M_AXI_GMEM2_3" hostOffset="0x0" hostSize="0x8" offset="0x94" size="0x8" type="void*"/>
+    </args>
+    <arg-map>
+      <arg id="0" orig_id="0"/>
+      <arg id="1" orig_id="0"/>
+      <arg id="2" orig_id="0"/>
+      <arg id="3" orig_id="0"/>
+      <arg id="4" orig_id="1"/>
+      <arg id="5" orig_id="1"/>
+      <arg id="6" orig_id="1"/>
+      <arg id="7" orig_id="1"/>
+      <arg id="8" orig_id="2"/>
+      <arg id="9" orig_id="2"/>
+      <arg id="10" orig_id="2"/>
+      <arg id="11" orig_id="2"/>
+    </arg-map>
+    <transforms>
+      <transform0>
+        <inputs>
+          <input id="0.0" variable-type="[16 x i8]*"/>
+        </inputs>
+        <layout-changes>
+          <array_partition type="Cyclic" dim="1" factor="4"/>
+        </layout-changes>
+        <outputs>
+          <input id="0.0.0" variable-type="[4 x i8]*"/>
+          <input id="0.0.1" variable-type="[4 x i8]*"/>
+          <input id="0.0.2" variable-type="[4 x i8]*"/>
+          <input id="0.0.3" variable-type="[4 x i8]*"/>
+        </outputs>
+      </transform0>
+      <transform1>
+        <inputs>
+          <input id="1.0" variable-type="[16 x i8]*"/>
+        </inputs>
+        <layout-changes>
+          <array_partition type="Cyclic" dim="1" factor="4"/>
+        </layout-changes>
+        <outputs>
+          <input id="1.0.0" variable-type="[4 x i8]*"/>
+          <input id="1.0.1" variable-type="[4 x i8]*"/>
+          <input id="1.0.2" variable-type="[4 x i8]*"/>
+          <input id="1.0.3" variable-type="[4 x i8]*"/>
+        </outputs>
+      </transform1>
+      <transform2>
+        <inputs>
+          <input id="2.0" variable-type="[16 x i15]*"/>
+        </inputs>
+        <layout-changes>
+          <array_partition type="Cyclic" dim="1" factor="4"/>
+        </layout-changes>
+        <outputs>
+          <input id="2.0.0" variable-type="[4 x i15]*"/>
+          <input id="2.0.1" variable-type="[4 x i15]*"/>
+          <input id="2.0.2" variable-type="[4 x i15]*"/>
+          <input id="2.0.3" variable-type="[4 x i15]*"/>
+        </outputs>
+      </transform2>
+    </transforms>
+    <compileWorkGroupSize x="1" y="1" z="1"/>
+    <maxWorkGroupSize x="1" y="1" z="1"/>
+  </kernel>
+</root>

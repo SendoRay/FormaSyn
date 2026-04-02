@@ -1,0 +1,21 @@
+{
+  "variant_id": "spa_exact_int8_p2_timing",
+  "example_name": "vec_add",
+  "function_name": "kernel",
+  "model": "claude-sonnet-4-5-20250929",
+  "base_url": "https://api.tryallai.com/v1",
+  "generated_at_utc": "2026-03-19T02:00:09.162879+00:00",
+  "schedule_summary": {
+    "node_count": 3,
+    "input_nodes": [
+      "a",
+      "b"
+    ],
+    "output_nodes": [
+      "c"
+    ],
+    "expected_ii": 9,
+    "total_dsp_estimate": 0,
+    "total_bram_estimate": 3
+  }
+}

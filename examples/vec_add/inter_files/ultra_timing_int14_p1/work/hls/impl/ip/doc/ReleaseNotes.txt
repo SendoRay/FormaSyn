@@ -1,0 +1,6 @@
+
+Family       : virtexuplus
+Device       : xcu200
+Package      : -fsgd2104
+Speed Grade  : -2-e
+Clock Period : 5

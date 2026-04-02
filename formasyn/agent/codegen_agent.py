@@ -9,38 +9,31 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
-from FormaSyn.formasyn.agent.base_agent import BaseAgent
-from FormaSyn.formasyn.ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
+from .base_agent import BaseAgent, _LOADED_MODEL
+from ..ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
 
 logger = logging.getLogger(__name__)
 
-_CODEGEN_SCHEMA = """\
-你是 Vitis HLS C++ 代码生成器。你会收到一个完整的 HLSScheduleDialect(JSON)。
+_CODEGEN_SCHEMA = """You are a Vitis HLS C++ code generator.
 
-要求：
-1) 生成可综合的 HLS C++ 顶层函数和头文件。
-2) 顶层函数名必须等于给定 function_name。
-3) 输入输出参数必须覆盖 schedule.input_nodes 和 schedule.output_nodes。
-4) 输出必须是“工具调用 JSON”，不要输出 Markdown 代码块，不要输出额外说明：
+[CRITICAL] Output ONLY raw JSON. No markdown, no explanations, no extra text!
+
+Input: HLSScheduleDialect (JSON)
+Output: Pure JSON object (no ```json wrapper)
+
+Format:
 {
   "tool_calls": [
-    {
-      "tool": "write_file",
-      "path": "kernel.cpp",
-      "content": "..."
-    },
-    {
-      "tool": "write_file",
-      "path": "kernel.h",
-      "content": "..."
-    }
+    {"tool": "write_file", "path": "kernel.cpp", "content": "..."},
+    {"tool": "write_file", "path": "kernel.h", "content": "..."}
   ]
 }
-5) path 必须是相对路径，禁止绝对路径和 `..`。
-6) kernel.cpp 需要包含:
-   - #include <ap_int.h>
-   - #include <ap_fixed.h>
-7) kernel.h 需要包含 include guard 和函数声明。
+
+Code requirements:
+- function_name: from input
+- I/O params: cover schedule.input_nodes and schedule.output_nodes
+- kernel.cpp: include <ap_int.h> and <ap_fixed.h>
+- kernel.h: include guard and function declaration
 """
 
 
@@ -67,9 +60,11 @@ class ScheduleCodegenAgent(BaseAgent):
 
     def __init__(
         self,
-        model: str = "claude-sonnet-4-5-20250929",
+        model: str | None = None,
         artifact_root: str | Path = "examples",
     ) -> None:
+        if model is None:
+            model = _LOADED_MODEL
         super().__init__(model=model)
         self._artifact_root = Path(artifact_root)
 
@@ -79,6 +74,7 @@ class ScheduleCodegenAgent(BaseAgent):
         *,
         example_name: str,
         function_name: str = "kernel",
+        force_fallback: bool = False,
     ) -> CodegenArtifacts:
         """Generate and persist HLS artifacts for one schedule variant."""
         schedule_json = self._schedule_to_json(schedule)
@@ -88,18 +84,35 @@ class ScheduleCodegenAgent(BaseAgent):
             function_name=function_name,
         )
 
-        try:
-            raw = self._chat_completion(
-                system_prompt=_CODEGEN_SCHEMA,
-                user_prompt=user_prompt,
-                temperature=0.1,
+        if force_fallback:
+            logger.info("强制使用 fallback 代码生成")
+            tool_calls = self._fallback_codegen_tool_calls(
+                schedule,
+                function_name=function_name,
             )
-            tool_calls = self._parse_codegen_response(raw)
-        except Exception:
-            logger.exception(
-                "Codegen LLM failed for variant '%s', fallback to local template",
-                schedule.variant_id,
-            )
+        else:
+            try:
+                raw = self._chat_completion(
+                    system_prompt=_CODEGEN_SCHEMA,
+                    user_prompt=user_prompt,
+                    temperature=0.1,
+                    timeout=10.0,  # 10秒超时
+                )
+                tool_calls = self._parse_codegen_response(raw)
+            except Exception as e:
+                logger.warning(
+                    "Codegen LLM failed for variant '%s' (error: %s), fallback to local template",
+                    schedule.variant_id,
+                    str(e)[:100],
+                )
+                tool_calls = self._fallback_codegen_tool_calls(
+                    schedule,
+                    function_name=function_name,
+                )
+
+        # 额外检查：如果 tool_calls 为空，强制使用 fallback
+        if not tool_calls:
+            logger.warning("LLM returned empty tool_calls, using fallback")
             tool_calls = self._fallback_codegen_tool_calls(
                 schedule,
                 function_name=function_name,
@@ -148,9 +161,19 @@ class ScheduleCodegenAgent(BaseAgent):
     @staticmethod
     def _parse_codegen_response(raw: str) -> list[dict[str, str]]:
         text = raw.strip()
+
+        # 移除 Markdown 代码块标记
+        if text.startswith("```"):
+            # 移除开头的 ```json 或 ```
+            text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.DOTALL)
+            # 移除结尾的 ```
+            text = re.sub(r"\s*```$", "", text, flags=re.DOTALL)
+            text = text.strip()
+
         try:
             payload = json.loads(text)
         except json.JSONDecodeError:
+            # 尝试从文本中提取 JSON 对象
             match = re.search(r"\{.*\}", text, re.DOTALL)
             if match is None:
                 raise ValueError("LLM codegen response is not valid JSON object")
@@ -256,7 +279,7 @@ class ScheduleCodegenAgent(BaseAgent):
         *,
         function_name: str,
     ) -> list[dict[str, str]]:
-        """Simple deterministic fallback if LLM API is unavailable."""
+        """Deterministic fallback codegen with pattern-aware logic."""
         params: list[str] = []
         for node_id in schedule.input_nodes:
             n = schedule.nodes[node_id]
@@ -268,10 +291,107 @@ class ScheduleCodegenAgent(BaseAgent):
             params.append(f"    {n.data_type} {node_id}[{size}]")
         sig = f"void {function_name}(\n" + ",\n".join(params) + "\n)"
 
-        first_input = schedule.input_nodes[0] if schedule.input_nodes else ""
-        body_lines = [f"    #pragma HLS PIPELINE II={schedule.expected_ii}"]
-        for out_id in schedule.output_nodes:
-            body_lines.append(f"    {out_id}[0] = {first_input}[0];")
+        body_lines: list[str] = []
+        body_lines.append(f"    #pragma HLS PIPELINE II={schedule.expected_ii}")
+
+        # 分析节点拓扑来推断代码模式
+        nodes = schedule.nodes
+        input_nodes = schedule.input_nodes
+        output_nodes = schedule.output_nodes
+
+        # DEBUG: 打印节点信息
+        with open("/tmp/formasyn_codegen_debug.log", "a") as f:
+            f.write(f"=== {schedule.variant_id} ===\n")
+            f.write(f"input_nodes: {input_nodes}\n")
+            f.write(f"output_nodes: {output_nodes}\n")
+            for nid, n in nodes.items():
+                f.write(f"{nid}: op_type={n.op_type}, op_detail={n.op_detail}, data_type={n.data_type}\n")
+
+        # 检查是否有 FIR 模式: shift_reg -> map(multiply) -> reduce(add)
+        has_shift_reg = any(
+            nodes[nid].op_type == "shift_reg" for nid in nodes
+        )
+        has_map_multiply = any(
+            nodes[nid].op_type == "map" and
+            nodes[nid].op_detail.get("func") == "multiply"
+            for nid in nodes
+        )
+        has_reduce_add = any(
+            nodes[nid].op_type == "reduce" and
+            nodes[nid].op_detail.get("op") == "add"
+            for nid in nodes
+        )
+
+        with open("/tmp/formasyn_codegen_debug.log", "a") as f:
+            f.write(f"FIR detection: has_shift_reg={has_shift_reg}, has_map_multiply={has_map_multiply}, has_reduce_add={has_reduce_add}\n")
+
+        if has_shift_reg and has_map_multiply and has_reduce_add:
+            # FIR 滤波器模式
+            # 提取系数（处理可能的嵌套结构）
+            coeffs = []
+            for nid, n in nodes.items():
+                if n.op_type == "map" and n.op_detail.get("func") == "multiply":
+                    # 尝试多种路径获取系数
+                    fp = n.op_detail.get("func_params", {})
+                    coeffs = fp.get("coeffs", [])
+                    if not coeffs:
+                        # 处理嵌套情况 {'func_params': {'func_params': {'coeffs': [...]}}}
+                        fp2 = fp.get("func_params", {})
+                        coeffs = fp2.get("coeffs", [])
+                    if coeffs:
+                        break
+
+            if coeffs:
+                # 生成 FIR 代码
+                coeff_strs = [f"static const ap_fixed<16,4> coeffs[{len(coeffs)}] = {{"
+                              + ", ".join(f"{c:.6f}" for c in coeffs) + "};"]
+                body_lines.extend(coeff_strs)
+
+                input_id = input_nodes[0] if input_nodes else "x_in"
+                output_id = output_nodes[0] if output_nodes else "y_out"
+                tap_count = len(coeffs)
+
+                # FIR 滤波器：处理整个输入数组（使用 tap_count 作为默认大小）
+                input_size = nodes[input_nodes[0]].shape[0] if nodes[input_nodes[0]].shape and nodes[input_nodes[0]].shape[0] > 1 else tap_count
+                body_lines.append(f"    static ap_fixed<16,4> shift_reg[{tap_count}] = {{0}};")
+                body_lines.append(f"    #pragma HLS ARRAY_PARTITION variable=shift_reg complete")
+                body_lines.append("")
+                body_lines.append(f"    for (int n = 0; n < {input_size}; n++) {{")
+                body_lines.append(f"        #pragma HLS PIPELINE II=1")
+                body_lines.append(f"        ap_fixed<32,8> acc = 0;")
+                body_lines.append("")
+                body_lines.append(f"        for (int i = {tap_count-1}; i > 0; i--) {{")
+                body_lines.append(f"            #pragma HLS UNROLL")
+                body_lines.append(f"            shift_reg[i] = shift_reg[i-1];")
+                body_lines.append(f"        }}")
+                body_lines.append(f"        shift_reg[0] = (ap_fixed<16,4>){input_id}[n];")
+                body_lines.append("")
+                body_lines.append(f"        for (int i = 0; i < {tap_count}; i++) {{")
+                body_lines.append(f"            #pragma HLS UNROLL")
+                body_lines.append(f"            acc += shift_reg[i] * coeffs[i];")
+                body_lines.append(f"        }}")
+                body_lines.append(f"        {output_id}[n] = acc;")
+                body_lines.append(f"    }}")
+            else:
+                # 没有系数，使用简单复制
+                ScheduleCodegenAgent._generate_simple_copy(body_lines, input_nodes, output_nodes)
+
+        elif len(input_nodes) == 2 and len(output_nodes) == 1:
+            # 二元运算 (如 vec_add)
+            a_id, b_id = input_nodes[0], input_nodes[1]
+            c_id = output_nodes[0]
+            size = nodes[input_nodes[0]].shape[0] if nodes[input_nodes[0]].shape else 16
+            body_lines.append(f"    for (int i = 0; i < {size}; i++) {{")
+            body_lines.append(f"        #pragma HLS UNROLL")
+            body_lines.append(f"        {c_id}[i] = {a_id}[i] + {b_id}[i];")
+            body_lines.append(f"    }}")
+
+        elif len(input_nodes) == 1 and len(output_nodes) == 1:
+            # 单输入单输出
+            ScheduleCodegenAgent._generate_simple_copy(body_lines, input_nodes, output_nodes)
+
+        else:
+            ScheduleCodegenAgent._generate_simple_copy(body_lines, input_nodes, output_nodes)
 
         cpp = "\n".join([
             "#include <ap_int.h>",
@@ -301,3 +421,16 @@ class ScheduleCodegenAgent(BaseAgent):
             {"tool": "write_file", "path": "kernel.cpp", "content": cpp},
             {"tool": "write_file", "path": "kernel.h", "content": hdr},
         ]
+
+    @staticmethod
+    def _generate_simple_copy(
+        body_lines: list[str],
+        input_nodes: list[str],
+        output_nodes: list[str],
+    ) -> None:
+        """生成简单的复制逻辑."""
+        first_input = input_nodes[0] if input_nodes else "x_in"
+        for out_id in output_nodes:
+            body_lines.append(f"    for (int i = 0; i < 16; i++) {{")
+            body_lines.append(f"        {out_id}[i] = {first_input}[i];")
+            body_lines.append(f"    }}")

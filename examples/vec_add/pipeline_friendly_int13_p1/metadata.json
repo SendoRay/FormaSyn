@@ -1,0 +1,21 @@
+{
+  "variant_id": "pipeline_friendly_int13_p1",
+  "example_name": "vec_add",
+  "function_name": "kernel",
+  "model": "claude-sonnet-4-5-20250929",
+  "base_url": "https://api.tryallai.com/v1",
+  "generated_at_utc": "2026-03-19T03:34:21.287444+00:00",
+  "schedule_summary": {
+    "node_count": 3,
+    "input_nodes": [
+      "a",
+      "b"
+    ],
+    "output_nodes": [
+      "c"
+    ],
+    "expected_ii": 17,
+    "total_dsp_estimate": 0,
+    "total_bram_estimate": 22
+  }
+}

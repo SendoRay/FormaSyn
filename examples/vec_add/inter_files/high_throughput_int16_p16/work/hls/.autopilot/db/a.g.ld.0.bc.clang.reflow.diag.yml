@@ -1,0 +1,571 @@
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaPartially2FullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        store_c
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:44:14'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''': changing partial unrolling into complete unrolling since the unrolling factor (='
+  - Factor:          '16'
+  - String:          ') is no less than the loop trip count (='
+  - TripCount:       '16'
+  - String:          ').'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        store_c
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:44:14'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Missed
+Pass:            reflow-pragma-loop-unroll
+Name:            PipelineRemovedByUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Pipeline directive for loop '''
+  - LoopName:        store_c
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:44:14'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' has been removed because the loop is unrolled completely'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaPartially2FullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        compute
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:37:14'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''': changing partial unrolling into complete unrolling since the unrolling factor (='
+  - Factor:          '16'
+  - String:          ') is no less than the loop trip count (='
+  - TripCount:       '16'
+  - String:          ').'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        compute
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:37:14'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Missed
+Pass:            reflow-pragma-loop-unroll
+Name:            PipelineRemovedByUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Pipeline directive for loop '''
+  - LoopName:        compute
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:37:14'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' has been removed because the loop is unrolled completely'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaPartially2FullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        load_b
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:30:13'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''': changing partial unrolling into complete unrolling since the unrolling factor (='
+  - Factor:          '16'
+  - String:          ') is no less than the loop trip count (='
+  - TripCount:       '16'
+  - String:          ').'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        load_b
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:30:13'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Missed
+Pass:            reflow-pragma-loop-unroll
+Name:            PipelineRemovedByUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Pipeline directive for loop '''
+  - LoopName:        load_b
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:30:13'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' has been removed because the loop is unrolled completely'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaPartially2FullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        load_a
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:23:10'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''': changing partial unrolling into complete unrolling since the unrolling factor (='
+  - Factor:          '16'
+  - String:          ') is no less than the loop trip count (='
+  - TripCount:       '16'
+  - String:          ').'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        load_a
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:23:10'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Missed
+Pass:            reflow-pragma-loop-unroll
+Name:            PipelineRemovedByUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Pipeline directive for loop '''
+  - LoopName:        load_a
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:23:10'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' has been removed because the loop is unrolled completely'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_kernel_ir
+Args:            
+  - Callee:          'kernel(ap_int<8>*, ap_int<8>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_kernel_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '16'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a51seq
+  - ArrayName:       a
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.32
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.34
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.36
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.38
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.40
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.42
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.44
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.46
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.48
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.50
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.52
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.54
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.56
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.58
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.60
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.62
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '16'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b52seq
+  - ArrayName:       b
+  - String:          ' '
+  - BundleName:      gmem1
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.82
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.84
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.86
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.88
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.90
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.92
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.94
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.96
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.98
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.100
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.102
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.104
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.106
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.108
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.110
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.112
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 49, Column: 1 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '16'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c53seq
+  - ArrayName:       c
+  - String:          ' '
+  - BundleName:      gmem2
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.226
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.228
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.230
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.232
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.234
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.236
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.238
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.240
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.242
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.244
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.246
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.248
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.250
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.252
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.254
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 47, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.256
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '16'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '16'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '128'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 26, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a51seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq
+  - ArrayName:       a
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '16'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '16'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '128'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 33, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b52seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq54
+  - ArrayName:       b
+  - String:          ' '
+  - BundleName:      gmem1
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 49, Column: 1 }
+Function:        _Z6kernelP6ap_intILi8EES1_PS_ILi16EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '16'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '16'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '256'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 49, Column: 1 }
+  - OrigDirection:   write
+  - OrigID:          c53seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq55
+  - ArrayName:       c
+  - String:          ' '
+  - BundleName:      gmem2
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...

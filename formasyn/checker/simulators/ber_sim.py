@@ -33,6 +33,7 @@ class BERSimulator(QualitySimulator):
         test_inputs: dict[str, list[float]],
         golden_outputs: dict[str, list[float]],
         *,
+        hls_header_code: str | None = None,
         csr_data: Optional[dict[str, list[int]]] = None,
     ) -> dict[str, float]:
         """运行 BER 仿真并返回质量指标.
@@ -43,7 +44,7 @@ class BERSimulator(QualitySimulator):
         try:
             clean_code = self._strip_hls_specifics(hls_cpp_code)
             function_name = self._extract_function_name(hls_cpp_code)
-            so_path = self._compile_to_so(clean_code, function_name)
+            so_path = self._compile_to_so(clean_code, function_name, hls_header_code)
 
             outputs = self._run_so(
                 so_path,
@@ -93,10 +94,9 @@ class BERSimulator(QualitySimulator):
         lib = ctypes.CDLL(so_path)
 
         # 获取函数
-        try:
-            func = lib[function_name]
-        except AttributeError:
-            func = lib
+        func = getattr(lib, function_name, None)
+        if func is None:
+            raise RuntimeError(f"Function '{function_name}' not found")
 
         # 准备输入输出数组
         outputs = {}

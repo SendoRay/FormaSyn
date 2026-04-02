@@ -76,13 +76,25 @@ class L1Checker:
         variant_id: str,
         *,
         csr_data: Optional[dict[str, list[int]]] = None,
+        prepared_dir: Optional[str] = None,
     ) -> L1Result:
-        """Run L1 verification on generated HLS C++ code."""
+        """Run L1 verification on generated HLS C++ code.
+
+        Args:
+            hls_cpp_code: Generated HLS C++ source.
+            golden_outputs: Golden reference outputs.
+            test_inputs: Test input vectors.
+            variant_id: Variant identifier.
+            csr_data: Optional CSR data for irregular-access kernels.
+            prepared_dir: Pre-prepared directory with config, testbench, etc.
+                         If provided, will use it instead of creating a temp directory.
+        """
         result = L1Result(variant_id=variant_id, golden_outputs=golden_outputs)
 
         try:
             hls_outputs = self._run_csim(
-                hls_cpp_code, test_inputs, golden_outputs, csr_data
+                hls_cpp_code, test_inputs, golden_outputs, csr_data,
+                prepared_dir=prepared_dir,
             )
         except _CompileError as exc:
             result.compile_ok = False
@@ -115,41 +127,71 @@ class L1Checker:
         test_inputs: dict[str, list[float]],
         golden_outputs: dict[str, list[float]],
         csr_data: Optional[dict[str, list[int]]],
+        prepared_dir: Optional[str] = None,
     ) -> dict[str, list[float]]:
-        """Run HLS C simulation and parse printed output vectors."""
+        """Run HLS C simulation and parse printed output vectors.
+
+        Args:
+            hls_cpp_code: Generated HLS C++ source.
+            test_inputs: Test input vectors.
+            golden_outputs: Golden reference outputs.
+            csr_data: Optional CSR data.
+            prepared_dir: Pre-prepared directory with config, testbench, etc.
+        """
         if not self._vitis_available():
             raise _CompileError("Neither vitis-run nor v++ found on PATH")
 
         function_name = self._extract_function_name(hls_cpp_code)
-        testbench = self._generate_testbench(
-            hls_cpp_code, test_inputs, golden_outputs, csr_data
-        )
 
-        tmp_dir = tempfile.mkdtemp(prefix="formasyn_l1_")
-        src_name = f"{function_name}.cpp"
-        tb_name = f"{function_name}_tb.cpp"
-        cfg_name = "hls_config.cfg"
-        work_dir = os.path.join(tmp_dir, "work")
-        src_path = os.path.join(tmp_dir, src_name)
-        tb_path = os.path.join(tmp_dir, tb_name)
-        cfg_path = os.path.join(tmp_dir, cfg_name)
+        # 使用预准备目录或创建临时目录
+        if prepared_dir:
+            base_dir = prepared_dir
+            src_name = f"{function_name}.cpp"
+            tb_name = f"{function_name}_tb.cpp"
+            cfg_name = "hls_config.cfg"
+            work_dir = os.path.join(base_dir, "work")
+            src_path = os.path.join(base_dir, src_name)
+            tb_path = os.path.join(base_dir, tb_name)
+            cfg_path = os.path.join(base_dir, cfg_name)
+        else:
+            base_dir = tempfile.mkdtemp(prefix="formasyn_l1_")
+            src_name = f"{function_name}.cpp"
+            tb_name = f"{function_name}_tb.cpp"
+            cfg_name = "hls_config.cfg"
+            work_dir = os.path.join(base_dir, "work")
+            src_path = os.path.join(base_dir, src_name)
+            tb_path = os.path.join(base_dir, tb_name)
+            cfg_path = os.path.join(base_dir, cfg_name)
 
-        with open(src_path, "w", encoding="utf-8") as f:
-            f.write(hls_cpp_code)
-        with open(tb_path, "w", encoding="utf-8") as f:
-            f.write(testbench)
-        self._ensure_local_kernel_header(hls_cpp_code, tmp_dir)
-        with open(cfg_path, "w", encoding="utf-8") as f:
-            f.write(self._generate_hls_config(function_name, src_name, tb_name))
+        # 生成或使用已有的文件
+        if not os.path.exists(src_path):
+            with open(src_path, "w", encoding="utf-8") as f:
+                f.write(hls_cpp_code)
+
+        if not os.path.exists(tb_path):
+            testbench = self._generate_testbench(
+                hls_cpp_code, test_inputs, golden_outputs, csr_data
+            )
+            with open(tb_path, "w", encoding="utf-8") as f:
+                f.write(testbench)
+
+        if not os.path.exists(os.path.join(base_dir, "kernel.h")):
+            self._ensure_local_kernel_header(hls_cpp_code, base_dir)
+
+        if not os.path.exists(cfg_path):
+            with open(cfg_path, "w", encoding="utf-8") as f:
+                f.write(self._generate_hls_config(function_name, src_name, tb_name))
 
         cmd = self._build_csim_cmd(cfg_path, work_dir)
+        logger.info("L1 CSim 开始执行 [%s]: %s (timeout=600s)", function_name, " ".join(cmd))
         proc = subprocess.run(
             cmd,
             capture_output=True,
             text=True,
-            cwd=tmp_dir,
+            cwd=base_dir,
             timeout=600,
         )
+        logger.info("L1 CSim 执行完成 [%s]: returncode=%d", function_name, proc.returncode)
 
         combined = "\n".join(
             chunk for chunk in (proc.stdout, proc.stderr) if chunk
@@ -316,22 +358,18 @@ class L1Checker:
             return
 
         signature = L1Checker._extract_function_signature(hls_cpp_code)
-        preamble = L1Checker._extract_preamble(hls_cpp_code)
 
-        preamble_lines: list[str] = []
-        for raw in preamble.splitlines():
-            line = raw.strip()
-            if line.startswith("#include") and '"kernel.h"' in line:
-                continue
-            preamble_lines.append(raw.rstrip())
-
-        header_lines = ["#pragma once"]
-        if preamble_lines:
-            header_lines.append("")
-            header_lines.extend(preamble_lines)
-        header_lines.append("")
-        header_lines.append(signature + ";")
-        header_lines.append("")
+        # 关键修复：确保 kernel.h 包含所有必要的 HLS 头文件
+        # 因为生成的 hls_cpp_code 可能已经移除了这些 include
+        header_lines = [
+            "#pragma once",
+            "",
+            "#include <ap_int.h>",
+            "#include <ap_fixed.h>",
+            "",
+            signature + ";",
+            "",
+        ]
         header = "\n".join(header_lines)
 
         with open(os.path.join(out_dir, "kernel.h"), "w", encoding="utf-8") as f:

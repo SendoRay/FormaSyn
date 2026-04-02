@@ -34,13 +34,14 @@ class TransformSimulator(QualitySimulator):
         test_inputs: dict[str, list[float]],
         golden_outputs: dict[str, list[float]],
         *,
+        hls_header_code: str | None = None,
         csr_data: Optional[dict[str, list[int]]] = None,
     ) -> dict[str, float]:
         """运行变换质量仿真."""
         try:
             clean_code = self._strip_hls_specifics(hls_cpp_code)
             function_name = self._extract_function_name(hls_cpp_code)
-            so_path = self._compile_to_so(clean_code, function_name)
+            so_path = self._compile_to_so(clean_code, function_name, hls_header_code)
 
             outputs = self._run_so_simple(
                 so_path,
@@ -50,8 +51,12 @@ class TransformSimulator(QualitySimulator):
                 csr_data,
             )
         except Exception as e:
+            import traceback
             logger.warning("变换仿真编译/运行失败: %s", str(e)[:200])
-            return {"nmse_db": 0.0}
+            logger.debug("详细错误: %s", traceback.format_exc()[-500:])
+            # 编译/运行失败时，返回一个较差的 NMSE 值，表示质量不达标
+            # 但不阻止流程继续（让 L2 综合结果决定是否通过）
+            return {"nmse_db": 100.0}  # 返回一个大值表示失败
 
         nmse_db = self._compute_nmse(golden_outputs, outputs)
 
@@ -87,10 +92,10 @@ class TransformSimulator(QualitySimulator):
 
         lib = ctypes.CDLL(so_path)
 
-        try:
-            func = lib[function_name]
-        except AttributeError:
-            func = lib
+        # 获取函数指针
+        func = getattr(lib, function_name, None)
+        if func is None:
+            raise RuntimeError(f"Function '{function_name}' not found in {so_path}")
 
         outputs = {}
         for key in golden_outputs:

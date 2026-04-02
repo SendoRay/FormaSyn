@@ -1,0 +1,4168 @@
+# Definitional proc to organize widgets for parameters.
+proc init_gui { IPINST } {
+  ipgui::add_param $IPINST -name "Component_Name"
+  #Adding Page
+  set Page_0 [ipgui::add_page $IPINST -name "Page 0"]
+  #Adding Group
+  set group_0 [ipgui::add_group $IPINST -name "group 0" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_0}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_ENABLE_ID_PORTS" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_ID_WIDTH" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_DATA_WIDTH" -parent ${group_0} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_ENABLE_USER_PORTS" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_AWUSER_WIDTH" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_WUSER_WIDTH" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_BUSER_WIDTH" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_ARUSER_WIDTH" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_RUSER_WIDTH" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_USER_VALUE" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_PROT_VALUE" -parent ${group_0}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_0_CACHE_VALUE" -parent ${group_0}
+
+  #Adding Group
+  set group_1 [ipgui::add_group $IPINST -name "group 1" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_1}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_ENABLE_ID_PORTS" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_ID_WIDTH" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_DATA_WIDTH" -parent ${group_1} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_ENABLE_USER_PORTS" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_AWUSER_WIDTH" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_WUSER_WIDTH" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_BUSER_WIDTH" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_ARUSER_WIDTH" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_RUSER_WIDTH" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_USER_VALUE" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_PROT_VALUE" -parent ${group_1}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_1_CACHE_VALUE" -parent ${group_1}
+
+  #Adding Group
+  set group_2 [ipgui::add_group $IPINST -name "group 2" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_2}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_ENABLE_ID_PORTS" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_ID_WIDTH" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_DATA_WIDTH" -parent ${group_2} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_ENABLE_USER_PORTS" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_AWUSER_WIDTH" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_WUSER_WIDTH" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_BUSER_WIDTH" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_ARUSER_WIDTH" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_RUSER_WIDTH" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_USER_VALUE" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_PROT_VALUE" -parent ${group_2}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_2_CACHE_VALUE" -parent ${group_2}
+
+  #Adding Group
+  set group_3 [ipgui::add_group $IPINST -name "group 3" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_3}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_ENABLE_ID_PORTS" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_ID_WIDTH" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_DATA_WIDTH" -parent ${group_3} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_ENABLE_USER_PORTS" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_AWUSER_WIDTH" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_WUSER_WIDTH" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_BUSER_WIDTH" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_ARUSER_WIDTH" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_RUSER_WIDTH" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_USER_VALUE" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_PROT_VALUE" -parent ${group_3}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_3_CACHE_VALUE" -parent ${group_3}
+
+  #Adding Group
+  set group_4 [ipgui::add_group $IPINST -name "group 4" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_4}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_ENABLE_ID_PORTS" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_ID_WIDTH" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_DATA_WIDTH" -parent ${group_4} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_ENABLE_USER_PORTS" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_AWUSER_WIDTH" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_WUSER_WIDTH" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_BUSER_WIDTH" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_ARUSER_WIDTH" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_RUSER_WIDTH" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_USER_VALUE" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_PROT_VALUE" -parent ${group_4}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_4_CACHE_VALUE" -parent ${group_4}
+
+  #Adding Group
+  set group_5 [ipgui::add_group $IPINST -name "group 5" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_5}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_ENABLE_ID_PORTS" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_ID_WIDTH" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_DATA_WIDTH" -parent ${group_5} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_ENABLE_USER_PORTS" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_AWUSER_WIDTH" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_WUSER_WIDTH" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_BUSER_WIDTH" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_ARUSER_WIDTH" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_RUSER_WIDTH" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_USER_VALUE" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_PROT_VALUE" -parent ${group_5}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_5_CACHE_VALUE" -parent ${group_5}
+
+  #Adding Group
+  set group_6 [ipgui::add_group $IPINST -name "group 6" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_6}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_ENABLE_ID_PORTS" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_ID_WIDTH" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_DATA_WIDTH" -parent ${group_6} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_ENABLE_USER_PORTS" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_AWUSER_WIDTH" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_WUSER_WIDTH" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_BUSER_WIDTH" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_ARUSER_WIDTH" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_RUSER_WIDTH" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_USER_VALUE" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_PROT_VALUE" -parent ${group_6}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_6_CACHE_VALUE" -parent ${group_6}
+
+  #Adding Group
+  set group_7 [ipgui::add_group $IPINST -name "group 7" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem0_7}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_ENABLE_ID_PORTS" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_ID_WIDTH" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_DATA_WIDTH" -parent ${group_7} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_ENABLE_USER_PORTS" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_AWUSER_WIDTH" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_WUSER_WIDTH" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_BUSER_WIDTH" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_ARUSER_WIDTH" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_RUSER_WIDTH" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_USER_VALUE" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_PROT_VALUE" -parent ${group_7}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM0_7_CACHE_VALUE" -parent ${group_7}
+
+  #Adding Group
+  set group_8 [ipgui::add_group $IPINST -name "group 8" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_0}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_ENABLE_ID_PORTS" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_ID_WIDTH" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_DATA_WIDTH" -parent ${group_8} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_ENABLE_USER_PORTS" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_AWUSER_WIDTH" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_WUSER_WIDTH" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_BUSER_WIDTH" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_ARUSER_WIDTH" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_RUSER_WIDTH" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_USER_VALUE" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_PROT_VALUE" -parent ${group_8}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_0_CACHE_VALUE" -parent ${group_8}
+
+  #Adding Group
+  set group_9 [ipgui::add_group $IPINST -name "group 9" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_1}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_ENABLE_ID_PORTS" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_ID_WIDTH" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_DATA_WIDTH" -parent ${group_9} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_ENABLE_USER_PORTS" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_AWUSER_WIDTH" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_WUSER_WIDTH" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_BUSER_WIDTH" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_ARUSER_WIDTH" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_RUSER_WIDTH" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_USER_VALUE" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_PROT_VALUE" -parent ${group_9}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_1_CACHE_VALUE" -parent ${group_9}
+
+  #Adding Group
+  set group_10 [ipgui::add_group $IPINST -name "group 10" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_2}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_ENABLE_ID_PORTS" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_ID_WIDTH" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_DATA_WIDTH" -parent ${group_10} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_ENABLE_USER_PORTS" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_AWUSER_WIDTH" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_WUSER_WIDTH" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_BUSER_WIDTH" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_ARUSER_WIDTH" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_RUSER_WIDTH" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_USER_VALUE" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_PROT_VALUE" -parent ${group_10}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_2_CACHE_VALUE" -parent ${group_10}
+
+  #Adding Group
+  set group_11 [ipgui::add_group $IPINST -name "group 11" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_3}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_ENABLE_ID_PORTS" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_ID_WIDTH" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_DATA_WIDTH" -parent ${group_11} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_ENABLE_USER_PORTS" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_AWUSER_WIDTH" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_WUSER_WIDTH" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_BUSER_WIDTH" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_ARUSER_WIDTH" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_RUSER_WIDTH" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_USER_VALUE" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_PROT_VALUE" -parent ${group_11}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_3_CACHE_VALUE" -parent ${group_11}
+
+  #Adding Group
+  set group_12 [ipgui::add_group $IPINST -name "group 12" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_4}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_ENABLE_ID_PORTS" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_ID_WIDTH" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_DATA_WIDTH" -parent ${group_12} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_ENABLE_USER_PORTS" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_AWUSER_WIDTH" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_WUSER_WIDTH" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_BUSER_WIDTH" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_ARUSER_WIDTH" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_RUSER_WIDTH" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_USER_VALUE" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_PROT_VALUE" -parent ${group_12}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_4_CACHE_VALUE" -parent ${group_12}
+
+  #Adding Group
+  set group_13 [ipgui::add_group $IPINST -name "group 13" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_5}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_ENABLE_ID_PORTS" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_ID_WIDTH" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_DATA_WIDTH" -parent ${group_13} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_ENABLE_USER_PORTS" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_AWUSER_WIDTH" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_WUSER_WIDTH" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_BUSER_WIDTH" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_ARUSER_WIDTH" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_RUSER_WIDTH" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_USER_VALUE" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_PROT_VALUE" -parent ${group_13}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_5_CACHE_VALUE" -parent ${group_13}
+
+  #Adding Group
+  set group_14 [ipgui::add_group $IPINST -name "group 14" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_6}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_ENABLE_ID_PORTS" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_ID_WIDTH" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_DATA_WIDTH" -parent ${group_14} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_ENABLE_USER_PORTS" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_AWUSER_WIDTH" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_WUSER_WIDTH" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_BUSER_WIDTH" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_ARUSER_WIDTH" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_RUSER_WIDTH" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_USER_VALUE" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_PROT_VALUE" -parent ${group_14}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_6_CACHE_VALUE" -parent ${group_14}
+
+  #Adding Group
+  set group_15 [ipgui::add_group $IPINST -name "group 15" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem1_7}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_ENABLE_ID_PORTS" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_ID_WIDTH" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_DATA_WIDTH" -parent ${group_15} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_ENABLE_USER_PORTS" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_AWUSER_WIDTH" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_WUSER_WIDTH" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_BUSER_WIDTH" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_ARUSER_WIDTH" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_RUSER_WIDTH" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_USER_VALUE" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_PROT_VALUE" -parent ${group_15}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM1_7_CACHE_VALUE" -parent ${group_15}
+
+  #Adding Group
+  set group_16 [ipgui::add_group $IPINST -name "group 16" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_0}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_ENABLE_ID_PORTS" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_ID_WIDTH" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_DATA_WIDTH" -parent ${group_16} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_ENABLE_USER_PORTS" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_AWUSER_WIDTH" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_WUSER_WIDTH" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_BUSER_WIDTH" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_ARUSER_WIDTH" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_RUSER_WIDTH" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_USER_VALUE" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_PROT_VALUE" -parent ${group_16}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_0_CACHE_VALUE" -parent ${group_16}
+
+  #Adding Group
+  set group_17 [ipgui::add_group $IPINST -name "group 17" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_1}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_ENABLE_ID_PORTS" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_ID_WIDTH" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_DATA_WIDTH" -parent ${group_17} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_ENABLE_USER_PORTS" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_AWUSER_WIDTH" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_WUSER_WIDTH" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_BUSER_WIDTH" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_ARUSER_WIDTH" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_RUSER_WIDTH" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_USER_VALUE" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_PROT_VALUE" -parent ${group_17}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_1_CACHE_VALUE" -parent ${group_17}
+
+  #Adding Group
+  set group_18 [ipgui::add_group $IPINST -name "group 18" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_2}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_ENABLE_ID_PORTS" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_ID_WIDTH" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_DATA_WIDTH" -parent ${group_18} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_ENABLE_USER_PORTS" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_AWUSER_WIDTH" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_WUSER_WIDTH" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_BUSER_WIDTH" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_ARUSER_WIDTH" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_RUSER_WIDTH" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_USER_VALUE" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_PROT_VALUE" -parent ${group_18}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_2_CACHE_VALUE" -parent ${group_18}
+
+  #Adding Group
+  set group_19 [ipgui::add_group $IPINST -name "group 19" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_3}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_ENABLE_ID_PORTS" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_ID_WIDTH" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_DATA_WIDTH" -parent ${group_19} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_ENABLE_USER_PORTS" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_AWUSER_WIDTH" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_WUSER_WIDTH" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_BUSER_WIDTH" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_ARUSER_WIDTH" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_RUSER_WIDTH" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_USER_VALUE" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_PROT_VALUE" -parent ${group_19}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_3_CACHE_VALUE" -parent ${group_19}
+
+  #Adding Group
+  set group_20 [ipgui::add_group $IPINST -name "group 20" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_4}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_ENABLE_ID_PORTS" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_ID_WIDTH" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_DATA_WIDTH" -parent ${group_20} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_ENABLE_USER_PORTS" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_AWUSER_WIDTH" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_WUSER_WIDTH" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_BUSER_WIDTH" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_ARUSER_WIDTH" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_RUSER_WIDTH" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_USER_VALUE" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_PROT_VALUE" -parent ${group_20}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_4_CACHE_VALUE" -parent ${group_20}
+
+  #Adding Group
+  set group_21 [ipgui::add_group $IPINST -name "group 21" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_5}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_ENABLE_ID_PORTS" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_ID_WIDTH" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_DATA_WIDTH" -parent ${group_21} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_ENABLE_USER_PORTS" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_AWUSER_WIDTH" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_WUSER_WIDTH" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_BUSER_WIDTH" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_ARUSER_WIDTH" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_RUSER_WIDTH" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_USER_VALUE" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_PROT_VALUE" -parent ${group_21}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_5_CACHE_VALUE" -parent ${group_21}
+
+  #Adding Group
+  set group_22 [ipgui::add_group $IPINST -name "group 22" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_6}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_ENABLE_ID_PORTS" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_ID_WIDTH" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_DATA_WIDTH" -parent ${group_22} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_ENABLE_USER_PORTS" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_AWUSER_WIDTH" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_WUSER_WIDTH" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_BUSER_WIDTH" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_ARUSER_WIDTH" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_RUSER_WIDTH" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_USER_VALUE" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_PROT_VALUE" -parent ${group_22}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_6_CACHE_VALUE" -parent ${group_22}
+
+  #Adding Group
+  set group_23 [ipgui::add_group $IPINST -name "group 23" -parent ${Page_0} -display_name {AXI4 Master Interface m_axi_gmem2_7}]
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_ENABLE_ID_PORTS" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_ID_WIDTH" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_DATA_WIDTH" -parent ${group_23} -widget comboBox
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_ENABLE_USER_PORTS" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_AWUSER_WIDTH" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_WUSER_WIDTH" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_BUSER_WIDTH" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_ARUSER_WIDTH" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_RUSER_WIDTH" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_USER_VALUE" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_PROT_VALUE" -parent ${group_23}
+  ipgui::add_param $IPINST -name "C_M_AXI_GMEM2_7_CACHE_VALUE" -parent ${group_23}
+
+
+
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_0_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_0_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_0_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_0_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_0_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_0_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_0_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_0_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_0_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_0_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_0_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_0_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_0_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_0_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_1_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_1_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_1_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_1_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_1_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_1_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_1_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_1_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_1_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_1_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_1_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_1_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_1_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_1_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_2_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_2_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_2_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_2_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_2_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_2_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_2_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_2_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_2_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_2_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_2_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_2_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_2_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_2_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_3_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_3_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_3_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_3_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_3_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_3_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_3_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_3_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_3_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_3_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_3_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_3_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_3_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_3_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_4_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_4_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_4_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_4_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_4_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_4_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_4_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_4_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_4_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_4_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_4_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_4_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_4_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_4_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_5_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_5_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_5_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_5_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_5_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_5_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_5_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_5_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_5_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_5_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_5_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_5_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_5_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_5_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_6_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_6_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_6_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_6_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_6_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_6_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_6_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_6_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_6_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_6_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_6_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_6_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_6_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_6_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_7_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_7_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_7_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM0_7_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM0_7_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_7_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_7_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_7_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_7_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM0_7_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_7_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_7_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM0_7_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM0_7_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_0_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_0_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_0_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_0_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_0_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_0_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_0_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_0_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_0_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_0_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_0_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_0_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_0_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_0_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_1_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_1_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_1_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_1_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_1_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_1_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_1_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_1_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_1_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_1_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_1_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_1_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_1_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_1_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_2_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_2_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_2_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_2_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_2_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_2_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_2_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_2_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_2_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_2_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_2_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_2_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_2_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_2_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_3_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_3_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_3_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_3_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_3_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_3_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_3_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_3_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_3_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_3_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_3_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_3_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_3_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_3_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_4_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_4_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_4_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_4_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_4_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_4_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_4_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_4_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_4_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_4_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_4_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_4_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_4_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_4_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_5_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_5_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_5_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_5_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_5_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_5_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_5_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_5_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_5_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_5_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_5_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_5_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_5_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_5_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_6_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_6_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_6_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_6_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_6_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_6_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_6_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_6_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_6_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_6_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_6_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_6_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_6_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_6_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_7_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_7_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_7_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM1_7_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM1_7_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_7_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_7_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_7_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_7_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM1_7_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_7_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_7_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM1_7_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM1_7_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_0_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_0_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_0_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_0_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_0_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_0_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_0_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_0_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_0_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_0_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_0_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_0_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_0_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_0_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_1_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_1_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_1_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_1_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_1_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_1_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_1_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_1_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_1_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_1_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_1_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_1_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_1_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_1_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_2_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_2_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_2_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_2_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_2_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_2_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_2_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_2_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_2_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_2_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_2_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_2_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_2_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_2_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_3_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_3_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_3_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_3_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_3_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_3_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_3_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_3_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_3_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_3_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_3_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_3_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_3_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_3_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_4_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_4_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_4_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_4_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_4_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_4_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_4_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_4_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_4_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_4_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_4_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_4_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_4_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_4_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_5_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_5_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_5_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_5_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_5_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_5_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_5_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_5_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_5_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_5_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_5_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_5_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_5_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_5_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_6_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_6_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_6_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_6_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_6_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_6_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_6_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_6_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_6_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_6_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_6_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_6_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_6_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_6_CACHE_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_ID_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_7_ENABLE_ID_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_ID_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_ID_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_ENABLE_ID_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_7_ID_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_ID_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_7_DATA_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_DATA_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_USER_PORTS } {
+	# Procedure called to update C_M_AXI_GMEM2_7_ENABLE_USER_PORTS when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_USER_PORTS { PARAM_VALUE.C_M_AXI_GMEM2_7_ENABLE_USER_PORTS } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_ENABLE_USER_PORTS
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_7_AWUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_AWUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_7_WUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_WUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_7_BUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_BUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_7_ARUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_ARUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH } {
+	# Procedure called to update C_M_AXI_GMEM2_7_RUSER_WIDTH when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH { PARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_RUSER_WIDTH
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_7_USER_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_USER_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_7_PROT_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_PROT_VALUE
+	return true
+}
+
+proc update_PARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE } {
+	# Procedure called to update C_M_AXI_GMEM2_7_CACHE_VALUE when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE { PARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE } {
+	# Procedure called to validate C_M_AXI_GMEM2_7_CACHE_VALUE
+	return true
+}
+
+
+proc update_MODELPARAM_VALUE.C_S_AXI_CONTROL_ADDR_WIDTH { MODELPARAM_VALUE.C_S_AXI_CONTROL_ADDR_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	# WARNING: There is no corresponding user parameter named "C_S_AXI_CONTROL_ADDR_WIDTH". Setting updated value from the model parameter.
+set_property value 9 ${MODELPARAM_VALUE.C_S_AXI_CONTROL_ADDR_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_0_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_1_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_2_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_3_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_4_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_5_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_6_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM0_7_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_0_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_1_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_2_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_3_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_4_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_5_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_6_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM1_7_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_0_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_1_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_2_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_3_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_4_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_5_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_6_CACHE_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_ID_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_DATA_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_AWUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_ARUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_WUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_RUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH PARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_BUSER_WIDTH}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE PARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_USER_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE PARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_PROT_VALUE}
+}
+
+proc update_MODELPARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE { MODELPARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE PARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE}] ${MODELPARAM_VALUE.C_M_AXI_GMEM2_7_CACHE_VALUE}
+}
+

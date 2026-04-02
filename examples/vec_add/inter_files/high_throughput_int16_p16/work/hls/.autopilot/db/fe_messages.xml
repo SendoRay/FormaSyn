@@ -1,0 +1,96 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=kernel" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port=a offset=slave bundle=gmem0" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:7:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port=b offset=slave bundle=gmem1" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:8:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port=c offset=slave bundle=gmem2" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:9:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=a bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:10:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=b bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:11:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=c bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:12:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=return bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:18:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=a_local complete" ARG_PragmaType="array_partition" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:19:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=b_local complete" ARG_PragmaType="array_partition" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:20:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=c_local complete" ARG_PragmaType="array_partition" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:24:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:25:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="factor=16" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:31:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:32:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="factor=16" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:38:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:39:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="factor=16" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:45:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:46:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="factor=16" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-359" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'store_c' (kernel.cpp:44:14) in function 'kernel': changing partial unrolling into complete unrolling since the unrolling factor (=16) is no less than the loop trip count (=16).">
+        <args Factor="16" LoopLoc="kernel.cpp:44:14" LoopName="store_c" TripCount="16"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'store_c' (kernel.cpp:44:14) in function 'kernel' completely with a factor of 16">
+        <args Factor="16" LoopLoc="kernel.cpp:44:14" LoopName="store_c"/>
+    </msg>
+    <msg msg_groups="PRAGMA_PIPELINE" msg_id="214-189" msg_severity="WARNING" msg_loc="kernel.cpp:5:0" msg_body="Pipeline directive for loop 'store_c' (kernel.cpp:44:14) in function 'kernel' has been removed because the loop is unrolled completely">
+        <args LoopLoc="kernel.cpp:44:14" LoopName="store_c"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-359" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'compute' (kernel.cpp:37:14) in function 'kernel': changing partial unrolling into complete unrolling since the unrolling factor (=16) is no less than the loop trip count (=16).">
+        <args Factor="16" LoopLoc="kernel.cpp:37:14" LoopName="compute" TripCount="16"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'compute' (kernel.cpp:37:14) in function 'kernel' completely with a factor of 16">
+        <args Factor="16" LoopLoc="kernel.cpp:37:14" LoopName="compute"/>
+    </msg>
+    <msg msg_groups="PRAGMA_PIPELINE" msg_id="214-189" msg_severity="WARNING" msg_loc="kernel.cpp:5:0" msg_body="Pipeline directive for loop 'compute' (kernel.cpp:37:14) in function 'kernel' has been removed because the loop is unrolled completely">
+        <args LoopLoc="kernel.cpp:37:14" LoopName="compute"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-359" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'load_b' (kernel.cpp:30:13) in function 'kernel': changing partial unrolling into complete unrolling since the unrolling factor (=16) is no less than the loop trip count (=16).">
+        <args Factor="16" LoopLoc="kernel.cpp:30:13" LoopName="load_b" TripCount="16"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'load_b' (kernel.cpp:30:13) in function 'kernel' completely with a factor of 16">
+        <args Factor="16" LoopLoc="kernel.cpp:30:13" LoopName="load_b"/>
+    </msg>
+    <msg msg_groups="PRAGMA_PIPELINE" msg_id="214-189" msg_severity="WARNING" msg_loc="kernel.cpp:5:0" msg_body="Pipeline directive for loop 'load_b' (kernel.cpp:30:13) in function 'kernel' has been removed because the loop is unrolled completely">
+        <args LoopLoc="kernel.cpp:30:13" LoopName="load_b"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-359" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'load_a' (kernel.cpp:23:10) in function 'kernel': changing partial unrolling into complete unrolling since the unrolling factor (=16) is no less than the loop trip count (=16).">
+        <args Factor="16" LoopLoc="kernel.cpp:23:10" LoopName="load_a" TripCount="16"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:5:0" msg_body="Unrolling loop 'load_a' (kernel.cpp:23:10) in function 'kernel' completely with a factor of 16">
+        <args Factor="16" LoopLoc="kernel.cpp:23:10" LoopName="load_a"/>
+    </msg>
+    <msg msg_groups="PRAGMA_PIPELINE" msg_id="214-189" msg_severity="WARNING" msg_loc="kernel.cpp:5:0" msg_body="Pipeline directive for loop 'load_a' (kernel.cpp:23:10) in function 'kernel' has been removed because the loop is unrolled completely">
+        <args LoopLoc="kernel.cpp:23:10" LoopName="load_a"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

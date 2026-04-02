@@ -1,22 +1,31 @@
-"""FormaSyn LLM DSE Agent package."""
+"""FormaSyn Agent 模块.
 
-from FormaSyn.formasyn.agent.base_agent import BaseAgent
-from FormaSyn.formasyn.agent.codegen_agent import CodegenArtifacts, ScheduleCodegenAgent
-from FormaSyn.formasyn.agent.diagnostic import AgentDiagnostic, DiagnosticResult, RecoveryAction, RecoveryLayer
-from FormaSyn.formasyn.agent.dse_agent import DSEAgent, IntentJSON, QuantSpec
-from FormaSyn.formasyn.agent.knowledge_prompt import COMM_KNOWLEDGE_PROMPT
+包含：
+- DSEAgent: 设计空间探索，生成变体意图
+- ScheduleCodegenAgent: 代码生成
+- AgentDiagnostic: 智能诊断与回退决策
+- DiagnosticAgent: 基于 LLM 的错误诊断
+"""
+
+from .base_agent import BaseAgent
+from .codegen_agent import ScheduleCodegenAgent, CodegenArtifacts
+from .diagnostic import (
+    AgentDiagnostic,
+    DiagnosticResult,
+    RecoveryAction,
+    RecoveryLayer,
+)
+from .dse_agent import DSEAgent, IntentJSON, QuantSpec
 
 __all__ = [
     "BaseAgent",
-    "CodegenArtifacts",
-    "COMM_KNOWLEDGE_PROMPT",
-    "DSEAgent",
-    "IntentJSON",
-    "QuantSpec",
     "ScheduleCodegenAgent",
-    # Diagnostic
+    "CodegenArtifacts",
     "AgentDiagnostic",
     "DiagnosticResult",
     "RecoveryAction",
     "RecoveryLayer",
+    "DSEAgent",
+    "IntentJSON",
+    "QuantSpec",
 ]

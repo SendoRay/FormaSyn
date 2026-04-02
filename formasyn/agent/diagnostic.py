@@ -1,23 +1,27 @@
-"""Agent Diagnostic: 解析 HLS 报告 / Quality结果 → 高层归因文本 + 修改决策.
+"""Agent Diagnostic: LLM 智能诊断与回退决策中心.
 
-本模块负责：
-1. 解析 HLS 报告和质量结果，生成高层归因文本（给 LLM）
-2. 决定新的参数值（如何修改）
-3. 决定回退到哪一层（去哪里修改）
-4. 构造回退输入（给到 feedback/loop.py）
+核心职责：
+1. 接收所有验证阶段的失败信息 (FailureContext)
+2. 调用 LLM 智能分析失败原因
+3. 由 LLM 决策回退到哪一层 (template_engine, roofline_solver, mlc_backend, codegen_agent, dse_agent)
+4. 输出结构化的恢复动作 (RecoveryAction)
 
-与 checker/diagnostic.py 的区别：
-- checker/diagnostic.py：基础诊断函数，被 L1/L2/L3 checker 调用
-- agent/diagnostic.py：Agent 诊断决策模块，被 feedback/loop.py 调用
+架构优势：
+- 单一入口：所有报错都送到这里
+- 智能决策：LLM 根据完整上下文决定最优回退策略
+- 完全利用 Agent 能力：不硬编码规则，让 LLM 灵活判断
 """
 
 from __future__ import annotations
 
+import json
 import logging
+import re
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Optional
 
+from FormaSyn.formasyn.agent.base_agent import BaseAgent, _LOADED_MODEL
 from FormaSyn.formasyn.checker.diagnostic import FailureContext, FailureStage
 
 logger = logging.getLogger(__name__)
@@ -26,11 +30,11 @@ logger = logging.getLogger(__name__)
 class RecoveryLayer(str, Enum):
     """回退目标层：决定将修改后的参数送回哪一层."""
 
-    TEMPLATE_ENGINE = "template_engine"  # 量化参数调整
-    ROOFLINE_SOLVER = "roofline_solver"  # 并行度/位宽调整
+    TEMPLATE_ENGINE = "template_engine"  # 量化参数、approx_method 调整
+    ROOFLINE_SOLVER = "roofline_solver"  # 并行度、调度参数调整
     MLC_BACKEND = "mlc_backend"  # BRAM tiling/bank 调整
     CODEGEN_AGENT = "codegen_agent"  # pragma 调整
-    DSE_AGENT = "dse_agent"  # 触发新一轮 LLM 探索
+    DSE_AGENT = "dse_agent"  # 触发新一轮 LLM 探索 (深度迭代)
 
 
 @dataclass
@@ -38,10 +42,10 @@ class RecoveryAction:
     """恢复动作：描述如何修改 IR.
 
     Attributes:
-        layer: 目标层（RecoveryLayer）.
-        action_type: 动作类型（relax_quant, reduce_parallelism, adjust_tiling, tune_pragma）.
-        params: 动作参数.
-        rationale: 原因说明.
+        layer: 目标层（RecoveryLayer）- 由 LLM 智能决策
+        action_type: 动作类型（relax_quant, reduce_parallelism, adjust_tiling, tune_pragma, explore_new）
+        params: 动作参数 - 由 LLM 根据错误类型智能生成
+        rationale: LLM 给出的决策原因说明
     """
 
     layer: RecoveryLayer
@@ -56,9 +60,9 @@ class DiagnosticResult:
 
     Attributes:
         failure: 原始失败上下文.
-        feedback_text: 给 LLM 的归因文本.
-        recovery_action: 恢复动作（决定如何修改、回退到哪一层）.
-        should_deep_loop: 是否需要触发深度迭代（回 DSE Agent）.
+        feedback_text: 给 LLM 的归因文本（用于下一轮深度迭代）.
+        recovery_action: 恢复动作（包含 LLM 决策的回退层和修改参数）.
+        should_deep_loop: 是否需要触发深度迭代（回退到 DSE_AGENT）.
     """
 
     failure: FailureContext
@@ -67,273 +71,472 @@ class DiagnosticResult:
     should_deep_loop: bool = False
 
 
-class AgentDiagnostic:
-    """Agent 诊断决策模块.
+# ---------------------------------------------------------------------------
+# LLM Prompt 设计
+# ---------------------------------------------------------------------------
 
-    根据 FailureContext 分析失败原因，决定：
-    1. 如何修改（量化参数、并行度、tiling、pragma）
-    2. 回退到哪一层（template_engine, roofline_solver, mlc_backend, codegen_agent, dse_agent）
-    3. 是否需要深度迭代（触发 LLM 重新探索）
+_DIAGNOSTIC_SYSTEM_PROMPT = """You are an expert FPGA/HLS diagnostic and recovery decision agent.
+
+Your task is to analyze verification failures and decide:
+1. **WHY** it failed (root cause analysis)
+2. **WHERE** to go back to fix it (which layer)
+3. **HOW** to fix it (specific action and parameters)
+
+## Available Recovery Layers (where to go back)
+
+1. `template_engine` - Algorithm-hardware mapping layer
+   - Adjust: quantization bit-width (int_bits, frac_bits)
+   - Adjust: approximation method (approx_method)
+   - Adjust: saturation protection (enable_saturation)
+   - Use when: numerical accuracy issues, wrong algorithm choice
+
+2. `roofline_solver` - Scheduling layer
+   - Adjust: parallelism degree (1, 2, 4, 8, 16...)
+   - Adjust: unroll factors
+   - Adjust: tile sizes
+   - Use when: resource overflow (DSP/LUT), timing issues from parallelism
+
+3. `mlc_backend` - Memory banking layer  
+   - Adjust: BRAM bank allocation
+   - Adjust: memory tiling strategy
+   - Use when: BRAM overflow, irregular access port conflicts
+
+4. `codegen_agent` - Code generation layer
+   - Adjust: pipeline II pragma
+   - Adjust: array partition type (none/cyclic/complete)
+   - Use when: timing closure issues, II not met
+
+5. `dse_agent` - High-level exploration layer
+   - Trigger: new design space exploration
+   - Use when: fundamental architecture mismatch, or quick fixes failed multiple times
+
+## Decision Guidelines
+
+**Numerical Failures (L1_NUMERIC)**:
+- Sign error rate > 1% → relax quantization → `template_engine`
+- NMSE too high but sign OK → increase frac_bits → `template_engine`  
+- Severe numerical issues → try different approx_method → `template_engine` or `dse_agent`
+
+**Resource Failures (L2_CSYNTH)**:
+- DSP overflow → reduce parallelism → `roofline_solver`
+- LUT overflow → reduce parallelism + bitwidth → `roofline_solver`
+- BRAM overflow → reduce tile_size or banks → `mlc_backend`
+- Timing/II not met → relax pragma → `codegen_agent`
+- Multiple resource violations → `dse_agent`
+
+**Quality Failures (L3_QUALITY)**:
+- Minor gap → fine-tune quantization → `template_engine`
+- Major gap → `dse_agent` for new architecture exploration
+
+**Compilation Failures (L1_COMPILE)**:
+- Syntax errors → `codegen_agent` to regenerate
+- Type mismatches → `template_engine` to adjust data types
+- Fundamental issues → `dse_agent`
+
+## Output Format
+
+Return ONLY a JSON object (no markdown, no explanations outside JSON):
+
+```json
+{
+  "summary": "One-line diagnosis in Chinese",
+  "gap_description": "Detailed explanation of what failed",
+  "root_cause": "technical_root_cause_category",
+  "recovery_decision": {
+    "target_layer": "template_engine|roofline_solver|mlc_backend|codegen_agent|dse_agent",
+    "action_type": "relax_quant|reduce_parallelism|adjust_tiling|tune_pragma|explore_new|regenerate_code",
+    "params": {
+      // Parameters specific to the action_type
+      // e.g., for relax_quant: {"int_bits_increment": 2, "frac_bits_increment": 2}
+      // e.g., for reduce_parallelism: {"parallelism_factor": 0.5}
+      // e.g., for adjust_tiling: {"tile_size_factor": 0.5}
+      // e.g., for tune_pragma: {"pipeline_ii_increment": 1, "relax_array_partition": true}
+      // e.g., for explore_new: {"suggestion": "Try min_sum instead of offset_min_sum"}
+    },
+    "rationale": "Detailed reasoning for this decision"
+  },
+  "should_deep_loop": false,
+  "alternative_actions": [
+    // Optional: if primary action fails, try these alternatives
+    {"target_layer": "...", "action_type": "...", "rationale": "..."}
+  ]
+}
+```
+
+## Key Decision Principles
+
+1. **Prefer local fixes**: If a quick fix at a lower layer is likely to work, prefer it over going back to dse_agent
+2. **Escalate when needed**: If you've seen similar failures multiple times, or the gap is large, go to dse_agent
+3. **Consider dependencies**: Changing approx_method requires going through template_engine, which then flows through roofline_solver and codegen_agent
+4. **Resource vs Quality trade-off**: Be aggressive in reducing resources if quality is good; be conservative if quality is already marginal
+"""
+
+
+class AgentDiagnostic(BaseAgent):
+    """LLM 智能诊断决策 Agent.
+
+    核心方法 `diagnose()` 接收 FailureContext，调用 LLM 做智能决策：
+    1. 分析失败原因
+    2. 决定回退到哪一层 (RecoveryLayer)
+    3. 生成具体的恢复动作参数
     """
 
-    def diagnose(self, failure: FailureContext) -> DiagnosticResult:
-        """诊断失败并生成恢复动作.
+    def __init__(
+        self,
+        model: str | None = None,
+        enable_rule_fallback: bool = True,
+    ) -> None:
+        """Initialize diagnostic agent.
 
         Args:
-            failure: 失败上下文.
+            model: LLM model name. Uses default if None.
+            enable_rule_fallback: Whether to use rule-based fallback when LLM fails.
+        """
+        if model is None:
+            model = _LOADED_MODEL
+        super().__init__(model=model)
+        self._enable_rule_fallback = enable_rule_fallback
+
+    def diagnose(self, failure: FailureContext) -> DiagnosticResult:
+        """智能诊断：调用 LLM 决策回退策略.
+
+        Args:
+            failure: 失败上下文，包含所有错误信息.
 
         Returns:
-            DiagnosticResult，包含反馈文本和恢复动作.
+            DiagnosticResult，包含 LLM 决策的恢复动作.
         """
-        # 根据失败阶段分发到不同的诊断逻辑
+        # 首先尝试 LLM 智能诊断
+        try:
+            return self._llm_diagnose(failure)
+        except Exception as e:
+            logger.warning(f"LLM diagnosis failed: {e}")
+            if self._enable_rule_fallback:
+                logger.info("Falling back to rule-based diagnosis")
+                return self._rule_based_diagnose(failure)
+            raise
+
+    def _llm_diagnose(self, failure: FailureContext) -> DiagnosticResult:
+        """调用 LLM 进行智能诊断."""
+        user_prompt = self._build_diagnostic_prompt(failure)
+
+        raw_response = self._chat_completion(
+            system_prompt=_DIAGNOSTIC_SYSTEM_PROMPT,
+            user_prompt=user_prompt,
+            temperature=0.2,  # Slightly creative for decision making
+            timeout=10.0,  # 10秒超时
+        )
+        
+        decision = self._parse_llm_decision(raw_response)
+        
+        # 构建 RecoveryAction
+        recovery_action = RecoveryAction(
+            layer=RecoveryLayer(decision["recovery_decision"]["target_layer"]),
+            action_type=decision["recovery_decision"]["action_type"],
+            params=decision["recovery_decision"].get("params", {}),
+            rationale=decision["recovery_decision"].get("rationale", ""),
+        )
+        
+        # 检查是否是深度迭代
+        should_deep_loop = decision.get("should_deep_loop", False)
+        if recovery_action.layer == RecoveryLayer.DSE_AGENT:
+            should_deep_loop = True
+        
+        return DiagnosticResult(
+            failure=failure,
+            feedback_text=self._build_feedback_text(failure, decision),
+            recovery_action=recovery_action,
+            should_deep_loop=should_deep_loop,
+        )
+
+    def _build_diagnostic_prompt(self, failure: FailureContext) -> str:
+        """构建 LLM 诊断输入."""
+        parts = [
+            "# Failure Diagnostic Request",
+            "",
+            f"## Failure Stage: {failure.failed_at.value}",
+            f"## Variant ID: {failure.variant_id}",
+            f"## Summary: {failure.summary}",
+        ]
+        
+        if failure.gap_description:
+            parts.extend([
+                "",
+                "## Gap Description",
+                failure.gap_description,
+            ])
+        
+        if failure.measured_metrics:
+            parts.extend([
+                "",
+                "## Measured Metrics",
+                json.dumps(failure.measured_metrics, indent=2, ensure_ascii=False),
+            ])
+        
+        if failure.target_metrics:
+            parts.extend([
+                "",
+                "## Target Metrics",
+                json.dumps(failure.target_metrics, indent=2, ensure_ascii=False),
+            ])
+        
+        if failure.resource_usage:
+            parts.extend([
+                "",
+                "## Resource Usage",
+                json.dumps(failure.resource_usage, indent=2, ensure_ascii=False),
+            ])
+        
+        if failure.resource_budget:
+            parts.extend([
+                "",
+                "## Resource Budget",
+                json.dumps(failure.resource_budget, indent=2, ensure_ascii=False),
+            ])
+        
+        if failure.raw_error:
+            parts.extend([
+                "",
+                "## Raw Error Log",
+                "```",
+                failure.raw_error[:3000],  # Limit length
+                "```",
+            ])
+        
+        parts.extend([
+            "",
+            "## Decision Task",
+            "Based on the above failure information, analyze the root cause and decide:",
+            "1. Which layer should we go back to for fixing?",
+            "2. What specific action should be taken?",
+            "3. What parameters should be adjusted?",
+            "",
+            "Return your decision in the specified JSON format.",
+        ])
+        
+        return "\n".join(parts)
+
+    def _parse_llm_decision(self, raw: str) -> dict:
+        """解析 LLM 决策响应."""
+        text = raw.strip()
+        
+        # 移除 Markdown 代码块
+        if text.startswith("```"):
+            text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.DOTALL)
+            text = re.sub(r"\s*```$", "", text, flags=re.DOTALL)
+            text = text.strip()
+        
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            # 尝试提取 JSON 对象
+            match = re.search(r"\{[\s\S]*\}", text)
+            if match:
+                data = json.loads(match.group())
+            else:
+                raise ValueError("Cannot parse LLM decision response")
+        
+        # 验证必要字段
+        if "recovery_decision" not in data:
+            raise ValueError("LLM response missing recovery_decision")
+        
+        rd = data["recovery_decision"]
+        if "target_layer" not in rd or "action_type" not in rd:
+            raise ValueError("recovery_decision missing target_layer or action_type")
+        
+        return data
+
+    def _build_feedback_text(self, failure: FailureContext, decision: dict) -> str:
+        """构建给下一轮深度迭代的反馈文本."""
+        lines = [
+            f"## 诊断报告: {failure.variant_id}",
+            "",
+            f"**失败阶段**: {failure.failed_at.value}",
+            f"**失败摘要**: {decision.get('summary', failure.summary)}",
+            "",
+            "**根因分析**:",
+            decision.get('gap_description', failure.gap_description or '未提供'),
+            "",
+            "**决策**:",
+            f"- 回退层: `{decision['recovery_decision']['target_layer']}`",
+            f"- 动作类型: `{decision['recovery_decision']['action_type']}`",
+            f"- 决策理由: {decision['recovery_decision'].get('rationale', 'N/A')}",
+        ]
+        
+        if decision['recovery_decision'].get('params'):
+            lines.extend([
+                "",
+                "**调整参数**:",
+                "```json",
+                json.dumps(decision['recovery_decision']['params'], indent=2, ensure_ascii=False),
+                "```",
+            ])
+        
+        # 如果有替代方案，也加上
+        alts = decision.get('alternative_actions', [])
+        if alts:
+            lines.extend([
+                "",
+                "**备选方案**:",
+            ])
+            for i, alt in enumerate(alts[:2], 1):  # 最多显示2个
+                lines.append(f"{i}. {alt.get('target_layer')} - {alt.get('action_type')}: {alt.get('rationale', 'N/A')}")
+        
+        return "\n".join(lines)
+
+    def _rule_based_diagnose(self, failure: FailureContext) -> DiagnosticResult:
+        """基于规则的备用诊断（当 LLM 失败时使用）."""
+        # 根据失败阶段分发
         if failure.failed_at == FailureStage.L1_NUMERIC:
-            return self._diagnose_l1_numeric(failure)
+            return self._rule_diagnose_l1(failure)
         elif failure.failed_at == FailureStage.L2_CSYNTH:
-            return self._diagnose_l2_csynth(failure)
+            return self._rule_diagnose_l2(failure)
         elif failure.failed_at == FailureStage.L3_QUALITY:
-            return self._diagnose_l3_quality(failure)
+            return self._rule_diagnose_l3(failure)
         else:
-            # 编译错误等无法自动恢复的失败
+            # 编译错误等，默认触发深度迭代
             return DiagnosticResult(
                 failure=failure,
-                feedback_text=self._generate_compile_feedback(failure),
-                should_deep_loop=True,  # 触发 LLM 重新探索
+                feedback_text=f"编译/L2仿真失败: {failure.summary}\n建议: 触发深度迭代",
+                recovery_action=RecoveryAction(
+                    layer=RecoveryLayer.DSE_AGENT,
+                    action_type="explore_new",
+                    params={"suggestion": "Fix compilation or CSIM issues"},
+                    rationale="编译/L2仿真失败，需要重新探索",
+                ),
+                should_deep_loop=True,
             )
 
-    def _diagnose_l1_numeric(self, failure: FailureContext) -> DiagnosticResult:
-        """诊断 L1 数值错误.
-
-        判断是否可以通过放宽量化参数恢复，或者需要深度迭代。
-        """
-        # 检查符号错误率
+    def _rule_diagnose_l1(self, failure: FailureContext) -> DiagnosticResult:
+        """规则诊断 L1 数值错误."""
         sign_error_rate = failure.measured_metrics.get("sign_error_rate", 0)
         nmse_db = failure.measured_metrics.get("nmse_db", 0)
-
-        # 如果符号错误率高，可能是位宽不足
+        
         if sign_error_rate > 0.01:
             return DiagnosticResult(
                 failure=failure,
-                feedback_text=self._generate_l1_feedback(failure),
+                feedback_text=f"L1 数值失败: 符号错误率 {sign_error_rate:.4f} 过高",
                 recovery_action=RecoveryAction(
                     layer=RecoveryLayer.TEMPLATE_ENGINE,
                     action_type="relax_quant",
-                    params={
-                        "int_bits_increment": 1,
-                        "frac_bits_increment": 2,
-                    },
-                    rationale=f"符号错误率 {sign_error_rate:.4f} 过高，放宽量化位宽",
+                    params={"int_bits_increment": 1, "frac_bits_increment": 2},
+                    rationale="符号错误率高，需要增加量化位宽",
                 ),
                 should_deep_loop=False,
             )
-
-        # 如果 NMSE 过高，但符号错误率低，可能是小数精度不足
+        
         if nmse_db > -20:
             return DiagnosticResult(
                 failure=failure,
-                feedback_text=self._generate_l1_feedback(failure),
+                feedback_text=f"L1 数值失败: NMSE {nmse_db:.2f} dB 过高",
                 recovery_action=RecoveryAction(
                     layer=RecoveryLayer.TEMPLATE_ENGINE,
                     action_type="relax_quant",
-                    params={
-                        "frac_bits_increment": 3,
-                    },
-                    rationale=f"NMSE {nmse_db:.2f} dB 过高，增加小数位宽",
+                    params={"frac_bits_increment": 3},
+                    rationale="NMSE 过高，增加小数位宽",
                 ),
                 should_deep_loop=False,
             )
-
-        # 轻微数值错误，尝试微调
+        
         return DiagnosticResult(
             failure=failure,
-            feedback_text=self._generate_l1_feedback(failure),
+            feedback_text="L1 数值失败: 轻微误差",
             recovery_action=RecoveryAction(
                 layer=RecoveryLayer.TEMPLATE_ENGINE,
                 action_type="fine_tune_quant",
-                params={
-                    "frac_bits_increment": 1,
-                },
-                rationale=f"轻微数值误差，微调量化参数",
+                params={"frac_bits_increment": 1},
+                rationale="轻微数值误差，微调量化",
             ),
             should_deep_loop=False,
         )
 
-    def _diagnose_l2_csynth(self, failure: FailureContext) -> DiagnosticResult:
-        """诊断 L2 综合/资源失败.
-
-        根据超限的资源类型，决定回退到哪一层：
-        - DSP 超限 → roofline_solver（降低并行度）
-        - LUT 超限 → roofline_solver（降低并行度/位宽）
-        - BRAM 超限 → mlc_backend（调整 tiling）
-        - II 超标/时序 → codegen_agent（调整 pragma）
-        """
+    def _rule_diagnose_l2(self, failure: FailureContext) -> DiagnosticResult:
+        """规则诊断 L2 资源错误."""
         usage = failure.resource_usage
         budget = failure.resource_budget
-
-        # 检查 DSP 超限
+        
+        # 检查各类资源超限
         if usage.get("dsp", 0) > budget.get("dsp", 999999):
             return DiagnosticResult(
                 failure=failure,
-                feedback_text=self._generate_l2_feedback(failure),
+                feedback_text=f"L2 资源失败: DSP 超限 ({usage['dsp']} > {budget['dsp']})",
                 recovery_action=RecoveryAction(
                     layer=RecoveryLayer.ROOFLINE_SOLVER,
                     action_type="reduce_parallelism",
-                    params={
-                        "parallelism_factor": 0.5,  # 减半
-                    },
-                    rationale=f"DSP 超限（{usage['dsp']} > {budget['dsp']}），降低并行度",
+                    params={"parallelism_factor": 0.5},
+                    rationale="DSP 超限，降低并行度",
                 ),
                 should_deep_loop=False,
             )
-
-        # 检查 LUT 超限
-        if usage.get("lut", 0) > budget.get("lut", 999999):
-            return DiagnosticResult(
-                failure=failure,
-                feedback_text=self._generate_l2_feedback(failure),
-                recovery_action=RecoveryAction(
-                    layer=RecoveryLayer.ROOFLINE_SOLVER,
-                    action_type="reduce_parallelism_and_bitwidth",
-                    params={
-                        "parallelism_factor": 0.5,
-                        "bitwidth_reduction": 2,
-                    },
-                    rationale=f"LUT 超限（{usage['lut']} > {budget['lut']}），降低并行度和位宽",
-                ),
-                should_deep_loop=False,
-            )
-
-        # 检查 BRAM 超限
+        
         if usage.get("bram", 0) > budget.get("bram", 999999):
             return DiagnosticResult(
                 failure=failure,
-                feedback_text=self._generate_l2_feedback(failure),
+                feedback_text=f"L2 资源失败: BRAM 超限 ({usage['bram']} > {budget['bram']})",
                 recovery_action=RecoveryAction(
                     layer=RecoveryLayer.MLC_BACKEND,
                     action_type="adjust_tiling",
-                    params={
-                        "tile_size_factor": 0.5,
-                    },
-                    rationale=f"BRAM 超限（{usage['bram']} > {budget['bram']}），调整 tiling",
+                    params={"tile_size_factor": 0.5},
+                    rationale="BRAM 超限，调整 tiling",
                 ),
                 should_deep_loop=False,
             )
-
+        
         # 时序/II 问题
         if "时序" in failure.summary or "II" in failure.summary:
             return DiagnosticResult(
                 failure=failure,
-                feedback_text=self._generate_l2_feedback(failure),
+                feedback_text="L2 时序失败: II 或时序不满足",
                 recovery_action=RecoveryAction(
                     layer=RecoveryLayer.CODEGEN_AGENT,
                     action_type="tune_pragma",
-                    params={
-                        "pipeline_ii_increment": 1,
-                    },
-                    rationale="时序不满足，调整 pipeline pragma",
+                    params={"pipeline_ii_increment": 1},
+                    rationale="时序不满足，放宽 pipeline",
                 ),
                 should_deep_loop=False,
             )
-
-        # 默认情况：触发深度迭代
+        
+        # 默认触发深度迭代
         return DiagnosticResult(
             failure=failure,
-            feedback_text=self._generate_l2_feedback(failure),
+            feedback_text=f"L2 失败: {failure.summary}",
+            recovery_action=RecoveryAction(
+                layer=RecoveryLayer.DSE_AGENT,
+                action_type="explore_new",
+                params={},
+                rationale="复杂 L2 失败，需要深度迭代",
+            ),
             should_deep_loop=True,
         )
 
-    def _diagnose_l3_quality(self, failure: FailureContext) -> DiagnosticResult:
-        """诊断 L3 质量仿真失败.
-
-        判断是轻微质量问题（可以微调）还是严重问题（需要深度迭代）。
-        """
-        nmse_db = failure.measured_metrics.get("nmse_db", 0)
+    def _rule_diagnose_l3(self, failure: FailureContext) -> DiagnosticResult:
+        """规则诊断 L3 质量错误."""
         sign_error_rate = failure.measured_metrics.get("sign_error_rate", 0)
-
-        # 严重的符号错误或 NMSE - 需要深度迭代
+        nmse_db = failure.measured_metrics.get("nmse_db", 0)
+        
+        # 严重问题触发深度迭代
         if sign_error_rate > 0.05 or nmse_db > -10:
             return DiagnosticResult(
                 failure=failure,
-                feedback_text=self._generate_l3_feedback(failure),
+                feedback_text=f"L3 质量失败: 严重 ({sign_error_rate:.4f} SER, {nmse_db:.2f} NMSE)",
+                recovery_action=RecoveryAction(
+                    layer=RecoveryLayer.DSE_AGENT,
+                    action_type="explore_new",
+                    params={"suggestion": "Try different approx_method or higher precision"},
+                    rationale="严重质量问题，需要重新探索架构",
+                ),
                 should_deep_loop=True,
             )
-
-        # 轻微质量问题 - 可以微调
+        
+        # 轻微问题尝试微调
         return DiagnosticResult(
             failure=failure,
-            feedback_text=self._generate_l3_feedback(failure),
+            feedback_text="L3 质量失败: 轻微差距",
             recovery_action=RecoveryAction(
                 layer=RecoveryLayer.TEMPLATE_ENGINE,
                 action_type="fine_tune_quant",
-                params={
-                    "frac_bits_increment": 1,
-                },
-                rationale=f"轻微质量差距，微调量化参数",
+                params={"frac_bits_increment": 1},
+                rationale="轻微质量差距，微调量化",
             ),
             should_deep_loop=False,
-        )
-
-    def _generate_l1_feedback(self, failure: FailureContext) -> str:
-        """生成 L1 失败的反馈文本."""
-        parts = [
-            f"## L1 数值验证失败: {failure.variant_id}",
-            "",
-            f"**失败原因**: {failure.summary}",
-        ]
-        if failure.gap_description:
-            parts.append(f"**指标差距**: {failure.gap_description}")
-        parts.append("")
-        parts.append("**建议方向**:")
-        parts.append("- 增加量化位宽（int_bits 或 frac_bits）")
-        parts.append("- 使用更精确的近似方法（如 offset_min_sum 替代 min_sum）")
-        parts.append("- 启用饱和保护（enable_saturation）")
-        return "\n".join(parts)
-
-    def _generate_l2_feedback(self, failure: FailureContext) -> str:
-        """生成 L2 失败的反馈文本."""
-        parts = [
-            f"## L2 综合/资源验证失败: {failure.variant_id}",
-            "",
-            f"**失败原因**: {failure.summary}",
-        ]
-        if failure.gap_description:
-            parts.append(f"**资源差距**: {failure.gap_description}")
-        parts.append("")
-        parts.append("**建议方向**:")
-        if "DSP" in failure.gap_description:
-            parts.append("- 降低并行度（parallelism）")
-        if "BRAM" in failure.gap_description:
-            parts.append("- 调整 tiling 策略（减少 tile_size）")
-        if "时序" in failure.summary:
-            parts.append("- 放宽 pipeline II 约束")
-        parts.append("- 减少量化位宽")
-        parts.append("- 使用更轻量的近似方法")
-        return "\n".join(parts)
-
-    def _generate_l3_feedback(self, failure: FailureContext) -> str:
-        """生成 L3 失败的反馈文本."""
-        parts = [
-            f"## L3 质量仿真失败: {failure.variant_id}",
-            "",
-            f"**失败原因**: {failure.summary}",
-        ]
-        if failure.gap_description:
-            parts.append(f"**质量差距**: {failure.gap_description}")
-        parts.append("")
-        parts.append("**建议方向**:")
-        parts.append("- 增加量化位宽")
-        parts.append("- 尝试不同的近似算法")
-        parts.append("- 检查是否算法选择本身有问题")
-        return "\n".join(parts)
-
-    def _generate_compile_feedback(self, failure: FailureContext) -> str:
-        """生成编译失败的反馈文本."""
-        return (
-            f"## 编译失败: {failure.variant_id}\n"
-            f"\n"
-            f"**失败原因**: {failure.summary}\n"
-            f"\n"
-            f"**建议**:\n"
-            f"- 检查生成的 C++ 代码语法\n"
-            f"- 检查数据类型定义\n"
-            f"- 尝试不同的近似方法组合\n"
         )

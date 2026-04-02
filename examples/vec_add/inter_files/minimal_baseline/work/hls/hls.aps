@@ -1,0 +1,26 @@
+<AutoPilot:solution xmlns:AutoPilot="com.autoesl.autopilot.solution">
+    <name>
+        <value string="hls"/>
+    </name>
+    <project>
+        <value string="work"/>
+    </project>
+    <flowTarget value="vitis"/>
+    <config>
+        <config_interface m_axi_latency="64" m_axi_alignment_byte_size="64" m_axi_max_widen_bitwidth="512" default_interface="kernel"/>
+        <config_rtl register_reset_num="3"/>
+        <config_export flow="none" format="ip_catalog"/>
+    </config>
+    <targetInfo>
+        <TargetInfo value="xcu200:-fsgd2104:-2-e"/>
+    </targetInfo>
+    <libraryList>
+        <library value="xilinx/virtexuplus/virtexuplus" name="DefaultPlatform"/>
+    </libraryList>
+    <clockList>
+        <clock name="default" period="5ns" default="false"/>
+    </clockList>
+    <writeConfigIni value="0"/>
+    <isComponent value="1"/>
+</AutoPilot:solution>
+

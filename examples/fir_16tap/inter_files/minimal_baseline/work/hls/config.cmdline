@@ -1,0 +1,3 @@
+relativeroot=/home/chengzhy/FormaSyn/examples/fir_16tap/inter_files/minimal_baseline
+original_argv=--mode hls --csim --config /home/chengzhy/FormaSyn/examples/fir_16tap/inter_files/minimal_baseline/hls_config.cfg --work_dir /home/chengzhy/FormaSyn/examples/fir_16tap/inter_files/minimal_baseline/work 
+

@@ -1,0 +1,95 @@
+example_name: vec_add
+function_name: kernel
+schedule_json:
+{
+  "variant_id": "conservative_int13_p4",
+  "input_nodes": [
+    "a",
+    "b"
+  ],
+  "output_nodes": [
+    "c"
+  ],
+  "expected_ii": 5,
+  "total_dsp_estimate": 0,
+  "total_bram_estimate": 22,
+  "nodes": {
+    "a": {
+      "node_id": "a",
+      "op_type": "input",
+      "op_detail": {},
+      "shape": [
+        16
+      ],
+      "input_nodes": [],
+      "is_irregular_access": false,
+      "csr_ref": null,
+      "data_type": "ap_int<8>",
+      "approx_method": "spa_exact",
+      "parallelism": 4,
+      "saturation_guard": true,
+      "quant_int_bits": 8,
+      "quant_frac_bits": 0,
+      "tile_size": 16384,
+      "unroll_factor": 2,
+      "pipeline_ii": 5,
+      "array_partition_type": "cyclic",
+      "bram_banks": 0,
+      "address_mapping_code": null
+    },
+    "b": {
+      "node_id": "b",
+      "op_type": "input",
+      "op_detail": {},
+      "shape": [
+        16
+      ],
+      "input_nodes": [],
+      "is_irregular_access": false,
+      "csr_ref": null,
+      "data_type": "ap_int<8>",
+      "approx_method": "spa_exact",
+      "parallelism": 4,
+      "saturation_guard": true,
+      "quant_int_bits": 8,
+      "quant_frac_bits": 0,
+      "tile_size": 16384,
+      "unroll_factor": 2,
+      "pipeline_ii": 5,
+      "array_partition_type": "cyclic",
+      "bram_banks": 0,
+      "address_mapping_code": null
+    },
+    "c": {
+      "node_id": "c",
+      "op_type": "map",
+      "op_detail": {
+        "func": "add",
+        "func_params": {
+          "other_ref": "b"
+        }
+      },
+      "shape": [
+        16
+      ],
+      "input_nodes": [
+        "a",
+        "b"
+      ],
+      "is_irregular_access": false,
+      "csr_ref": null,
+      "data_type": "ap_int<13>",
+      "approx_method": "spa_exact",
+      "parallelism": 4,
+      "saturation_guard": true,
+      "quant_int_bits": 13,
+      "quant_frac_bits": 0,
+      "tile_size": 8192,
+      "unroll_factor": 2,
+      "pipeline_ii": 5,
+      "array_partition_type": "cyclic",
+      "bram_banks": 0,
+      "address_mapping_code": null
+    }
+  }
+}

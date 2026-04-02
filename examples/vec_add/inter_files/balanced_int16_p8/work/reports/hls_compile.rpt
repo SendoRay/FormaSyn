@@ -1,0 +1,340 @@
+
+
+================================================================
+== Synthesis Summary Report of 'kernel'
+================================================================
++ General Information: 
+    * Date:           Thu Mar 19 03:45:13 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        work
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: virtexuplus
+    * Target device:  xcu200-fsgd2104-2-e
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +----------+------+------+---------+---------+----------+---------+------+----------+----------+----+-------------+------------+-----+
+    |  Modules | Issue|      |      Latency      | Iteration|         | Trip |          |          |    |             |            |     |
+    |  & Loops | Type | Slack| (cycles)|   (ns)  |  Latency | Interval| Count| Pipelined|   BRAM   | DSP|      FF     |     LUT    | URAM|
+    +----------+------+------+---------+---------+----------+---------+------+----------+----------+----+-------------+------------+-----+
+    |+ kernel  |     -|  0.00|      145|  725.000|         -|      146|     -|        no|  16 (~0%)|   -|  18598 (~0%)|  21763 (1%)|    -|
+    | o loop   |     -|  3.65|        1|    5.000|         1|        1|     2|       yes|         -|   -|            -|           -|    -|
+    +----------+------+------+---------+---------+----------+---------+------+----------+----------+----+-------------+------------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* M_AXI
++---------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| Interface     | Read/Write | Data Width | Address Width | Latency | Offset | Register | Max Widen | Max Read     | Max Write    | Num Read    | Num Write   | Resource Estimate |
+|               |            | (SW->HW)   |               |         |        |          | Bitwidth  | Burst Length | Burst Length | Outstanding | Outstanding |                   |
++---------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| m_axi_gmem0_0 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem0_1 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem0_2 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem0_3 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem0_4 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem0_5 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem0_6 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem0_7 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_0 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_1 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_2 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_3 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_4 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_5 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_6 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem1_7 | READ_ONLY  | 8 -> 16    | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=1            |
+| m_axi_gmem2_0 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
+| m_axi_gmem2_1 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
+| m_axi_gmem2_2 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
+| m_axi_gmem2_3 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
+| m_axi_gmem2_4 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
+| m_axi_gmem2_5 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
+| m_axi_gmem2_6 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
+| m_axi_gmem2_7 | WRITE_ONLY | 16 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          |                   |
++---------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 9             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL     | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER     | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER   | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR   | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | a_0_1    | 0x10   | 32    | W      | Data signal of a_0               |                                                                                    |
+| s_axi_control | a_0_2    | 0x14   | 32    | W      | Data signal of a_0               |                                                                                    |
+| s_axi_control | a_1_1    | 0x1c   | 32    | W      | Data signal of a_1               |                                                                                    |
+| s_axi_control | a_1_2    | 0x20   | 32    | W      | Data signal of a_1               |                                                                                    |
+| s_axi_control | a_2_1    | 0x28   | 32    | W      | Data signal of a_2               |                                                                                    |
+| s_axi_control | a_2_2    | 0x2c   | 32    | W      | Data signal of a_2               |                                                                                    |
+| s_axi_control | a_3_1    | 0x34   | 32    | W      | Data signal of a_3               |                                                                                    |
+| s_axi_control | a_3_2    | 0x38   | 32    | W      | Data signal of a_3               |                                                                                    |
+| s_axi_control | a_4_1    | 0x40   | 32    | W      | Data signal of a_4               |                                                                                    |
+| s_axi_control | a_4_2    | 0x44   | 32    | W      | Data signal of a_4               |                                                                                    |
+| s_axi_control | a_5_1    | 0x4c   | 32    | W      | Data signal of a_5               |                                                                                    |
+| s_axi_control | a_5_2    | 0x50   | 32    | W      | Data signal of a_5               |                                                                                    |
+| s_axi_control | a_6_1    | 0x58   | 32    | W      | Data signal of a_6               |                                                                                    |
+| s_axi_control | a_6_2    | 0x5c   | 32    | W      | Data signal of a_6               |                                                                                    |
+| s_axi_control | a_7_1    | 0x64   | 32    | W      | Data signal of a_7               |                                                                                    |
+| s_axi_control | a_7_2    | 0x68   | 32    | W      | Data signal of a_7               |                                                                                    |
+| s_axi_control | b_0_1    | 0x70   | 32    | W      | Data signal of b_0               |                                                                                    |
+| s_axi_control | b_0_2    | 0x74   | 32    | W      | Data signal of b_0               |                                                                                    |
+| s_axi_control | b_1_1    | 0x7c   | 32    | W      | Data signal of b_1               |                                                                                    |
+| s_axi_control | b_1_2    | 0x80   | 32    | W      | Data signal of b_1               |                                                                                    |
+| s_axi_control | b_2_1    | 0x88   | 32    | W      | Data signal of b_2               |                                                                                    |
+| s_axi_control | b_2_2    | 0x8c   | 32    | W      | Data signal of b_2               |                                                                                    |
+| s_axi_control | b_3_1    | 0x94   | 32    | W      | Data signal of b_3               |                                                                                    |
+| s_axi_control | b_3_2    | 0x98   | 32    | W      | Data signal of b_3               |                                                                                    |
+| s_axi_control | b_4_1    | 0xa0   | 32    | W      | Data signal of b_4               |                                                                                    |
+| s_axi_control | b_4_2    | 0xa4   | 32    | W      | Data signal of b_4               |                                                                                    |
+| s_axi_control | b_5_1    | 0xac   | 32    | W      | Data signal of b_5               |                                                                                    |
+| s_axi_control | b_5_2    | 0xb0   | 32    | W      | Data signal of b_5               |                                                                                    |
+| s_axi_control | b_6_1    | 0xb8   | 32    | W      | Data signal of b_6               |                                                                                    |
+| s_axi_control | b_6_2    | 0xbc   | 32    | W      | Data signal of b_6               |                                                                                    |
+| s_axi_control | b_7_1    | 0xc4   | 32    | W      | Data signal of b_7               |                                                                                    |
+| s_axi_control | b_7_2    | 0xc8   | 32    | W      | Data signal of b_7               |                                                                                    |
+| s_axi_control | c_0_1    | 0xd0   | 32    | W      | Data signal of c_0               |                                                                                    |
+| s_axi_control | c_0_2    | 0xd4   | 32    | W      | Data signal of c_0               |                                                                                    |
+| s_axi_control | c_1_1    | 0xdc   | 32    | W      | Data signal of c_1               |                                                                                    |
+| s_axi_control | c_1_2    | 0xe0   | 32    | W      | Data signal of c_1               |                                                                                    |
+| s_axi_control | c_2_1    | 0xe8   | 32    | W      | Data signal of c_2               |                                                                                    |
+| s_axi_control | c_2_2    | 0xec   | 32    | W      | Data signal of c_2               |                                                                                    |
+| s_axi_control | c_3_1    | 0xf4   | 32    | W      | Data signal of c_3               |                                                                                    |
+| s_axi_control | c_3_2    | 0xf8   | 32    | W      | Data signal of c_3               |                                                                                    |
+| s_axi_control | c_4_1    | 0x100  | 32    | W      | Data signal of c_4               |                                                                                    |
+| s_axi_control | c_4_2    | 0x104  | 32    | W      | Data signal of c_4               |                                                                                    |
+| s_axi_control | c_5_1    | 0x10c  | 32    | W      | Data signal of c_5               |                                                                                    |
+| s_axi_control | c_5_2    | 0x110  | 32    | W      | Data signal of c_5               |                                                                                    |
+| s_axi_control | c_6_1    | 0x118  | 32    | W      | Data signal of c_6               |                                                                                    |
+| s_axi_control | c_6_2    | 0x11c  | 32    | W      | Data signal of c_6               |                                                                                    |
+| s_axi_control | c_7_1    | 0x124  | 32    | W      | Data signal of c_7               |                                                                                    |
+| s_axi_control | c_7_2    | 0x128  | 32    | W      | Data signal of c_7               |                                                                                    |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+-------------+
+| Argument | Direction | Datatype    |
++----------+-----------+-------------+
+| a        | in        | ap_int<8>*  |
+| b        | in        | ap_int<8>*  |
+| c        | out       | ap_int<16>* |
++----------+-----------+-------------+
+
+* SW-to-HW Mapping
++----------+---------------+-----------+----------+-----------+
+| Argument | HW Interface  | HW Type   | HW Usage | HW Info   |
++----------+---------------+-----------+----------+-----------+
+| a        | m_axi_gmem0_0 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| a        | m_axi_gmem0_1 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| a        | m_axi_gmem0_2 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| a        | m_axi_gmem0_3 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| a        | m_axi_gmem0_4 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| a        | m_axi_gmem0_5 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| a        | m_axi_gmem0_6 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| a        | m_axi_gmem0_7 | interface |          | channel=0 |
+| a        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_0 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_1 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_2 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_3 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_4 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_5 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_6 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| b        | m_axi_gmem1_7 | interface |          | channel=0 |
+| b        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_0 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_1 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_2 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_3 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_4 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_5 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_6 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
+| c        | m_axi_gmem2_7 | interface |          | channel=0 |
+| c        | s_axi_control | interface | offset   |           |
++----------+---------------+-----------+----------+-----------+
+
+
+================================================================
+== M_AXI Burst Information
+================================================================
+ Note: All burst requests might be further partitioned into multiple requests during RTL generation based on max_read_burst_length or max_write_burst_length settings.
+
+* All M_AXI Variable Accesses
++---------------+----------+------------------+-----------+--------------+--------+------+-----------------+
+| HW Interface  | Variable | Access Location  | Direction | Burst Status | Length | Loop | Loop Location   |
++---------------+----------+------------------+-----------+--------------+--------+------+-----------------+
+| m_axi_gmem0_0 | a_0      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_0 | a_0      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_1 | a_1      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_1 | a_1      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_2 | a_2      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_2 | a_2      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_3 | a_3      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_3 | a_3      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_4 | a_4      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_4 | a_4      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_5 | a_5      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_5 | a_5      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_6 | a_6      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_6 | a_6      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_7 | a_7      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem0_7 | a_7      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_0 | b_0      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_0 | b_0      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_1 | b_1      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_1 | b_1      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_2 | b_2      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_2 | b_2      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_3 | b_3      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_3 | b_3      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_4 | b_4      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_4 | b_4      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_5 | b_5      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_5 | b_5      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_6 | b_6      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_6 | b_6      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_7 | b_7      | kernel.cpp:22:14 | read      | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem1_7 | b_7      | kernel.cpp:22:14 | read      | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_0 | c_0      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_0 | c_0      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_1 | c_1      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_1 | c_1      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_2 | c_2      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_2 | c_2      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_3 | c_3      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_3 | c_3      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_4 | c_4      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_4 | c_4      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_5 | c_5      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_5 | c_5      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_6 | c_6      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_6 | c_6      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_7 | c_7      | kernel.cpp:22:7  | write     | Widened      | 1      | loop | kernel.cpp:19:5 |
+| m_axi_gmem2_7 | c_7      | kernel.cpp:22:7  | write     | Inferred     | 2      | loop | kernel.cpp:19:5 |
++---------------+----------+------------------+-----------+--------------+--------+------+-----------------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++-------------------------+-----+--------+------------+-----+--------+---------+
+| Name                    | DSP | Pragma | Variable   | Op  | Impl   | Latency |
++-------------------------+-----+--------+------------+-----+--------+---------+
+| + kernel                | 0   |        |            |     |        |         |
+|   add_ln22_fu_1586_p2   |     |        | add_ln22   | add | fabric | 0       |
+|   add_ln22_1_fu_1768_p2 |     |        | add_ln22_1 | add | fabric | 0       |
+|   add_ln22_2_fu_1796_p2 |     |        | add_ln22_2 | add | fabric | 0       |
+|   add_ln22_3_fu_1824_p2 |     |        | add_ln22_3 | add | fabric | 0       |
+|   add_ln22_4_fu_1852_p2 |     |        | add_ln22_4 | add | fabric | 0       |
+|   add_ln22_5_fu_1880_p2 |     |        | add_ln22_5 | add | fabric | 0       |
+|   add_ln22_6_fu_1908_p2 |     |        | add_ln22_6 | add | fabric | 0       |
+|   add_ln22_7_fu_1936_p2 |     |        | add_ln22_7 | add | fabric | 0       |
+|   i_fu_2150_p2          |     |        | i          | add | fabric | 0       |
++-------------------------+-----+--------+------------+-----+--------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name              | Usage     | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                   |           |           |      |      |        |          |      |         | Banks            |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| + kernel          |           |           | 16   | 0    |        |          |      |         |                  |
+|   control_s_axi_U | interface | s_axilite |      |      |        |          |      |         |                  |
+|   gmem0_0_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem0_1_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem0_2_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem0_3_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem0_4_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem0_5_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem0_6_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem0_7_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_0_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_1_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_2_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_3_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_4_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_5_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_6_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem1_7_m_axi_U | interface | m_axi     | 1    |      |        |          |      |         |                  |
+|   gmem2_0_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
+|   gmem2_1_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
+|   gmem2_2_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
+|   gmem2_3_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
+|   gmem2_4_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
+|   gmem2_5_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
+|   gmem2_6_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
+|   gmem2_7_m_axi_U | interface | m_axi     |      |      |        |          |      |         |                  |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------------+----------------------------------------+---------------------------------+
+| Type            | Options                                | Location                        |
++-----------------+----------------------------------------+---------------------------------+
+| INTERFACE       | m_axi port=a offset=slave bundle=gmem0 | kernel.cpp:6 in kernel, a       |
+| INTERFACE       | m_axi port=b offset=slave bundle=gmem1 | kernel.cpp:7 in kernel, b       |
+| INTERFACE       | m_axi port=c offset=slave bundle=gmem2 | kernel.cpp:8 in kernel, c       |
+| INTERFACE       | s_axilite port=a bundle=control        | kernel.cpp:9 in kernel, a       |
+| INTERFACE       | s_axilite port=b bundle=control        | kernel.cpp:10 in kernel, b      |
+| INTERFACE       | s_axilite port=c bundle=control        | kernel.cpp:11 in kernel, c      |
+| INTERFACE       | s_axilite port=return bundle=control   | kernel.cpp:12 in kernel, return |
+| ARRAY_PARTITION | variable=a cyclic factor=8 dim=1       | kernel.cpp:14 in kernel, a      |
+| ARRAY_PARTITION | variable=b cyclic factor=8 dim=1       | kernel.cpp:15 in kernel, b      |
+| ARRAY_PARTITION | variable=c cyclic factor=8 dim=1       | kernel.cpp:16 in kernel, c      |
+| PIPELINE        | ii=2                                   | kernel.cpp:20 in kernel         |
+| UNROLL          | factor=8                               | kernel.cpp:21 in kernel         |
++-----------------+----------------------------------------+---------------------------------+
+
+

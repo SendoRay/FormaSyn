@@ -1,0 +1,1721 @@
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaPartiallyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        loop_main
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' partially '
+  - String:          ''
+  - String:          'with a factor of '
+  - Factor:          '8'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_kernel_ir
+Args:            
+  - Callee:          'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_kernel_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          a
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Cyclic
+  - String:          ' partitioning'
+  - String:          ' with factor '
+  - Factor:          '8'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          b
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Cyclic
+  - String:          ' partitioning'
+  - String:          ' with factor '
+  - Factor:          '8'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          c
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Cyclic
+  - String:          ' partitioning'
+  - String:          ' with factor '
+  - Factor:          '8'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_07seq
+  - ArrayName:       a_0
+  - String:          ' '
+  - BundleName:      gmem0_0
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.14
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_08seq
+  - ArrayName:       b_0
+  - String:          ' '
+  - BundleName:      gmem1_0
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.19
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_19seq
+  - ArrayName:       a_1
+  - String:          ' '
+  - BundleName:      gmem0_1
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.44
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_210seq
+  - ArrayName:       a_2
+  - String:          ' '
+  - BundleName:      gmem0_2
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.48
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_311seq
+  - ArrayName:       a_3
+  - String:          ' '
+  - BundleName:      gmem0_3
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.52
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_412seq
+  - ArrayName:       a_4
+  - String:          ' '
+  - BundleName:      gmem0_4
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.56
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_513seq
+  - ArrayName:       a_5
+  - String:          ' '
+  - BundleName:      gmem0_5
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.60
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_614seq
+  - ArrayName:       a_6
+  - String:          ' '
+  - BundleName:      gmem0_6
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.64
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a_715seq
+  - ArrayName:       a_7
+  - String:          ' '
+  - BundleName:      gmem0_7
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 9 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.68
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_116seq
+  - ArrayName:       b_1
+  - String:          ' '
+  - BundleName:      gmem1_1
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.73
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_217seq
+  - ArrayName:       b_2
+  - String:          ' '
+  - BundleName:      gmem1_2
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.78
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_318seq
+  - ArrayName:       b_3
+  - String:          ' '
+  - BundleName:      gmem1_3
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.83
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_419seq
+  - ArrayName:       b_4
+  - String:          ' '
+  - BundleName:      gmem1_4
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.88
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_520seq
+  - ArrayName:       b_5
+  - String:          ' '
+  - BundleName:      gmem1_5
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.93
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_621seq
+  - ArrayName:       b_6
+  - String:          ' '
+  - BundleName:      gmem1_6
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.98
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b_722seq
+  - ArrayName:       b_7
+  - String:          ' '
+  - BundleName:      gmem1_7
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 32 }
+  - OrigDirection:   read
+  - OrigID:          for.body.load.103
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_023seq
+  - ArrayName:       c_0
+  - String:          ' '
+  - BundleName:      gmem2_0
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.109
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_124seq
+  - ArrayName:       c_1
+  - String:          ' '
+  - BundleName:      gmem2_1
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.111
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_225seq
+  - ArrayName:       c_2
+  - String:          ' '
+  - BundleName:      gmem2_2
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.113
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_326seq
+  - ArrayName:       c_3
+  - String:          ' '
+  - BundleName:      gmem2_3
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.115
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_427seq
+  - ArrayName:       c_4
+  - String:          ' '
+  - BundleName:      gmem2_4
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.117
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_528seq
+  - ArrayName:       c_5
+  - String:          ' '
+  - BundleName:      gmem2_5
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.119
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_629seq
+  - ArrayName:       c_6
+  - String:          ' '
+  - BundleName:      gmem2_6
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.121
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '2'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c_730seq
+  - ArrayName:       c_7
+  - String:          ' '
+  - BundleName:      gmem2_7
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 21, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          for.body.store.123
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_07seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq
+  - ArrayName:       a_0
+  - String:          ' '
+  - BundleName:      gmem0_0
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_08seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq31
+  - ArrayName:       b_0
+  - String:          ' '
+  - BundleName:      gmem1_0
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_19seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq33
+  - ArrayName:       a_1
+  - String:          ' '
+  - BundleName:      gmem0_1
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_210seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq35
+  - ArrayName:       a_2
+  - String:          ' '
+  - BundleName:      gmem0_2
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_311seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq37
+  - ArrayName:       a_3
+  - String:          ' '
+  - BundleName:      gmem0_3
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_412seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq39
+  - ArrayName:       a_4
+  - String:          ' '
+  - BundleName:      gmem0_4
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_513seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq41
+  - ArrayName:       a_5
+  - String:          ' '
+  - BundleName:      gmem0_5
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_614seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq43
+  - ArrayName:       a_6
+  - String:          ' '
+  - BundleName:      gmem0_6
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          a_715seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq45
+  - ArrayName:       a_7
+  - String:          ' '
+  - BundleName:      gmem0_7
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_116seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq47
+  - ArrayName:       b_1
+  - String:          ' '
+  - BundleName:      gmem1_1
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_217seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq49
+  - ArrayName:       b_2
+  - String:          ' '
+  - BundleName:      gmem1_2
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_318seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq51
+  - ArrayName:       b_3
+  - String:          ' '
+  - BundleName:      gmem1_3
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_419seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq53
+  - ArrayName:       b_4
+  - String:          ' '
+  - BundleName:      gmem1_4
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_520seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq55
+  - ArrayName:       b_5
+  - String:          ' '
+  - BundleName:      gmem1_5
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_621seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq57
+  - ArrayName:       b_6
+  - String:          ' '
+  - BundleName:      gmem1_6
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '16'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   read
+  - OrigID:          b_722seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq59
+  - ArrayName:       b_7
+  - String:          ' '
+  - BundleName:      gmem1_7
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_023seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq61
+  - ArrayName:       c_0
+  - String:          ' '
+  - BundleName:      gmem2_0
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_124seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq63
+  - ArrayName:       c_1
+  - String:          ' '
+  - BundleName:      gmem2_1
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_225seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq65
+  - ArrayName:       c_2
+  - String:          ' '
+  - BundleName:      gmem2_2
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_326seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq67
+  - ArrayName:       c_3
+  - String:          ' '
+  - BundleName:      gmem2_3
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_427seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq69
+  - ArrayName:       c_4
+  - String:          ' '
+  - BundleName:      gmem2_4
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_528seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq71
+  - ArrayName:       c_5
+  - String:          ' '
+  - BundleName:      gmem2_5
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_629seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq73
+  - ArrayName:       c_6
+  - String:          ' '
+  - BundleName:      gmem2_6
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '2'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '2'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '32'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 18, Column: 13 }
+  - OrigDirection:   write
+  - OrigID:          c_730seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq75
+  - ArrayName:       c_7
+  - String:          ' '
+  - BundleName:      gmem2_7
+  - String:          ' '
+  - LoopName:        loop_main
+  - String:          ' '
+  - LoopLoc:         'kernel.cpp:18:13'
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 5, Column: 0 }
+  - String:          ' '
+...

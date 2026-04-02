@@ -1,0 +1,20 @@
+{
+  "0": {
+    "basicblocks": 7,
+    "calls": "",
+    "control_depth": 2,
+    "def_use_depth": 6,
+    "file": "kernel.cpp",
+    "fileloc": 5,
+    "instructions": 97,
+    "loads": {
+      "T": 4
+    },
+    "memory_accesses": 8,
+    "name": "kernel",
+    "stores": {
+      "T": 2
+    },
+    "total_instructions": 97
+  }
+}

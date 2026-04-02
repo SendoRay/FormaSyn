@@ -1,0 +1,3 @@
+relativeroot=/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16
+original_argv=-c --mode hls --config /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/hls_config.cfg --work_dir /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work 
+

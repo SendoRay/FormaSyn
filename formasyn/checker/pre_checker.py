@@ -36,16 +36,19 @@ class PreChecker:
         part: str = DEFAULT_PART,
         clock: str = DEFAULT_CLOCK,
         output_root: str | Path = "/tmp/formasyn_checker",
+        examples_root: str | Path | None = None,
     ) -> None:
         """初始化 PreChecker.
 
         Args:
             part: FPGA 部件型号.
             clock: 时钟周期字符串.
-            output_root: 输出根目录.
+            output_root: 输出根目录（用于兼容旧代码）.
+            examples_root: 示例根目录，中间文件将保存到 examples_root/example_name/inter_files/variant_id.
         """
         self._part = part
         self._clock = clock
+        self._examples_root = Path(examples_root) if examples_root else None
         self._output_root = Path(output_root)
         self._tb_gen = TestbenchGenerator()
 
@@ -142,8 +145,15 @@ class PreChecker:
         return result
 
     def _create_output_dir(self, example_name: str, variant_id: str) -> Path:
-        """创建输出目录结构."""
-        output_dir = self._output_root / example_name / variant_id
+        """创建输出目录结构.
+
+        如果设置了 examples_root，则使用 examples_root/example_name/inter_files/variant_id，
+        否则使用 output_root/example_name/variant_id（兼容旧代码）.
+        """
+        if self._examples_root:
+            output_dir = self._examples_root / example_name / "inter_files" / variant_id
+        else:
+            output_dir = self._output_root / example_name / variant_id
         output_dir.mkdir(parents=True, exist_ok=True)
         return output_dir
 

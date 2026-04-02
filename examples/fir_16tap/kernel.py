@@ -38,7 +38,7 @@ def build_fir_16tap() -> fp.FormulaGraph:
     )
 
     graph.add(
-        fp.map("taps", func="multiply", output="products")
+        fp.map("taps", func="multiply", func_params={"coeffs": COEFFS}, output="products")
     )
 
     graph.add(

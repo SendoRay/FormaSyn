@@ -1,0 +1,98 @@
+
+
+set RtlHierarchyInfo {[
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"],
+		"CDFG" : "kernel",
+		"Protocol" : "ap_ctrl_chain",
+		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "1", "ap_idle" : "1", "real_start" : "0",
+		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
+		"II" : "0",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "147", "EstimateLatencyMax" : "147",
+		"Combinational" : "0",
+		"Datapath" : "0",
+		"ClockEnable" : "0",
+		"HasSubDataflow" : "0",
+		"InDataflowNetwork" : "0",
+		"HasNonBlockingOperation" : "0",
+		"IsBlackBox" : "0",
+		"Port" : [
+			{"Name" : "gmem0_0", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem0_0_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem0_0_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem0_1", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem0_1_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem0_1_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem0_2", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem0_2_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem0_2_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem0_3", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem0_3_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem0_3_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem1_0", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem1_0_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem1_0_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem1_1", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem1_1_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem1_1_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem1_2", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem1_2_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem1_2_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem1_3", "Type" : "MAXI", "Direction" : "I",
+				"BlockSignal" : [
+					{"Name" : "gmem1_3_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "gmem1_3_blk_n_R", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem2_0", "Type" : "MAXI", "Direction" : "O",
+				"BlockSignal" : [
+					{"Name" : "gmem2_0_blk_n_AW", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_0_blk_n_W", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_0_blk_n_B", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem2_1", "Type" : "MAXI", "Direction" : "O",
+				"BlockSignal" : [
+					{"Name" : "gmem2_1_blk_n_AW", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_1_blk_n_W", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_1_blk_n_B", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem2_2", "Type" : "MAXI", "Direction" : "O",
+				"BlockSignal" : [
+					{"Name" : "gmem2_2_blk_n_AW", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_2_blk_n_W", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_2_blk_n_B", "Type" : "RtlSignal"}]},
+			{"Name" : "gmem2_3", "Type" : "MAXI", "Direction" : "O",
+				"BlockSignal" : [
+					{"Name" : "gmem2_3_blk_n_AW", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_3_blk_n_W", "Type" : "RtlSignal"},
+					{"Name" : "gmem2_3_blk_n_B", "Type" : "RtlSignal"}]},
+			{"Name" : "a_0", "Type" : "None", "Direction" : "I"},
+			{"Name" : "a_1", "Type" : "None", "Direction" : "I"},
+			{"Name" : "a_2", "Type" : "None", "Direction" : "I"},
+			{"Name" : "a_3", "Type" : "None", "Direction" : "I"},
+			{"Name" : "b_0", "Type" : "None", "Direction" : "I"},
+			{"Name" : "b_1", "Type" : "None", "Direction" : "I"},
+			{"Name" : "b_2", "Type" : "None", "Direction" : "I"},
+			{"Name" : "b_3", "Type" : "None", "Direction" : "I"},
+			{"Name" : "c_0", "Type" : "None", "Direction" : "I"},
+			{"Name" : "c_1", "Type" : "None", "Direction" : "I"},
+			{"Name" : "c_2", "Type" : "None", "Direction" : "I"},
+			{"Name" : "c_3", "Type" : "None", "Direction" : "I"}],
+		"Loop" : [
+			{"Name" : "loop_main", "PipelineType" : "no",
+				"LoopDec" : {"FSMBitwidth" : "145", "FirstState" : "ap_ST_fsm_state75", "LastState" : ["ap_ST_fsm_state75"], "QuitState" : ["ap_ST_fsm_state75"], "PreState" : ["ap_ST_fsm_state74"], "PostState" : ["ap_ST_fsm_state76"], "OneDepthLoop" : "1", "OneStateBlock": "ap_ST_fsm_state75_blk"}}]},
+	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.control_s_axi_U", "Parent" : "0"},
+	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_0_m_axi_U", "Parent" : "0"},
+	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_1_m_axi_U", "Parent" : "0"},
+	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_2_m_axi_U", "Parent" : "0"},
+	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_3_m_axi_U", "Parent" : "0"},
+	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_0_m_axi_U", "Parent" : "0"},
+	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_1_m_axi_U", "Parent" : "0"},
+	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_2_m_axi_U", "Parent" : "0"},
+	{"ID" : "9", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_3_m_axi_U", "Parent" : "0"},
+	{"ID" : "10", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_0_m_axi_U", "Parent" : "0"},
+	{"ID" : "11", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_1_m_axi_U", "Parent" : "0"},
+	{"ID" : "12", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_2_m_axi_U", "Parent" : "0"},
+	{"ID" : "13", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_3_m_axi_U", "Parent" : "0"}]}

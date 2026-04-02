@@ -12,10 +12,10 @@ import copy
 import logging
 from typing import Callable, Optional
 
-from FormaSyn.formasyn.agent.dse_agent import IntentJSON
-from FormaSyn.formasyn.golden.quant_analyzer import QuantSpec
-from FormaSyn.formasyn.ir.algo_hw_dialect import AlgoHWDialect, AlgoHWNode
-from FormaSyn.formasyn.ir.math_dialect import MathDialect, MathNode
+from ..agent.dse_agent import IntentJSON
+from ..golden.quant_analyzer import QuantSpec
+from ..ir.algo_hw_dialect import AlgoHWDialect, AlgoHWNode
+from ..ir.math_dialect import MathDialect, MathNode
 
 logger = logging.getLogger(__name__)
 
@@ -484,7 +484,8 @@ class TemplateEngine:
                 int_bits = qs.recommended_int_bits
                 frac_bits = qs.recommended_frac_bits
             else:
-                int_bits, frac_bits = 8, 0
+                # 默认值：根据节点类型选择合适的默认值
+                int_bits, frac_bits = _get_default_quant_for_node(node)
 
             total = int_bits + frac_bits
             if frac_bits > 0:
@@ -507,3 +508,29 @@ class TemplateEngine:
             cost = _DSP_COST.get(func, 0)
             total += cost * parallelism
         return total
+
+
+def _get_default_quant_for_node(node: AlgoHWNode) -> tuple[int, int]:
+    """根据节点类型返回合理的默认量化参数.
+
+    对于需要小数精度的节点（如 FIR 滤波器），返回 ap_fixed 参数。
+    """
+    op_type = node.op_type
+    op_detail = node.op_detail
+
+    # FIR 滤波器的 map multiply 操作需要小数精度
+    if op_type == "map" and op_detail.get("func") == "multiply":
+        # 如果有系数数组（FIR 滤波器），使用 ap_fixed
+        if "coeffs" in op_detail.get("func_params", {}):
+            return 4, 12  # ap_fixed<16,4>: 4位整数, 12位小数
+
+    # reduce add 操作通常也需要小数精度
+    if op_type == "reduce" and op_detail.get("op") == "add":
+        return 6, 10  # ap_fixed<16,6>: 6位整数, 10位小数
+
+    # shift_reg 输出通常需要保持一定精度
+    if op_type == "shift_reg":
+        return 4, 12  # ap_fixed<16,4>
+
+    # 默认使用 ap_int<8>
+    return 8, 0

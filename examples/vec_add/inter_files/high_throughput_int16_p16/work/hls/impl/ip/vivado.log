@@ -1,0 +1,52 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Wed May 21 22:58:25 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Thu Mar 19 04:08:54 2026
+# Process ID         : 3414431
+# Current directory  : /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip
+# Command line       : vivado -notrace -mode batch -source run_ippack.tcl
+# Log file           : /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/vivado.log
+# Journal file       : /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/vivado.jou
+# Running On         : h3c-chengzhy
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 22.04.5 LTS
+# Processor Detail   : AMD EPYC 9684X 96-Core Processor
+# CPU Frequency      : 1500.000 MHz
+# CPU Physical cores : 192
+# CPU Logical cores  : 384
+# Host memory        : 1081728 MB
+# Swap memory        : 0 MB
+# Total Virtual      : 1081728 MB
+# Available Virtual  : 1075906 MB
+#-----------------------------------------------------------
+source run_ippack.tcl -notrace
+INFO: calling package_hls_ip ip_types=vitis sysgen json_file=/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/hls_data.json outdir=/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip srcdir=/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls ippack_options_dict= ippack_options_dict=
+INFO: Copied 1 ipmisc file(s) to /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/misc
+INFO: Copied 5 verilog file(s) to /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/hdl/verilog
+INFO: Copied 5 vhdl file(s) to /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/hdl/vhdl
+INFO: Copied 10 swdriver file(s) to /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/drivers
+WARNING: [Common 17-1496] Vivado tclapp support version doesn't have install/uninstall hooks. Please update support using ::tclapp::update_support command.
+WARNING: [Common 17-1496] Vivado tclapp support version doesn't have install/uninstall hooks. Please update support using ::tclapp::update_support command.
+WARNING: [Common 17-1496] Vivado tclapp support version doesn't have install/uninstall hooks. Please update support using ::tclapp::update_support command.
+WARNING: [Common 17-1496] Vivado tclapp support version doesn't have install/uninstall hooks. Please update support using ::tclapp::update_support command.
+WARNING: [Common 17-1496] Vivado tclapp support version doesn't have install/uninstall hooks. Please update support using ::tclapp::update_support command.
+WARNING: [Common 17-1496] Vivado tclapp support version doesn't have install/uninstall hooks. Please update support using ::tclapp::update_support command.
+INFO: Import ports from HDL: /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/hdl/vhdl/kernel.vhd (kernel)
+INFO: Add axi4lite interface s_axi_control
+INFO: Add clock interface ap_clk
+INFO: Add reset interface ap_rst_n
+INFO: Add interrupt interface interrupt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/2025.1/Vivado/data/ip'.
+INFO: Add axi4full interface m_axi_gmem0
+INFO: Add axi4full interface m_axi_gmem1
+INFO: Add axi4full interface m_axi_gmem2
+INFO: Calling post_process_vitis to specialize IP
+INFO: Calling post_process_sysgen to specialize IP
+Generating sysgen info xml from json file
+INFO: Created IP /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/component.xml
+INFO: Created IP archive /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p16/work/hls/impl/ip/xilinx_com_hls_kernel_1_0.zip
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 19 04:08:58 2026...

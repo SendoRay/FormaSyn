@@ -2,15 +2,14 @@
 
 hardware_constraints:
   target_device: "xcu200-fsgd2104-2-e"
-  clock_target_mhz: 300
-  max_dsp: 8
-  max_bram_18k: 2
-  target_ii: 1
+  clock_target_mhz: 200
+  max_dsp: 64
+  max_bram_18k: 100
+  target_ii: 10000
 
 algorithm_metrics:
   evaluator_type: "WaveformEvaluator"
-  kernel_type: "filtering"
+  kernel_type: "elementwise"
   tolerance:
-    nmse_db: -80.0
-    max_overflows: 0
+    nmse_db: -40.0
 

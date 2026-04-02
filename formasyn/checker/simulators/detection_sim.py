@@ -34,13 +34,14 @@ class DetectionSimulator(QualitySimulator):
         test_inputs: dict[str, list[float]],
         golden_outputs: dict[str, list[float]],
         *,
+        hls_header_code: str | None = None,
         csr_data: Optional[dict[str, list[int]]] = None,
     ) -> dict[str, float]:
         """运行检测质量仿真."""
         try:
             clean_code = self._strip_hls_specifics(hls_cpp_code)
             function_name = self._extract_function_name(hls_cpp_code)
-            so_path = self._compile_to_so(clean_code, function_name)
+            so_path = self._compile_to_so(clean_code, function_name, hls_header_code)
 
             outputs = self._run_so_simple(
                 so_path,
@@ -84,10 +85,9 @@ class DetectionSimulator(QualitySimulator):
 
         lib = ctypes.CDLL(so_path)
 
-        try:
-            func = lib[function_name]
-        except AttributeError:
-            func = lib
+        func = getattr(lib, function_name, None)
+        if func is None:
+            raise RuntimeError(f"Function '{function_name}' not found")
 
         outputs = {}
         for key in golden_outputs:

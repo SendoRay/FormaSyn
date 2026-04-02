@@ -1,0 +1,245 @@
+<ENTRY>
+{
+ "thisFile": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/work.hlscompile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Mar 19 04:10:55 2026",
+ "timestampMillis": "1773893455711",
+ "buildStep": {
+  "cmdId": "2a6f8f83-ab1e-4206-be5f-0a417741a145",
+  "name": "v++",
+  "logFile": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/logs/work.steps.log",
+  "commandLine": "/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/v++  -c --mode hls --config /home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/hls_config.cfg --work_dir /home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work ",
+  "args": [
+   "-c",
+   "--mode",
+   "hls",
+   "--config",
+   "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/hls_config.cfg",
+   "--work_dir",
+   "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/hls_config.cfg",
+    "content": "part=xcu200-fsgd2104-2-e\n\n[hls]\nclock=5.0ns\nflow_target=vitis\nsyn.top=kernel\nsyn.file=kernel.cpp\ntb.file=kernel_tb.cpp\n"
+   }
+  ],
+  "cwd": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 19 04:10:55 2026",
+ "timestampMillis": "1773893455711",
+ "status": {
+  "cmdId": "2a6f8f83-ab1e-4206-be5f-0a417741a145",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu Mar 19 04:10:59 2026",
+ "timestampMillis": "1773893459857",
+ "buildSummary": {
+  "hardwarePlatform": "",
+  "hardwareDsa": "",
+  "platformDirectory": "",
+  "runtime": "",
+  "systemConfig": "",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "kernel",
+     "file": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/kernel.zip",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/kernel.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "2025.1"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Mar 19 04:10:59 2026",
+ "timestampMillis": "1773893459857",
+ "buildStep": {
+  "cmdId": "338743b2-176d-4f14-88c9-6337b0c66e64",
+  "name": "",
+  "logFile": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/hls/hls.log",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 19 04:10:59 2026",
+ "timestampMillis": "1773893459857",
+ "status": {
+  "cmdId": "338743b2-176d-4f14-88c9-6337b0c66e64",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:10:59 2026",
+ "timestampMillis": "1773893459858",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/hls/hls_data.json",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:10:59 2026",
+ "timestampMillis": "1773893459858",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/hls/syn/report/csynth.rpt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:10:59 2026",
+ "timestampMillis": "1773893459858",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/hls/syn/report/csynth.xml",
+  "name": "",
+  "fileType": "XML",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:11:15 2026",
+ "timestampMillis": "1773893475739",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_DATAFLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:11:15 2026",
+ "timestampMillis": "1773893475740",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_FUNCTION_CALL_GRAPH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:11:15 2026",
+ "timestampMillis": "1773893475740",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_SCHEDULE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 19 04:11:15 2026",
+ "timestampMillis": "1773893475741",
+ "status": {
+  "cmdId": "338743b2-176d-4f14-88c9-6337b0c66e64",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 19 04:11:46 2026",
+ "timestampMillis": "1773893506452",
+ "status": {
+  "cmdId": "2a6f8f83-ab1e-4206-be5f-0a417741a145",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:11:46 2026",
+ "timestampMillis": "1773893506516",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/reports/v++_compile_work_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 19 04:11:46 2026",
+ "timestampMillis": "1773893506517",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/balanced_int15_p8/work/reports/.db/v++_compile_work_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

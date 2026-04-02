@@ -137,10 +137,11 @@ def build_l2_checker(config: ExampleConfig) -> L2Checker:
         "dsp": hw.get("max_dsp", 999999),
         "bram": hw.get("max_bram_18k", 999999),
     }
+    clock_mhz = hw.get("clock_target_mhz", 200)
     return L2Checker(
         hw_budget=budget,
         target_ii=hw.get("target_ii", 1),
-        clock_mhz=hw.get("clock_target_mhz", 250),
+        clock_mhz=clock_mhz,
     )
 
 
@@ -202,7 +203,16 @@ class FormaSynPipeline:
         self.use_dse = use_dse
 
         # 初始化模块
-        self.pre_checker = PreChecker()
+        # 从 constraints 中提取时钟配置
+        clock_mhz = config.hardware_constraints.get("clock_target_mhz", 200)
+        clock_ns = f"{round(1000.0 / clock_mhz, 2)}ns"
+        part = config.hardware_constraints.get("target_device", "xc7z020clg400-1")
+
+        self.pre_checker = PreChecker(
+            examples_root=EXAMPLES_DIR,
+            part=part,
+            clock=clock_ns,
+        )
         self.engine = TemplateEngine()
         self.solver = RooflineSolver(
             bram_kb=config.hardware_constraints.get("max_bram_18k", 32) * 18,
@@ -370,40 +380,270 @@ class FormaSynPipeline:
         golden_outputs: dict[str, list[float]],
         csr_data: dict[str, list[int]] | None,
     ) -> tuple[bool, FailureContext | None]:
-        """评估单个变体。
+        """评估单个变体，支持智能回退到任意层。
 
         Returns:
             (是否成功, 失败上下文)
         """
         variant_name = intent["variant_name"]
 
+        # 保存各阶段的 IR，支持从任意层回退
+        ir_state = {
+            "intent": intent,
+            "algo_hw": None,
+            "schedule": None,
+            "hls_cpp": None,
+            "hls_hdr": None,
+            "prepared_dir": None,
+        }
+
         try:
-            # 1. 渲染 AlgoHWDialect
-            algo_hw = self.engine.render(intent, math_dialect, quant_specs)
-
-            # 2. 求解 ScheduleDialect
-            try:
-                schedule = self.solver.solve(algo_hw)
-            except ResourceOverflowError as exc:
-                return False, FailureContext(
-                    failed_at=FailureStage.L2_CSYNTH,
-                    variant_id=variant_name,
-                    summary=f"Roofline 求解失败: {exc}",
+            # 初始执行完整流程
+            success, failure = self._execute_full_flow(
+                ir_state, math_dialect, quant_specs,
+                l1, l2, l3, golden_outputs, csr_data, variant_name
+            )
+            
+            if success:
+                return True, None
+            
+            # 失败，尝试智能恢复
+            from FormaSyn.formasyn.agent.diagnostic import RecoveryLayer
+            
+            max_recover_attempts = 3
+            for attempt in range(max_recover_attempts):
+                # 确定从哪一层开始恢复
+                current_ir = self._get_ir_for_layer(ir_state, failure.failed_at)
+                
+                loop_result = feedback_loop.recover(current_ir, failure)
+                
+                if loop_result.should_deep_loop:
+                    # Agent 决定触发深度迭代，本地恢复终止
+                    logger.info("Agent 决策: 触发深度迭代")
+                    return False, failure
+                
+                if not loop_result.success or not loop_result.target_layer:
+                    # 恢复失败或无法确定目标层
+                    logger.warning(f"恢复尝试 {attempt+1} 失败")
+                    return False, failure
+                
+                target_layer = loop_result.target_layer
+                logger.info(
+                    "Agent 决策: 从 %s 层恢复，动作: %s",
+                    target_layer.value,
+                    loop_result.actions_taken
                 )
+                
+                # 根据目标层重新执行流程
+                success, failure = self._recover_from_layer(
+                    ir_state, target_layer, loop_result.new_ir,
+                    math_dialect, quant_specs, l1, l2, l3,
+                    golden_outputs, csr_data, variant_name
+                )
+                
+                if success:
+                    logger.info(f"从 {target_layer.value} 恢复成功")
+                    return True, None
+                
+                # 继续下一轮恢复尝试
+            
+            # 超出最大恢复次数
+            logger.warning(f"达到最大恢复次数 {max_recover_attempts}")
+            return False, failure
 
-            # 3. 生成 HLS 代码
+        except Exception as e:
+            logger.exception(f"评估变体 {variant_name} 时发生异常")
+            return False, FailureContext(
+                failed_at=FailureStage.L1_COMPILE,
+                variant_id=variant_name,
+                summary=f"评估异常: {str(e)[:200]}",
+            )
+
+    def _get_ir_for_layer(self, ir_state: dict, failed_at: FailureStage):
+        """根据失败阶段确定应该传递哪个 IR 给 Agent."""
+        from FormaSyn.formasyn.agent.diagnostic import RecoveryLayer
+        
+        # 根据失败阶段推断合适的 IR
+        if failed_at in (FailureStage.L1_COMPILE, FailureStage.L1_NUMERIC):
+            return ir_state.get("algo_hw")
+        elif failed_at == FailureStage.L2_CSYNTH:
+            # L2 失败，可以回退到 schedule 或 algo_hw
+            return ir_state.get("schedule") or ir_state.get("algo_hw")
+        elif failed_at in (FailureStage.L2_CSIM, FailureStage.L3_COSIM, FailureStage.L3_QUALITY):
+            return ir_state.get("schedule")
+        return ir_state.get("algo_hw")
+
+    def _execute_full_flow(
+        self,
+        ir_state: dict,
+        math_dialect,
+        quant_specs,
+        l1: L1Checker,
+        l2: L2Checker,
+        l3: L3Checker,
+        golden_outputs: dict,
+        csr_data: dict | None,
+        variant_name: str,
+    ) -> tuple[bool, FailureContext | None]:
+        """执行完整的验证流程."""
+        
+        # 1. 渲染 AlgoHWDialect
+        intent = ir_state["intent"]
+        algo_hw = self.engine.render(intent, math_dialect, quant_specs)
+        ir_state["algo_hw"] = algo_hw
+
+        # 2. 求解 ScheduleDialect
+        try:
+            schedule = self.solver.solve(algo_hw)
+        except ResourceOverflowError as exc:
+            return False, FailureContext(
+                failed_at=FailureStage.L2_CSYNTH,
+                variant_id=variant_name,
+                summary=f"Roofline 求解失败: {exc}",
+            )
+        ir_state["schedule"] = schedule
+
+        # 3. 生成 HLS 代码
+        artifacts = self.codegen_agent.generate(
+            schedule,
+            example_name=self.config.name,
+            force_fallback=True,  # 使用本地模板生成，避免 LLM 超时
+        )
+        ir_state["hls_cpp"] = artifacts.kernel_cpp
+        ir_state["hls_hdr"] = artifacts.kernel_h
+
+        # 4. 准备验证环境
+        pre_result = self.pre_checker.prepare_environment(
+            example_name=self.config.name,
+            variant_id=variant_name,
+            hls_cpp_code=artifacts.kernel_cpp,
+            golden_outputs=golden_outputs,
+            test_inputs=self.config.test_data,
+            csr_data=csr_data,
+        )
+
+        if not pre_result.ready:
+            return False, FailureContext(
+                failed_at=FailureStage.L1_COMPILE,
+                variant_id=variant_name,
+                summary=f"环境准备失败: {pre_result.error}",
+            )
+        ir_state["prepared_dir"] = pre_result.output_dir
+
+        # 5. L1 验证
+        l1_result = l1.check(
+            artifacts.kernel_cpp,
+            golden_outputs,
+            self.config.test_data,
+            variant_name,
+            csr_data=csr_data,
+            prepared_dir=pre_result.output_dir,
+        )
+        if not l1_result.passed:
+            return False, l1_result.failure or FailureContext(
+                failed_at=FailureStage.L1_NUMERIC,
+                variant_id=variant_name,
+                summary="L1 数值验证失败",
+            )
+
+        # 6. L2 验证
+        l2_result = l2.check(
+            artifacts.kernel_cpp,
+            artifacts.kernel_h,
+            variant_name,
+            prepared_dir=pre_result.output_dir,
+        )
+        if not l2_result.passed:
+            return False, l2_result.failure or FailureContext(
+                failed_at=FailureStage.L2_CSYNTH,
+                variant_id=variant_name,
+                summary="L2 综合失败",
+            )
+
+        # 7. L3 验证
+        l3_result = l3.check(
+            artifacts.kernel_cpp,
+            variant_name,
+            self.config.test_data,
+            hls_header_code=artifacts.kernel_h,
+            csr_data=csr_data,
+        )
+        if not l3_result.passed:
+            return False, l3_result.failure or FailureContext(
+                failed_at=FailureStage.L3_QUALITY,
+                variant_id=variant_name,
+                summary="L3 质量验证失败",
+            )
+
+        return True, None
+
+    def _recover_from_layer(
+        self,
+        ir_state: dict,
+        target_layer,
+        new_ir,
+        math_dialect,
+        quant_specs,
+        l1: L1Checker,
+        l2: L2Checker,
+        l3: L3Checker,
+        golden_outputs: dict,
+        csr_data: dict | None,
+        variant_name: str,
+    ) -> tuple[bool, FailureContext | None]:
+        """从指定层重新开始执行流程."""
+        from FormaSyn.formasyn.agent.diagnostic import RecoveryLayer
+        
+        try:
+            # 根据目标层确定从哪里开始
+            if target_layer == RecoveryLayer.TEMPLATE_ENGINE:
+                # 更新 algo_hw，重新执行 roofline -> codegen -> verify
+                ir_state["algo_hw"] = new_ir
+                
+                schedule = self.solver.solve(new_ir)
+                ir_state["schedule"] = schedule
+                
+            elif target_layer == RecoveryLayer.ROOFLINE_SOLVER:
+                # Agent 已经修改了 algo_hw，我们重新求解 schedule
+                # 注意：new_ir 应该是 AlgoHWDialect
+                ir_state["algo_hw"] = new_ir
+                
+                schedule = self.solver.solve(new_ir)
+                ir_state["schedule"] = schedule
+                
+            elif target_layer == RecoveryLayer.MLC_BACKEND:
+                # Agent 已经修改了 schedule，直接使用
+                ir_state["schedule"] = new_ir
+                schedule = new_ir
+                
+            elif target_layer == RecoveryLayer.CODEGEN_AGENT:
+                # Agent 已经修改了 schedule，直接使用
+                ir_state["schedule"] = new_ir
+                schedule = new_ir
+                
+            else:
+                # 未知层，使用 schedule 继续
+                schedule = ir_state.get("schedule")
+                if schedule is None:
+                    return False, FailureContext(
+                        failed_at=FailureStage.L1_COMPILE,
+                        variant_id=variant_name,
+                        summary=f"无法从层 {target_layer} 恢复: 缺少 schedule",
+                    )
+            
+            # 重新生成代码
             artifacts = self.codegen_agent.generate(
                 schedule,
                 example_name=self.config.name,
             )
-            hls_cpp = artifacts.kernel_cpp
-            hls_hdr = artifacts.kernel_h
+            ir_state["hls_cpp"] = artifacts.kernel_cpp
+            ir_state["hls_hdr"] = artifacts.kernel_h
 
-            # 4. 准备验证环境
+            # 重新准备环境
             pre_result = self.pre_checker.prepare_environment(
                 example_name=self.config.name,
                 variant_id=variant_name,
-                hls_cpp_code=hls_cpp,
+                hls_cpp_code=artifacts.kernel_cpp,
                 golden_outputs=golden_outputs,
                 test_inputs=self.config.test_data,
                 csr_data=csr_data,
@@ -415,97 +655,89 @@ class FormaSynPipeline:
                     variant_id=variant_name,
                     summary=f"环境准备失败: {pre_result.error}",
                 )
+            ir_state["prepared_dir"] = pre_result.output_dir
 
-            # 5. L1 验证
-            l1_result = l1.check(
-                hls_cpp,
-                golden_outputs,
-                self.config.test_data,
-                variant_name,
-                csr_data=csr_data,
+            # 重新执行验证流程
+            return self._re_verify_from_current_state(
+                ir_state, l1, l2, l3, golden_outputs, csr_data, variant_name
             )
 
-            if not l1_result.passed:
-                failure = l1_result.failure or FailureContext(
-                    failed_at=FailureStage.L1_NUMERIC,
-                    variant_id=variant_name,
-                    summary="L1 数值验证失败",
-                )
-
-                # 尝试快速恢复
-                loop_result = feedback_loop.recover(algo_hw, failure)
-                if loop_result.success:
-                    algo_hw = loop_result.new_ir
-                    try:
-                        schedule = self.solver.solve(algo_hw)
-                        artifacts = self.codegen_agent.generate(
-                            schedule,
-                            example_name=self.config.name,
-                        )
-                        hls_cpp = artifacts.kernel_cpp
-                        l1_result = l1.check(
-                            hls_cpp,
-                            golden_outputs,
-                            self.config.test_data,
-                            variant_name,
-                            csr_data=csr_data,
-                        )
-                        if not l1_result.passed:
-                            return False, failure
-                    except Exception:
-                        return False, failure
-                else:
-                    return False, failure
-
-            # 6. L2 验证
-            l2_result = l2.check(hls_cpp, hls_hdr, variant_name)
-            if not l2_result.passed:
-                failure = l2_result.failure or FailureContext(
-                    failed_at=FailureStage.L2_CSYNTH,
-                    variant_id=variant_name,
-                    summary="L2 综合失败",
-                )
-
-                # 尝试快速恢复
-                loop_result = feedback_loop.recover(schedule, failure)
-                if loop_result.success:
-                    schedule = loop_result.new_ir
-                    artifacts = self.codegen_agent.generate(
-                        schedule,
-                        example_name=self.config.name,
-                    )
-                    hls_cpp = artifacts.kernel_cpp
-                    hls_hdr = artifacts.kernel_h
-                    l2_result = l2.check(hls_cpp, hls_hdr, variant_name)
-                    if not l2_result.passed:
-                        return False, failure
-                else:
-                    return False, failure
-
-            # 7. L3 验证
-            l3_result = l3.check(
-                hls_cpp,
-                variant_name,
-                self.config.test_data,
-                csr_data=csr_data,
+        except ResourceOverflowError as exc:
+            return False, FailureContext(
+                failed_at=FailureStage.L2_CSYNTH,
+                variant_id=variant_name,
+                summary=f"Roofline 求解失败: {exc}",
             )
-            if not l3_result.passed:
-                failure = l3_result.failure or FailureContext(
-                    failed_at=FailureStage.L3_QUALITY,
-                    variant_id=variant_name,
-                    summary="L3 质量验证失败",
-                )
-                return False, failure
-
-            return True, None
-
         except Exception as e:
-            logger.exception(f"评估变体 {variant_name} 时发生异常")
+            logger.exception(f"从 {target_layer} 恢复时发生异常")
             return False, FailureContext(
                 failed_at=FailureStage.L1_COMPILE,
                 variant_id=variant_name,
-                summary=f"评估异常: {str(e)[:200]}",
+                summary=f"恢复异常: {str(e)[:200]}",
             )
+
+    def _re_verify_from_current_state(
+        self,
+        ir_state: dict,
+        l1: L1Checker,
+        l2: L2Checker,
+        l3: L3Checker,
+        golden_outputs: dict,
+        csr_data: dict | None,
+        variant_name: str,
+    ) -> tuple[bool, FailureContext | None]:
+        """从当前状态重新执行验证."""
+        
+        hls_cpp = ir_state["hls_cpp"]
+        hls_hdr = ir_state["hls_hdr"]
+        prepared_dir = ir_state["prepared_dir"]
+
+        # L1 验证
+        l1_result = l1.check(
+            hls_cpp,
+            golden_outputs,
+            self.config.test_data,
+            variant_name,
+            csr_data=csr_data,
+            prepared_dir=prepared_dir,
+        )
+        if not l1_result.passed:
+            return False, l1_result.failure or FailureContext(
+                failed_at=FailureStage.L1_NUMERIC,
+                variant_id=variant_name,
+                summary="L1 数值验证失败（恢复后）",
+            )
+
+        # L2 验证
+        l2_result = l2.check(
+            hls_cpp,
+            hls_hdr,
+            variant_name,
+            prepared_dir=prepared_dir,
+        )
+        if not l2_result.passed:
+            return False, l2_result.failure or FailureContext(
+                failed_at=FailureStage.L2_CSYNTH,
+                variant_id=variant_name,
+                summary="L2 综合失败（恢复后）",
+            )
+
+        # L3 验证
+        l3_result = l3.check(
+            hls_cpp,
+            variant_name,
+            self.config.test_data,
+            hls_header_code=hls_hdr,
+            csr_data=csr_data,
+        )
+        if not l3_result.passed:
+            return False, l3_result.failure or FailureContext(
+                failed_at=FailureStage.L3_QUALITY,
+                variant_id=variant_name,
+                summary="L3 质量验证失败（恢复后）",
+            )
+
+        return True, None
 
 
 def summarize_results(result: PipelineResult) -> None:

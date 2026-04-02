@@ -40,6 +40,7 @@ class QualitySimulator(ABC):
         test_inputs: dict[str, list[float]],
         golden_outputs: dict[str, list[float]],
         *,
+        hls_header_code: str | None = None,
         csr_data: Optional[dict[str, list[int]]] = None,
     ) -> dict[str, float]:
         """运行仿真并返回质量指标.
@@ -48,6 +49,7 @@ class QualitySimulator(ABC):
             hls_cpp_code: HLS C++ 源码.
             test_inputs: 测试输入数据.
             golden_outputs: Golden 参考输出.
+            hls_header_code: 可选的 kernel.h 内容.
             csr_data: 可选的 CSR 格式稀疏矩阵数据.
 
         Returns:
@@ -65,8 +67,13 @@ class QualitySimulator(ABC):
         return "\n".join(stripped) + "\n"
 
     @staticmethod
-    def _write_mock_hls_headers(out_dir: str) -> None:
-        """写入最小化的 HLS 兼容头文件，用于 host 仿真."""
+    def _write_mock_hls_headers(out_dir: str, hls_header_code: str | None = None) -> None:
+        """写入最小化的 HLS 兼容头文件，用于 host 仿真.
+
+        Args:
+            out_dir: 输出目录.
+            hls_header_code: 可选的 kernel.h 内容，如果提供则写入.
+        """
         headers = {
             "ap_int.h": (
                 "#pragma once\n"
@@ -88,16 +95,23 @@ class QualitySimulator(ABC):
             with open(os.path.join(out_dir, name), "w", encoding="utf-8") as f:
                 f.write(content)
 
+        # 如果提供了 kernel.h 内容，写入它
+        if hls_header_code:
+            with open(os.path.join(out_dir, "kernel.h"), "w", encoding="utf-8") as f:
+                f.write(hls_header_code)
+
     @staticmethod
     def _compile_to_so(
         hls_cpp_code: str,
         function_name: str = "kernel",
+        hls_header_code: str | None = None,
     ) -> str:
         """将 HLS C++ 代码编译为 .so 动态库.
 
         Args:
             hls_cpp_code: HLS C++ 源码（已移除 HLS pragma）.
             function_name: 顶层函数名.
+            hls_header_code: 可选的 kernel.h 内容.
 
         Returns:
             编译生成的 .so 文件路径.
@@ -112,7 +126,7 @@ class QualitySimulator(ABC):
         with open(src_path, "w", encoding="utf-8") as f:
             f.write(hls_cpp_code)
 
-        QualitySimulator._write_mock_hls_headers(tmp_dir)
+        QualitySimulator._write_mock_hls_headers(tmp_dir, hls_header_code)
 
         # 编译为 .so
         cmd = [
@@ -243,6 +257,10 @@ def get_simulator(kernel_type: str) -> type[QualitySimulator]:
         "transform": TransformSimulator,
         "detection": DetectionSimulator,
         "synchronization": SyncSimulator,
+        # 简单算术运算使用通用仿真器
+        "elementwise": TransformSimulator,  # 复用 TransformSimulator 的 NMSE 计算
+        "arithmetic": TransformSimulator,
+        "generic": TransformSimulator,
     }
 
     sim_class = sim_map.get(kernel_type)

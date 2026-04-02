@@ -1,0 +1,30 @@
+
+
+set RtlHierarchyInfo {[
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST"},
+	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.control_s_axi_U"},
+	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_0_m_axi_U"},
+	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_1_m_axi_U"},
+	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_2_m_axi_U"},
+	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_3_m_axi_U"},
+	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_4_m_axi_U"},
+	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_5_m_axi_U"},
+	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_6_m_axi_U"},
+	{"ID" : "9", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem0_7_m_axi_U"},
+	{"ID" : "10", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_0_m_axi_U"},
+	{"ID" : "11", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_1_m_axi_U"},
+	{"ID" : "12", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_2_m_axi_U"},
+	{"ID" : "13", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_3_m_axi_U"},
+	{"ID" : "14", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_4_m_axi_U"},
+	{"ID" : "15", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_5_m_axi_U"},
+	{"ID" : "16", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_6_m_axi_U"},
+	{"ID" : "17", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem1_7_m_axi_U"},
+	{"ID" : "18", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_0_m_axi_U"},
+	{"ID" : "19", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_1_m_axi_U"},
+	{"ID" : "20", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_2_m_axi_U"},
+	{"ID" : "21", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_3_m_axi_U"},
+	{"ID" : "22", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_4_m_axi_U"},
+	{"ID" : "23", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_5_m_axi_U"},
+	{"ID" : "24", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_6_m_axi_U"},
+	{"ID" : "25", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.gmem2_7_m_axi_U"}]}
+set DependenceCheckSize 0

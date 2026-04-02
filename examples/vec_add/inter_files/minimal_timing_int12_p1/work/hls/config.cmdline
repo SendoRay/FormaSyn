@@ -1,0 +1,3 @@
+relativeroot=/home/chengzhy/FormaSyn/examples/vec_add/inter_files/minimal_timing_int12_p1
+original_argv=-c --mode hls --config /home/chengzhy/FormaSyn/examples/vec_add/inter_files/minimal_timing_int12_p1/hls_config.cfg --work_dir /home/chengzhy/FormaSyn/examples/vec_add/inter_files/minimal_timing_int12_p1/work 
+

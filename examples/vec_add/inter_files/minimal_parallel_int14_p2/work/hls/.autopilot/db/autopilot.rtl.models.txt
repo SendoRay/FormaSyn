@@ -1,0 +1,8 @@
+kernel_gmem0_0_m_axi
+kernel_gmem0_1_m_axi
+kernel_gmem1_0_m_axi
+kernel_gmem1_1_m_axi
+kernel_gmem2_0_m_axi
+kernel_gmem2_1_m_axi
+kernel_control_s_axi
+kernel

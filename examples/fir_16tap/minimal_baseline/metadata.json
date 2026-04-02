@@ -2,9 +2,9 @@
   "variant_id": "minimal_baseline",
   "example_name": "fir_16tap",
   "function_name": "kernel",
-  "model": "claude-sonnet-4-5-20250929",
+  "model": "gpt-5-codex-high",
   "base_url": "https://api.tryallai.com/v1",
-  "generated_at_utc": "2026-03-18T12:54:44.210071+00:00",
+  "generated_at_utc": "2026-04-02T04:57:55.838137+00:00",
   "schedule_summary": {
     "node_count": 4,
     "input_nodes": [
@@ -15,6 +15,6 @@
     ],
     "expected_ii": 16,
     "total_dsp_estimate": 0,
-    "total_bram_estimate": 13
+    "total_bram_estimate": 16
   }
 }

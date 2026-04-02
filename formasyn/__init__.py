@@ -1,6 +1,6 @@
 """FormaSyn: AI-driven compiler for communication algorithm FPGA implementation."""
 
-from FormaSyn.formasyn.agent import (
+from .agent import (
     AgentDiagnostic,
     BaseAgent,
     CodegenArtifacts,
@@ -9,19 +9,19 @@ from FormaSyn.formasyn.agent import (
     QuantSpec,
     ScheduleCodegenAgent,
 )
-from FormaSyn.formasyn.checker import (
+from .checker import (
     L1Checker,
     L2Checker,
     L3Checker,
     PreChecker,
 )
-from FormaSyn.formasyn.dsl.parser import parse
-from FormaSyn.formasyn.feedback.loop import FeedbackLoop
-from FormaSyn.formasyn.golden.generator import GoldenModelGenerator
-from FormaSyn.formasyn.ir.algo_hw_dialect import AlgoHWDialect
-from FormaSyn.formasyn.ir.math_dialect import MathDialect
-from FormaSyn.formasyn.ir.schedule_dialect import HLSScheduleDialect
-from FormaSyn.formasyn.solver.roofline_solver import RooflineSolver
+from .dsl.parser import parse
+from .feedback.loop import FeedbackLoop
+from .golden.generator import GoldenModelGenerator
+from .ir.algo_hw_dialect import AlgoHWDialect
+from .ir.math_dialect import MathDialect
+from .ir.schedule_dialect import HLSScheduleDialect
+from .solver.roofline_solver import RooflineSolver
 
 __all__ = [
     # IR

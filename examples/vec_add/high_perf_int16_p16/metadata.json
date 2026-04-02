@@ -1,0 +1,21 @@
+{
+  "variant_id": "high_perf_int16_p16",
+  "example_name": "vec_add",
+  "function_name": "kernel",
+  "model": "claude-sonnet-4-5-20250929",
+  "base_url": "https://cloud.hongqiye.com/v1",
+  "generated_at_utc": "2026-03-19T01:18:02.529578+00:00",
+  "schedule_summary": {
+    "node_count": 3,
+    "input_nodes": [
+      "a",
+      "b"
+    ],
+    "output_nodes": [
+      "c"
+    ],
+    "expected_ii": 2,
+    "total_dsp_estimate": 0,
+    "total_bram_estimate": 3
+  }
+}

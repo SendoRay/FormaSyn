@@ -1,0 +1,27 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=kernel" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:10:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=8" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:12:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="" msg_id="214-414" msg_severity="WARNING" msg_loc="kernel.cpp:9:0" msg_body="Cannot apply interface mode 'ap_none' on function argument 'a' since this interface mode only supports scalar types">
+        <args Name="a"/>
+    </msg>
+    <msg msg_groups="" msg_id="214-414" msg_severity="WARNING" msg_loc="kernel.cpp:9:0" msg_body="Cannot apply interface mode 'ap_none' on function argument 'b' since this interface mode only supports scalar types">
+        <args Name="b"/>
+    </msg>
+    <msg msg_groups="" msg_id="214-414" msg_severity="WARNING" msg_loc="kernel.cpp:9:0" msg_body="Cannot apply interface mode 'ap_none' on function argument 'c' since this interface mode only supports scalar types">
+        <args Name="c"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="kernel.cpp:11:19" msg_body="Loop 'VITIS_LOOP_11_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_11_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:9:0" msg_body="Unrolling loop 'VITIS_LOOP_11_1' (kernel.cpp:11:19) in function 'kernel' completely with a factor of 16">
+        <args Factor="16" LoopLoc="kernel.cpp:11:19" LoopName="VITIS_LOOP_11_1"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

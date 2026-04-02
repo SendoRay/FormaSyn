@@ -1,9 +1,12 @@
-#ifndef KERNEL_H
-#define KERNEL_H
+#ifndef FORMASYN_KERNEL_H
+#define FORMASYN_KERNEL_H
 
 #include <ap_int.h>
 #include <ap_fixed.h>
 
-void kernel(ap_int<11> x_in, ap_fixed<19,3>& y_out);
+void kernel(
+    ap_int<17> x_in[1],
+    ap_fixed<25,3> y_out[1]
+);
 
-#endif
+#endif  // FORMASYN_KERNEL_H

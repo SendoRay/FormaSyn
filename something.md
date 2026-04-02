@@ -17,466 +17,7 @@
 
 
 
-
-我运行python run.py fir_16tap
-==> [1/5] 解析算法 fir_16tap 到 Math Dialect ...
-INFO FormaSyn.dsl.parser: Parsed FormulaGraph 'fir_16tap' → MathDialect with 4 nodes
-==> [2/5] 生成黄金参考模型并分析量化参数 ...
-INFO FormaSyn.golden.generator: Generated golden C++ for 'fir_16tap' (39 lines)
-INFO FormaSyn.golden.generator: Generated golden C++ for 'fir_16tap' (39 lines)
-INFO FormaSyn.golden.quant_analyzer: Quantisation analysis complete for 'fir_16tap': 1 output nodes analysed over 100 trials
-==> [3/5] 调用 LLM 生成硬件变体意图 ...
-==> [4/5] 编译并验证各变体（L1/L2/L3 + feedback）...
-INFO FormaSyn.agent.dse_agent: 调用 LLM 生成变体意图 (model=claude-sonnet-4-5-20250929, kernel=fir_16tap)
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO FormaSyn.agent.dse_agent: 成功解析 8 个变体意图 (kernel=fir_16tap)
-    Round 1: 生成 8 个变体
-INFO FormaSyn.dsl.template_engine: Rendered variant 'baseline_int16_p16_full' (approx=min_sum, parallelism=16, nodes=5, dsp≈32)
-INFO FormaSyn.solver.roofline_solver: Roofline solved baseline_int16_p16_full: DSP=0  BRAM=26  II=1
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'baseline_int16_p16_full' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [baseline_int16_p16_full]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] baseline_int16_p16_full  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'dsp_optimal_int8_p16' (approx=min_sum, parallelism=16, nodes=5, dsp≈32)
-INFO FormaSyn.solver.roofline_solver: Roofline solved dsp_optimal_int8_p16: DSP=0  BRAM=24  II=1
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'dsp_optimal_int8_p16' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [dsp_optimal_int8_p16]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] dsp_optimal_int8_p16  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'balanced_int10_p8' (approx=offset_min_sum, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved balanced_int10_p8: DSP=0  BRAM=16  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'balanced_int10_p8' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [balanced_int10_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] balanced_int10_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'low_resource_int8_p4' (approx=normalized_min_sum, parallelism=4, nodes=5, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved low_resource_int8_p4: DSP=0  BRAM=24  II=4
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'low_resource_int8_p4' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [low_resource_int8_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] low_resource_int8_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'high_precision_int12_p8' (approx=offset_min_sum, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved high_precision_int12_p8: DSP=0  BRAM=17  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'high_precision_int12_p8' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [high_precision_int12_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] high_precision_int12_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'area_minimal_int6_p2' (approx=normalized_min_sum, parallelism=2, nodes=5, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved area_minimal_int6_p2: DSP=0  BRAM=27  II=8
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'area_minimal_int6_p2' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [area_minimal_int6_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] area_minimal_int6_p2  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'recommended_int9_p8' (approx=offset_min_sum, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved recommended_int9_p8: DSP=0  BRAM=16  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'recommended_int9_p8' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [recommended_int9_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] recommended_int9_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'clock_optimized_int8_p8' (approx=min_sum, parallelism=8, nodes=5, dsp≈16)
-INFO FormaSyn.solver.roofline_solver: Roofline solved clock_optimized_int8_p8: DSP=0  BRAM=24  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'clock_optimized_int8_p8' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [clock_optimized_int8_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] clock_optimized_int8_p8  stage=L1  metrics={}
-    [DEEP] 进入第 1 轮反馈迭代，失败样本=8
-INFO FormaSyn.agent.dse_agent: 调用 LLM 生成变体意图 (model=claude-sonnet-4-5-20250929, kernel=fir_16tap)
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO FormaSyn.agent.dse_agent: 成功解析 8 个变体意图 (kernel=fir_16tap)
-    Round 2: 生成 8 个变体
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_baseline_int16_p1' (approx=spa_exact, parallelism=1, nodes=4, dsp≈1)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_baseline_int16_p1: DSP=0  BRAM=18  II=16
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_baseline_int16_p1' (46 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_baseline_int16_p1]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_baseline_int16_p1  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_dsp_fit_int16_p2' (approx=spa_exact, parallelism=2, nodes=4, dsp≈2)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_dsp_fit_int16_p2: DSP=0  BRAM=18  II=8
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_dsp_fit_int16_p2' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_dsp_fit_int16_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_dsp_fit_int16_p2  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_recommended_int9_p4' (approx=spa_exact, parallelism=4, nodes=4, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_recommended_int9_p4: DSP=0  BRAM=19  II=4
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_recommended_int9_p4' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_recommended_int9_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_recommended_int9_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_low_dsp_int8_p8' (approx=spa_exact, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_low_dsp_int8_p8: DSP=0  BRAM=18  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_low_dsp_int8_p8' (47 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_low_dsp_int8_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_low_dsp_int8_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_high_throughput_int10_p16' (approx=spa_exact, parallelism=16, nodes=4, dsp≈16)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_high_throughput_int10_p16: DSP=0  BRAM=15  II=1
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_high_throughput_int10_p16' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_high_throughput_int10_p16]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_high_throughput_int10_p16  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_minimal_int6_p1' (approx=spa_exact, parallelism=1, nodes=4, dsp≈1)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_minimal_int6_p1: DSP=0  BRAM=16  II=16
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_minimal_int6_p1' (46 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_minimal_int6_p1]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_minimal_int6_p1  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_balanced_int12_p4' (approx=spa_exact, parallelism=4, nodes=4, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_balanced_int12_p4: DSP=0  BRAM=16  II=4
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_balanced_int12_p4' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_balanced_int12_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_balanced_int12_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_clock_safe_int8_p2' (approx=spa_exact, parallelism=2, nodes=4, dsp≈2)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_clock_safe_int8_p2: DSP=0  BRAM=18  II=8
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_clock_safe_int8_p2' (47 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_clock_safe_int8_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_clock_safe_int8_p2  stage=L1  metrics={}
-    [DEEP] 进入第 2 轮反馈迭代，失败样本=8
-INFO FormaSyn.agent.dse_agent: 调用 LLM 生成变体意图 (model=claude-sonnet-4-5-20250929, kernel=fir_16tap)
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO FormaSyn.agent.dse_agent: 成功解析 8 个变体意图 (kernel=fir_16tap)
-    Round 3: 生成 8 个变体
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_spa_int16_p16' (approx=spa_exact, parallelism=16, nodes=4, dsp≈16)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_spa_int16_p16: DSP=0  BRAM=18  II=1
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_spa_int16_p16' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_spa_int16_p16]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_spa_int16_p16  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_minsum_int12_p8' (approx=min_sum, parallelism=8, nodes=5, dsp≈16)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_minsum_int12_p8: DSP=0  BRAM=24  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_minsum_int12_p8' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_minsum_int12_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_minsum_int12_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_offset_int10_p4' (approx=offset_min_sum, parallelism=4, nodes=4, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_offset_int10_p4: DSP=0  BRAM=15  II=4
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_offset_int10_p4' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_offset_int10_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_offset_int10_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_normalized_int8_p16' (approx=normalized_min_sum, parallelism=16, nodes=5, dsp≈32)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_normalized_int8_p16: DSP=0  BRAM=26  II=1
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_normalized_int8_p16' (54 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_normalized_int8_p16]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_normalized_int8_p16  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_lut_int14_p8' (approx=lut_tanh, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_lut_int14_p8: DSP=0  BRAM=17  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_lut_int14_p8' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_lut_int14_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_lut_int14_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_spa_int13_p4' (approx=spa_exact, parallelism=4, nodes=4, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_spa_int13_p4: DSP=0  BRAM=16  II=4
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_spa_int13_p4' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_spa_int13_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_spa_int13_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_minsum_int15_p2' (approx=min_sum, parallelism=2, nodes=5, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_minsum_int15_p2: DSP=0  BRAM=25  II=8
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_minsum_int15_p2' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_minsum_int15_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_minsum_int15_p2  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_offset_int11_p16' (approx=offset_min_sum, parallelism=16, nodes=4, dsp≈16)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_offset_int11_p16: DSP=0  BRAM=16  II=1
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_offset_int11_p16' (48 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_offset_int11_p16]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_offset_int11_p16  stage=L1  metrics={}
-    [DEEP] 进入第 3 轮反馈迭代，失败样本=8
-INFO FormaSyn.agent.dse_agent: 调用 LLM 生成变体意图 (model=claude-sonnet-4-5-20250929, kernel=fir_16tap)
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO FormaSyn.agent.dse_agent: 成功解析 8 个变体意图 (kernel=fir_16tap)
-    Round 4: 生成 8 个变体
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_basic_int16_p1' (approx=min_sum, parallelism=1, nodes=5, dsp≈2)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_basic_int16_p1: DSP=0  BRAM=26  II=16
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_basic_int16_p1' (53 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_basic_int16_p1]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_basic_int16_p1  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_recommended_int16_p2' (approx=min_sum, parallelism=2, nodes=5, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_recommended_int16_p2: DSP=0  BRAM=26  II=8
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_recommended_int16_p2' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_recommended_int16_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_recommended_int16_p2  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_dsp_safe_int12_p4' (approx=min_sum, parallelism=4, nodes=5, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_dsp_safe_int12_p4: DSP=0  BRAM=24  II=4
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_dsp_safe_int12_p4' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_dsp_safe_int12_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_dsp_safe_int12_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_minimal_int8_p1' (approx=min_sum, parallelism=1, nodes=5, dsp≈2)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_minimal_int8_p1: DSP=0  BRAM=26  II=16
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_minimal_int8_p1' (52 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_minimal_int8_p1]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_minimal_int8_p1  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_throughput_int10_p8' (approx=min_sum, parallelism=8, nodes=5, dsp≈16)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_throughput_int10_p8: DSP=0  BRAM=23  II=2
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_throughput_int10_p8' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_throughput_int10_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_throughput_int10_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_balanced_int14_p2' (approx=min_sum, parallelism=2, nodes=5, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_balanced_int14_p2: DSP=0  BRAM=25  II=8
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_balanced_int14_p2' (55 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_balanced_int14_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_balanced_int14_p2  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_high_throughput_int8_p16' (approx=min_sum, parallelism=16, nodes=5, dsp≈32)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_high_throughput_int8_p16: DSP=0  BRAM=26  II=1
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_high_throughput_int8_p16' (54 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_high_throughput_int8_p16]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_high_throughput_int8_p16  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_conservative_int15_p1' (approx=min_sum, parallelism=1, nodes=5, dsp≈2)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_conservative_int15_p1: DSP=0  BRAM=25  II=16
-INFO FormaSyn.codegen.hls_codegen: Generated HLS C++ for variant 'fir_conservative_int15_p1' (53 lines)
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_conservative_int15_p1]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_conservative_int15_p1  stage=L1  metrics={}
-
-==> [5/5] 完成：0/32 个变体通过（rounds=4）
-    没有变体通过验证，请检查约束或调整参数
-chengzhy@h3c-chengzhy:~/FormaSyn$ vim ~/.codex/config.toml
-chengzhy@h3c-chengzhy:~/FormaSyn$ python run.py fir_16tap
-==> [1/5] 解析算法 fir_16tap 到 Math Dialect ...
-INFO FormaSyn.dsl.parser: Parsed FormulaGraph 'fir_16tap' → MathDialect with 4 nodes
-==> [2/5] 生成黄金参考模型并分析量化参数 ...
-INFO FormaSyn.golden.generator: Generated golden C++ for 'fir_16tap' (39 lines)
-INFO FormaSyn.golden.generator: Generated golden C++ for 'fir_16tap' (39 lines)
-INFO FormaSyn.golden.quant_analyzer: Quantisation analysis complete for 'fir_16tap': 1 output nodes analysed over 100 trials
-==> [3/5] 调用 LLM 生成硬件变体意图 ...
-==> [4/5] 编译并验证各变体（L1/L2/L3 + feedback）...
-INFO FormaSyn.agent.dse_agent: 调用 LLM 生成变体意图 (model=claude-sonnet-4-5-20250929, kernel=fir_16tap)
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO FormaSyn.agent.dse_agent: 成功解析 8 个变体意图 (kernel=fir_16tap)
-    Round 1: 生成 8 个变体
-INFO FormaSyn.dsl.template_engine: Rendered variant 'baseline_int16_p16_full' (approx=min_sum, parallelism=16, nodes=5, dsp≈32)
-INFO FormaSyn.solver.roofline_solver: Roofline solved baseline_int16_p16_full: DSP=0  BRAM=26  II=1
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] baseline_int16_p16_full  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/baseline_int16_p16_full
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [baseline_int16_p16_full]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] baseline_int16_p16_full  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'dsp_optimal_int8_p16' (approx=min_sum, parallelism=16, nodes=5, dsp≈32)
-INFO FormaSyn.solver.roofline_solver: Roofline solved dsp_optimal_int8_p16: DSP=0  BRAM=24  II=1
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] dsp_optimal_int8_p16  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/dsp_optimal_int8_p16
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [dsp_optimal_int8_p16]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] dsp_optimal_int8_p16  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'balanced_int10_p8' (approx=offset_min_sum, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved balanced_int10_p8: DSP=0  BRAM=16  II=2
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] balanced_int10_p8  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/balanced_int10_p8
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [balanced_int10_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] balanced_int10_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'low_resource_int8_p4' (approx=normalized_min_sum, parallelism=4, nodes=5, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved low_resource_int8_p4: DSP=0  BRAM=24  II=4
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] low_resource_int8_p4  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/low_resource_int8_p4
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [low_resource_int8_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] low_resource_int8_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'high_precision_int12_p8' (approx=offset_min_sum, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved high_precision_int12_p8: DSP=0  BRAM=17  II=2
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] high_precision_int12_p8  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/high_precision_int12_p8
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [high_precision_int12_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] high_precision_int12_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'area_minimal_int6_p2' (approx=normalized_min_sum, parallelism=2, nodes=5, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved area_minimal_int6_p2: DSP=0  BRAM=27  II=8
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] area_minimal_int6_p2  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/area_minimal_int6_p2
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [area_minimal_int6_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] area_minimal_int6_p2  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'recommended_int9_p8' (approx=offset_min_sum, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved recommended_int9_p8: DSP=0  BRAM=16  II=2
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] recommended_int9_p8  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/recommended_int9_p8
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [recommended_int9_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] recommended_int9_p8  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'clock_optimized_int8_p8' (approx=min_sum, parallelism=8, nodes=5, dsp≈16)
-INFO FormaSyn.solver.roofline_solver: Roofline solved clock_optimized_int8_p8: DSP=0  BRAM=24  II=2
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] clock_optimized_int8_p8  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/clock_optimized_int8_p8
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [clock_optimized_int8_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] clock_optimized_int8_p8  stage=L1  metrics={}
-    [DEEP] 进入第 1 轮反馈迭代，失败样本=8
-INFO FormaSyn.agent.dse_agent: 调用 LLM 生成变体意图 (model=claude-sonnet-4-5-20250929, kernel=fir_16tap)
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO FormaSyn.agent.dse_agent: 成功解析 8 个变体意图 (kernel=fir_16tap)
-    Round 2: 生成 8 个变体
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_baseline_int16_p1' (approx=spa_exact, parallelism=1, nodes=4, dsp≈1)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_baseline_int16_p1: DSP=0  BRAM=18  II=16
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] fir_baseline_int16_p1  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/fir_baseline_int16_p1
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_baseline_int16_p1]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_baseline_int16_p1  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_dsp_fit_int16_p2' (approx=spa_exact, parallelism=2, nodes=4, dsp≈2)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_dsp_fit_int16_p2: DSP=0  BRAM=18  II=8
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] fir_dsp_fit_int16_p2  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/fir_dsp_fit_int16_p2
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_dsp_fit_int16_p2]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_dsp_fit_int16_p2  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_recommended_int9_p4' (approx=spa_exact, parallelism=4, nodes=4, dsp≈4)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_recommended_int9_p4: DSP=0  BRAM=19  II=4
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] fir_recommended_int9_p4  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/fir_recommended_int9_p4
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_recommended_int9_p4]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-    [FAIL] fir_recommended_int9_p4  stage=L1  metrics={}
-INFO FormaSyn.dsl.template_engine: Rendered variant 'fir_low_dsp_int8_p8' (approx=spa_exact, parallelism=8, nodes=4, dsp≈8)
-INFO FormaSyn.solver.roofline_solver: Roofline solved fir_low_dsp_int8_p8: DSP=0  BRAM=18  II=2
-INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
-    [ARTIFACT] fir_low_dsp_int8_p8  dir=/home/chengzhy/FormaSyn/examples/fir_16tap/fir_low_dsp_int8_p8
-WARNING FormaSyn.checker.l1_checker: L1 CSim 失败 [fir_low_dsp_int8_p8]: ERROR: [v++ 60-1520] ***Exception: unrecognised option '--csim' 
-Usage: v++ [options] <input file...>
-Try v++ --help
- or v++ --compile --mode aie --help
- or v++ --compile --mode hls --help
-很多都是 命令出错了  所以你可以去查阅
-https://docs.amd.com/r/zh-CN/ug1702-vitis-accelerated-reference   找到更合适的在l1_checker 使用的命令 
+s
 
 2，全局寻找，有一些硬编码很不好
 3， 多复用 然后解耦一些设计 
@@ -488,5 +29,250 @@ https://docs.amd.com/r/zh-CN/ug1702-vitis-accelerated-reference   找到更合�
 
 
 
-你确定你改的和我给你的目录一样吗  第一个 你没有吧核心代码放在一个formasyn/ 的文件夹下面 然后这样使用起来轻松点  第二个  你的 agent依旧没有 dignostic的逻辑  第三个 你的 feedback             
-里面为什么还有 pragama_tuner的代码  很明显 你没有理解 @formasyn.md    
+ python run.py vec_add
+Traceback (most recent call last):
+  File "/home/chengzhy/FormaSyn/run.py", line 36, in <module>
+    from FormaSyn.formasyn.agent.codegen_agent import ScheduleCodegenAgent
+  File "/home/chengzhy/FormaSyn/formasyn/__init__.py", line 3, in <module>
+    from .agent import (
+  File "/home/chengzhy/FormaSyn/formasyn/agent/__init__.py", line 4, in <module>
+    from FormaSyn.formasyn.agent.codegen_agent import CodegenArtifacts, ScheduleCodegenAgent
+  File "/home/chengzhy/FormaSyn/formasyn/agent/codegen_agent.py", line 17
+    _CODEGEN_SCHEMA = “””你是 Vitis HLS C++ 代码生成器。
+                      ^
+SyntaxError: invalid character '“' (U+201C)
+chengzhy@h3c-chengzhy:~/FormaSyn$ python run.py vec_add
+INFO __main__: ==> [1/7] 解析算法 vec_add 到 Math Dialect ...
+INFO FormaSyn.formasyn.dsl.parser: Parsed FormulaGraph 'vec_add' → MathDialect with 3 nodes
+INFO __main__: ==> [2/7] 生成黄金参考模型并分析量化参数 ...
+INFO FormaSyn.formasyn.golden.generator: Generated golden C++ for 'vec_add' (17 lines)
+INFO FormaSyn.formasyn.golden.generator: Generated golden C++ for 'vec_add' (17 lines)
+INFO FormaSyn.formasyn.golden.quant_analyzer: Quantisation analysis complete for 'vec_add': 1 output nodes analysed over 100 trials
+INFO __main__: ==> [3/7] 初始化验证流水线 ...
+INFO __main__: ==> [4/7] 开始设计空间探索与验证 ...
+INFO __main__: === Round 1 ===
+INFO FormaSyn.formasyn.agent.dse_agent: 调用 LLM 生成变体意图 (model=claude-sonnet-4-5-20250929, kernel=vec_add)
+INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO FormaSyn.formasyn.agent.dse_agent: 成功解析 4 个变体意图 (kernel=vec_add)
+INFO __main__: 生成了 4 个变体意图
+INFO __main__:   评估变体: spa_exact_int8_p16_sat
+INFO FormaSyn.formasyn.dsl.template_engine: Rendered variant 'spa_exact_int8_p16_sat' (approx=spa_exact, parallelism=16, nodes=3, dsp≈0)
+INFO FormaSyn.formasyn.solver.roofline_solver: Roofline solved spa_exact_int8_p16_sat: DSP=0  BRAM=24  II=1
+INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO FormaSyn.formasyn.checker.pre_checker: PreChecker 准备完成 [spa_exact_int8_p16_sat]: dir=/tmp/formasyn_checker/vec_add/spa_exact_int8_p16_sat
+INFO FormaSyn.formasyn.checker.l1_checker: L1 通过 [spa_exact_int8_p16_sat]: metrics={'nmse_db': -339.0091306773767}
+INFO FormaSyn.formasyn.checker.l2_checker: L2 通过 [spa_exact_int8_p16_sat]: DSP=0 BRAM=0 II=1
+WARNING FormaSyn.formasyn.checker.simulators.filter_sim: 滤波器仿真编译/运行失败: g++ compilation failed:
+/tmp/formasyn_so_z2ugmzda/kernel.cpp:1:10: fatal error: kernel.h: No such file or directory
+    1 | #include "kernel.h"
+      |          ^~~~~~~~~~
+compilation terminated.
+
+WARNING FormaSyn.formasyn.checker.l3_checker: L3 质量仿真失败 [spa_exact_int8_p16_sat]: nmse_db: 实测 0.000000, 目标 < -80.0; max_overflows: 实测 inf, 目标 < 0
+INFO __main__:     [FAIL] spa_exact_int8_p16_sat: L3 质量仿真失败 (filtering)
+INFO __main__:   评估变体: spa_exact_int6_p16_sat
+INFO FormaSyn.formasyn.dsl.template_engine: Rendered variant 'spa_exact_int6_p16_sat' (approx=spa_exact, parallelism=16, nodes=3, dsp≈0)
+INFO FormaSyn.formasyn.solver.roofline_solver: Roofline solved spa_exact_int6_p16_sat: DSP=0  BRAM=22  II=1
+INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO FormaSyn.formasyn.checker.pre_checker: PreChecker 准备完成 [spa_exact_int6_p16_sat]: dir=/tmp/formasyn_checker/vec_add/spa_exact_int6_p16_sat
+WARNING FormaSyn.formasyn.checker.l1_checker: L1 数值验证失败 [spa_exact_int6_p16_sat]: nmse_db: 实测 -18.005425, 目标 < -80.0; max_overflows: 实测 inf, 目标 < 0
+INFO FormaSyn.formasyn.feedback.loop: 执行恢复动作: RecoveryLayer.TEMPLATE_ENGINE -> relax_quant (NMSE -18.01 dB 过高，增加小数位宽)
+INFO FormaSyn.formasyn.solver.roofline_solver: Roofline solved spa_exact_int6_p16_sat: DSP=0  BRAM=21  II=1
+INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING FormaSyn.formasyn.agent.codegen_agent: Codegen LLM failed for variant 'spa_exact_int6_p16_sat' (raw: 我看到这是一个向量加法的调度配置JSON。让我为你分析一下这个配置的关键信息：
+
+## 配置概览
+
+**变体ID**: `spa_exact_int6_p16_sat`
+- 使用精确定点运算（spa_exact）
+- 输出6位整数
+- 并行度16
+- 启用饱和保护
+
+**性能指标**:
+- 预期启动间隔（II）: 1
+- DSP资源估计: 0
+- BRAM资源估计: 21
+
+## 节点分析
+
+##), fallback to local template
+WARNING FormaSyn.formasyn.checker.l1_checker: L1 数值验证失败 [spa_exact_int6_p16_sat]: nmse_db: 实测 0.000000, 目标 < -80.0; max_overflows: 实测 inf, 目标 < 0
+INFO __main__:     [FAIL] spa_exact_int6_p16_sat: L1 数值验证失败 (filtering)
+INFO __main__:   评估变体: spa_exact_int8_p8_sat
+INFO FormaSyn.formasyn.dsl.template_engine: Rendered variant 'spa_exact_int8_p8_sat' (approx=spa_exact, parallelism=8, nodes=3, dsp≈0)
+INFO FormaSyn.formasyn.solver.roofline_solver: Roofline solved spa_exact_int8_p8_sat: DSP=0  BRAM=24  II=2
+INFO httpx: HTTP Request: POST https://api.tryallai.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING FormaSyn.formasyn.agent.codegen_agent: Codegen LLM failed for variant 'spa_exact_int8_p8_sat' (raw: 我看到这是一个向量加法的调度配置JSON。让我帮你分析一下这个配置的关键信息：
+
+## 配置概览
+
+**变体ID**: `spa_exact_int8_p8_sat`
+- 精确计算（spa_exact）
+- 8位整数输入
+- 并行度为8
+- 带饱和保护
+
+## 节点分析
+
+### 输入节点 (a, b)
+- **数据类型**: `ap_int<8>` (8位有符号整数)
+- **形状**: [16), fallback to local template
+
+
+
+这是我运行上一个报错 第一个：我不想让 WARNING FormaSyn.formasyn.agent.codegen_agent: Codegen LLM failed for variant 'spa_exact_int6_p16_sat' (raw: 我看到这是一个向量加法的调度配置JSON。让我为你分析一下这个配置的关键信息：
+
+## 配置概览
+
+**变体ID**: `spa_exact_int6_p16_sat`
+- 使用精确定点运算（spa_exact）
+- 输出6位整数
+- 并行度16
+- 启用饱和保护
+
+**性能指标**:
+- 预期启动间隔（II）: 1
+- DSP资源估计: 0
+- BRAM资源估计: 21
+
+## 节点分析
+
+##), fallback to local template  返回这些东西 太多了  这些不需要 log 出来，第二 WARNING FormaSyn.formasyn.checker.simulators.filter_sim: 滤波器仿真编译/运行失败: g++ compilation failed:
+/tmp/formasyn_so_z2ugmzda/kernel.cpp:1:10: fatal error: kernel.h: No such file or directory
+    1 | #include "kernel.h"
+      |          ^~~~~~~~~~
+compilation terminated.
+
+WARNING FormaSyn.formasyn.checker.l3_checker: L3 质量仿真失败 [spa_exact_int8_p16_sat]: nmse_db: 实测 0.000000, 目标 < -80.0; max_overflows: 实测 inf, 目标 < 0
+INFO __main__:     [FAIL] spa_exact_int8_p16_sat: L3 质量仿真失败 (filtering)
+INFO __main__:   评估变体: spa_exact_int6_p16_sat 失败的原因是什么  怎么解决
+
+
+
+
+
+
+
+可以删除 config.yaml   如果没有用到的话
+
+
+
+我这个能实现- 输入是数学公式。但是可能可以生成三种截然不同的硬件架构：
+  - 架构 A（脉动阵列 Systolic Array）： 像 TPU 那样，数据在计算单元之间流动。适合大矩阵，高吞吐。
+  - 架构 B (点积树 Dot-Product Tree）： 并行取出向量，瞬间算完一个点。适合低延迟。
+  - 架构 C (分块 Blocked）： 为了适应片上缓存（BRAM），把公式重写为分块矩阵乘形式。  
+这种构想吗
+
+
+
+
+benchmark 无线电+ 基带   应该有很多   wifi 等等 stage+简单端到端   SDR（Software Defined Radio）  demo 
+
+
+分工图不规定具体顺序，
+  但明确谁必须等谁。
+  这反而让并行更清晰：
+✻ Sautéed for 2m 51s
+
+❯ 那我现在属于是什么  mathdialect  什么都没有 还是属于顺序的？还是属于控制流？                                                                                                                 
+  ⎿  ⧉ Selected 11 lines from docs/dialect.md in Visual Studio Code
+
+
+
+                                                                
+● DSE Agent 详解                        
+                                                                  
+  DSE (Design Space Exploration) Agent 是 FormaSyn                
+  中负责设计空间探索的 LLM Agent。
+                                                                  
+  核心作用                                                        
+  
+  DSE Agent 的任务是：根据算法描述、量化建议和硬件约束，生成多个优
+  化变体配置，让后续的 codegen 生成不同的 HLS C++ 代码实现。
+                                                                  
+  工作流程                                                        
+  
+  输入                          DSE Agent                         
+   输出                                                           
+  ────────────────────────────────────────────────────────────────
+  ─────                                                           
+  MathDialect          ──>  LLM 调用  ──>
+  IntentJSON[]                                                    
+  量化推荐                     (生成策略)                  [
+  硬件约束                                                    {   
+                  
+  "variant_name": "high_perf",                                    
+      │                         │
+  "rationale": "最大化吞吐",                                      
+      ▼                         ▼
+  "approx_method": "spa_exact",                                   
+    ┌─────────────┐         ┌─────────┐
+  "parallelism": 8,                                               
+    │ kernel:     │         │  GPT-5  │──> 返回 JSON ──>
+  "quant_overrides": {},                                          
+    │   vec_add   │         └─────────┘
+  "enable_saturation": true                                       
+    │ target:     │                                             },
+    │   throughput                                            {   
+    │ constraints │                                               
+  "variant_name": "min_area",                                     
+    │   DSP≤200   │                                               
+  "parallelism": 2,                                               
+    └──────────────┘
+  ...                                                             
+                                                             } ]
+                                                                  
+  关键数据结构                                                    
+                                                                  
+  IntentJSON - 每个变体的配置：                                   
+  {               
+      "variant_name": "变体名称",                                 
+      "rationale": "设计思路说明",
+      "approx_method": "近似方法 (spa_exact, min_sum, ...)",      
+      "scale_factor": "归一化因子",                               
+      "offset_beta": "偏移量",                                    
+      "parallelism": "并行度 (1,2,4,8...)",                       
+      "quant_overrides": "位宽覆盖",                              
+      "enable_saturation": "是否饱和"                             
+  }                                                               
+                                                                  
+  代码结构                                                        
+                                                                  
+  ┌────────────────────────┬───────────────────────────────────┐  
+  │          组件          │               作用                │  
+  ├────────────────────────┼───────────────────────────────────┤  
+  │ _build_system_prompt() │ 构建系统提示词，注入领域知识      │
+  ├────────────────────────┼───────────────────────────────────┤
+  │ _build_user_prompt()   │ 构建用户提示词，包含当前 kernel   │  
+  │                        │ 的具体信息                        │  
+  ├────────────────────────┼───────────────────────────────────┤  
+  │ _chat_completion()     │ 调用 LLM API，强制返回 JSON 格式  │  
+  ├────────────────────────┼───────────────────────────────────┤  
+  │ _parse_response()      │ 解析 LLM 返回的 JSON，提取        │
+  │                        │ variants 数组                     │  
+  ├────────────────────────┼───────────────────────────────────┤
+  │ _validate_intent()     │ 校验每个变体配置的合法性          │  
+  └────────────────────────┴───────────────────────────────────┘  
+   
+  与整体架构的关系                                                
+                  
+  run.py
+    │
+    ├──> DSEAgent (dse_agent.py)
+    │     │                                                       
+    │     └──> 生成多个优化策略 (IntentJSON[])
+    │                                                             
+    ├──> CodegenAgent (codegen_agent.py)
+    │     │                                                       
+    │     └──> 根据策略生成 HLS C++ 代码                          
+    │                                                             
+    └──> Checker (l1_checker, l2_checker, l3_checker)             
+          │                                                       
+          └──> 验证代码正确性和性能
+                                                                  
+  你遇到的问题                                                    
+                                                                  
+  LLM 返回的不是纯 JSON，而是包含 Markdown                        
+  表格的混合文本。这是因为 response_format={"type": "json_object"}
+   强制要求 JSON 对象，但 LLM 可能没有严格遵循。     

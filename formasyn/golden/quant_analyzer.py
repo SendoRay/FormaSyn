@@ -32,6 +32,8 @@ class QuantSpec:
         min_int_bits: Minimum integer bits (recommended - 1).
         max_int_bits: Maximum integer bits (recommended + 2).
         max_abs_observed: Largest absolute value seen across all trials.
+        min_bits: Minimum total bit-width that avoids severe BER degradation.
+        max_bits: Maximum useful bit-width.
     """
 
     node_id: str
@@ -41,15 +43,24 @@ class QuantSpec:
     max_int_bits: int
     max_abs_observed: float
 
+    @property
+    def min_bits(self) -> int:
+        """Minimum total bit-width."""
+        return max(self.min_int_bits + self.recommended_frac_bits, 4)
+
+    @property
+    def max_bits(self) -> int:
+        """Maximum total bit-width."""
+        return self.max_int_bits + self.recommended_frac_bits
+
     def to_dse_format(self) -> dict:
         """Return a dict compatible with ``dse_agent.QuantSpec`` constructor kwargs."""
-        total = self.recommended_int_bits + self.recommended_frac_bits
         return {
             "node_id": self.node_id,
             "recommended_int_bits": self.recommended_int_bits,
             "recommended_frac_bits": self.recommended_frac_bits,
-            "min_bits": max(self.min_int_bits + self.recommended_frac_bits, 4),
-            "max_bits": self.max_int_bits + self.recommended_frac_bits,
+            "min_bits": self.min_bits,
+            "max_bits": self.max_bits,
         }
 
 

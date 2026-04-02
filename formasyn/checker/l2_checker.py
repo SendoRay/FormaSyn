@@ -19,6 +19,7 @@ from FormaSyn.formasyn.checker.diagnostic import (
     FailureContext,
     FailureStage,
     diagnose_resource_error,
+    diagnose_resource_error_with_ii,
 )
 
 logger = logging.getLogger(__name__)
@@ -89,6 +90,7 @@ class L2Checker:
         hls_header_code: str,
         variant_id: str,
         function_name: str = "kernel",
+        prepared_dir: Optional[str] = None,
     ) -> L2Result:
         """Run Vitis HLS csynth on the generated code.
 
@@ -99,9 +101,7 @@ class L2Checker:
             hls_header_code: Generated HLS C++ header.
             variant_id: Variant identifier.
             function_name: Top-level function name for HLS.
-
-        Returns:
-            L2Result with synthesis report and pass/fail status.
+            prepared_dir: Pre-prepared directory for intermediate files.
         """
         result = L2Result(variant_id=variant_id)
 
@@ -113,7 +113,8 @@ class L2Checker:
 
         try:
             synth = self._run_csynth(
-                hls_cpp_code, hls_header_code, function_name, variant_id
+                hls_cpp_code, hls_header_code, function_name, variant_id,
+                prepared_dir=prepared_dir,
             )
         except _VitisError as e:
             result.failure = FailureContext(
@@ -134,9 +135,17 @@ class L2Checker:
         ii_ok = synth.achieved_ii <= self._target_ii
         timing_ok = synth.timing_met
 
+        logger.info(
+            "L2 综合结果 [%s]: timing_met=%s, ii_ok=%s, over_budget=%s, "
+            "clock_period=%.2fns, achieved_ii=%d",
+            variant_id, timing_ok, ii_ok, over_budget,
+            synth.clock_period_ns, synth.achieved_ii,
+        )
+
         if over_budget or not ii_ok or not timing_ok:
-            result.failure = diagnose_resource_error(
-                variant_id, usage, self._budget, timing_ok and ii_ok
+            result.failure = diagnose_resource_error_with_ii(
+                variant_id, usage, self._budget, timing_ok, ii_ok,
+                synth.achieved_ii, self._target_ii,
             )
             logger.warning("L2 验证失败 [%s]: %s", variant_id, result.failure.gap_description)
         else:
@@ -172,20 +181,40 @@ class L2Checker:
         header_code: str,
         function_name: str,
         variant_id: str,
+        prepared_dir: Optional[str] = None,
     ) -> SynthReport:
-        """Run ``v++ --mode hls`` csynth and parse the synthesis report."""
-        work_dir = tempfile.mkdtemp(prefix="formasyn_l2_")
-        src_path = os.path.join(work_dir, f"{function_name}.cpp")
-        hdr_path = os.path.join(work_dir, f"{function_name}.h")
-        cfg_path = os.path.join(work_dir, "hls_config.cfg")
-        vpp_work_dir = os.path.join(work_dir, "work")
+        """Run ``v++ --mode hls`` csynth and parse the synthesis report.
 
-        with open(src_path, "w", encoding="utf-8") as f:
-            f.write(cpp_code)
-        with open(hdr_path, "w", encoding="utf-8") as f:
-            f.write(header_code)
-        with open(cfg_path, "w", encoding="utf-8") as f:
-            f.write(self._generate_hls_config(function_name, src_path))
+        Args:
+            cpp_code: HLS C++ source.
+            header_code: HLS C++ header.
+            function_name: Top-level function name.
+            variant_id: Variant identifier.
+            prepared_dir: Pre-prepared directory for intermediate files.
+        """
+        if prepared_dir:
+            work_dir = os.path.join(prepared_dir, "work")
+            src_path = os.path.join(prepared_dir, f"{function_name}.cpp")
+            hdr_path = os.path.join(prepared_dir, f"{function_name}.h")
+            cfg_path = os.path.join(prepared_dir, "hls_config.cfg")
+            vpp_work_dir = work_dir
+        else:
+            work_dir = tempfile.mkdtemp(prefix="formasyn_l2_")
+            src_path = os.path.join(work_dir, f"{function_name}.cpp")
+            hdr_path = os.path.join(work_dir, f"{function_name}.h")
+            cfg_path = os.path.join(work_dir, "hls_config.cfg")
+            vpp_work_dir = os.path.join(work_dir, "work")
+
+        # 写入源文件
+        if not os.path.exists(src_path):
+            with open(src_path, "w", encoding="utf-8") as f:
+                f.write(cpp_code)
+        if not os.path.exists(hdr_path):
+            with open(hdr_path, "w", encoding="utf-8") as f:
+                f.write(header_code)
+        if not os.path.exists(cfg_path):
+            with open(cfg_path, "w", encoding="utf-8") as f:
+                f.write(self._generate_hls_config(function_name, src_path))
 
         cmd = [
             "v++",
@@ -197,18 +226,27 @@ class L2Checker:
             "--work_dir",
             vpp_work_dir,
         ]
+        cwd_dir = prepared_dir if prepared_dir else work_dir
+        logger.info("L2 CSynth 开始执行 [%s]: %s (timeout=1200s)", variant_id, " ".join(cmd))
         try:
             proc = subprocess.run(
                 cmd,
                 capture_output=True,
                 text=True,
-                cwd=work_dir,
+                cwd=cwd_dir,
                 timeout=1200,
             )
         except (FileNotFoundError, NotADirectoryError, PermissionError, OSError) as exc:
             raise _VitisError(str(exc)) from exc
+        logger.info("L2 CSynth 执行完成 [%s]: returncode=%d", variant_id, proc.returncode)
         if proc.returncode != 0:
-            raise _VitisError(proc.stderr or proc.stdout or "v++ csynth failed")
+            error_output = proc.stderr or proc.stdout or "v++ csynth failed"
+            # 保存错误日志
+            if prepared_dir:
+                error_log_path = os.path.join(prepared_dir, "csynth_error.log")
+                with open(error_log_path, "w") as f:
+                    f.write(error_output)
+            raise _VitisError(error_output)
 
         return self._parse_csynth_report(vpp_work_dir)
 

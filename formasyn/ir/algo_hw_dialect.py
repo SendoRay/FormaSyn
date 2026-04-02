@@ -11,7 +11,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import Optional
 
-from FormaSyn.formasyn.ir.math_dialect import MathNode
+from .math_dialect import MathNode
 
 logger = logging.getLogger(__name__)
 
