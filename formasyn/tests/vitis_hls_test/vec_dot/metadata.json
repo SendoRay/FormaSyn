@@ -1,0 +1,22 @@
+{
+  "name": "vec_dot",
+  "description": "Vector dot product (Map+Reduce pattern)",
+  "pattern": "map_reduce",
+  "vector_size": 8,
+  "target_ii": 1,
+  "io": {
+    "inputs": [
+      {"name": "a", "type": "ap_int<16>", "size": 8, "direction": "in"},
+      {"name": "b", "type": "ap_int<16>", "size": 8, "direction": "in"}
+    ],
+    "outputs": [
+      {"name": "y", "type": "ap_int<40>", "size": 1, "direction": "out"}
+    ]
+  },
+  "operation": "y = sum(a[i] * b[i])",
+  "accuracy_requirement": {
+    "metric": "NMSE",
+    "threshold": -50,
+    "unit": "dB"
+  }
+}

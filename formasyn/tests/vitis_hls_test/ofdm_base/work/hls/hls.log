@@ -1,0 +1,110 @@
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2025.1 (64-bit)
+Tool Version Limit: 2025.05
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+==============================================================
+INFO: [HLS 200-1505] Using default flow_target 'vivado'
+INFO: [HLS 200-2174] Applying component config ini file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/hls_config.cfg
+INFO: [HLS 200-1465] Applying config ini 'syn.file=kernel.cpp' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/hls_config.cfg(7)
+INFO: [HLS 200-10] Adding design file '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/kernel.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'tb.file=kernel_tb.cpp' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/hls_config.cfg(8)
+INFO: [HLS 200-10] Adding test bench file '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/kernel_tb.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'syn.top=ofdm_base' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/hls_config.cfg(6)
+INFO: [HLS 200-1465] Applying config ini 'flow_target=vitis' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/hls_config.cfg(5)
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_latency=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_rtl -register_reset_num=3
+INFO: [HLS 200-1465] Applying config ini 'part=xc7z020clg400-1' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/hls_config.cfg(1)
+INFO: [HLS 200-1611] Setting target device to 'xc7z020-clg400-1'
+INFO: [HLS 200-1465] Applying config ini 'clock=10ns' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/hls_config.cfg(4)
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-2176] Writing Vitis IDE component file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/vitis-comp.json
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 1.61 seconds. CPU system time: 0.59 seconds. Elapsed time: 2.43 seconds; current allocated memory: 257.871 MB.
+INFO: [HLS 200-10] Analyzing design file 'kernel.cpp' ... 
+WARNING: [HLS 207-1016] unknown warning group '-Wmisleading-indentation', ignored (/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/hls_sqrt_apfixed.h:16:34)
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 14.78 seconds. CPU system time: 1.54 seconds. Elapsed time: 16.38 seconds; current allocated memory: 264.086 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vitis' flow target.
+INFO: [HLS 200-1995] There were 17,137 instructions in the design after the 'Compile/Link' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 9,565 instructions in the design after the 'Unroll/Inline (step 1)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 2,019 instructions in the design after the 'Unroll/Inline (step 2)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,505 instructions in the design after the 'Unroll/Inline (step 3)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,505 instructions in the design after the 'Unroll/Inline (step 4)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,457 instructions in the design after the 'Array/Struct (step 1)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,457 instructions in the design after the 'Array/Struct (step 2)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,457 instructions in the design after the 'Array/Struct (step 3)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,457 instructions in the design after the 'Array/Struct (step 4)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,457 instructions in the design after the 'Array/Struct (step 5)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,457 instructions in the design after the 'Performance (step 1)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,359 instructions in the design after the 'Performance (step 2)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,295 instructions in the design after the 'Performance (step 3)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,295 instructions in the design after the 'Performance (step 4)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,437 instructions in the design after the 'HW Transforms (step 1)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 200-1995] There were 1,321 instructions in the design after the 'HW Transforms (step 2)' phase of compilation. See the Design Size Report for more details (/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/work/hls/syn/report/csynth_design_size.rpt:2)
+INFO: [HLS 214-131] Inlining function 'butterfly(std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >, std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >, std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >, std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >&, std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >&)' into 'ifft_16(std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >*, std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >*)' (kernel.cpp:49:2)
+INFO: [HLS 214-291] Loop 'CP_INSERT_LOOP' is marked as complete unroll implied by the pipeline pragma (kernel.cpp:105:5)
+INFO: [HLS 214-291] Loop 'SCALE_LOOP' is marked as complete unroll implied by the pipeline pragma (kernel.cpp:79:5)
+INFO: [HLS 214-291] Loop 'STAGE4_LOOP' is marked as complete unroll implied by the pipeline pragma (kernel.cpp:72:5)
+INFO: [HLS 214-291] Loop 'STAGE3_LOOP' is marked as complete unroll implied by the pipeline pragma (kernel.cpp:62:5)
+INFO: [HLS 214-291] Loop 'STAGE2_LOOP' is marked as complete unroll implied by the pipeline pragma (kernel.cpp:54:5)
+INFO: [HLS 214-291] Loop 'STAGE1_LOOP' is marked as complete unroll implied by the pipeline pragma (kernel.cpp:47:5)
+INFO: [HLS 214-291] Loop 'REORDER_LOOP' is marked as complete unroll implied by the pipeline pragma (kernel.cpp:40:5)
+INFO: [HLS 214-186] Unrolling loop 'CP_INSERT_LOOP' (kernel.cpp:105:5) in function 'ofdm_base' completely with a factor of 20 (kernel.cpp:90:0)
+INFO: [HLS 214-186] Unrolling loop 'SCALE_LOOP' (kernel.cpp:79:5) in function 'ifft_16' completely with a factor of 16 (kernel.cpp:24:0)
+INFO: [HLS 214-186] Unrolling loop 'STAGE4_LOOP' (kernel.cpp:72:5) in function 'ifft_16' completely with a factor of 8 (kernel.cpp:24:0)
+INFO: [HLS 214-186] Unrolling loop 'STAGE3_LOOP' (kernel.cpp:62:5) in function 'ifft_16' completely with a factor of 2 (kernel.cpp:24:0)
+INFO: [HLS 214-186] Unrolling loop 'STAGE2_LOOP' (kernel.cpp:54:5) in function 'ifft_16' completely with a factor of 4 (kernel.cpp:24:0)
+INFO: [HLS 214-186] Unrolling loop 'STAGE1_LOOP' (kernel.cpp:47:5) in function 'ifft_16' completely with a factor of 8 (kernel.cpp:24:0)
+INFO: [HLS 214-186] Unrolling loop 'REORDER_LOOP' (kernel.cpp:40:5) in function 'ifft_16' completely with a factor of 16 (kernel.cpp:24:0)
+INFO: [HLS 214-248] Applying array_partition to 'ifft_out._M_real': Complete partitioning on dimension 1. (kernel.cpp:97:12)
+INFO: [HLS 214-248] Applying array_partition to 'ifft_out._M_imag': Complete partitioning on dimension 1. (kernel.cpp:97:12)
+INFO: [HLS 214-364] Automatically inlining function 'ifft_16(std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >*, std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >*)' to improve effectiveness of pipeline pragma in function 'ofdm_base(std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >*, std::complex<ap_fixed<16, 3, (ap_q_mode)5, (ap_o_mode)3, 0> >*)' (kernel.cpp:101:2)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 3.2 seconds. CPU system time: 0.57 seconds. Elapsed time: 7.08 seconds; current allocated memory: 265.105 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 265.105 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.02 seconds. CPU system time: 0 seconds. Elapsed time: 0.02 seconds; current allocated memory: 265.473 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.02 seconds. CPU system time: 0 seconds. Elapsed time: 0.02 seconds; current allocated memory: 265.586 MB.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.05 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.07 seconds; current allocated memory: 288.137 MB.
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.06 seconds. CPU system time: 0 seconds. Elapsed time: 0.06 seconds; current allocated memory: 288.137 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'ofdm_base' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'ofdm_base' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_9) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_16) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_8) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_15) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_7) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_14) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_13) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln14_17) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln14_16) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_11) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_10) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln14_7) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln14_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=add_ln14) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln14_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln14) to 3 in order to utilize available DSP registers.
+INFO: [SCHED 204-61] Pipelining function 'ofdm_base'.
+INFO: [HLS 200-876] Unable to schedule the whole 2 cycles 'store' operation 0 bit ('out_r_addr_write_ln109', kernel.cpp:109) of variable 'sext_ln109', kernel.cpp:109 on array 'out_r' within the last cycle (II = 1). Simulation mismatch may occur if the testbench is not ready to receive the output when this operation occurs.
+WARNING: [HLS 200-885] The II Violation in module 'ofdm_base' (function 'ofdm_base'): Unable to schedule 'load' operation 32 bit ('in_r_load_13', kernel.cpp:42->kernel.cpp:101) on array 'in_r' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'in_r'.
+WARNING: [HLS 200-885] The II Violation in module 'ofdm_base' (function 'ofdm_base'): Unable to schedule 'load' operation 32 bit ('in_r_load_14', kernel.cpp:42->kernel.cpp:101) on array 'in_r' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'in_r'.
+WARNING: [HLS 200-885] The II Violation in module 'ofdm_base' (function 'ofdm_base'): Unable to schedule 'load' operation 32 bit ('in_r_load_15', kernel.cpp:42->kernel.cpp:101) on array 'in_r' due to limited memory ports (II = 4). Please consider using a memory core with more ports or partitioning the array 'in_r'.
+WARNING: [HLS 200-885] The II Violation in module 'ofdm_base' (function 'ofdm_base'): Unable to schedule 'store' operation 0 bit ('out_r_addr_11_write_ln112', kernel.cpp:112) of variable 'sext_ln112_7', kernel.cpp:112 on array 'out_r' due to limited memory ports (II = 19). Please consider using a memory core with more ports or partitioning the array 'out_r'.
+WARNING: [HLS 200-885] The II Violation in module 'ofdm_base' (function 'ofdm_base'): Unable to schedule 'store' operation 0 bit ('out_r_addr_13_write_ln112', kernel.cpp:112) of variable 'sext_ln112_9', kernel.cpp:112 on array 'out_r' due to limited memory ports (II = 20). Please consider using a memory core with more ports or partitioning the array 'out_r'.
+INFO: [SCHED 204-61] Discarding stage scheduling solution.
+INFO: [HLS 200-1470] Pipelining result : Target II = 1, Final II = 21, Depth = 38, function 'ofdm_base'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 4.03 seconds. CPU system time: 0.04 seconds. Elapsed time: 4.08 seconds; current allocated memory: 288.137 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...

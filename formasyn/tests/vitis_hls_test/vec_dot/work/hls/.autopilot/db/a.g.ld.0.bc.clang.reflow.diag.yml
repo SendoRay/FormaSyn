@@ -1,0 +1,37 @@
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 13, Column: 22 }
+Function:        _Z7vec_dotP6ap_intILi16EES1_PS_ILi40EE
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_13_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 3, Column: 0 }
+Function:        _Z7vec_dotP6ap_intILi16EES1_PS_ILi40EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_13_1
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:13:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          vec_dot
+  - String:          ''' completely with a factor of '
+  - Factor:          '8'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_vec_dot_ir
+Args:            
+  - Callee:          'vec_dot(ap_int<16>*, ap_int<16>*, ap_int<40>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 3, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_vec_dot_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...

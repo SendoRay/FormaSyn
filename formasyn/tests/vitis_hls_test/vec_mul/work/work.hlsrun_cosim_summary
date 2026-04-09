@@ -1,0 +1,226 @@
+<ENTRY>
+{
+ "thisFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/work.hlsrun_cosim_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Apr  9 04:25:15 2026",
+ "timestampMillis": "1775708715186",
+ "buildStep": {
+  "cmdId": "22013afb-ef9c-4c8b-8b19-6eb6f229995b",
+  "name": "vitis-run",
+  "logFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/logs/work.steps.log",
+  "commandLine": "/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/vitis-run  --mode hls --cosim --config hls_config.cfg --work_dir work ",
+  "args": [
+   "--mode",
+   "hls",
+   "--cosim",
+   "--config",
+   "hls_config.cfg",
+   "--work_dir",
+   "work"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:25:15 2026",
+ "timestampMillis": "1775708715186",
+ "status": {
+  "cmdId": "22013afb-ef9c-4c8b-8b19-6eb6f229995b",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719467",
+ "buildSummary": {
+  "hardwarePlatform": "",
+  "hardwareDsa": "",
+  "platformDirectory": "",
+  "runtime": "",
+  "systemConfig": "",
+  "flow": "BF_RUN",
+  "target": "TT_HLS_RTL_COSIM",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "vec_mul",
+     "file": "",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/kernel.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "2025.1"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719468",
+ "buildStep": {
+  "cmdId": "8f8a1711-8d4c-4c0a-abbc-8c3d26585ffb",
+  "name": "",
+  "logFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/hls/hls.log",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719468",
+ "status": {
+  "cmdId": "8f8a1711-8d4c-4c0a-abbc-8c3d26585ffb",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719468",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/hls/sim/report/vec_mul_cosim.rpt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "HLS_COSIMULATION",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719468",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_DATAFLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719468",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_FUNCTION_CALL_GRAPH_COSIM",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719469",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_TIMELINE_TRACE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:25:19 2026",
+ "timestampMillis": "1775708719469",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_mul/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_WAVE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:25:51 2026",
+ "timestampMillis": "1775708751325",
+ "status": {
+  "cmdId": "8f8a1711-8d4c-4c0a-abbc-8c3d26585ffb",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:25:51 2026",
+ "timestampMillis": "1775708751471",
+ "status": {
+  "cmdId": "22013afb-ef9c-4c8b-8b19-6eb6f229995b",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:25:51 2026",
+ "timestampMillis": "1775708751472",
+ "report": {
+  "path": "",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:25:51 2026",
+ "timestampMillis": "1775708751472",
+ "report": {
+  "path": "",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

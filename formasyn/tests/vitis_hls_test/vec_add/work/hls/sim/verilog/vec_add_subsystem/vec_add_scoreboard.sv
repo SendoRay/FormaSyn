@@ -35,16 +35,18 @@
                 forever begin
                     @refm.allaxilite_write_data_finish;
                     `uvm_info(this.get_full_name(), "receive allaxilite_write_finish axilite write_mem_page_process", UVM_LOW)
+                    void'(refm.mem_blk_pages_control_a.pages.pop_front());
+                    void'(refm.mem_blk_pages_control_b.pages.pop_front());
+                end
+                forever begin
+                    @refm.allaxilite_read_data_finish;
+                    `uvm_info(this.get_full_name(), "receive allaxilite_read_finish axilite_read_mem_page_process", UVM_LOW)
+                    refm.mem_blk_pages_control_y.tvout_dump_frontpage(1);
                 end
                                                                                                
                 forever begin                                                                  
                     @refm.dut2tb_ap_done;                                                             
                     `uvm_info(this.get_full_name(), "receive ap_done_for_nexttrans and do axim dump", UVM_LOW)           
-                    for(int j=0; j<refm.ap_done_cnt; j++) begin
-                        if(j<refm.trans_num_total) begin
-                            refm.mem_blk_pages_gmem.tvout_dump_frontpage(1);
-                        end
-                    end
                 end                                                                            
                 begin                                                                          
                     @refm.finish;                                                              
@@ -53,12 +55,6 @@
             join                                                                               
         endtask                                                                                
                                                                                                
-        virtual function void write_axi_wtr_gmem(axi_pkg::axi_transfer tr);
-        endfunction
-
-        virtual function void write_axi_rtr_gmem(axi_pkg::axi_transfer tr);
-        endfunction
-
         virtual function void write_axi_wtr_control(axi_pkg::axi_transfer tr);
         endfunction
 

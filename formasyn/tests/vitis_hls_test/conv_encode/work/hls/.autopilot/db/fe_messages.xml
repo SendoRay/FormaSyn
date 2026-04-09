@@ -1,0 +1,49 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_INVALID" msg_id="207-5541" msg_severity="WARNING" msg_loc="kernel.cpp:15:28" msg_body="'Ap_stable' in '#pragma HLS INTERFACE' is deprecated, use 'Stable Pragma' instead">
+        <args ClangWarningOption="ignored-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_DATAFLOW" msg_id="214-114" msg_severity="WARNING" msg_loc="kernel.cpp:17:9" msg_body="Since the only kind of statements allowed in a canonical dataflow region are variable declarations and function calls, the compiler may not be able to correctly handle the region"/>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="./kernel.h:27:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="shift" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="./kernel.h:32:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="read" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="./kernel.h:37:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="reset" ARG_PragmaIsValid="1" ARG_PragmaType="inline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="conv_encode" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=conv_encode" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:12:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="conv_encode" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_ctrl_chain port=return" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:13:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="conv_encode" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_fifo port=bit_in_stream" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:14:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="conv_encode" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_fifo port=y_out_stream" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:15:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="conv_encode" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_stable port=num_bits" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:17:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="conv_encode" ARG_PragmaIsValid="1" ARG_PragmaType="dataflow" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:23:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="conv_encode" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="kernel.cpp:48:19" msg_body="Inlining function 'ShiftReg&lt;2&gt;::shift(ap_uint&lt;1&gt;)' into 'conv_encode(hls::stream&lt;ap_uint&lt;1&gt;, 0&gt;&amp;, hls::stream&lt;ap_uint&lt;2&gt;, 0&gt;&amp;, ap_uint&lt;32&gt;)'">
+        <args Callee="ShiftReg&lt;2&gt;::shift(ap_uint&lt;1&gt;)" Callee-DebugLoc="File ./kernel.h Line 26 Column 0" Caller="conv_encode(hls::stream&lt;ap_uint&lt;1&gt;, 0&gt;&amp;, hls::stream&lt;ap_uint&lt;2&gt;, 0&gt;&amp;, ap_uint&lt;32&gt;)" Caller-DebugLoc="File kernel.cpp Line 11 Column 0"/>
+    </msg>
+    <msg msg_groups="CODE_UNSUPPORTED" msg_id="214-131" msg_severity="INFO" msg_loc="kernel.cpp:29:41" msg_body="Inlining function 'ShiftReg&lt;2&gt;::read() const' into 'conv_encode(hls::stream&lt;ap_uint&lt;1&gt;, 0&gt;&amp;, hls::stream&lt;ap_uint&lt;2&gt;, 0&gt;&amp;, ap_uint&lt;32&gt;)'">
+        <args Callee="ShiftReg&lt;2&gt;::read() const" Callee-DebugLoc="File ./kernel.h Line 31 Column 0" Caller="conv_encode(hls::stream&lt;ap_uint&lt;1&gt;, 0&gt;&amp;, hls::stream&lt;ap_uint&lt;2&gt;, 0&gt;&amp;, ap_uint&lt;32&gt;)" Caller-DebugLoc="File kernel.cpp Line 11 Column 0"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INLINE" msg_id="214-178" msg_severity="INFO" msg_loc="kernel.cpp:11:0" msg_body="Inlining function 'ShiftReg&lt;2&gt;::ShiftReg()' into 'conv_encode(hls::stream&lt;ap_uint&lt;1&gt;, 0&gt;&amp;, hls::stream&lt;ap_uint&lt;2&gt;, 0&gt;&amp;, ap_uint&lt;32&gt;)'">
+        <args Callee="ShiftReg&lt;2&gt;::ShiftReg()" Callee-DebugLoc="File ./kernel.h Line 24 Column 0" Caller="conv_encode(hls::stream&lt;ap_uint&lt;1&gt;, 0&gt;&amp;, hls::stream&lt;ap_uint&lt;2&gt;, 0&gt;&amp;, ap_uint&lt;32&gt;)" Caller-DebugLoc="File kernel.cpp Line 11 Column 0"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-455" msg_severity="INFO" msg_loc="kernel.cpp:22:22" msg_body="Changing loop 'Loop_VITIS_LOOP_22_1_proc' (kernel.cpp:22:22) to a process function for dataflow in function 'conv_encode'">
+        <args LoopLoc="kernel.cpp:22:22" LoopName="Loop_VITIS_LOOP_22_1_proc" Name="conv_encode"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

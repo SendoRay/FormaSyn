@@ -1,0 +1,167 @@
+
+
+================================================================
+== Synthesis Summary Report of 'kernel'
+================================================================
++ General Information: 
+    * Date:           Thu Apr  2 09:50:10 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        work
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: virtexuplus
+    * Target device:  xcu200-fsgd2104-2-e
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +----------+------+------+---------+---------+----------+---------+------+----------+---------+----+------------+------------+-----+
+    |  Modules | Issue|      |      Latency      | Iteration|         | Trip |          |         |    |            |            |     |
+    |  & Loops | Type | Slack| (cycles)|   (ns)  |  Latency | Interval| Count| Pipelined|  BRAM   | DSP|     FF     |     LUT    | URAM|
+    +----------+------+------+---------+---------+----------+---------+------+----------+---------+----+------------+------------+-----+
+    |+ kernel  |    II|  0.00|      143|  715.000|         -|        2|     -|       yes|  8 (~0%)|   -|  2342 (~0%)|  2418 (~0%)|    -|
+    +----------+------+------+---------+---------+----------+---------+------+----------+---------+----+------------+------------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* M_AXI
++------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| Interface  | Read/Write | Data Width | Address Width | Latency | Offset | Register | Max Widen | Max Read     | Max Write    | Num Read    | Num Write   | Resource Estimate |
+|            |            | (SW->HW)   |               |         |        |          | Bitwidth  | Burst Length | Burst Length | Outstanding | Outstanding |                   |
++------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| m_axi_gmem | READ_WRITE | 8 -> 256   | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=8            |
++------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 6             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL     | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER     | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER   | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR   | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | a_1      | 0x10   | 32    | W      | Data signal of a                 |                                                                                    |
+| s_axi_control | a_2      | 0x14   | 32    | W      | Data signal of a                 |                                                                                    |
+| s_axi_control | b_1      | 0x1c   | 32    | W      | Data signal of b                 |                                                                                    |
+| s_axi_control | b_2      | 0x20   | 32    | W      | Data signal of b                 |                                                                                    |
+| s_axi_control | c_1      | 0x28   | 32    | W      | Data signal of c                 |                                                                                    |
+| s_axi_control | c_2      | 0x2c   | 32    | W      | Data signal of c                 |                                                                                    |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+--------------------------------------+
+| Argument | Direction | Datatype                             |
++----------+-----------+--------------------------------------+
+| a        | inout     | ap_int<8>*                           |
+| b        | inout     | ap_int<8>*                           |
+| c        | inout     | ap_fixed<16, 7, AP_TRN, AP_WRAP, 0>* |
++----------+-----------+--------------------------------------+
+
+* SW-to-HW Mapping
++----------+---------------+-----------+----------+-------------------------------+
+| Argument | HW Interface  | HW Type   | HW Usage | HW Info                       |
++----------+---------------+-----------+----------+-------------------------------+
+| a        | m_axi_gmem    | interface |          | channel=0                     |
+| a        | s_axi_control | register  | offset   | name=a_1 offset=0x10 range=32 |
+| a        | s_axi_control | register  | offset   | name=a_2 offset=0x14 range=32 |
+| b        | m_axi_gmem    | interface |          | channel=0                     |
+| b        | s_axi_control | register  | offset   | name=b_1 offset=0x1c range=32 |
+| b        | s_axi_control | register  | offset   | name=b_2 offset=0x20 range=32 |
+| c        | m_axi_gmem    | interface |          | channel=0                     |
+| c        | s_axi_control | register  | offset   | name=c_1 offset=0x28 range=32 |
+| c        | s_axi_control | register  | offset   | name=c_2 offset=0x2c range=32 |
++----------+---------------+-----------+----------+-------------------------------+
+
+
+================================================================
+== M_AXI Burst Information
+================================================================
+ Note: All burst requests might be further partitioned into multiple requests during RTL generation based on max_read_burst_length or max_write_burst_length settings.
+
+* All M_AXI Variable Accesses
++--------------+----------+------------------+-----------+--------------+--------+
+| HW Interface | Variable | Access Location  | Direction | Burst Status | Length |
++--------------+----------+------------------+-----------+--------------+--------+
+| m_axi_gmem   | c        | kernel.cpp:13:7  | write     | Widened      | 1      |
+| m_axi_gmem   | b        | kernel.cpp:13:14 | read      | Widened      | 1      |
+| m_axi_gmem   | a        | kernel.cpp:13:14 | read      | Widened      | 1      |
+| m_axi_gmem   | c        | kernel.cpp:13:7  | write     | Inferred     | 16     |
+| m_axi_gmem   | b        | kernel.cpp:13:14 | read      | Inferred     | 16     |
+| m_axi_gmem   | a        | kernel.cpp:13:14 | read      | Inferred     | 16     |
++--------------+----------+------------------+-----------+--------------+--------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++-------------------------+-----+--------+-------------+-----+--------+---------+
+| Name                    | DSP | Pragma | Variable    | Op  | Impl   | Latency |
++-------------------------+-----+--------+-------------+-----+--------+---------+
+| + kernel                | 0   |        |             |     |        |         |
+|   add_ln13_fu_392_p2    |     |        | add_ln13    | add | fabric | 0       |
+|   add_ln13_1_fu_396_p2  |     |        | add_ln13_1  | add | fabric | 0       |
+|   add_ln13_2_fu_400_p2  |     |        | add_ln13_2  | add | fabric | 0       |
+|   add_ln13_3_fu_404_p2  |     |        | add_ln13_3  | add | fabric | 0       |
+|   add_ln13_4_fu_408_p2  |     |        | add_ln13_4  | add | fabric | 0       |
+|   add_ln13_5_fu_412_p2  |     |        | add_ln13_5  | add | fabric | 0       |
+|   add_ln13_6_fu_416_p2  |     |        | add_ln13_6  | add | fabric | 0       |
+|   add_ln13_7_fu_420_p2  |     |        | add_ln13_7  | add | fabric | 0       |
+|   add_ln13_8_fu_424_p2  |     |        | add_ln13_8  | add | fabric | 0       |
+|   add_ln13_9_fu_428_p2  |     |        | add_ln13_9  | add | fabric | 0       |
+|   add_ln13_10_fu_432_p2 |     |        | add_ln13_10 | add | fabric | 0       |
+|   add_ln13_11_fu_436_p2 |     |        | add_ln13_11 | add | fabric | 0       |
+|   add_ln13_12_fu_440_p2 |     |        | add_ln13_12 | add | fabric | 0       |
+|   add_ln13_13_fu_444_p2 |     |        | add_ln13_13 | add | fabric | 0       |
+|   add_ln13_14_fu_448_p2 |     |        | add_ln13_14 | add | fabric | 0       |
+|   add_ln13_15_fu_452_p2 |     |        | add_ln13_15 | add | fabric | 0       |
++-------------------------+-----+--------+-------------+-----+--------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name              | Usage     | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                   |           |           |      |      |        |          |      |         | Banks            |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| + kernel          |           |           | 8    | 0    |        |          |      |         |                  |
+|   control_s_axi_U | interface | s_axilite |      |      |        |          |      |         |                  |
+|   gmem_m_axi_U    | interface | m_axi     | 8    |      |        |          |      |         |                  |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++----------+---------+-------------------------+
+| Type     | Options | Location                |
++----------+---------+-------------------------+
+| PIPELINE | ii=1    | kernel.cpp:10 in kernel |
+| UNROLL   |         | kernel.cpp:12 in kernel |
++----------+---------+-------------------------+
+
+

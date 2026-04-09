@@ -1,0 +1,23 @@
+[
+  {
+    "functionLabel": "",
+    "functionName": "vec_mul",
+    "id": 0,
+    "ifcond": "",
+    "insert_position": "",
+    "label": "",
+    "pragma": {
+      "name": "TOP",
+      "option": [
+        {
+          "name": "name",
+          "value": "vec_mul"
+        }
+      ]
+    },
+    "slx": false,
+    "sourceFile": "",
+    "sourceLine": 0,
+    "success": true
+  }
+]

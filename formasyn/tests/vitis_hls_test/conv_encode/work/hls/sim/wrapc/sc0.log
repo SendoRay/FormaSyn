@@ -1,0 +1,7 @@
+   Build using "/tools/Xilinx/2025.1/Vitis/lnx64/tools/vcxx/libexec//clang++"
+   Compiling apatb_conv_encode.cpp
+   Compiling apatb_conv_encode_util.cpp
+   Compiling kernel.cpp_pre.cpp.tb.cpp
+   Compiling kernel_tb.cpp_pre.cpp.tb.cpp
+   Compiling apatb_conv_encode_ir.ll
+   Generating cosim.tv.exe

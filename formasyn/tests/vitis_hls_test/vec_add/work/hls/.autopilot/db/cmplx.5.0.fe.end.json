@@ -1,14 +1,20 @@
 {
     "0": {
         "name": "vec_add",
-        "file": "vec_add.cpp",
-        "fileloc": "1",
-        "instructions": "81",
-        "total_instructions": "81",
+        "file": "kernel.cpp",
+        "fileloc": "3",
+        "instructions": "73",
+        "total_instructions": "73",
         "calls": "",
         "basicblocks": "1",
-        "memory_accesses": "10",
+        "memory_accesses": "24",
         "control_depth": "0",
-        "def_use_depth": "6"
+        "def_use_depth": "3",
+        "loads": {
+            "T": "16"
+        },
+        "stores": {
+            "T": "8"
+        }
     }
 }

@@ -1,6 +1,6 @@
 <ENTRY>
 {
- "thisFile": "/home/chengzhy/vitis_hls_test/work/work.hlsrun_cosim_summary",
+ "thisFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/work.hlsrun_cosim_summary",
  "connectId": "",
  "serverToken": "",
  "timestamp": "0"
@@ -9,12 +9,12 @@
 <ENTRY>
 {
  "type": "ET_CmdStep",
- "dateTimestamp": "Wed Mar 11 09:07:52 2026",
- "timestampMillis": "1773220072827",
+ "dateTimestamp": "Thu Apr  9 04:28:05 2026",
+ "timestampMillis": "1775708885417",
  "buildStep": {
-  "cmdId": "da394414-24f1-429c-be64-2ea8ebedc16a",
+  "cmdId": "c94551bd-ec95-44b0-8080-bc45854cb05f",
   "name": "vitis-run",
-  "logFile": "/home/chengzhy/vitis_hls_test/work/logs/work.steps.log",
+  "logFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/logs/work.steps.log",
   "commandLine": "/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/vitis-run  --mode hls --cosim --config hls_config.cfg --work_dir work ",
   "args": [
    "--mode",
@@ -26,17 +26,17 @@
    "work"
   ],
   "iniFiles": [],
-  "cwd": "/home/chengzhy/vitis_hls_test"
+  "cwd": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add"
  }
 }
 </ENTRY>
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Wed Mar 11 09:07:52 2026",
- "timestampMillis": "1773220072827",
+ "dateTimestamp": "Thu Apr  9 04:28:05 2026",
+ "timestampMillis": "1775708885418",
  "status": {
-  "cmdId": "da394414-24f1-429c-be64-2ea8ebedc16a",
+  "cmdId": "c94551bd-ec95-44b0-8080-bc45854cb05f",
   "state": "CS_RUNNING"
  }
 }
@@ -44,8 +44,8 @@
 <ENTRY>
 {
  "type": "ET_FlowMetaData",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077076",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889759",
  "buildSummary": {
   "hardwarePlatform": "",
   "hardwareDsa": "",
@@ -64,7 +64,7 @@
      "uuid": ""
     },
     "sources": [
-     "/home/chengzhy/vitis_hls_test/vec_add.cpp"
+     "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp"
     ],
     "psSources": [],
     "cuNames": [],
@@ -80,26 +80,26 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077076",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889760",
  "buildStep": {
-  "cmdId": "255da033-0224-4754-9123-f5278f08c0be",
+  "cmdId": "d8ba140a-2cce-4eab-a531-d3c843ef42d4",
   "name": "",
-  "logFile": "/home/chengzhy/vitis_hls_test/work/hls/hls.log",
+  "logFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls/hls.log",
   "commandLine": "",
   "args": [],
   "iniFiles": [],
-  "cwd": "/home/chengzhy/vitis_hls_test"
+  "cwd": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add"
  }
 }
 </ENTRY>
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077076",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889760",
  "status": {
-  "cmdId": "255da033-0224-4754-9123-f5278f08c0be",
+  "cmdId": "d8ba140a-2cce-4eab-a531-d3c843ef42d4",
   "state": "CS_RUNNING"
  }
 }
@@ -107,10 +107,10 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077077",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889760",
  "report": {
-  "path": "/home/chengzhy/vitis_hls_test/work/hls/sim/report/vec_add_cosim.rpt",
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls/sim/report/vec_add_cosim.rpt",
   "name": "",
   "fileType": "TEXT",
   "reportType": "HLS_COSIMULATION",
@@ -121,10 +121,10 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077077",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889760",
  "report": {
-  "path": "/home/chengzhy/vitis_hls_test/work/hls",
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls",
   "name": "",
   "fileType": "DIR",
   "reportType": "HLS_DATAFLOW",
@@ -135,10 +135,10 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077077",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889760",
  "report": {
-  "path": "/home/chengzhy/vitis_hls_test/work/hls",
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls",
   "name": "",
   "fileType": "DIR",
   "reportType": "HLS_FUNCTION_CALL_GRAPH_COSIM",
@@ -149,10 +149,10 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077077",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889761",
  "report": {
-  "path": "/home/chengzhy/vitis_hls_test/work/hls",
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls",
   "name": "",
   "fileType": "DIR",
   "reportType": "HLS_TIMELINE_TRACE",
@@ -163,10 +163,10 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Wed Mar 11 09:07:57 2026",
- "timestampMillis": "1773220077077",
+ "dateTimestamp": "Thu Apr  9 04:28:09 2026",
+ "timestampMillis": "1775708889761",
  "report": {
-  "path": "/home/chengzhy/vitis_hls_test/work/hls",
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls",
   "name": "",
   "fileType": "DIR",
   "reportType": "HLS_WAVE",
@@ -177,10 +177,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Wed Mar 11 09:08:37 2026",
- "timestampMillis": "1773220117302",
+ "dateTimestamp": "Thu Apr  9 04:28:40 2026",
+ "timestampMillis": "1775708920618",
  "status": {
-  "cmdId": "255da033-0224-4754-9123-f5278f08c0be",
+  "cmdId": "d8ba140a-2cce-4eab-a531-d3c843ef42d4",
   "state": "CS_PASSED"
  }
 }
@@ -188,10 +188,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Wed Mar 11 09:08:37 2026",
- "timestampMillis": "1773220117446",
+ "dateTimestamp": "Thu Apr  9 04:28:40 2026",
+ "timestampMillis": "1775708920748",
  "status": {
-  "cmdId": "da394414-24f1-429c-be64-2ea8ebedc16a",
+  "cmdId": "c94551bd-ec95-44b0-8080-bc45854cb05f",
   "state": "CS_PASSED"
  }
 }
@@ -199,8 +199,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Wed Mar 11 09:08:37 2026",
- "timestampMillis": "1773220117447",
+ "dateTimestamp": "Thu Apr  9 04:28:40 2026",
+ "timestampMillis": "1775708920749",
  "report": {
   "path": "",
   "name": "",
@@ -213,8 +213,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Wed Mar 11 09:08:37 2026",
- "timestampMillis": "1773220117447",
+ "dateTimestamp": "Thu Apr  9 04:28:40 2026",
+ "timestampMillis": "1775708920750",
  "report": {
   "path": "",
   "name": "",

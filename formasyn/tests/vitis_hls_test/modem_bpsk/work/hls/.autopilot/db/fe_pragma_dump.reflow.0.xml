@@ -1,0 +1,11 @@
+<pragmas>
+<pragma file="kernel.cpp" line="8" pragmaType="interface" parentfunction="bpsk_mapper" mode="s_axilite" port="" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="9" pragmaType="interface" parentfunction="bpsk_mapper" mode="s_axilite" port="bit_in" bundle="" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="10" pragmaType="interface" parentfunction="bpsk_mapper" mode="s_axilite" port="y_out" bundle="" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="20" pragmaType="bind_storage" parentfunction="bpsk_mapper" op="666" impl="213" latency="-1" variable="_ZZ11bpsk_mapper7ap_uintILi1EEP6ap_intILi16EEE8bpsk_lut"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowBaseC" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="ssdm_int<16, true>::ssdm_int(short)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<16>::ap_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<1, false>::operator unsigned long long() const" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+</pragmas>

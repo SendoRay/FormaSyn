@@ -1,0 +1,17 @@
+{
+    "0": {
+        "name": "vec_dot",
+        "file": "kernel.cpp",
+        "fileloc": "3",
+        "instructions": "95",
+        "total_instructions": "95",
+        "calls": "",
+        "basicblocks": "1",
+        "memory_accesses": "17",
+        "control_depth": "0",
+        "def_use_depth": "6",
+        "loads": {
+            "T": "16"
+        }
+    }
+}

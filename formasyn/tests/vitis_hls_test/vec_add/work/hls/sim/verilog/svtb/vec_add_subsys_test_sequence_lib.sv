@@ -26,8 +26,8 @@
             virtual interface misc_interface misc_if;                                               
             vec_add_reference_model refm;                                                       
                                                                                                     
-            axi_pkg::axi_slave_sequence#(64,64,8,3,1) axi_slave_gmem_seq;
             axi_pkg::axi_busdatas_master_sequence#(6, 32) axi_master_wr_control_seq;
+            axi_pkg::axi_busdatas_master_sequence#(6, 32) axi_master_rd_control_seq;
             axi_pkg::axi_busdatas_master_sequence#(6, 32) axi_master_poll_control_seq;
             axi_pkg::axi_busdatas_master_sequence#(6, 32) axi_master_wr_cont_control_seq;
 
@@ -55,15 +55,6 @@
             fork
                 begin
                     fork
-                        begin //axi slave sequence. loop delays
-                            `uvm_create_on(axi_slave_gmem_seq, p_sequencer.gmem_sqr);
-                            axi_slave_gmem_seq.misc_if = refm.misc_if;
-                            axi_slave_gmem_seq.ap_done    = refm.ap_done_for_nexttrans   ;
-                            axi_slave_gmem_seq.ap_ready   = refm.ap_ready_for_nexttrans  ;
-                            axi_slave_gmem_seq.finish     = refm.finish ;
-                            axi_slave_gmem_seq.isusr_delay = axi_pkg::NO_DELAY;
-                            `uvm_send(axi_slave_gmem_seq);
-                        end
                         begin
                             int control_page_idx_bak;
                             `uvm_create_on(axi_master_wr_control_seq, p_sequencer.control_sqr);
@@ -77,32 +68,18 @@
                                 logic[32-1:0] databusbit_a[$];
                                 logic[63:0] data64bit_b[$];
                                 logic[32-1:0] databusbit_b[$];
-                                logic[63:0] data64bit_c[$];
-                                logic[32-1:0] databusbit_c[$];
                                 data64bit_a.delete(); databusbit_a.delete();
                                 axi_master_wr_control_seq.StableAxiliteNoUpdate=0;
-                                for(int j=0; j < (64+32-1)/32; j++) begin
-                                    data64bit_a.push_back( ((refm.mem_blk_pages_gmem.maxi_bundlevar_offset["a"]+refm.mem_blk_pages_gmem.page_ofst[refm.mem_blk_pages_gmem.rd_page_idx])>>(j*32)) & (2**32-1) );
-                                end
+                                refm.mem_blk_pages_control_a.tobusdata(data64bit_a, refm.mem_blk_pages_control_a.rd_page_idx, 32);
                                 foreach(data64bit_a[s]) databusbit_a[s]=data64bit_a[s][32-1:0];
                                 axi_master_wr_control_seq.StableAxiliteNoUpdate=1;
                                 axi_master_wr_control_seq.datamerge_inavg(databusbit_a, 0, 16, 1);
                                 data64bit_b.delete(); databusbit_b.delete();
                                 axi_master_wr_control_seq.StableAxiliteNoUpdate=0;
-                                for(int j=0; j < (64+32-1)/32; j++) begin
-                                    data64bit_b.push_back( ((refm.mem_blk_pages_gmem.maxi_bundlevar_offset["b"]+refm.mem_blk_pages_gmem.page_ofst[refm.mem_blk_pages_gmem.rd_page_idx])>>(j*32)) & (2**32-1) );
-                                end
+                                refm.mem_blk_pages_control_b.tobusdata(data64bit_b, refm.mem_blk_pages_control_b.rd_page_idx, 32);
                                 foreach(data64bit_b[s]) databusbit_b[s]=data64bit_b[s][32-1:0];
                                 axi_master_wr_control_seq.StableAxiliteNoUpdate=1;
-                                axi_master_wr_control_seq.datamerge_inavg(databusbit_b, 0, 28, 1);
-                                data64bit_c.delete(); databusbit_c.delete();
-                                axi_master_wr_control_seq.StableAxiliteNoUpdate=0;
-                                for(int j=0; j < (64+32-1)/32; j++) begin
-                                    data64bit_c.push_back( ((refm.mem_blk_pages_gmem.maxi_bundlevar_offset["c"]+refm.mem_blk_pages_gmem.page_ofst[refm.mem_blk_pages_gmem.rd_page_idx])>>(j*32)) & (2**32-1) );
-                                end
-                                foreach(data64bit_c[s]) databusbit_c[s]=data64bit_c[s][32-1:0];
-                                axi_master_wr_control_seq.StableAxiliteNoUpdate=1;
-                                axi_master_wr_control_seq.datamerge_inavg(databusbit_c, 0, 40, 1);
+                                axi_master_wr_control_seq.datamerge_inavg(databusbit_b, 0, 32, 1);
                                 `uvm_send(axi_master_wr_control_seq);
                                 @(posedge refm.misc_if.clock); //wait address 2 rsp done
                                 @(posedge refm.misc_if.clock);
@@ -150,11 +127,23 @@
                             end
                         end
                         begin
+                            `uvm_create_on(axi_master_rd_control_seq, p_sequencer.control_sqr)
+                            axi_master_rd_control_seq.misc_if = refm.misc_if;
+                            axi_master_rd_control_seq.ap_done    = refm.ap_done_for_nexttrans   ;
+                            axi_master_rd_control_seq.ap_ready   = refm.ap_ready_for_nexttrans  ;
+                            axi_master_rd_control_seq.finish     = refm.finish ;
+                            axi_master_rd_control_seq.isusr_delay = axi_pkg::NO_DELAY;
                             `uvm_create_on(axi_master_wr_cont_control_seq, p_sequencer.control_sqr)
                             for(int j=0; j<1; j=j+refm.ap_done_cnt) begin
                                 logic[32-1:0] databusbit[$];
                                 @refm.dut2tb_ap_done;
+                                axi_master_rd_control_seq.datamerge_inavg(databusbit, (8*16+32-1)/32, 48, 0);
                                     `uvm_info("axilite data read", $sformatf("%0dth(total 1) data read sequence is started",j), UVM_LOW)
+                                `uvm_send(axi_master_rd_control_seq);
+                                @(posedge refm.misc_if.clock); //wait address 2 rdata rsp done
+                                @(posedge refm.misc_if.clock);
+                                refm.read_data_finish_control = 1;
+                                wait(refm.allaxilite_read_data_finish.triggered);
                                 axi_master_wr_cont_control_seq.wr_addr_data.push_back( (1<<4)+(0<<32) );
                                 `uvm_info("continue bit set by axilite", $sformatf("%0dth(total 1) continue setting is started",j), UVM_LOW)
                                 `uvm_send(axi_master_wr_cont_control_seq);
@@ -176,7 +165,6 @@
             join_any
             repeat(5) @(posedge refm.misc_if.clock); //5 cycles delay for finish stuff. 5 is haphazard value
 
-            p_sequencer.gmem_sqr.stop_sequences();
             p_sequencer.control_sqr.stop_sequences();
             disable fork;
                                                                                                     

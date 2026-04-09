@@ -1,0 +1,125 @@
+
+
+================================================================
+== Synthesis Summary Report of 'kernel'
+================================================================
++ General Information: 
+    * Date:           Thu Apr  9 04:26:42 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        work
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: zynq
+    * Target device:  xc7z020-clg400-1
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+-----------+-----+
+    |  Modules | Issue|      |      Latency     | Iteration|         | Trip |          |      |         |           |           |     |
+    |  & Loops | Type | Slack| (cycles)|  (ns)  |  Latency | Interval| Count| Pipelined| BRAM |   DSP   |     FF    |    LUT    | URAM|
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+-----------+-----+
+    |+ kernel  |     -|  1.09|        3|  30.000|         -|        1|     -|       yes|     -|  1 (~0%)|  126 (~0%)|  229 (~0%)|    -|
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+-----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 6             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL     | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER     | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER   | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR   | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | x_in     | 0x10   | 32    | W      | Data signal of x_in              |                                                                                    |
+| s_axi_control | gain     | 0x18   | 32    | W      | Data signal of gain              |                                                                                    |
+| s_axi_control | y_out    | 0x20   | 32    | R      | Data signal of y_out             |                                                                                    |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+-------------+
+| Argument | Direction | Datatype    |
++----------+-----------+-------------+
+| x_in     | in        | ap_int<16>  |
+| gain     | in        | ap_int<16>  |
+| y_out    | out       | ap_int<16>& |
++----------+-----------+-------------+
+
+* SW-to-HW Mapping
++----------+---------------+----------+---------------------------------+
+| Argument | HW Interface  | HW Type  | HW Info                         |
++----------+---------------+----------+---------------------------------+
+| x_in     | s_axi_control | register | name=x_in offset=0x10 range=32  |
+| gain     | s_axi_control | register | name=gain offset=0x18 range=32  |
+| y_out    | s_axi_control | register | name=y_out offset=0x20 range=32 |
++----------+---------------+----------+---------------------------------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++-------------------------------------+-----+--------+-----------------+--------+-----------+---------+
+| Name                                | DSP | Pragma | Variable        | Op     | Impl      | Latency |
++-------------------------------------+-----+--------+-----------------+--------+-----------+---------+
+| + kernel                            | 1   |        |                 |        |           |         |
+|   mac_muladd_16s_16s_14ns_32_4_1_U1 | 1   |        | prod            | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_16s_14ns_32_4_1_U1 | 1   |        | prod_rounded    | add    | dsp_slice | 3       |
+|   icmp_ln53_fu_109_p2               |     |        | icmp_ln53       | setgt  | auto      | 0       |
+|   icmp_ln55_fu_115_p2               |     |        | icmp_ln55       | setlt  | auto      | 0       |
+|   result_fu_130_p3                  |     |        | result          | select | auto_sel  | 0       |
+|   empty_fu_138_p2                   |     |        | empty           | or     | auto      | 0       |
+|   result_1_0_0_02_fu_144_p3         |     |        | result_1_0_0_02 | select | auto_sel  | 0       |
++-------------------------------------+-----+--------+-----------------+--------+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name              | Usage     | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                   |           |           |      |      |        |          |      |         | Banks            |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| + kernel          |           |           | 0    | 0    |        |          |      |         |                  |
+|   control_s_axi_U | interface | s_axilite |      |      |        |          |      |         |                  |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------+--------------------------------------+---------------------------------+
+| Type      | Options                              | Location                        |
++-----------+--------------------------------------+---------------------------------+
+| INTERFACE | s_axilite port=x_in bundle=control   | kernel.cpp:22 in kernel, x_in   |
+| INTERFACE | s_axilite port=gain bundle=control   | kernel.cpp:23 in kernel, gain   |
+| INTERFACE | s_axilite port=y_out bundle=control  | kernel.cpp:24 in kernel, y_out  |
+| INTERFACE | s_axilite port=return bundle=control | kernel.cpp:25 in kernel, return |
+| PIPELINE  | ii=1                                 | kernel.cpp:26 in kernel         |
++-----------+--------------------------------------+---------------------------------+
+
+

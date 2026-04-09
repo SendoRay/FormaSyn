@@ -1,0 +1,12 @@
+sv xil_defaultlib "glbl.v"
+sv xil_defaultlib "vec_max_control_s_axi.v"
+sv xil_defaultlib "vec_max.v"
+sv xil_defaultlib "vec_max.autotb.v"
+sv xil_defaultlib "dataflow_monitor.sv"
+sv xil_defaultlib "./file_agent/file_agent_pkg.sv"     
+sv xil_defaultlib "./axivip/axi_pkg.sv"    
+sv xil_defaultlib "./axivip/axi_if.sv"   
+sv xil_defaultlib "./vec_max_subsystem/vec_max_subsystem_pkg.sv"           
+sv xil_defaultlib "./svtb/misc_interface.sv"    
+sv xil_defaultlib "./svtb/sv_module_top.sv"   
+

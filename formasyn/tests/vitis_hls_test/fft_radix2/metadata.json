@@ -1,0 +1,94 @@
+{
+  "name": "fft_radix2",
+  "description": "16-point Radix-2 FFT kernel with bit-reversal and butterfly stages",
+  "version": "1.0.0",
+  "author": "FormaSyn",
+  "license": "MIT",
+  "kernel": {
+    "top_function": "fft_radix2",
+    "language": "cpp",
+    "clock_period": 10,
+    "target_ii": 1
+  },
+  "specifications": {
+    "nfft": 16,
+    "n_stages": 4,
+    "data_type": {
+      "real": "ap_fixed<16,8>",
+      "imag": "ap_fixed<16,8>"
+    },
+    "twiddle_type": {
+      "real": "ap_fixed<18,2>",
+      "imag": "ap_fixed<18,2>"
+    },
+    "sfdr_db": 60,
+    "input_width": 16,
+    "output_width": 16
+  },
+  "interfaces": {
+    "in": {
+      "type": "ap_memory",
+      "width": 32,
+      "description": "Input complex array (real + imag)"
+    },
+    "out": {
+      "type": "ap_memory",
+      "width": 32,
+      "description": "Output complex array (real + imag)"
+    }
+  },
+  "algorithm": {
+    "type": "radix2_dit",
+    "stages": [
+      "bit_reverse",
+      "butterfly_stage_0",
+      "butterfly_stage_1",
+      "butterfly_stage_2",
+      "butterfly_stage_3"
+    ],
+    "twiddle_storage": "constant_lookup_table"
+  },
+  "resources": {
+    "estimated": {
+      "bram": 0,
+      "dsp": 8,
+      "ff": 1024,
+      "lut": 2048
+    }
+  },
+  "files": [
+    {
+      "name": "kernel.h",
+      "type": "header",
+      "description": "Kernel header with type definitions"
+    },
+    {
+      "name": "kernel.cpp",
+      "type": "source",
+      "description": "Main kernel implementation"
+    },
+    {
+      "name": "kernel_tb.cpp",
+      "type": "testbench",
+      "description": "Testbench with single-tone SFDR test"
+    },
+    {
+      "name": "hls_config.cfg",
+      "type": "config",
+      "description": "Vitis HLS configuration"
+    }
+  ],
+  "build": {
+    "command": "vitis-run --mode hls --config hls_config.cfg --work_dir work",
+    "dependencies": [
+      "xilinx_hls"
+    ]
+  },
+  "tags": [
+    "fft",
+    "radix2",
+    "dsp",
+    "signal_processing",
+    "fixed_point"
+  ]
+}

@@ -1,0 +1,310 @@
+
+
+================================================================
+== Vitis HLS Report for 'vec_mul'
+================================================================
+* Date:           Thu Apr  9 04:23:12 2026
+
+* Version:        2025.1 (Build 6135595 on May 21 2025)
+* Project:        work
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  5.580 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |       11|       11|  0.110 us|  0.110 us|    9|    9|      yes|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 1
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 2
+HasVarLatency: 0
+IsPipeline: 1
+IsRtlPipelined: 1
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 9, depth = 12
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 12
+* Pipeline : 1
+  Pipeline-0 : II = 9, D = 12, States = { 1 2 3 4 5 6 7 8 9 10 11 12 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 2.32>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%a_addr = getelementptr i16 %a, i64 0, i64 0" [kernel.cpp:13]   --->   Operation 13 'getelementptr' 'a_addr' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 14 [2/2] (2.32ns)   --->   "%a_load = load i3 %a_addr" [kernel.cpp:13]   --->   Operation 14 'load' 'a_load' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_1 : Operation 15 [1/1] (0.00ns)   --->   "%b_addr = getelementptr i16 %b, i64 0, i64 0" [kernel.cpp:13]   --->   Operation 15 'getelementptr' 'b_addr' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 16 [2/2] (2.32ns)   --->   "%b_load = load i3 %b_addr" [kernel.cpp:13]   --->   Operation 16 'load' 'b_load' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 2 <SV = 1> <Delay = 2.32>
+ST_2 : Operation 17 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load = load i3 %a_addr" [kernel.cpp:13]   --->   Operation 17 'load' 'a_load' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_2 : Operation 18 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load = load i3 %b_addr" [kernel.cpp:13]   --->   Operation 18 'load' 'b_load' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_2 : Operation 19 [1/1] (0.00ns)   --->   "%a_addr_1 = getelementptr i16 %a, i64 0, i64 1" [kernel.cpp:13]   --->   Operation 19 'getelementptr' 'a_addr_1' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 20 [2/2] (2.32ns)   --->   "%a_load_1 = load i3 %a_addr_1" [kernel.cpp:13]   --->   Operation 20 'load' 'a_load_1' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_2 : Operation 21 [1/1] (0.00ns)   --->   "%b_addr_1 = getelementptr i16 %b, i64 0, i64 1" [kernel.cpp:13]   --->   Operation 21 'getelementptr' 'b_addr_1' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 22 [2/2] (2.32ns)   --->   "%b_load_1 = load i3 %b_addr_1" [kernel.cpp:13]   --->   Operation 22 'load' 'b_load_1' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 3 <SV = 2> <Delay = 5.58>
+ST_3 : Operation 23 [1/1] (0.00ns)   --->   "%sext_ln13 = sext i16 %a_load" [kernel.cpp:13]   --->   Operation 23 'sext' 'sext_ln13' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 24 [1/1] (0.00ns)   --->   "%sext_ln13_1 = sext i16 %b_load" [kernel.cpp:13]   --->   Operation 24 'sext' 'sext_ln13_1' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 25 [1/1] (5.58ns)   --->   "%mul_ln13 = mul i32 %sext_ln13_1, i32 %sext_ln13" [kernel.cpp:13]   --->   Operation 25 'mul' 'mul_ln13' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 26 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load_1 = load i3 %a_addr_1" [kernel.cpp:13]   --->   Operation 26 'load' 'a_load_1' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_3 : Operation 27 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load_1 = load i3 %b_addr_1" [kernel.cpp:13]   --->   Operation 27 'load' 'b_load_1' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_3 : Operation 28 [1/1] (0.00ns)   --->   "%a_addr_2 = getelementptr i16 %a, i64 0, i64 2" [kernel.cpp:13]   --->   Operation 28 'getelementptr' 'a_addr_2' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 29 [2/2] (2.32ns)   --->   "%a_load_2 = load i3 %a_addr_2" [kernel.cpp:13]   --->   Operation 29 'load' 'a_load_2' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_3 : Operation 30 [1/1] (0.00ns)   --->   "%b_addr_2 = getelementptr i16 %b, i64 0, i64 2" [kernel.cpp:13]   --->   Operation 30 'getelementptr' 'b_addr_2' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 31 [2/2] (2.32ns)   --->   "%b_load_2 = load i3 %b_addr_2" [kernel.cpp:13]   --->   Operation 31 'load' 'b_load_2' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 4 <SV = 3> <Delay = 5.58>
+ST_4 : Operation 32 [1/1] (0.00ns)   --->   "%y_addr = getelementptr i32 %y, i64 0, i64 0" [kernel.cpp:13]   --->   Operation 32 'getelementptr' 'y_addr' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 33 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13, i3 %y_addr" [kernel.cpp:13]   --->   Operation 33 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_4 : Operation 34 [1/1] (0.00ns)   --->   "%sext_ln13_2 = sext i16 %a_load_1" [kernel.cpp:13]   --->   Operation 34 'sext' 'sext_ln13_2' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 35 [1/1] (0.00ns)   --->   "%sext_ln13_3 = sext i16 %b_load_1" [kernel.cpp:13]   --->   Operation 35 'sext' 'sext_ln13_3' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 36 [1/1] (5.58ns)   --->   "%mul_ln13_1 = mul i32 %sext_ln13_3, i32 %sext_ln13_2" [kernel.cpp:13]   --->   Operation 36 'mul' 'mul_ln13_1' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 37 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load_2 = load i3 %a_addr_2" [kernel.cpp:13]   --->   Operation 37 'load' 'a_load_2' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_4 : Operation 38 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load_2 = load i3 %b_addr_2" [kernel.cpp:13]   --->   Operation 38 'load' 'b_load_2' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_4 : Operation 39 [1/1] (0.00ns)   --->   "%a_addr_3 = getelementptr i16 %a, i64 0, i64 3" [kernel.cpp:13]   --->   Operation 39 'getelementptr' 'a_addr_3' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 40 [2/2] (2.32ns)   --->   "%a_load_3 = load i3 %a_addr_3" [kernel.cpp:13]   --->   Operation 40 'load' 'a_load_3' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_4 : Operation 41 [1/1] (0.00ns)   --->   "%b_addr_3 = getelementptr i16 %b, i64 0, i64 3" [kernel.cpp:13]   --->   Operation 41 'getelementptr' 'b_addr_3' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 42 [2/2] (2.32ns)   --->   "%b_load_3 = load i3 %b_addr_3" [kernel.cpp:13]   --->   Operation 42 'load' 'b_load_3' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 5 <SV = 4> <Delay = 5.58>
+ST_5 : Operation 43 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13, i3 %y_addr" [kernel.cpp:13]   --->   Operation 43 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_5 : Operation 44 [1/1] (0.00ns)   --->   "%y_addr_1 = getelementptr i32 %y, i64 0, i64 1" [kernel.cpp:13]   --->   Operation 44 'getelementptr' 'y_addr_1' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 45 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13_1, i3 %y_addr_1" [kernel.cpp:13]   --->   Operation 45 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_5 : Operation 46 [1/1] (0.00ns)   --->   "%sext_ln13_4 = sext i16 %a_load_2" [kernel.cpp:13]   --->   Operation 46 'sext' 'sext_ln13_4' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 47 [1/1] (0.00ns)   --->   "%sext_ln13_5 = sext i16 %b_load_2" [kernel.cpp:13]   --->   Operation 47 'sext' 'sext_ln13_5' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 48 [1/1] (5.58ns)   --->   "%mul_ln13_2 = mul i32 %sext_ln13_5, i32 %sext_ln13_4" [kernel.cpp:13]   --->   Operation 48 'mul' 'mul_ln13_2' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 49 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load_3 = load i3 %a_addr_3" [kernel.cpp:13]   --->   Operation 49 'load' 'a_load_3' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_5 : Operation 50 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load_3 = load i3 %b_addr_3" [kernel.cpp:13]   --->   Operation 50 'load' 'b_load_3' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_5 : Operation 51 [1/1] (0.00ns)   --->   "%a_addr_4 = getelementptr i16 %a, i64 0, i64 4" [kernel.cpp:13]   --->   Operation 51 'getelementptr' 'a_addr_4' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 52 [2/2] (2.32ns)   --->   "%a_load_4 = load i3 %a_addr_4" [kernel.cpp:13]   --->   Operation 52 'load' 'a_load_4' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_5 : Operation 53 [1/1] (0.00ns)   --->   "%b_addr_4 = getelementptr i16 %b, i64 0, i64 4" [kernel.cpp:13]   --->   Operation 53 'getelementptr' 'b_addr_4' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 54 [2/2] (2.32ns)   --->   "%b_load_4 = load i3 %b_addr_4" [kernel.cpp:13]   --->   Operation 54 'load' 'b_load_4' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 6 <SV = 5> <Delay = 5.58>
+ST_6 : Operation 55 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13_1, i3 %y_addr_1" [kernel.cpp:13]   --->   Operation 55 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_6 : Operation 56 [1/1] (0.00ns)   --->   "%y_addr_2 = getelementptr i32 %y, i64 0, i64 2" [kernel.cpp:13]   --->   Operation 56 'getelementptr' 'y_addr_2' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 57 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13_2, i3 %y_addr_2" [kernel.cpp:13]   --->   Operation 57 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_6 : Operation 58 [1/1] (0.00ns)   --->   "%sext_ln13_6 = sext i16 %a_load_3" [kernel.cpp:13]   --->   Operation 58 'sext' 'sext_ln13_6' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 59 [1/1] (0.00ns)   --->   "%sext_ln13_7 = sext i16 %b_load_3" [kernel.cpp:13]   --->   Operation 59 'sext' 'sext_ln13_7' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 60 [1/1] (5.58ns)   --->   "%mul_ln13_3 = mul i32 %sext_ln13_7, i32 %sext_ln13_6" [kernel.cpp:13]   --->   Operation 60 'mul' 'mul_ln13_3' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 61 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load_4 = load i3 %a_addr_4" [kernel.cpp:13]   --->   Operation 61 'load' 'a_load_4' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_6 : Operation 62 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load_4 = load i3 %b_addr_4" [kernel.cpp:13]   --->   Operation 62 'load' 'b_load_4' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_6 : Operation 63 [1/1] (0.00ns)   --->   "%a_addr_5 = getelementptr i16 %a, i64 0, i64 5" [kernel.cpp:13]   --->   Operation 63 'getelementptr' 'a_addr_5' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 64 [2/2] (2.32ns)   --->   "%a_load_5 = load i3 %a_addr_5" [kernel.cpp:13]   --->   Operation 64 'load' 'a_load_5' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_6 : Operation 65 [1/1] (0.00ns)   --->   "%b_addr_5 = getelementptr i16 %b, i64 0, i64 5" [kernel.cpp:13]   --->   Operation 65 'getelementptr' 'b_addr_5' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 66 [2/2] (2.32ns)   --->   "%b_load_5 = load i3 %b_addr_5" [kernel.cpp:13]   --->   Operation 66 'load' 'b_load_5' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 7 <SV = 6> <Delay = 5.58>
+ST_7 : Operation 67 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13_2, i3 %y_addr_2" [kernel.cpp:13]   --->   Operation 67 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_7 : Operation 68 [1/1] (0.00ns)   --->   "%y_addr_3 = getelementptr i32 %y, i64 0, i64 3" [kernel.cpp:13]   --->   Operation 68 'getelementptr' 'y_addr_3' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 69 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13_3, i3 %y_addr_3" [kernel.cpp:13]   --->   Operation 69 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_7 : Operation 70 [1/1] (0.00ns)   --->   "%sext_ln13_8 = sext i16 %a_load_4" [kernel.cpp:13]   --->   Operation 70 'sext' 'sext_ln13_8' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 71 [1/1] (0.00ns)   --->   "%sext_ln13_9 = sext i16 %b_load_4" [kernel.cpp:13]   --->   Operation 71 'sext' 'sext_ln13_9' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 72 [1/1] (5.58ns)   --->   "%mul_ln13_4 = mul i32 %sext_ln13_9, i32 %sext_ln13_8" [kernel.cpp:13]   --->   Operation 72 'mul' 'mul_ln13_4' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 73 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load_5 = load i3 %a_addr_5" [kernel.cpp:13]   --->   Operation 73 'load' 'a_load_5' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_7 : Operation 74 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load_5 = load i3 %b_addr_5" [kernel.cpp:13]   --->   Operation 74 'load' 'b_load_5' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_7 : Operation 75 [1/1] (0.00ns)   --->   "%a_addr_6 = getelementptr i16 %a, i64 0, i64 6" [kernel.cpp:13]   --->   Operation 75 'getelementptr' 'a_addr_6' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 76 [2/2] (2.32ns)   --->   "%a_load_6 = load i3 %a_addr_6" [kernel.cpp:13]   --->   Operation 76 'load' 'a_load_6' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_7 : Operation 77 [1/1] (0.00ns)   --->   "%b_addr_6 = getelementptr i16 %b, i64 0, i64 6" [kernel.cpp:13]   --->   Operation 77 'getelementptr' 'b_addr_6' <Predicate = true> <Delay = 0.00>
+ST_7 : Operation 78 [2/2] (2.32ns)   --->   "%b_load_6 = load i3 %b_addr_6" [kernel.cpp:13]   --->   Operation 78 'load' 'b_load_6' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 8 <SV = 7> <Delay = 5.58>
+ST_8 : Operation 79 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13_3, i3 %y_addr_3" [kernel.cpp:13]   --->   Operation 79 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_8 : Operation 80 [1/1] (0.00ns)   --->   "%y_addr_4 = getelementptr i32 %y, i64 0, i64 4" [kernel.cpp:13]   --->   Operation 80 'getelementptr' 'y_addr_4' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 81 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13_4, i3 %y_addr_4" [kernel.cpp:13]   --->   Operation 81 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_8 : Operation 82 [1/1] (0.00ns)   --->   "%sext_ln13_10 = sext i16 %a_load_5" [kernel.cpp:13]   --->   Operation 82 'sext' 'sext_ln13_10' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 83 [1/1] (0.00ns)   --->   "%sext_ln13_11 = sext i16 %b_load_5" [kernel.cpp:13]   --->   Operation 83 'sext' 'sext_ln13_11' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 84 [1/1] (5.58ns)   --->   "%mul_ln13_5 = mul i32 %sext_ln13_11, i32 %sext_ln13_10" [kernel.cpp:13]   --->   Operation 84 'mul' 'mul_ln13_5' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 85 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load_6 = load i3 %a_addr_6" [kernel.cpp:13]   --->   Operation 85 'load' 'a_load_6' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_8 : Operation 86 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load_6 = load i3 %b_addr_6" [kernel.cpp:13]   --->   Operation 86 'load' 'b_load_6' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_8 : Operation 87 [1/1] (0.00ns)   --->   "%a_addr_7 = getelementptr i16 %a, i64 0, i64 7" [kernel.cpp:13]   --->   Operation 87 'getelementptr' 'a_addr_7' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 88 [2/2] (2.32ns)   --->   "%a_load_7 = load i3 %a_addr_7" [kernel.cpp:13]   --->   Operation 88 'load' 'a_load_7' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_8 : Operation 89 [1/1] (0.00ns)   --->   "%b_addr_7 = getelementptr i16 %b, i64 0, i64 7" [kernel.cpp:13]   --->   Operation 89 'getelementptr' 'b_addr_7' <Predicate = true> <Delay = 0.00>
+ST_8 : Operation 90 [2/2] (2.32ns)   --->   "%b_load_7 = load i3 %b_addr_7" [kernel.cpp:13]   --->   Operation 90 'load' 'b_load_7' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 9 <SV = 8> <Delay = 5.58>
+ST_9 : Operation 91 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13_4, i3 %y_addr_4" [kernel.cpp:13]   --->   Operation 91 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_9 : Operation 92 [1/1] (0.00ns)   --->   "%y_addr_5 = getelementptr i32 %y, i64 0, i64 5" [kernel.cpp:13]   --->   Operation 92 'getelementptr' 'y_addr_5' <Predicate = true> <Delay = 0.00>
+ST_9 : Operation 93 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13_5, i3 %y_addr_5" [kernel.cpp:13]   --->   Operation 93 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_9 : Operation 94 [1/1] (0.00ns)   --->   "%sext_ln13_12 = sext i16 %a_load_6" [kernel.cpp:13]   --->   Operation 94 'sext' 'sext_ln13_12' <Predicate = true> <Delay = 0.00>
+ST_9 : Operation 95 [1/1] (0.00ns)   --->   "%sext_ln13_13 = sext i16 %b_load_6" [kernel.cpp:13]   --->   Operation 95 'sext' 'sext_ln13_13' <Predicate = true> <Delay = 0.00>
+ST_9 : Operation 96 [1/1] (5.58ns)   --->   "%mul_ln13_6 = mul i32 %sext_ln13_13, i32 %sext_ln13_12" [kernel.cpp:13]   --->   Operation 96 'mul' 'mul_ln13_6' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 97 [1/2] ( I:2.32ns O:2.32ns )   --->   "%a_load_7 = load i3 %a_addr_7" [kernel.cpp:13]   --->   Operation 97 'load' 'a_load_7' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+ST_9 : Operation 98 [1/2] ( I:2.32ns O:2.32ns )   --->   "%b_load_7 = load i3 %b_addr_7" [kernel.cpp:13]   --->   Operation 98 'load' 'b_load_7' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 16> <Depth = 8> <RAM>
+
+State 10 <SV = 9> <Delay = 5.58>
+ST_10 : Operation 99 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13_5, i3 %y_addr_5" [kernel.cpp:13]   --->   Operation 99 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_10 : Operation 100 [1/1] (0.00ns)   --->   "%y_addr_6 = getelementptr i32 %y, i64 0, i64 6" [kernel.cpp:13]   --->   Operation 100 'getelementptr' 'y_addr_6' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 101 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13_6, i3 %y_addr_6" [kernel.cpp:13]   --->   Operation 101 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_10 : Operation 102 [1/1] (0.00ns)   --->   "%sext_ln13_14 = sext i16 %a_load_7" [kernel.cpp:13]   --->   Operation 102 'sext' 'sext_ln13_14' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 103 [1/1] (0.00ns)   --->   "%sext_ln13_15 = sext i16 %b_load_7" [kernel.cpp:13]   --->   Operation 103 'sext' 'sext_ln13_15' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 104 [1/1] (5.58ns)   --->   "%mul_ln13_7 = mul i32 %sext_ln13_15, i32 %sext_ln13_14" [kernel.cpp:13]   --->   Operation 104 'mul' 'mul_ln13_7' <Predicate = true> <Delay = 5.58> <CoreInst = "Multiplier">   --->   Core 3 'Multiplier' <Latency = 0> <II = 1> <Delay = 5.58> <FuncUnit> <Opcode : 'mul'> <InPorts = 2> <OutPorts = 1>
+
+State 11 <SV = 10> <Delay = 2.32>
+ST_11 : Operation 105 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13_6, i3 %y_addr_6" [kernel.cpp:13]   --->   Operation 105 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_11 : Operation 106 [1/1] (0.00ns)   --->   "%y_addr_7 = getelementptr i32 %y, i64 0, i64 7" [kernel.cpp:13]   --->   Operation 106 'getelementptr' 'y_addr_7' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 107 [2/2] (2.32ns)   --->   "%store_ln13 = store i32 %mul_ln13_7, i3 %y_addr_7" [kernel.cpp:13]   --->   Operation 107 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+
+State 12 <SV = 11> <Delay = 2.32>
+ST_12 : Operation 108 [1/1] (0.00ns)   --->   "%specpipeline_ln9 = specpipeline void @_ssdm_op_SpecPipeline, i32 1, i32 0, i32 0, i32 0, void @empty_0" [kernel.cpp:9]   --->   Operation 108 'specpipeline' 'specpipeline_ln9' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 109 [1/1] (0.00ns)   --->   "%spectopmodule_ln3 = spectopmodule void @_ssdm_op_SpecTopModule, void @empty_6" [kernel.cpp:3]   --->   Operation 109 'spectopmodule' 'spectopmodule_ln3' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 110 [1/1] (0.00ns)   --->   "%specinterface_ln3 = specinterface void @_ssdm_op_SpecInterface, i32 0, void @empty_7, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0" [kernel.cpp:3]   --->   Operation 110 'specinterface' 'specinterface_ln3' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 111 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i16 %a, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_1, void @empty_2, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 111 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 112 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i16 %a, void @empty_3, i32 0, i32 0, void @empty_0, i32 1, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 112 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 113 [1/1] (0.00ns)   --->   "%specmemcore_ln0 = specmemcore void @_ssdm_op_SpecMemCore, i16 %a, i64 666, i64 207, i64 1"   --->   Operation 113 'specmemcore' 'specmemcore_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 114 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i16 %a"   --->   Operation 114 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 115 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i16 %b, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_1, void @empty_4, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 115 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 116 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i16 %b, void @empty_3, i32 0, i32 0, void @empty_0, i32 1, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 116 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 117 [1/1] (0.00ns)   --->   "%specmemcore_ln0 = specmemcore void @_ssdm_op_SpecMemCore, i16 %b, i64 666, i64 207, i64 1"   --->   Operation 117 'specmemcore' 'specmemcore_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 118 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i16 %b"   --->   Operation 118 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 119 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %y, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_1, void @empty_5, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 119 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 120 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %y, void @empty_3, i32 0, i32 0, void @empty_0, i32 1, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 120 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 121 [1/1] (0.00ns)   --->   "%specmemcore_ln0 = specmemcore void @_ssdm_op_SpecMemCore, i32 %y, i64 666, i64 207, i64 1"   --->   Operation 121 'specmemcore' 'specmemcore_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 122 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i32 %y"   --->   Operation 122 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 123 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 0, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_1, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 123 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 124 [1/2] ( I:2.32ns O:2.32ns )   --->   "%store_ln13 = store i32 %mul_ln13_7, i3 %y_addr_7" [kernel.cpp:13]   --->   Operation 124 'store' 'store_ln13' <Predicate = true> <Delay = 2.32> <CoreInst = "RAM_1P">   --->   Core 85 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 8> <RAM>
+ST_12 : Operation 125 [1/1] (0.00ns)   --->   "%ret_ln15 = ret" [kernel.cpp:15]   --->   Operation 125 'ret' 'ret_ln15' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10.000ns, clock uncertainty: 2.700ns.
+
+ <State 1>: 2.322ns
+The critical path consists of the following:
+	'getelementptr' operation 3 bit ('a_addr', kernel.cpp:13) [20]  (0.000 ns)
+	'load' operation 16 bit ('a_load', kernel.cpp:13) on array 'a' [21]  (2.322 ns)
+
+ <State 2>: 2.322ns
+The critical path consists of the following:
+	'load' operation 16 bit ('a_load', kernel.cpp:13) on array 'a' [21]  (2.322 ns)
+
+ <State 3>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13', kernel.cpp:13) [26]  (5.580 ns)
+
+ <State 4>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13_1', kernel.cpp:13) [35]  (5.580 ns)
+
+ <State 5>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13_2', kernel.cpp:13) [44]  (5.580 ns)
+
+ <State 6>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13_3', kernel.cpp:13) [53]  (5.580 ns)
+
+ <State 7>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13_4', kernel.cpp:13) [62]  (5.580 ns)
+
+ <State 8>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13_5', kernel.cpp:13) [71]  (5.580 ns)
+
+ <State 9>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13_6', kernel.cpp:13) [80]  (5.580 ns)
+
+ <State 10>: 5.580ns
+The critical path consists of the following:
+	'mul' operation 32 bit ('mul_ln13_7', kernel.cpp:13) [89]  (5.580 ns)
+
+ <State 11>: 2.322ns
+The critical path consists of the following:
+	'store' operation 0 bit ('store_ln13', kernel.cpp:13) of variable 'mul_ln13_6', kernel.cpp:13 on array 'y' [82]  (2.322 ns)
+
+ <State 12>: 2.322ns
+The critical path consists of the following:
+	'store' operation 0 bit ('store_ln13', kernel.cpp:13) of variable 'mul_ln13_7', kernel.cpp:13 on array 'y' [91]  (2.322 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

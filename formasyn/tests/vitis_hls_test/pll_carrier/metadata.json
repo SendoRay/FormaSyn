@@ -1,0 +1,40 @@
+{
+  "variant_id": "pll_carrier_int16",
+  "example_name": "pll_carrier",
+  "function_name": "pll_carrier",
+  "model": "claude-sonnet-4-5-20250929",
+  "description": "PLL Carrier Recovery - FormulaGraph implementation with Cycle feedback pattern",
+  "formula_graph": {
+    "nodes": [
+      {
+        "type": "Cycle",
+        "body": [
+          {"type": "Map", "func": "phase_rotate", "phase": "theta_d1"},
+          {"type": "Map", "func": "phase_error"},
+          {"type": "Map", "func": "multiply", "coeff": "kp"},
+          {"type": "Map", "func": "multiply", "coeff": "ki"},
+          {"type": "Reduce", "op": "add", "input_refs": ["is_d1", "id"]},
+          {"type": "Reduce", "op": "add", "input_refs": ["theta_d1", "pt", "it"]},
+          {"type": "Map", "func": "wrap_phase"}
+        ],
+        "feedback_edges": [
+          {"from": "tn", "to": "theta_d1", "delay": 1},
+          {"from": "it", "to": "is_d1", "delay": 1}
+        ]
+      }
+    ]
+  },
+  "parameters": {
+    "data_width": 16,
+    "phase_width": 16,
+    "kp": 0.1,
+    "ki": 0.01
+  },
+  "schedule_summary": {
+    "node_count": 7,
+    "input_nodes": ["x_real", "x_imag"],
+    "output_nodes": ["y_real", "y_imag"],
+    "expected_ii": 1,
+    "lock_time_target": "≤ 1000 symbols"
+  }
+}

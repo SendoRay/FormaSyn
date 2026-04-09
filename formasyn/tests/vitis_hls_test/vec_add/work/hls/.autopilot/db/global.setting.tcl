@@ -8,7 +8,7 @@ set CombLogicFlag 0
 set PipelineFlag 1
 set DataflowTaskPipelineFlag 1
 set TrivialPipelineFlag 0
-set noPortSwitchingFlag 1
+set noPortSwitchingFlag 0
 set FloatingPointFlag 0
 set FftOrFirFlag 0
 set NbRWValue 0
@@ -43,10 +43,10 @@ set SCTraceFileName mytrace
 set SCTraceFileFormat vcd
 set SCTraceOption all
 set TargetInfo xc7z020:-clg400:-1
-set SourceFiles {sc {} c ../../vec_add.cpp}
+set SourceFiles {sc {} c ../../kernel.cpp}
 set SourceFlags {sc {} c {{}}}
 set DirectiveFile {}
-set TBFiles {verilog /home/chengzhy/vitis_hls_test/vec_add_tb.cpp bc /home/chengzhy/vitis_hls_test/vec_add_tb.cpp vhdl /home/chengzhy/vitis_hls_test/vec_add_tb.cpp sc /home/chengzhy/vitis_hls_test/vec_add_tb.cpp cas /home/chengzhy/vitis_hls_test/vec_add_tb.cpp c {}}
+set TBFiles {verilog /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel_tb.cpp bc /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel_tb.cpp vhdl /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel_tb.cpp sc /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel_tb.cpp cas /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel_tb.cpp c {}}
 set SpecLanguage C
 set TVInFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}
 set TVOutFiles {bc {} c {} sc {} cas {} vhdl {} verilog {}}

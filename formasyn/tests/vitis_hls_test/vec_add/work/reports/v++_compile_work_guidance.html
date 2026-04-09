@@ -3407,16 +3407,16 @@ window.onload = function () { addSorting(); }
 <center><h1>Design Guidance Report</h1></center><center><table class="header" border="0">
 <tr><td><b>Copyright</b></td><td>Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.</td></tr>
 <tr><td><b>Tool Version</b></td><td>xcd v.2025.1 (lin64) Build 0 </td></tr>
-<tr><td><b>Date</b></td><td>Wed Mar 11 09:00:57 2026</td></tr>
+<tr><td><b>Date</b></td><td>Thu Apr  9 04:22:32 2026</td></tr>
 <tr><td><b>Host</b></td><td>h3c-chengzhy running 64-bit Ubuntu 22.04.5 LTS</td></tr>
-<tr><td><b>Command</b></td><td>/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/v++  -c --mode hls --config hls_cofig.cfg --work_dir work </td></tr>
+<tr><td><b>Command</b></td><td>/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/v++  -c --mode hls --config hls_config.cfg --work_dir work </td></tr>
 </table></center><br>
 <table class="toc" border="1"><tr><td><b>Table of Contents</b></td></tr>
 <tr><td><a href="#REPORT SUMMARY">1 REPORT SUMMARY</a></tr></td>
 <tr><td><a href="#VIOLATION DETAILS">2 VIOLATION DETAILS</a></tr></td>
 </table>
 <a name="REPORT SUMMARY"></a><h1>1 REPORT SUMMARY</h1>
-<pre>Violations found: 3
+<pre>Violations found: 8
 </pre>
 <pre>Rule Specs Violated: 2
 </pre>
@@ -3434,35 +3434,90 @@ window.onload = function () { addSorting(); }
 <th align="left" width="380">Resolution</th>
 </tr>
 <tr>
-<td align="left">1</td>
+<td align="left">6</td>
 <td align="left">Kernel</td>
 <td align="left">WARNING</td>
 <td align="left"><undefined></td>
 <td align="left">HLS Kernel Related</td>
 <td align="left">Accelerator.vec_add.Kernel</td>
-<td align="left">The II Violation in module 'vec_add' (function 'vec_add'): Unable to schedule bus request operation ('gmem_load_1_req', <a href="file:///home/chengzhy/vitis_hls_test/vec_add.cpp#line=4">vec_add.cpp</a>) on port 'gmem' (<a href="file:///home/chengzhy/vitis_hls_test/vec_add.cpp#line=4">vec_add.cpp</a>) due to limited memory ports (II = 1). Please consider using a memory core with more ports or partitioning the array.
+<td align="left">The II Violation in module 'vec_add' (function 'vec_add'): Unable to schedule 'store' operation 0 bit ('y_addr_1_write_ln13', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a>) of variable 'add_ln13_1', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a> on array 'y' due to limited memory ports (II = 8). Please consider using a memory core with more ports or partitioning the array 'y'.
 </td>
 <td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
 </tr>
 <tr>
 <td align="left">3</td>
 <td align="left">Kernel</td>
+<td align="left">WARNING</td>
+<td align="left"><undefined></td>
+<td align="left">HLS Kernel Related</td>
+<td align="left">Accelerator.vec_add.Kernel</td>
+<td align="left">The II Violation in module 'vec_add' (function 'vec_add'): Unable to schedule 'load' operation 16 bit ('a_load_2', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a>) on array 'a' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'a'.
+</td>
+<td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">Kernel</td>
 <td align="left">ADVISORY</td>
 <td align="left"><undefined></td>
 <td align="left">HLS Kernel Related</td>
 <td align="left">Accelerator.vec_add.Kernel</td>
-<td align="left">**** Estimated Fmax: 136.99 MHz
+<td align="left">Unable to schedule the whole 2 cycles 'store' operation 0 bit ('y_addr_write_ln13', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a>) of variable 'add_ln13', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a> on array 'y' within the last cycle (II = 1). Simulation mismatch may occur if the testbench is not ready to receive the output when this operation occurs.
+</td>
+<td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">Kernel</td>
+<td align="left">WARNING</td>
+<td align="left"><undefined></td>
+<td align="left">HLS Kernel Related</td>
+<td align="left">Accelerator.vec_add.Kernel</td>
+<td align="left">The II Violation in module 'vec_add' (function 'vec_add'): Unable to schedule 'load' operation 16 bit ('a_load_3', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a>) on array 'a' due to limited memory ports (II = 4). Please consider using a memory core with more ports or partitioning the array 'a'.
+</td>
+<td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">Kernel</td>
+<td align="left">ADVISORY</td>
+<td align="left"><undefined></td>
+<td align="left">HLS Kernel Related</td>
+<td align="left">Accelerator.vec_add.Kernel</td>
+<td align="left">**** Estimated Fmax: 148.79 MHz
 </td>
 <td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
 </tr>
 <tr>
 <td align="left">2</td>
+<td align="left">Kernel</td>
+<td align="left">WARNING</td>
+<td align="left"><undefined></td>
+<td align="left">HLS Kernel Related</td>
+<td align="left">Accelerator.vec_add.Kernel</td>
+<td align="left">The II Violation in module 'vec_add' (function 'vec_add'): Unable to schedule 'load' operation 16 bit ('a_load_1', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a>) on array 'a' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'a'.
+</td>
+<td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
+</tr>
+<tr>
+<td align="left">7</td>
 <td align="left">Throughput</td>
 <td align="left">ADVISORY</td>
 <td align="left"><undefined></td>
 <td align="left">HLS Throughput Related</td>
 <td align="left">Accelerator.vec_add.Throughput</td>
-<td align="left">Pipelining result : Target II = 1, Final II = 2, Depth = 144, function 'vec_add'
+<td align="left">Pipelining result : Target II = 1, Final II = 9, Depth = 10, function 'vec_add'
+</td>
+<td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">Kernel</td>
+<td align="left">WARNING</td>
+<td align="left"><undefined></td>
+<td align="left">HLS Kernel Related</td>
+<td align="left">Accelerator.vec_add.Kernel</td>
+<td align="left">The II Violation in module 'vec_add' (function 'vec_add'): Unable to schedule 'load' operation 16 bit ('a_load_6', <a href="file:///home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/kernel.cpp#line=13">kernel.cpp</a>) on array 'a' due to limited memory ports (II = 7). Please consider using a memory core with more ports or partitioning the array 'a'.
 </td>
 <td align="left"><a href="http:///docs.xilinx.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1399-vitis-hls">Vitis HLS User Guide (UG1399)</a></td>
 </tr>

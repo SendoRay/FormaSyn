@@ -12,11 +12,9 @@
                                                             
         int check_ena;                                      
         int cover_ena;                                      
-        axi_pkg::axi_cfg gmem_cfg;
         axi_pkg::axi_cfg control_cfg;
 
         `uvm_object_utils_begin(vec_add_config)         
-        `uvm_field_object(gmem_cfg, UVM_DEFAULT);
         `uvm_field_object(control_cfg, UVM_DEFAULT);
         `uvm_field_int   (check_ena , UVM_DEFAULT)          
         `uvm_field_int   (cover_ena , UVM_DEFAULT)          
@@ -24,7 +22,6 @@
 
         function new (string name = "vec_add_config");
             super.new(name);                                
-        gmem_cfg = axi_pkg::axi_cfg::type_id::create("gmem_cfg");
         control_cfg = axi_pkg::axi_cfg::type_id::create("control_cfg");
         endfunction                                         
                                                             

@@ -18,30 +18,33 @@
 //        bit 0 - ap_done (Read/TOW)
 //        bit 1 - ap_ready (Read/TOW)
 //        others - reserved
-// 0x10 : Data signal of a
-//        bit 31~0 - a[31:0] (Read/Write)
-// 0x14 : Data signal of a
-//        bit 31~0 - a[63:32] (Read/Write)
-// 0x18 : reserved
-// 0x1c : Data signal of b
-//        bit 31~0 - b[31:0] (Read/Write)
-// 0x20 : Data signal of b
-//        bit 31~0 - b[63:32] (Read/Write)
-// 0x24 : reserved
-// 0x28 : Data signal of c
-//        bit 31~0 - c[31:0] (Read/Write)
-// 0x2c : Data signal of c
-//        bit 31~0 - c[63:32] (Read/Write)
-// 0x30 : reserved
+// 0x10 ~
+// 0x1f : Memory 'a' (8 * 16b)
+//        Word n : bit [15: 0] - a[2n]
+//                 bit [31:16] - a[2n+1]
+// 0x20 ~
+// 0x2f : Memory 'b' (8 * 16b)
+//        Word n : bit [15: 0] - b[2n]
+//                 bit [31:16] - b[2n+1]
+// 0x30 ~
+// 0x3f : Memory 'y' (8 * 16b)
+//        Word n : bit [15: 0] - y[2n]
+//                 bit [31:16] - y[2n+1]
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 #define CONTROL_ADDR_AP_CTRL 0x00
 #define CONTROL_ADDR_GIE     0x04
 #define CONTROL_ADDR_IER     0x08
 #define CONTROL_ADDR_ISR     0x0c
-#define CONTROL_ADDR_A_DATA  0x10
-#define CONTROL_BITS_A_DATA  64
-#define CONTROL_ADDR_B_DATA  0x1c
-#define CONTROL_BITS_B_DATA  64
-#define CONTROL_ADDR_C_DATA  0x28
-#define CONTROL_BITS_C_DATA  64
+#define CONTROL_ADDR_A_BASE  0x10
+#define CONTROL_ADDR_A_HIGH  0x1f
+#define CONTROL_WIDTH_A      16
+#define CONTROL_DEPTH_A      8
+#define CONTROL_ADDR_B_BASE  0x20
+#define CONTROL_ADDR_B_HIGH  0x2f
+#define CONTROL_WIDTH_B      16
+#define CONTROL_DEPTH_B      8
+#define CONTROL_ADDR_Y_BASE  0x30
+#define CONTROL_ADDR_Y_HIGH  0x3f
+#define CONTROL_WIDTH_Y      16
+#define CONTROL_DEPTH_Y      8

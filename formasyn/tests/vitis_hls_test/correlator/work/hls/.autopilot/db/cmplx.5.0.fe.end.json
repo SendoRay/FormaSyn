@@ -1,0 +1,20 @@
+{
+    "0": {
+        "name": "kernel",
+        "file": "kernel.cpp",
+        "fileloc": "12",
+        "instructions": "93",
+        "total_instructions": "93",
+        "calls": "",
+        "basicblocks": "1",
+        "memory_accesses": "32",
+        "control_depth": "0",
+        "def_use_depth": "6",
+        "loads": {
+            "G": "15"
+        },
+        "stores": {
+            "G": "15"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+  "variant_id": "vector16_int16_p8",
+  "example_name": "vec_add",
+  "function_name": "kernel",
+  "model": "gpt-5-codex-high",
+  "base_url": "https://api.tryallai.com/v1",
+  "generated_at_utc": "2026-04-02T09:48:24.627796+00:00",
+  "schedule_summary": {
+    "node_count": 3,
+    "input_nodes": [
+      "a",
+      "b"
+    ],
+    "output_nodes": [
+      "c"
+    ],
+    "expected_ii": 2,
+    "total_dsp_estimate": 0,
+    "total_bram_estimate": 45
+  }
+}

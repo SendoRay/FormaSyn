@@ -1,0 +1,27 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="qpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=qpsk_mapper" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:10:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="qpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=return bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:11:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="qpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=bits_in" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:12:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="qpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=y_real" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:13:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="qpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=y_imag" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:33:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="qpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=qpsk_i_lut type=ROM_1P" ARG_PragmaType="bind_storage" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:34:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="qpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=qpsk_q_lut type=ROM_1P" ARG_PragmaType="bind_storage" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INTERFACE" msg_id="214-219" msg_severity="ERROR" msg_loc="kernel.cpp:9:0" msg_body="Vitis kernel mode requires that all s_axilite ports must be bundled into one bundle. The following ports ('return' and 'bits_in,y_real,y_imag', in function 'qpsk_mapper(ap_uint&lt;2&gt;, ap_int&lt;16&gt;*, ap_int&lt;16&gt;*)') have different bundle names: 'control' and 'control_r'. Consider removing the bundle names on these ports.">
+        <args Function="qpsk_mapper(ap_uint&lt;2&gt;, ap_int&lt;16&gt;*, ap_int&lt;16&gt;*)" Function-DebugLoc="File kernel.cpp Line 9 Column 0" Name="islist return bits_in,y_real,y_imag control control_r"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

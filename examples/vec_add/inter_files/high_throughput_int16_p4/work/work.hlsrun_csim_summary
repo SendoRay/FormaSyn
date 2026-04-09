@@ -1,0 +1,156 @@
+<ENTRY>
+{
+ "thisFile": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/work/work.hlsrun_csim_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Apr  2 09:47:27 2026",
+ "timestampMillis": "1775123247401",
+ "buildStep": {
+  "cmdId": "9cbba30f-c14b-4e68-99b4-0ce9dac0bd72",
+  "name": "vitis-run",
+  "logFile": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/work/logs/work.steps.log",
+  "commandLine": "/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/vitis-run  --mode hls --csim --config /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/hls_config.cfg --work_dir /home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/work ",
+  "args": [
+   "--mode",
+   "hls",
+   "--csim",
+   "--config",
+   "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/hls_config.cfg",
+   "--work_dir",
+   "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/work"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  2 09:47:27 2026",
+ "timestampMillis": "1775123247402",
+ "status": {
+  "cmdId": "9cbba30f-c14b-4e68-99b4-0ce9dac0bd72",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu Apr  2 09:47:31 2026",
+ "timestampMillis": "1775123251494",
+ "buildSummary": {
+  "hardwarePlatform": "",
+  "hardwareDsa": "",
+  "platformDirectory": "",
+  "runtime": "",
+  "systemConfig": "",
+  "flow": "BF_RUN",
+  "target": "TT_HLS_C_SIM",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "kernel",
+     "file": "",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/kernel.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "2025.1"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Apr  2 09:47:31 2026",
+ "timestampMillis": "1775123251494",
+ "buildStep": {
+  "cmdId": "f90f0247-52a4-467b-85f3-0e8b1bc6c243",
+  "name": "",
+  "logFile": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4/work/hls/hls.log",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/chengzhy/FormaSyn/examples/vec_add/inter_files/high_throughput_int16_p4"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  2 09:47:31 2026",
+ "timestampMillis": "1775123251495",
+ "status": {
+  "cmdId": "f90f0247-52a4-467b-85f3-0e8b1bc6c243",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  2 09:47:34 2026",
+ "timestampMillis": "1775123254961",
+ "status": {
+  "cmdId": "f90f0247-52a4-467b-85f3-0e8b1bc6c243",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  2 09:47:35 2026",
+ "timestampMillis": "1775123255087",
+ "status": {
+  "cmdId": "9cbba30f-c14b-4e68-99b4-0ce9dac0bd72",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  2 09:47:35 2026",
+ "timestampMillis": "1775123255088",
+ "report": {
+  "path": "",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  2 09:47:35 2026",
+ "timestampMillis": "1775123255088",
+ "report": {
+  "path": "",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

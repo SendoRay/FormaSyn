@@ -1,0 +1,48 @@
+{
+    "name": "viterbi_simple",
+    "description": "Viterbi Decoder (4-state, K=3, Traceback depth 20)",
+    "version": "1.0.0",
+    "type": "kernel",
+    "target": "vitis_hls",
+    "parameters": {
+        "constraint_length": 3,
+        "num_states": 4,
+        "code_rate": "1/2",
+        "traceback_depth": 20,
+        "generator_polynomials": {
+            "G1": "0b111",
+            "G2": "0b101"
+        },
+        "acs_units": 4
+    },
+    "interfaces": {
+        "input": {
+            "name": "soft_in_stream",
+            "type": "hls::stream<ap_int<8>>",
+            "description": "Soft decision input stream (-128 to 127)"
+        },
+        "output": {
+            "name": "bit_out_stream",
+            "type": "hls::stream<ap_uint<1>>",
+            "description": "Decoded bit stream"
+        },
+        "control": {
+            "name": "num_symbols",
+            "type": "ap_uint<32>",
+            "description": "Number of symbols to decode"
+        }
+    },
+    "performance": {
+        "target_clock_ns": 5.0,
+        "throughput": "1 symbol per clock cycle (2 input bits)",
+        "latency": "num_symbols + traceback_depth + pipeline overhead",
+        "fer_gap_db": "< 0.5 dB from soft-decision theory"
+    },
+    "files": {
+        "header": "kernel.h",
+        "source": "kernel.cpp",
+        "testbench": "kernel_tb.cpp",
+        "config": "hls_config.cfg",
+        "readme": "readme.md"
+    }
+}

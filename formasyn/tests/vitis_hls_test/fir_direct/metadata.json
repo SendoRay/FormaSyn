@@ -1,0 +1,42 @@
+{
+  "variant_id": "fir_direct_int16_t16",
+  "example_name": "fir_direct",
+  "function_name": "fir_direct",
+  "model": "claude-sonnet-4-5-20250929",
+  "description": "FIR Direct Form Filter - FormulaGraph implementation with ShiftReg->Map(multiply)->Reduce(add) pattern",
+  "formula_graph": {
+    "nodes": [
+      {
+        "type": "ShiftReg",
+        "input_ref": "x",
+        "taps": [0, 1, 2, ..., 15],
+        "output_ref": "d"
+      },
+      {
+        "type": "Map",
+        "input_ref": "d",
+        "func": "multiply",
+        "func_params": {"coeffs": "h"},
+        "output_ref": "p"
+      },
+      {
+        "type": "Reduce",
+        "input_refs": ["p"],
+        "op": "add",
+        "domain": "all",
+        "output_ref": "y"
+      }
+    ]
+  },
+  "parameters": {
+    "taps": 16,
+    "data_width": 16,
+    "coeff_width": 16
+  },
+  "schedule_summary": {
+    "node_count": 3,
+    "input_nodes": ["x_in", "h"],
+    "output_nodes": ["y_out"],
+    "expected_ii": 1
+  }
+}

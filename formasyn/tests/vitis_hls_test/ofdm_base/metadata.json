@@ -1,0 +1,58 @@
+{
+  "kernel": {
+    "name": "ofdm_base",
+    "description": "OFDM Baseband Modulator - 16-point IFFT with Cyclic Prefix",
+    "version": "1.0.0",
+    "type": "communication",
+    "category": "modulation"
+  },
+  "specifications": {
+    "ifft_size": 16,
+    "cyclic_prefix_length": 4,
+    "output_samples": 20,
+    "input_type": "complex_fixed_16_3",
+    "output_type": "complex_fixed_16_3",
+    "evm_requirement": "6%"
+  },
+  "interfaces": {
+    "input": {
+      "name": "in",
+      "type": "complex_fixed",
+      "width": 16,
+      "integer_width": 3,
+      "size": 16,
+      "memory": "ap_memory"
+    },
+    "output": {
+      "name": "out",
+      "type": "complex_fixed",
+      "width": 16,
+      "integer_width": 3,
+      "size": 20,
+      "memory": "ap_memory"
+    },
+    "control": {
+      "type": "ap_ctrl_chain"
+    }
+  },
+  "performance": {
+    "target_clock_ns": 5,
+    "pipeline_ii": 1,
+    "latency": "fixed"
+  },
+  "implementation": {
+    "algorithm": "radix_2_dit_ifft",
+    "butterflies_per_stage": 8,
+    "stages": 4,
+    "twiddle_storage": "constant_array",
+    "cp_insertion": "parallel_unroll"
+  },
+  "resources": {
+    "estimated": {
+      "dsp48": 8,
+      "bram": 0,
+      "lut": 2000,
+      "ff": 1500
+    }
+  }
+}

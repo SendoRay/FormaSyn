@@ -1,0 +1,48 @@
+{
+  "variant_id": "correlator_int16_t16",
+  "example_name": "correlator",
+  "function_name": "correlator",
+  "model": "claude-sonnet-4-5-20250929",
+  "description": "Correlator (Matched Filter) - FormulaGraph implementation with ShiftReg->Map(multiply)->Reduce(add) pattern for synchronization",
+  "formula_graph": {
+    "nodes": [
+      {
+        "type": "ShiftReg",
+        "input_ref": "x",
+        "taps": [0, 1, 2, ..., 15],
+        "output_ref": "d"
+      },
+      {
+        "type": "Map",
+        "input_ref": "d",
+        "func": "multiply",
+        "func_params": {"coeffs": "preamble"},
+        "output_ref": "p"
+      },
+      {
+        "type": "Reduce",
+        "input_refs": ["p"],
+        "op": "add",
+        "domain": "all",
+        "output_ref": "y"
+      }
+    ]
+  },
+  "parameters": {
+    "taps": 16,
+    "data_width": 16,
+    "coeff_width": 2,
+    "output_width": 32,
+    "preamble": [1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, 1]
+  },
+  "validation": {
+    "nmse_target_db": -45,
+    "application": "synchronization"
+  },
+  "schedule_summary": {
+    "node_count": 3,
+    "input_nodes": ["x_in"],
+    "output_nodes": ["y_out"],
+    "expected_ii": 1
+  }
+}

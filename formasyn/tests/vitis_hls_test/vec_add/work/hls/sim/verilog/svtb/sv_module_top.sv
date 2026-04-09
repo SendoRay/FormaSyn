@@ -32,57 +32,6 @@ module sv_module_top;
     end
 
 
-    axi_if #(64,64,8,3,1)  axi_gmem_if (.clk  (apatb_vec_add_top.AESL_clock), .rst(apatb_vec_add_top.AESL_reset));
-    assign axi_gmem_if.AWVALID = apatb_vec_add_top.gmem_AWVALID;
-    assign apatb_vec_add_top.gmem_AWREADY = axi_gmem_if.AWREADY;
-    assign axi_gmem_if.AWADDR = apatb_vec_add_top.gmem_AWADDR;
-    assign axi_gmem_if.AWID = apatb_vec_add_top.gmem_AWID;
-    assign axi_gmem_if.AWLEN = apatb_vec_add_top.gmem_AWLEN;
-    assign axi_gmem_if.AWSIZE = apatb_vec_add_top.gmem_AWSIZE;
-    assign axi_gmem_if.AWBURST = apatb_vec_add_top.gmem_AWBURST;
-    assign axi_gmem_if.AWLOCK = apatb_vec_add_top.gmem_AWLOCK;
-    assign axi_gmem_if.AWCACHE = apatb_vec_add_top.gmem_AWCACHE;
-    assign axi_gmem_if.AWPROT = apatb_vec_add_top.gmem_AWPROT;
-    assign axi_gmem_if.AWQOS = apatb_vec_add_top.gmem_AWQOS;
-    assign axi_gmem_if.AWREGION = apatb_vec_add_top.gmem_AWREGION;
-    assign axi_gmem_if.AWUSER = apatb_vec_add_top.gmem_AWUSER;
-    assign axi_gmem_if.WVALID = apatb_vec_add_top.gmem_WVALID;
-    assign apatb_vec_add_top.gmem_WREADY = axi_gmem_if.WREADY;
-    assign axi_gmem_if.WDATA = apatb_vec_add_top.gmem_WDATA;
-    assign axi_gmem_if.WSTRB = apatb_vec_add_top.gmem_WSTRB;
-    assign axi_gmem_if.WLAST = apatb_vec_add_top.gmem_WLAST;
-    assign axi_gmem_if.WID = apatb_vec_add_top.gmem_WID;
-    assign axi_gmem_if.WUSER = apatb_vec_add_top.gmem_WUSER;
-    assign axi_gmem_if.ARVALID = apatb_vec_add_top.gmem_ARVALID;
-    assign apatb_vec_add_top.gmem_ARREADY = axi_gmem_if.ARREADY;
-    assign axi_gmem_if.ARADDR = apatb_vec_add_top.gmem_ARADDR;
-    assign axi_gmem_if.ARID = apatb_vec_add_top.gmem_ARID;
-    assign axi_gmem_if.ARLEN = apatb_vec_add_top.gmem_ARLEN;
-    assign axi_gmem_if.ARSIZE = apatb_vec_add_top.gmem_ARSIZE;
-    assign axi_gmem_if.ARBURST = apatb_vec_add_top.gmem_ARBURST;
-    assign axi_gmem_if.ARLOCK = apatb_vec_add_top.gmem_ARLOCK;
-    assign axi_gmem_if.ARCACHE = apatb_vec_add_top.gmem_ARCACHE;
-    assign axi_gmem_if.ARPROT = apatb_vec_add_top.gmem_ARPROT;
-    assign axi_gmem_if.ARQOS = apatb_vec_add_top.gmem_ARQOS;
-    assign axi_gmem_if.ARREGION = apatb_vec_add_top.gmem_ARREGION;
-    assign axi_gmem_if.ARUSER = apatb_vec_add_top.gmem_ARUSER;
-    assign apatb_vec_add_top.gmem_RVALID = axi_gmem_if.RVALID;
-    assign axi_gmem_if.RREADY = apatb_vec_add_top.gmem_RREADY;
-    assign apatb_vec_add_top.gmem_RDATA = axi_gmem_if.RDATA;
-    assign apatb_vec_add_top.gmem_RLAST = axi_gmem_if.RLAST;
-    assign apatb_vec_add_top.gmem_RID = axi_gmem_if.RID;
-    assign apatb_vec_add_top.gmem_RUSER = axi_gmem_if.RUSER;
-    assign apatb_vec_add_top.gmem_RRESP = axi_gmem_if.RRESP;
-    assign apatb_vec_add_top.gmem_BVALID = axi_gmem_if.BVALID;
-    assign axi_gmem_if.BREADY = apatb_vec_add_top.gmem_BREADY;
-    assign apatb_vec_add_top.gmem_BRESP = axi_gmem_if.BRESP;
-    assign apatb_vec_add_top.gmem_BID = axi_gmem_if.BID;
-    assign apatb_vec_add_top.gmem_BUSER = axi_gmem_if.BUSER;
-    initial begin
-        uvm_config_db #( virtual axi_if#(64,64,8,3,1) )::set(null, "uvm_test_top.top_env.axi_master_gmem.*", "vif", axi_gmem_if);
-    end
-
-
     axi_if #(6,4,4,3,1)  axi_control_if (.clk  (apatb_vec_add_top.AESL_clock), .rst(apatb_vec_add_top.AESL_reset));
     assign apatb_vec_add_top.control_AWADDR = axi_control_if.AWADDR;
     assign apatb_vec_add_top.control_AWVALID = axi_control_if.AWVALID;

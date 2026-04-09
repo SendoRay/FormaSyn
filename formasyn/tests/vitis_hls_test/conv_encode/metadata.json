@@ -1,0 +1,45 @@
+{
+    "name": "conv_encode",
+    "description": "Convolutional Encoder (K=3, Rate 1/2)",
+    "version": "1.0.0",
+    "type": "kernel",
+    "target": "vitis_hls",
+    "parameters": {
+        "constraint_length": 3,
+        "code_rate": "1/2",
+        "generator_polynomials": {
+            "G1": "0b111",
+            "G2": "0b101"
+        },
+        "num_states": 4
+    },
+    "interfaces": {
+        "input": {
+            "name": "bit_in_stream",
+            "type": "hls::stream<ap_uint<1>>",
+            "description": "Input bit stream"
+        },
+        "output": {
+            "name": "y_out_stream",
+            "type": "hls::stream<ap_uint<2>>",
+            "description": "Output coded bit pair (rate 1/2)"
+        },
+        "control": {
+            "name": "num_bits",
+            "type": "ap_uint<32>",
+            "description": "Number of bits to encode"
+        }
+    },
+    "performance": {
+        "target_clock_ns": 5.0,
+        "throughput": "1 bit per clock cycle",
+        "latency": "num_bits + pipeline overhead"
+    },
+    "files": {
+        "header": "kernel.h",
+        "source": "kernel.cpp",
+        "testbench": "kernel_tb.cpp",
+        "config": "hls_config.cfg",
+        "readme": "readme.md"
+    }
+}

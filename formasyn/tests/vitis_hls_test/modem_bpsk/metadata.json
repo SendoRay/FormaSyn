@@ -1,0 +1,38 @@
+{
+    "name": "bpsk_mapper",
+    "description": "BPSK Modulator with LUT-based mapping",
+    "type": "kernel",
+    "version": "1.0.0",
+    "target": "vitis_hls",
+    "interface": {
+        "input": [
+            {
+                "name": "bit_in",
+                "width": 1,
+                "type": "ap_uint",
+                "description": "Input bit stream"
+            }
+        ],
+        "output": [
+            {
+                "name": "y_out",
+                "width": 16,
+                "type": "ap_int",
+                "description": "BPSK constellation point"
+            }
+        ]
+    },
+    "parameters": {
+        "constellation_points": 2,
+        "scale_factor": 1000,
+        "evm_threshold_percent": 5
+    },
+    "constellation": {
+        "0": -1000,
+        "1": 1000
+    },
+    "requirements": {
+        "target_ii": 1,
+        "target_clock_ns": 5
+    }
+}

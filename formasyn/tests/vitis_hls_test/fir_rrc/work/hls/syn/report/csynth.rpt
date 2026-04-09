@@ -1,0 +1,178 @@
+
+
+================================================================
+== Synthesis Summary Report of 'kernel'
+================================================================
++ General Information: 
+    * Date:           Thu Apr  9 02:35:43 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        work
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: zynq
+    * Target device:  xc7z020-clg400-1
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+-----------+-----+
+    |  Modules | Issue|      |      Latency     | Iteration|         | Trip |          |      |         |           |           |     |
+    |  & Loops | Type | Slack| (cycles)|  (ns)  |  Latency | Interval| Count| Pipelined| BRAM |   DSP   |     FF    |    LUT    | URAM|
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+-----------+-----+
+    |+ kernel  |     -|  0.47|        6|  60.000|         -|        1|     -|       yes|     -|  19 (8%)|  1752 (1%)|  1315 (2%)|    -|
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+-----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 5             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL     | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER     | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER   | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR   | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | x_in     | 0x10   | 32    | W      | Data signal of x_in              |                                                                                    |
+| s_axi_control | y_out    | 0x18   | 32    | R      | Data signal of y_out             |                                                                                    |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+-------------+
+| Argument | Direction | Datatype    |
++----------+-----------+-------------+
+| x_in     | in        | ap_int<16>  |
+| y_out    | out       | ap_int<16>& |
++----------+-----------+-------------+
+
+* SW-to-HW Mapping
++----------+---------------+----------+---------------------------------+
+| Argument | HW Interface  | HW Type  | HW Info                         |
++----------+---------------+----------+---------------------------------+
+| x_in     | s_axi_control | register | name=x_in offset=0x10 range=32  |
+| y_out    | s_axi_control | register | name=y_out offset=0x18 range=32 |
++----------+---------------+----------+---------------------------------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++-------------------------------------+-----+--------+-----------------+--------+-----------+---------+
+| Name                                | DSP | Pragma | Variable        | Op     | Impl      | Latency |
++-------------------------------------+-----+--------+-----------------+--------+-----------+---------+
+| + kernel                            | 19  |        |                 |        |           |         |
+|   sub_ln52_fu_814_p2                |     |        | sub_ln52        | sub    | fabric    | 0       |
+|   mac_muladd_16s_7s_23s_23_4_1_U8   | 1   |        | mul_ln52        | mul    | dsp_slice | 3       |
+|   grp_fu_1269_p2                    |     |        | sub_ln52_1      | sub    | fabric    | 0       |
+|   sub_ln52_2_fu_417_p2              |     |        | sub_ln52_2      | sub    | fabric    | 0       |
+|   sub_ln52_3_fu_507_p2              |     |        | sub_ln52_3      | sub    | fabric    | 0       |
+|   mul_16s_10ns_26_1_1_U1            | 1   |        | mul_ln52_1      | mul    | auto      | 0       |
+|   mac_muladd_16s_9ns_26s_26_4_1_U9  | 1   |        | mul_ln52_2      | mul    | dsp_slice | 3       |
+|   mul_16s_10ns_26_1_1_U2            | 1   |        | mul_ln52_3      | mul    | auto      | 0       |
+|   mac_muladd_16s_9ns_26s_26_4_1_U10 | 1   |        | mul_ln52_4      | mul    | dsp_slice | 3       |
+|   mul_16s_9ns_24_1_1_U3             | 1   |        | mul_ln59        | mul    | auto      | 0       |
+|   mac_muladd_16s_7s_24s_24_4_1_U11  | 1   |        | mul_ln52_5      | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_9s_26s_26_4_1_U12  | 1   |        | mul_ln52_6      | mul    | dsp_slice | 3       |
+|   mul_16s_10s_26_1_1_U4             | 1   |        | mul_ln52_7      | mul    | auto      | 0       |
+|   mul_16s_10s_26_1_1_U5             | 1   |        | mul_ln52_8      | mul    | auto      | 0       |
+|   mac_muladd_16s_10s_26s_26_4_1_U13 | 1   |        | mul_ln52_9      | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_9s_23s_25_4_1_U15  | 1   |        | mul_ln52_10     | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_7s_22s_23_4_1_U14  | 1   |        | mul_ln52_11     | mul    | dsp_slice | 3       |
+|   mul_16s_9ns_25_1_1_U6             | 1   |        | mul_ln52_12     | mul    | auto      | 0       |
+|   mac_muladd_16s_9ns_25s_25_4_1_U16 | 1   |        | mul_ln59_1      | mul    | dsp_slice | 3       |
+|   mul_16s_10ns_26_1_1_U7            | 1   |        | mul_ln52_13     | mul    | auto      | 0       |
+|   mac_muladd_16s_9ns_26s_26_4_1_U17 | 1   |        | mul_ln52_14     | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_25s_26_4_1_U18 | 1   |        | mul_ln52_15     | mul    | dsp_slice | 3       |
+|   sub_ln52_4_fu_979_p2              |     |        | sub_ln52_4      | sub    | fabric    | 0       |
+|   add_ln59_33_fu_888_p2             |     |        | add_ln59_33     | add    | fabric    | 0       |
+|   add_ln52_1_fu_916_p2              |     |        | add_ln52_1      | add    | fabric    | 0       |
+|   sub_ln52_5_fu_742_p2              |     |        | sub_ln52_5      | sub    | fabric    | 0       |
+|   mac_muladd_16s_7s_22s_23_4_1_U19  | 1   |        | mul_ln52_16     | mul    | dsp_slice | 3       |
+|   sub_ln52_7_fu_1007_p2             |     |        | sub_ln52_7      | sub    | fabric    | 0       |
+|   mac_muladd_16s_7s_24s_24_4_1_U11  | 1   |        | sext_ln59_5     | sext   | dsp_slice | 3       |
+|   mac_muladd_16s_9s_26s_26_4_1_U12  | 1   |        | sext_ln59_6     | sext   | dsp_slice | 3       |
+|   mac_muladd_16s_7s_23s_23_4_1_U8   | 1   |        | add_ln59        | add    | dsp_slice | 3       |
+|   add_ln59_2_fu_1031_p2             |     |        | add_ln59_2      | add    | fabric    | 0       |
+|   mac_muladd_16s_9ns_26s_26_4_1_U9  | 1   |        | add_ln59_3      | add    | dsp_slice | 3       |
+|   mac_muladd_16s_10s_26s_26_4_1_U13 | 1   |        | add_ln59_7      | add    | dsp_slice | 3       |
+|   mac_muladd_16s_9s_26s_26_4_1_U12  | 1   |        | add_ln59_8      | add    | dsp_slice | 3       |
+|   add_ln59_9_fu_1043_p2             |     |        | add_ln59_9      | add    | fabric    | 0       |
+|   mac_muladd_16s_7s_24s_24_4_1_U11  | 1   |        | add_ln59_10     | add    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_26s_26_4_1_U10 | 1   |        | add_ln59_11     | add    | dsp_slice | 3       |
+|   add_ln59_12_fu_1052_p2            |     |        | add_ln59_12     | add    | fabric    | 0       |
+|   add_ln59_15_fu_1057_p2            |     |        | add_ln59_15     | add    | fabric    | 0       |
+|   sub_ln59_fu_1105_p2               |     |        | sub_ln59        | sub    | fabric    | 0       |
+|   mac_muladd_16s_7s_22s_23_4_1_U19  | 1   |        | add_ln59_16     | add    | dsp_slice | 3       |
+|   add_ln59_17_fu_1115_p2            |     |        | add_ln59_17     | add    | fabric    | 0       |
+|   add_ln59_21_fu_1127_p2            |     |        | add_ln59_21     | add    | fabric    | 0       |
+|   mac_muladd_16s_9ns_25s_26_4_1_U18 | 1   |        | add_ln59_22     | add    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_26s_26_4_1_U17 | 1   |        | add_ln59_23     | add    | dsp_slice | 3       |
+|   add_ln59_24_fu_1139_p2            |     |        | add_ln59_24     | add    | fabric    | 0       |
+|   mac_muladd_16s_9ns_25s_25_4_1_U16 | 1   |        | add_ln59_25     | add    | dsp_slice | 3       |
+|   mac_muladd_16s_7s_22s_23_4_1_U14  | 1   |        | add_ln59_26     | add    | dsp_slice | 3       |
+|   mac_muladd_16s_9s_23s_25_4_1_U15  | 1   |        | add_ln59_27     | add    | dsp_slice | 3       |
+|   add_ln59_28_fu_1151_p2            |     |        | add_ln59_28     | add    | fabric    | 0       |
+|   add_ln72_fu_1215_p2               |     |        | add_ln72        | add    | fabric    | 0       |
+|   acc_fu_1221_p2                    |     |        | acc             | add    | fabric    | 0       |
+|   icmp_ln67_fu_1237_p2              |     |        | icmp_ln67       | setgt  | auto      | 0       |
+|   icmp_ln69_fu_1242_p2              |     |        | icmp_ln69       | setlt  | auto      | 0       |
+|   result_fu_1247_p3                 |     |        | result          | select | auto_sel  | 0       |
+|   empty_fu_1255_p2                  |     |        | empty           | or     | auto      | 0       |
+|   result_1_0_0_05_fu_1261_p3        |     |        | result_1_0_0_05 | select | auto_sel  | 0       |
++-------------------------------------+-----+--------+-----------------+--------+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name              | Usage     | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                   |           |           |      |      |        |          |      |         | Banks            |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| + kernel          |           |           | 0    | 0    |        |          |      |         |                  |
+|   control_s_axi_U | interface | s_axilite |      |      |        |          |      |         |                  |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------------+--------------------------------------+------------------------------------+
+| Type            | Options                              | Location                           |
++-----------------+--------------------------------------+------------------------------------+
+| INTERFACE       | s_axilite port=x_in bundle=control   | kernel.cpp:15 in kernel, x_in      |
+| INTERFACE       | s_axilite port=y_out bundle=control  | kernel.cpp:16 in kernel, y_out     |
+| INTERFACE       | s_axilite port=return bundle=control | kernel.cpp:17 in kernel, return    |
+| PIPELINE        | ii=1                                 | kernel.cpp:18 in kernel            |
+| ARRAY_PARTITION | variable=coeffs complete             | kernel.cpp:33 in kernel, coeffs    |
+| ARRAY_PARTITION | variable=shift_reg complete          | kernel.cpp:37 in kernel, shift_reg |
+| UNROLL          |                                      | kernel.cpp:41 in kernel            |
+| ARRAY_PARTITION | variable=products complete           | kernel.cpp:48 in kernel, products  |
+| UNROLL          |                                      | kernel.cpp:51 in kernel            |
+| UNROLL          |                                      | kernel.cpp:58 in kernel            |
++-----------------+--------------------------------------+------------------------------------+
+
+

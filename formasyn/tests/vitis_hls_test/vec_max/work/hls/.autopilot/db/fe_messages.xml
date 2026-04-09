@@ -1,0 +1,30 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="vec_max" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=vec_max" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:4:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="vec_max" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_memory port=a" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:5:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="vec_max" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_vld port=y" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:6:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="vec_max" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_vld port=idx" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:7:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="vec_max" ARG_PragmaIsValid="1" ARG_PragmaOptions="mode=ap_ctrl_chain port=return" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:9:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="vec_max" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:15:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="vec_max" ARG_PragmaIsValid="1" ARG_PragmaOptions="factor=1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="kernel.cpp:14:22" msg_body="Loop 'VITIS_LOOP_14_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_14_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:3:0" msg_body="Unrolling loop 'VITIS_LOOP_14_1' (kernel.cpp:14:22) in function 'vec_max' completely with a factor of 7">
+        <args Factor="7" LoopLoc="kernel.cpp:14:22" LoopName="VITIS_LOOP_14_1"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

@@ -1,0 +1,214 @@
+
+
+================================================================
+== Vitis HLS Report for 'kernel'
+================================================================
+* Date:           Thu Apr  9 03:50:11 2026
+
+* Version:        2025.1 (Build 6135595 on May 21 2025)
+* Project:        work
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  7.157 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+-----+-----+---------+
+    |  Latency (cycles) |   Latency (absolute)  |  Interval | Pipeline|
+    |   min   |   max   |    min    |    max    | min | max |   Type  |
+    +---------+---------+-----------+-----------+-----+-----+---------+
+    |        1|        1|  10.000 ns|  10.000 ns|    1|    1|      yes|
+    +---------+---------+-----------+-----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 1
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 2
+HasVarLatency: 0
+IsPipeline: 1
+IsRtlPipelined: 1
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
++ Individual pipeline summary: 
+  * Pipeline-0: initiation interval (II) = 1, depth = 2
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 2
+* Pipeline : 1
+  Pipeline-0 : II = 1, D = 2, States = { 1 2 }
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 7.03>
+ST_1 : Operation 3 [1/1] (1.00ns)   --->   "%x_in_read = read i16 @_ssdm_op_Read.ap_none.i16, i16 %x_in" [kernel.cpp:12]   --->   Operation 3 'read' 'x_in_read' <Predicate = true> <Delay = 1.00> <CoreInst = "s_axilite">   --->   Core 112 's_axilite' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write'>
+ST_1 : Operation 4 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg = load i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_14" [kernel.cpp:43]   --->   Operation 4 'load' 'kernel_ap_int_16_ap_int_32_shift_reg' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 5 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_9 = load i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_13" [kernel.cpp:43]   --->   Operation 5 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_9' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 6 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_10 = load i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_12" [kernel.cpp:43]   --->   Operation 6 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_10' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_11 = load i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_11" [kernel.cpp:43]   --->   Operation 7 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_11' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_10_load = load i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_10" [kernel.cpp:43]   --->   Operation 8 'load' 'p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_10_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_9_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_9" [kernel.cpp:43]   --->   Operation 9 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_9_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_8_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_8" [kernel.cpp:43]   --->   Operation 10 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_8_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_7_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_7" [kernel.cpp:43]   --->   Operation 11 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_7_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_6_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_6" [kernel.cpp:43]   --->   Operation 12 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_6_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_5_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_5" [kernel.cpp:43]   --->   Operation 13 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_5_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 14 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_4_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_4" [kernel.cpp:43]   --->   Operation 14 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_4_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 15 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_3_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_3" [kernel.cpp:43]   --->   Operation 15 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_3_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 16 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_2_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_2" [kernel.cpp:43]   --->   Operation 16 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_2_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_1_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg_1" [kernel.cpp:43]   --->   Operation 17 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_1_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%kernel_ap_int_16_ap_int_32_shift_reg_load = load i16 %kernel_ap_int_16_ap_int_32_shift_reg" [kernel.cpp:43]   --->   Operation 18 'load' 'kernel_ap_int_16_ap_int_32_shift_reg_load' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_9, i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_14" [kernel.cpp:43]   --->   Operation 19 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_10, i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_13" [kernel.cpp:43]   --->   Operation 20 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_11, i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_12" [kernel.cpp:43]   --->   Operation 21 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_10_load, i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_11" [kernel.cpp:43]   --->   Operation 22 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 23 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_9_load, i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_10" [kernel.cpp:43]   --->   Operation 23 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_8_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_9" [kernel.cpp:43]   --->   Operation 24 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_7_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_8" [kernel.cpp:43]   --->   Operation 25 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 26 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_6_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_7" [kernel.cpp:43]   --->   Operation 26 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 27 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_5_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_6" [kernel.cpp:43]   --->   Operation 27 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 28 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_4_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_5" [kernel.cpp:43]   --->   Operation 28 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 29 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_3_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_4" [kernel.cpp:43]   --->   Operation 29 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 30 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_2_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_3" [kernel.cpp:43]   --->   Operation 30 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 31 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_1_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_2" [kernel.cpp:43]   --->   Operation 31 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 32 [1/1] (0.00ns)   --->   "%store_ln43 = store i16 %kernel_ap_int_16_ap_int_32_shift_reg_load, i16 %kernel_ap_int_16_ap_int_32_shift_reg_1" [kernel.cpp:43]   --->   Operation 32 'store' 'store_ln43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 33 [1/1] (0.00ns)   --->   "%store_ln45 = store i16 %x_in_read, i16 %kernel_ap_int_16_ap_int_32_shift_reg" [kernel.cpp:45]   --->   Operation 33 'store' 'store_ln45' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 34 [1/1] (0.00ns)   --->   "%sext_ln54 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_3_load" [kernel.cpp:54]   --->   Operation 34 'sext' 'sext_ln54' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 35 [1/1] (2.07ns)   --->   "%sub_ln54 = sub i17 0, i17 %sext_ln54" [kernel.cpp:54]   --->   Operation 35 'sub' 'sub_ln54' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 36 [1/1] (0.00ns)   --->   "%sext_ln54_1 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_6_load" [kernel.cpp:54]   --->   Operation 36 'sext' 'sext_ln54_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 37 [1/1] (2.07ns)   --->   "%sub_ln54_1 = sub i17 0, i17 %sext_ln54_1" [kernel.cpp:54]   --->   Operation 37 'sub' 'sub_ln54_1' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 38 [1/1] (0.00ns)   --->   "%sext_ln54_2 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_9_load" [kernel.cpp:54]   --->   Operation 38 'sext' 'sext_ln54_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 39 [1/1] (2.07ns)   --->   "%sub_ln54_2 = sub i17 0, i17 %sext_ln54_2" [kernel.cpp:54]   --->   Operation 39 'sub' 'sub_ln54_2' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 40 [1/1] (0.00ns)   --->   "%sext_ln58 = sext i16 %x_in_read" [kernel.cpp:58]   --->   Operation 40 'sext' 'sext_ln58' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 41 [1/1] (0.00ns)   --->   "%sext_ln61 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_load" [kernel.cpp:61]   --->   Operation 41 'sext' 'sext_ln61' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 42 [1/1] (0.00ns)   --->   "%sext_ln61_1 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_1_load" [kernel.cpp:61]   --->   Operation 42 'sext' 'sext_ln61_1' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 43 [1/1] (0.00ns)   --->   "%sext_ln61_2 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_2_load" [kernel.cpp:61]   --->   Operation 43 'sext' 'sext_ln61_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 44 [1/1] (0.00ns)   --->   "%sext_ln61_3 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_5_load" [kernel.cpp:61]   --->   Operation 44 'sext' 'sext_ln61_3' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 45 [1/1] (0.00ns)   --->   "%sext_ln61_4 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_7_load" [kernel.cpp:61]   --->   Operation 45 'sext' 'sext_ln61_4' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 46 [1/1] (0.00ns)   --->   "%sext_ln61_5 = sext i16 %p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_10_load" [kernel.cpp:61]   --->   Operation 46 'sext' 'sext_ln61_5' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 47 [1/1] (0.00ns)   --->   "%sext_ln61_6 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_11" [kernel.cpp:61]   --->   Operation 47 'sext' 'sext_ln61_6' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 48 [1/1] (0.00ns)   --->   "%sext_ln61_7 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_9" [kernel.cpp:61]   --->   Operation 48 'sext' 'sext_ln61_7' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 49 [1/1] (0.00ns)   --->   "%sext_ln61_8 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg" [kernel.cpp:61]   --->   Operation 49 'sext' 'sext_ln61_8' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 50 [1/1] (0.00ns)   --->   "%sext_ln61_9 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_10" [kernel.cpp:61]   --->   Operation 50 'sext' 'sext_ln61_9' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 51 [1/1] (0.00ns)   --->   "%sext_ln61_10 = sext i17 %sub_ln54_2" [kernel.cpp:61]   --->   Operation 51 'sext' 'sext_ln61_10' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 52 [1/1] (2.10ns)   --->   "%sub_ln61 = sub i18 %sext_ln61_10, i18 %sext_ln61_9" [kernel.cpp:61]   --->   Operation 52 'sub' 'sub_ln61' <Predicate = true> <Delay = 2.10> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.10> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 53 [1/1] (0.00ns)   --->   "%sext_ln61_12 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_8_load" [kernel.cpp:61]   --->   Operation 53 'sext' 'sext_ln61_12' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 54 [1/1] (0.00ns)   --->   "%sext_ln61_13 = sext i17 %sub_ln54_1" [kernel.cpp:61]   --->   Operation 54 'sext' 'sext_ln61_13' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 55 [1/1] (2.10ns)   --->   "%sub_ln61_1 = sub i18 %sext_ln61_13, i18 %sext_ln61_12" [kernel.cpp:61]   --->   Operation 55 'sub' 'sub_ln61_1' <Predicate = true> <Delay = 2.10> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.10> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 56 [1/1] (0.00ns)   --->   "%sext_ln61_15 = sext i16 %kernel_ap_int_16_ap_int_32_shift_reg_4_load" [kernel.cpp:61]   --->   Operation 56 'sext' 'sext_ln61_15' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 57 [1/1] (0.00ns)   --->   "%sext_ln61_16 = sext i17 %sub_ln54" [kernel.cpp:61]   --->   Operation 57 'sext' 'sext_ln61_16' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 58 [1/1] (0.00ns) (grouped into TernaryAdder)   --->   "%sub_ln61_2 = sub i18 %sext_ln61_16, i18 %sext_ln61_15" [kernel.cpp:61]   --->   Operation 58 'sub' 'sub_ln61_2' <Predicate = true> <Delay = 0.00> <CoreInst = "TAddSub">   --->   Core 10 'TAddSub' <Latency = 0> <II = 1> <Delay = 1.99> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_1 : Operation 59 [1/1] (2.07ns)   --->   "%add_ln61_1 = add i17 %sext_ln61_8, i17 %sext_ln58" [kernel.cpp:61]   --->   Operation 59 'add' 'add_ln61_1' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 60 [1/1] (0.00ns)   --->   "%sext_ln61_17 = sext i17 %add_ln61_1" [kernel.cpp:61]   --->   Operation 60 'sext' 'sext_ln61_17' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 61 [1/1] (3.96ns) (root node of TernaryAdder)   --->   "%add_ln61_2 = add i18 %sext_ln61_17, i18 %sub_ln61_2" [kernel.cpp:61]   --->   Operation 61 'add' 'add_ln61_2' <Predicate = true> <Delay = 3.96> <CoreInst = "TAddSub">   --->   Core 10 'TAddSub' <Latency = 0> <II = 1> <Delay = 1.99> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_1 : Operation 62 [1/1] (2.07ns)   --->   "%add_ln61_4 = add i17 %sext_ln61_7, i17 %sext_ln61_6" [kernel.cpp:61]   --->   Operation 62 'add' 'add_ln61_4' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 63 [1/1] (0.00ns)   --->   "%sext_ln61_20 = sext i17 %add_ln61_4" [kernel.cpp:61]   --->   Operation 63 'sext' 'sext_ln61_20' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 64 [1/1] (2.07ns)   --->   "%add_ln61_5 = add i17 %sext_ln61_5, i17 %sext_ln61_4" [kernel.cpp:61]   --->   Operation 64 'add' 'add_ln61_5' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 65 [1/1] (0.00ns)   --->   "%sext_ln61_21 = sext i17 %add_ln61_5" [kernel.cpp:61]   --->   Operation 65 'sext' 'sext_ln61_21' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 66 [1/1] (2.10ns)   --->   "%add_ln61_6 = add i18 %sext_ln61_21, i18 %sext_ln61_20" [kernel.cpp:61]   --->   Operation 66 'add' 'add_ln61_6' <Predicate = true> <Delay = 2.10> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.10> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 67 [1/1] (0.00ns)   --->   "%sext_ln61_22 = sext i18 %add_ln61_6" [kernel.cpp:61]   --->   Operation 67 'sext' 'sext_ln61_22' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 68 [1/1] (2.07ns)   --->   "%add_ln61_7 = add i17 %sext_ln61_3, i17 %sext_ln61_2" [kernel.cpp:61]   --->   Operation 68 'add' 'add_ln61_7' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 69 [1/1] (0.00ns)   --->   "%sext_ln61_23 = sext i17 %add_ln61_7" [kernel.cpp:61]   --->   Operation 69 'sext' 'sext_ln61_23' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 70 [1/1] (2.07ns)   --->   "%add_ln61_8 = add i17 %sext_ln61_1, i17 %sext_ln61" [kernel.cpp:61]   --->   Operation 70 'add' 'add_ln61_8' <Predicate = true> <Delay = 2.07> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.07> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 71 [1/1] (0.00ns)   --->   "%sext_ln61_24 = sext i17 %add_ln61_8" [kernel.cpp:61]   --->   Operation 71 'sext' 'sext_ln61_24' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 72 [1/1] (2.10ns)   --->   "%add_ln61_9 = add i18 %sext_ln61_24, i18 %sext_ln61_23" [kernel.cpp:61]   --->   Operation 72 'add' 'add_ln61_9' <Predicate = true> <Delay = 2.10> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.10> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_1 : Operation 73 [1/1] (0.00ns)   --->   "%sext_ln61_25 = sext i18 %add_ln61_9" [kernel.cpp:61]   --->   Operation 73 'sext' 'sext_ln61_25' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 74 [1/1] (2.13ns)   --->   "%add_ln61_10 = add i19 %sext_ln61_25, i19 %sext_ln61_22" [kernel.cpp:61]   --->   Operation 74 'add' 'add_ln61_10' <Predicate = true> <Delay = 2.13> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.13> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+
+State 2 <SV = 1> <Delay = 7.15>
+ST_2 : Operation 75 [1/1] (0.00ns)   --->   "%specpipeline_ln16 = specpipeline void @_ssdm_op_SpecPipeline, i32 1, i32 0, i32 0, i32 0, void @empty_0" [kernel.cpp:16]   --->   Operation 75 'specpipeline' 'specpipeline_ln16' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 76 [1/1] (0.00ns)   --->   "%spectopmodule_ln12 = spectopmodule void @_ssdm_op_SpecTopModule, void @empty_5" [kernel.cpp:12]   --->   Operation 76 'spectopmodule' 'spectopmodule_ln12' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 77 [1/1] (0.00ns)   --->   "%specinterface_ln12 = specinterface void @_ssdm_op_SpecInterface, i32 0, void @empty_6, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0" [kernel.cpp:12]   --->   Operation 77 'specinterface' 'specinterface_ln12' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 78 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i16 %x_in"   --->   Operation 78 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 79 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i16 %x_in, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_1, void @empty_2, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 79 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 80 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i16 %x_in, void @empty_3, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 80 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 81 [1/1] (0.00ns)   --->   "%specbitsmap_ln0 = specbitsmap void @_ssdm_op_SpecBitsMap, i32 %y_out"   --->   Operation 81 'specbitsmap' 'specbitsmap_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 82 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %y_out, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_1, void @empty_4, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 82 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 83 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 %y_out, void @empty_3, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_0, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 83 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 84 [1/1] (0.00ns)   --->   "%specinterface_ln0 = specinterface void @_ssdm_op_SpecInterface, i32 0, void @empty, i32 0, i32 0, void @empty_0, i32 0, i32 0, void @empty_1, void @empty_0, void @empty_0, i32 0, i32 0, i32 0, i32 0, void @empty_0, void @empty_0, i32 4294967295, i32 0, i32 0"   --->   Operation 84 'specinterface' 'specinterface_ln0' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 85 [1/1] (0.00ns)   --->   "%sext_ln61_11 = sext i18 %sub_ln61" [kernel.cpp:61]   --->   Operation 85 'sext' 'sext_ln61_11' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 86 [1/1] (0.00ns)   --->   "%sext_ln61_14 = sext i18 %sub_ln61_1" [kernel.cpp:61]   --->   Operation 86 'sext' 'sext_ln61_14' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 87 [1/1] (0.00ns) (grouped into TernaryAdder)   --->   "%add_ln61 = add i19 %sext_ln61_14, i19 %sext_ln61_11" [kernel.cpp:61]   --->   Operation 87 'add' 'add_ln61' <Predicate = true> <Delay = 0.00> <CoreInst = "TAddSub">   --->   Core 10 'TAddSub' <Latency = 0> <II = 1> <Delay = 1.99> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_2 : Operation 88 [1/1] (0.00ns)   --->   "%sext_ln61_18 = sext i18 %add_ln61_2" [kernel.cpp:61]   --->   Operation 88 'sext' 'sext_ln61_18' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 89 [1/1] (3.99ns) (root node of TernaryAdder)   --->   "%add_ln61_3 = add i19 %sext_ln61_18, i19 %add_ln61" [kernel.cpp:61]   --->   Operation 89 'add' 'add_ln61_3' <Predicate = true> <Delay = 3.99> <CoreInst = "TAddSub">   --->   Core 10 'TAddSub' <Latency = 0> <II = 1> <Delay = 1.99> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_2 : Operation 90 [1/1] (0.00ns)   --->   "%sext_ln61_19 = sext i19 %add_ln61_3" [kernel.cpp:61]   --->   Operation 90 'sext' 'sext_ln61_19' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 91 [1/1] (0.00ns)   --->   "%sext_ln61_26 = sext i19 %add_ln61_10" [kernel.cpp:61]   --->   Operation 91 'sext' 'sext_ln61_26' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 92 [1/1] (2.16ns)   --->   "%acc = add i20 %sext_ln61_26, i20 %sext_ln61_19" [kernel.cpp:61]   --->   Operation 92 'add' 'acc' <Predicate = true> <Delay = 2.16> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 2.16> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 93 [1/1] (0.00ns)   --->   "%sext_ln58_1 = sext i20 %acc" [kernel.cpp:58]   --->   Operation 93 'sext' 'sext_ln58_1' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 94 [1/1] (1.00ns)   --->   "%write_ln64 = write void @_ssdm_op_Write.ap_none.i32P0A, i32 %y_out, i32 %sext_ln58_1" [kernel.cpp:64]   --->   Operation 94 'write' 'write_ln64' <Predicate = true> <Delay = 1.00> <CoreInst = "s_axilite">   --->   Core 112 's_axilite' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write'>
+ST_2 : Operation 95 [1/1] (0.00ns)   --->   "%ret_ln65 = ret" [kernel.cpp:65]   --->   Operation 95 'ret' 'ret_ln65' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 10.000ns, clock uncertainty: 2.700ns.
+
+ <State 1>: 7.038ns
+The critical path consists of the following:
+	wire read operation ('x_in_read', kernel.cpp:12) on port 'x_in' (kernel.cpp:12) [28]  (1.000 ns)
+	'add' operation 17 bit ('add_ln61_1', kernel.cpp:61) [87]  (2.077 ns)
+	'add' operation 18 bit ('add_ln61_2', kernel.cpp:61) [89]  (3.962 ns)
+
+ <State 2>: 7.157ns
+The critical path consists of the following:
+	'add' operation 19 bit ('add_ln61', kernel.cpp:61) [83]  (0.000 ns)
+	'add' operation 19 bit ('add_ln61_3', kernel.cpp:61) [91]  (3.991 ns)
+	'add' operation 20 bit ('acc', kernel.cpp:61) [107]  (2.166 ns)
+	wire write operation ('write_ln64', kernel.cpp:64) on port 'y_out' (kernel.cpp:64) [109]  (1.000 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

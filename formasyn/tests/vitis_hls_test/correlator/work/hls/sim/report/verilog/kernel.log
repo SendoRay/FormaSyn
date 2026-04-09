@@ -1,0 +1,683 @@
+INFO: [COSIM-47] Using XSIM for RTL simulation.
+INFO: [COSIM-14] Instrumenting C test bench ...
+   Build using "/tools/Xilinx/2025.1/Vitis/lnx64/tools/vcxx/libexec//clang++"
+   Compiling apatb_kernel.cpp
+   Compiling kernel.cpp_pre.cpp.tb.cpp
+   Compiling kernel_tb.cpp_pre.cpp.tb.cpp
+   Compiling apatb_kernel_ir.ll
+   Generating cosim.tv.exe
+INFO: [COSIM-302] Starting C TB testing ... 
+INFO: [COSIM-333] Generating C post check test bench ...
+INFO: [COSIM-12] Generating RTL test bench ...
+INFO: [COSIM-1] *** C/RTL co-simulation file generation completed. ***
+INFO: [COSIM-323] Starting verilog simulation. 
+INFO: [COSIM-15] Starting XSIM ...
+INFO: [COSIM-316] Starting C post checking ...
+Test 1: Functional Verification
+
+Test 2: Preamble Detection (Matched Filter Response)
+  Peak correlation: 11000 at sample 24
+  Expected peak at sample 25 (preamble fully aligned)
+  NMSE: -inf dB
+  NMSE meets -45 dB target.
+
+Test 3: Noise Rejection
+  Average correlation magnitude for random noise: 985
+  Peak correlation for preamble: 11000
+  Peak-to-noise ratio: 11
+
+PASS
+Vivado Simulator v2025.1.0
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /tools/Xilinx/2025.1/Vivado/bin/unwrapped/lnx64.o/xelab xil_defaultlib.apatb_kernel_top xil_defaultlib.glbl -Oenable_linking_all_libraries -prj kernel.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm -L floating_point_v7_1_20 -L floating_point_v7_0_25 --lib ieee_proposed=./ieee_proposed -L uvm -relax -i ./svr -i ./svtb -i ./file_agent -i ./kernel_subsystem -s kernel 
+Multi-threading is on. Using 127 slave threads.
+WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by AMD, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the "-mt off -v 1" switches to see more information from the C compiler. The following environment variables have been detected:
+    LIBRARY_PATH
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/kernel.autotb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module apatb_kernel_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/kernel.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module kernel
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/kernel_control_s_axi.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module kernel_control_s_axi
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/dataflow_monitor.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dataflow_monitor
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/file_agent/file_agent_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/axivip/axi_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/axivip/axi_if.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/kernel_subsystem/kernel_subsystem_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/svtb/misc_interface.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/correlator/work/hls/sim/verilog/svtb/sv_module_top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sv_module_top
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/proj/primebuilds/9999.0_PRIME_0428_0031/installs/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 4356. Module uvm_pkg doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/proj/primebuilds/9999.0_PRIME_0428_0031/installs/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 4356. Module uvm_pkg doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4468] File : /proj/primebuilds/9999.0_PRIME_0428_0031/installs/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv, Line : 25994, RANDC variable size more than 8 bits. This will be treated as a RAND variable instead.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package xil_defaultlib.$unit_sv_module_top_sv
+Compiling package uvm.uvm_pkg
+Compiling package std.std
+Compiling package xil_defaultlib.axi_pkg
+Compiling package xil_defaultlib.kernel_subsystem_pkg
+Compiling package xil_defaultlib.file_agent_pkg
+Compiling package xil_defaultlib.$unit_dataflow_monitor_sv
+Compiling module xil_defaultlib.kernel_control_s_axi
+Compiling module xil_defaultlib.kernel
+Compiling module xil_defaultlib.misc_interface_default
+Compiling module xil_defaultlib.axi_if(ADDR_WIDTH=5,STRB_WIDTH=4...
+Compiling module xil_defaultlib.sv_module_top
+Compiling module xil_defaultlib.nodf_module_intf_default
+Compiling module xil_defaultlib.dataflow_monitor_1
+Compiling module xil_defaultlib.apatb_kernel_top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot kernel
+
+****** xsim v2025.1 (64-bit)
+  **** SW Build 6140274 on Wed May 21 22:58:25 MDT 2025
+  **** IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+  **** SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+  **** Start of session at: Thu Apr  9 04:00:27 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/kernel/xsim_script.tcl
+# xsim {kernel} -testplusarg UVM_VERBOSITY=UVM_NONE -testplusarg UVM_TESTNAME=kernel_test_lib -testplusarg UVM_TIMEOUT=20000000000000 -autoloadwcfg -tclbatch {kernel.tcl}
+Time resolution is 1 ps
+source kernel.tcl
+## run all
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18601) @ 0: reporter [UVM/RELNOTES] 
+----------------------------------------------------------------
+UVM-1.2
+(C) 2007-2014 Mentor Graphics Corporation
+(C) 2007-2014 Cadence Design Systems, Inc.
+(C) 2006-2014 Synopsys, Inc.
+(C) 2011-2013 Cypress Semiconductor Corp.
+(C) 2013-2014 NVIDIA Corporation
+----------------------------------------------------------------
+
+  ***********       IMPORTANT RELEASE NOTES         ************
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_NO_DEPRECATED undefined.
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+
+      (Specify +UVM_NO_RELNOTES to turn off this notice)
+
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18648) @ 0: reporter [NO_DPI_TSTNAME] UVM_NO_DPI defined--getting UVM_TESTNAME directly, without DPI
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18752) @ 0: reporter [UVMTOP] UVM testbench topology:
+------------------------------------------------------------------------------------
+Name                         Type                              Size  Value          
+------------------------------------------------------------------------------------
+uvm_test_top                 kernel_test_lib                   -     @364           
+  top_env                    kernel_env                        -     @375           
+    axi_lite_control         uvm_env                           -     @396           
+      item_rtr_port          uvm_analysis_port                 -     @415           
+      item_wtr_port          uvm_analysis_port                 -     @405           
+      master                 uvm_agent                         -     @788           
+        ardrv                uvm_driver #(REQ,RSP)             -     @1463          
+          item_read_imp      uvm_analysis_port                 -     @1492          
+          rsp_port           uvm_analysis_port                 -     @1482          
+          seq_item_port      uvm_seq_item_pull_port            -     @1472          
+          m_num_sent         integral                          32    'h0            
+        arsqr                axi_sequencer                     -     @1502          
+          rsp_export         uvm_analysis_export               -     @1511          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1629          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        awdrv                uvm_driver #(REQ,RSP)             -     @935           
+          item_read_imp      uvm_analysis_port                 -     @964           
+          rsp_port           uvm_analysis_port                 -     @954           
+          seq_item_port      uvm_seq_item_pull_port            -     @944           
+          m_num_sent         integral                          32    'h0            
+        awsqr                axi_sequencer                     -     @974           
+          rsp_export         uvm_analysis_export               -     @983           
+          seq_item_export    uvm_seq_item_pull_imp             -     @1101          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        bdrv                 uvm_driver #(REQ,RSP)             -     @1287          
+          item_read_imp      uvm_analysis_port                 -     @1316          
+          rsp_port           uvm_analysis_port                 -     @1306          
+          seq_item_port      uvm_seq_item_pull_port            -     @1296          
+          m_num_sent         integral                          32    'h0            
+        bsqr                 axi_sequencer                     -     @1326          
+          rsp_export         uvm_analysis_export               -     @1335          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1453          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        rdrv                 uvm_driver #(REQ,RSP)             -     @1639          
+          item_read_imp      uvm_analysis_port                 -     @1668          
+          rsp_port           uvm_analysis_port                 -     @1658          
+          seq_item_port      uvm_seq_item_pull_port            -     @1648          
+          m_num_sent         integral                          32    'h0            
+        rsqr                 axi_sequencer                     -     @1678          
+          rsp_export         uvm_analysis_export               -     @1687          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1805          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        wdrv                 uvm_driver #(REQ,RSP)             -     @1111          
+          item_read_imp      uvm_analysis_port                 -     @1140          
+          rsp_port           uvm_analysis_port                 -     @1130          
+          seq_item_port      uvm_seq_item_pull_port            -     @1120          
+          m_num_sent         integral                          32    'h0            
+        wsqr                 axi_sequencer                     -     @1150          
+          rsp_export         uvm_analysis_export               -     @1159          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1277          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+      monitor                uvm_monitor                       -     @610           
+        item_ar2r_port       uvm_analysis_port                 -     @679           
+        item_ar_port         uvm_analysis_port                 -     @649           
+        item_aw2b_port       uvm_analysis_port                 -     @669           
+        item_aw_port         uvm_analysis_port                 -     @619           
+        item_b_port          uvm_analysis_port                 -     @639           
+        item_r_port          uvm_analysis_port                 -     @659           
+        item_w_port          uvm_analysis_port                 -     @629           
+        checks_enable        integral                          1     'h1            
+        coverage_enable      integral                          1     'h1            
+      state                  axi_state                         -     @689           
+        ar2r_imp             uvm_analysis_imp_ar2r             -     @758           
+        ar_imp               uvm_analysis_imp_ar               -     @728           
+        aw2b_imp             uvm_analysis_imp_aw2b             -     @748           
+        aw_imp               uvm_analysis_imp_aw               -     @698           
+        b_imp                uvm_analysis_imp_b                -     @718           
+        item_rtr_port        uvm_analysis_port                 -     @778           
+        item_wtr_port        uvm_analysis_port                 -     @768           
+        r_imp                uvm_analysis_imp_r                -     @738           
+        w_imp                uvm_analysis_imp_w                -     @708           
+        avg_rate             integral                          32    'h0            
+        exp_rate             integral                          32    'h0            
+        win_size             integral                          32    'h0            
+        bqnum_for_slaseq     integral                          32    'h0            
+        rq_from_model_num    integral                          32    'h0            
+      vsqr                   axi_virtual_sequencer             -     @797           
+        rsp_export           uvm_analysis_export               -     @806           
+        seq_item_export      uvm_seq_item_pull_imp             -     @924           
+        arbitration_queue    array                             0     -              
+        lock_queue           array                             0     -              
+        num_last_reqs        integral                          32    'd1            
+        num_last_rsps        integral                          32    'd1            
+      cfg                    axi_cfg                           -     @390           
+        has_checker          integral                          1     'h1            
+        has_coverage         integral                          1     'h1            
+        id_num               integral                          32    'h1            
+        reset_level          reset_level_enum                  32    RESET_LEVEL_LOW
+        drv_type             drv_type_enum                     32    MASTER         
+        write_latency_mode   latency_mode_enum                 32    CHANNEL_FIRST  
+        read_latency_mode    latency_mode_enum                 32    CHANNEL_FIRST  
+        clatency             axi_latency                       -     @391           
+          wr_latency         integral                          32    'h0            
+          rd_latency         integral                          32    'h0            
+    kernel_virtual_sqr       kernel_virtual_sequencer          -     @467           
+      rsp_export             uvm_analysis_export               -     @476           
+      seq_item_export        uvm_seq_item_pull_imp             -     @594           
+      arbitration_queue      array                             0     -              
+      lock_queue             array                             0     -              
+      num_last_reqs          integral                          32    'd1            
+      num_last_rsps          integral                          32    'd1            
+    refm                     kernel_reference_model            -     @425           
+      trans_num_idx          integral                          32    'h0            
+    subsys_mon               kernel_subsystem_monitor          -     @438           
+      control_rtr_imp        uvm_analysis_imp_axi_rtr_control  -     @457           
+      control_wtr_imp        uvm_analysis_imp_axi_wtr_control  -     @447           
+      scbd                   kernel_scoreboard                 -     @1892          
+        refm                 kernel_reference_model            -     @425           
+          trans_num_idx      integral                          32    'h0            
+    refm                     kernel_reference_model            -     @425           
+    kernel_virtual_sqr       kernel_virtual_sequencer          -     @467           
+    kernel_cfg               kernel_config                     -     @389           
+      control_cfg            axi_cfg                           -     @390           
+        has_checker          integral                          1     'h1            
+        has_coverage         integral                          1     'h1            
+        id_num               integral                          32    'h1            
+        reset_level          reset_level_enum                  32    RESET_LEVEL_LOW
+        drv_type             drv_type_enum                     32    MASTER         
+        write_latency_mode   latency_mode_enum                 32    CHANNEL_FIRST  
+        read_latency_mode    latency_mode_enum                 32    CHANNEL_FIRST  
+        clatency             axi_latency                       -     @391           
+          wr_latency         integral                          32    'h0            
+          rd_latency         integral                          32    'h0            
+      check_ena              integral                          32    'h0            
+      cover_ena              integral                          32    'h0            
+------------------------------------------------------------------------------------
+
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(20867) @ 0: reporter [UVM/COMP/NAMECHECK] This implementation of the component name checks requires DPI to be enabled
+////////////////////////////////////////////////////////////////////////////////////
+// Inter-Transaction Progress: Completed Transaction / Total Transaction
+// Intra-Transaction Progress: Measured Latency / Latency Estimation * 100%
+//
+// RTL Simulation : "Inter-Transaction Progress" ["Intra-Transaction Progress"] @ "Simulation Time"
+////////////////////////////////////////////////////////////////////////////////////
+// RTL Simulation : 0 / 396 [0.00%] @ "125000"
+// RTL Simulation : 1 / 396 [100.00%] @ "295000"
+// RTL Simulation : 2 / 396 [100.00%] @ "475000"
+// RTL Simulation : 3 / 396 [100.00%] @ "655000"
+// RTL Simulation : 4 / 396 [100.00%] @ "835000"
+// RTL Simulation : 5 / 396 [100.00%] @ "1015000"
+// RTL Simulation : 6 / 396 [100.00%] @ "1195000"
+// RTL Simulation : 7 / 396 [100.00%] @ "1375000"
+// RTL Simulation : 8 / 396 [100.00%] @ "1555000"
+// RTL Simulation : 9 / 396 [100.00%] @ "1735000"
+// RTL Simulation : 10 / 396 [100.00%] @ "1915000"
+// RTL Simulation : 11 / 396 [100.00%] @ "2095000"
+// RTL Simulation : 12 / 396 [100.00%] @ "2275000"
+// RTL Simulation : 13 / 396 [100.00%] @ "2455000"
+// RTL Simulation : 14 / 396 [100.00%] @ "2635000"
+// RTL Simulation : 15 / 396 [100.00%] @ "2815000"
+// RTL Simulation : 16 / 396 [100.00%] @ "2995000"
+// RTL Simulation : 17 / 396 [100.00%] @ "3205000"
+// RTL Simulation : 18 / 396 [100.00%] @ "3415000"
+// RTL Simulation : 19 / 396 [100.00%] @ "3595000"
+// RTL Simulation : 20 / 396 [100.00%] @ "3775000"
+// RTL Simulation : 21 / 396 [100.00%] @ "3955000"
+// RTL Simulation : 22 / 396 [100.00%] @ "4135000"
+// RTL Simulation : 23 / 396 [100.00%] @ "4315000"
+// RTL Simulation : 24 / 396 [100.00%] @ "4495000"
+// RTL Simulation : 25 / 396 [100.00%] @ "4675000"
+// RTL Simulation : 26 / 396 [100.00%] @ "4855000"
+// RTL Simulation : 27 / 396 [100.00%] @ "5035000"
+// RTL Simulation : 28 / 396 [100.00%] @ "5245000"
+// RTL Simulation : 29 / 396 [100.00%] @ "5455000"
+// RTL Simulation : 30 / 396 [100.00%] @ "5665000"
+// RTL Simulation : 31 / 396 [100.00%] @ "5875000"
+// RTL Simulation : 32 / 396 [100.00%] @ "6085000"
+// RTL Simulation : 33 / 396 [100.00%] @ "6295000"
+// RTL Simulation : 34 / 396 [100.00%] @ "6505000"
+// RTL Simulation : 35 / 396 [100.00%] @ "6715000"
+// RTL Simulation : 36 / 396 [100.00%] @ "6925000"
+// RTL Simulation : 37 / 396 [100.00%] @ "7135000"
+// RTL Simulation : 38 / 396 [100.00%] @ "7345000"
+// RTL Simulation : 39 / 396 [100.00%] @ "7555000"
+// RTL Simulation : 40 / 396 [100.00%] @ "7765000"
+// RTL Simulation : 41 / 396 [100.00%] @ "7975000"
+// RTL Simulation : 42 / 396 [100.00%] @ "8185000"
+// RTL Simulation : 43 / 396 [100.00%] @ "8395000"
+// RTL Simulation : 44 / 396 [100.00%] @ "8605000"
+// RTL Simulation : 45 / 396 [100.00%] @ "8815000"
+// RTL Simulation : 46 / 396 [100.00%] @ "9025000"
+// RTL Simulation : 47 / 396 [100.00%] @ "9235000"
+// RTL Simulation : 48 / 396 [100.00%] @ "9445000"
+// RTL Simulation : 49 / 396 [100.00%] @ "9655000"
+// RTL Simulation : 50 / 396 [100.00%] @ "9865000"
+// RTL Simulation : 51 / 396 [100.00%] @ "10075000"
+// RTL Simulation : 52 / 396 [100.00%] @ "10285000"
+// RTL Simulation : 53 / 396 [100.00%] @ "10495000"
+// RTL Simulation : 54 / 396 [100.00%] @ "10705000"
+// RTL Simulation : 55 / 396 [100.00%] @ "10915000"
+// RTL Simulation : 56 / 396 [100.00%] @ "11125000"
+// RTL Simulation : 57 / 396 [100.00%] @ "11335000"
+// RTL Simulation : 58 / 396 [100.00%] @ "11545000"
+// RTL Simulation : 59 / 396 [100.00%] @ "11755000"
+// RTL Simulation : 60 / 396 [100.00%] @ "11965000"
+// RTL Simulation : 61 / 396 [100.00%] @ "12175000"
+// RTL Simulation : 62 / 396 [100.00%] @ "12385000"
+// RTL Simulation : 63 / 396 [100.00%] @ "12595000"
+// RTL Simulation : 64 / 396 [100.00%] @ "12805000"
+// RTL Simulation : 65 / 396 [100.00%] @ "13015000"
+// RTL Simulation : 66 / 396 [100.00%] @ "13225000"
+// RTL Simulation : 67 / 396 [100.00%] @ "13435000"
+// RTL Simulation : 68 / 396 [100.00%] @ "13645000"
+// RTL Simulation : 69 / 396 [100.00%] @ "13855000"
+// RTL Simulation : 70 / 396 [100.00%] @ "14065000"
+// RTL Simulation : 71 / 396 [100.00%] @ "14275000"
+// RTL Simulation : 72 / 396 [100.00%] @ "14485000"
+// RTL Simulation : 73 / 396 [100.00%] @ "14695000"
+// RTL Simulation : 74 / 396 [100.00%] @ "14905000"
+// RTL Simulation : 75 / 396 [100.00%] @ "15115000"
+// RTL Simulation : 76 / 396 [100.00%] @ "15325000"
+// RTL Simulation : 77 / 396 [100.00%] @ "15535000"
+// RTL Simulation : 78 / 396 [100.00%] @ "15745000"
+// RTL Simulation : 79 / 396 [100.00%] @ "15955000"
+// RTL Simulation : 80 / 396 [100.00%] @ "16165000"
+// RTL Simulation : 81 / 396 [100.00%] @ "16375000"
+// RTL Simulation : 82 / 396 [100.00%] @ "16585000"
+// RTL Simulation : 83 / 396 [100.00%] @ "16795000"
+// RTL Simulation : 84 / 396 [100.00%] @ "17005000"
+// RTL Simulation : 85 / 396 [100.00%] @ "17215000"
+// RTL Simulation : 86 / 396 [100.00%] @ "17425000"
+// RTL Simulation : 87 / 396 [100.00%] @ "17635000"
+// RTL Simulation : 88 / 396 [100.00%] @ "17845000"
+// RTL Simulation : 89 / 396 [100.00%] @ "18055000"
+// RTL Simulation : 90 / 396 [100.00%] @ "18265000"
+// RTL Simulation : 91 / 396 [100.00%] @ "18475000"
+// RTL Simulation : 92 / 396 [100.00%] @ "18685000"
+// RTL Simulation : 93 / 396 [100.00%] @ "18895000"
+// RTL Simulation : 94 / 396 [100.00%] @ "19105000"
+// RTL Simulation : 95 / 396 [100.00%] @ "19315000"
+// RTL Simulation : 96 / 396 [100.00%] @ "19525000"
+// RTL Simulation : 97 / 396 [100.00%] @ "19735000"
+// RTL Simulation : 98 / 396 [100.00%] @ "19945000"
+// RTL Simulation : 99 / 396 [100.00%] @ "20155000"
+// RTL Simulation : 100 / 396 [100.00%] @ "20365000"
+// RTL Simulation : 101 / 396 [100.00%] @ "20575000"
+// RTL Simulation : 102 / 396 [100.00%] @ "20785000"
+// RTL Simulation : 103 / 396 [100.00%] @ "20995000"
+// RTL Simulation : 104 / 396 [100.00%] @ "21205000"
+// RTL Simulation : 105 / 396 [100.00%] @ "21415000"
+// RTL Simulation : 106 / 396 [100.00%] @ "21625000"
+// RTL Simulation : 107 / 396 [100.00%] @ "21835000"
+// RTL Simulation : 108 / 396 [100.00%] @ "22045000"
+// RTL Simulation : 109 / 396 [100.00%] @ "22255000"
+// RTL Simulation : 110 / 396 [100.00%] @ "22465000"
+// RTL Simulation : 111 / 396 [100.00%] @ "22675000"
+// RTL Simulation : 112 / 396 [100.00%] @ "22885000"
+// RTL Simulation : 113 / 396 [100.00%] @ "23095000"
+// RTL Simulation : 114 / 396 [100.00%] @ "23305000"
+// RTL Simulation : 115 / 396 [100.00%] @ "23515000"
+// RTL Simulation : 116 / 396 [100.00%] @ "23725000"
+// RTL Simulation : 117 / 396 [100.00%] @ "23935000"
+// RTL Simulation : 118 / 396 [100.00%] @ "24145000"
+// RTL Simulation : 119 / 396 [100.00%] @ "24355000"
+// RTL Simulation : 120 / 396 [100.00%] @ "24565000"
+// RTL Simulation : 121 / 396 [100.00%] @ "24775000"
+// RTL Simulation : 122 / 396 [100.00%] @ "24985000"
+// RTL Simulation : 123 / 396 [100.00%] @ "25195000"
+// RTL Simulation : 124 / 396 [100.00%] @ "25405000"
+// RTL Simulation : 125 / 396 [100.00%] @ "25615000"
+// RTL Simulation : 126 / 396 [100.00%] @ "25825000"
+// RTL Simulation : 127 / 396 [100.00%] @ "26035000"
+// RTL Simulation : 128 / 396 [100.00%] @ "26245000"
+// RTL Simulation : 129 / 396 [100.00%] @ "26455000"
+// RTL Simulation : 130 / 396 [100.00%] @ "26665000"
+// RTL Simulation : 131 / 396 [100.00%] @ "26875000"
+// RTL Simulation : 132 / 396 [100.00%] @ "27085000"
+// RTL Simulation : 133 / 396 [100.00%] @ "27295000"
+// RTL Simulation : 134 / 396 [100.00%] @ "27505000"
+// RTL Simulation : 135 / 396 [100.00%] @ "27715000"
+// RTL Simulation : 136 / 396 [100.00%] @ "27925000"
+// RTL Simulation : 137 / 396 [100.00%] @ "28135000"
+// RTL Simulation : 138 / 396 [100.00%] @ "28345000"
+// RTL Simulation : 139 / 396 [100.00%] @ "28555000"
+// RTL Simulation : 140 / 396 [100.00%] @ "28765000"
+// RTL Simulation : 141 / 396 [100.00%] @ "28975000"
+// RTL Simulation : 142 / 396 [100.00%] @ "29185000"
+// RTL Simulation : 143 / 396 [100.00%] @ "29395000"
+// RTL Simulation : 144 / 396 [100.00%] @ "29605000"
+// RTL Simulation : 145 / 396 [100.00%] @ "29815000"
+// RTL Simulation : 146 / 396 [100.00%] @ "30025000"
+// RTL Simulation : 147 / 396 [100.00%] @ "30235000"
+// RTL Simulation : 148 / 396 [100.00%] @ "30445000"
+// RTL Simulation : 149 / 396 [100.00%] @ "30655000"
+// RTL Simulation : 150 / 396 [100.00%] @ "30865000"
+// RTL Simulation : 151 / 396 [100.00%] @ "31075000"
+// RTL Simulation : 152 / 396 [100.00%] @ "31285000"
+// RTL Simulation : 153 / 396 [100.00%] @ "31495000"
+// RTL Simulation : 154 / 396 [100.00%] @ "31705000"
+// RTL Simulation : 155 / 396 [100.00%] @ "31915000"
+// RTL Simulation : 156 / 396 [100.00%] @ "32125000"
+// RTL Simulation : 157 / 396 [100.00%] @ "32335000"
+// RTL Simulation : 158 / 396 [100.00%] @ "32545000"
+// RTL Simulation : 159 / 396 [100.00%] @ "32755000"
+// RTL Simulation : 160 / 396 [100.00%] @ "32965000"
+// RTL Simulation : 161 / 396 [100.00%] @ "33175000"
+// RTL Simulation : 162 / 396 [100.00%] @ "33385000"
+// RTL Simulation : 163 / 396 [100.00%] @ "33595000"
+// RTL Simulation : 164 / 396 [100.00%] @ "33805000"
+// RTL Simulation : 165 / 396 [100.00%] @ "34015000"
+// RTL Simulation : 166 / 396 [100.00%] @ "34225000"
+// RTL Simulation : 167 / 396 [100.00%] @ "34435000"
+// RTL Simulation : 168 / 396 [100.00%] @ "34645000"
+// RTL Simulation : 169 / 396 [100.00%] @ "34855000"
+// RTL Simulation : 170 / 396 [100.00%] @ "35065000"
+// RTL Simulation : 171 / 396 [100.00%] @ "35275000"
+// RTL Simulation : 172 / 396 [100.00%] @ "35485000"
+// RTL Simulation : 173 / 396 [100.00%] @ "35695000"
+// RTL Simulation : 174 / 396 [100.00%] @ "35905000"
+// RTL Simulation : 175 / 396 [100.00%] @ "36115000"
+// RTL Simulation : 176 / 396 [100.00%] @ "36325000"
+// RTL Simulation : 177 / 396 [100.00%] @ "36535000"
+// RTL Simulation : 178 / 396 [100.00%] @ "36745000"
+// RTL Simulation : 179 / 396 [100.00%] @ "36955000"
+// RTL Simulation : 180 / 396 [100.00%] @ "37165000"
+// RTL Simulation : 181 / 396 [100.00%] @ "37375000"
+// RTL Simulation : 182 / 396 [100.00%] @ "37585000"
+// RTL Simulation : 183 / 396 [100.00%] @ "37795000"
+// RTL Simulation : 184 / 396 [100.00%] @ "38005000"
+// RTL Simulation : 185 / 396 [100.00%] @ "38215000"
+// RTL Simulation : 186 / 396 [100.00%] @ "38425000"
+// RTL Simulation : 187 / 396 [100.00%] @ "38635000"
+// RTL Simulation : 188 / 396 [100.00%] @ "38845000"
+// RTL Simulation : 189 / 396 [100.00%] @ "39055000"
+// RTL Simulation : 190 / 396 [100.00%] @ "39265000"
+// RTL Simulation : 191 / 396 [100.00%] @ "39475000"
+// RTL Simulation : 192 / 396 [100.00%] @ "39685000"
+// RTL Simulation : 193 / 396 [100.00%] @ "39895000"
+// RTL Simulation : 194 / 396 [100.00%] @ "40105000"
+// RTL Simulation : 195 / 396 [100.00%] @ "40315000"
+// RTL Simulation : 196 / 396 [100.00%] @ "40525000"
+// RTL Simulation : 197 / 396 [100.00%] @ "40735000"
+// RTL Simulation : 198 / 396 [100.00%] @ "40945000"
+// RTL Simulation : 199 / 396 [100.00%] @ "41155000"
+// RTL Simulation : 200 / 396 [100.00%] @ "41365000"
+// RTL Simulation : 201 / 396 [100.00%] @ "41575000"
+// RTL Simulation : 202 / 396 [100.00%] @ "41785000"
+// RTL Simulation : 203 / 396 [100.00%] @ "41995000"
+// RTL Simulation : 204 / 396 [100.00%] @ "42205000"
+// RTL Simulation : 205 / 396 [100.00%] @ "42415000"
+// RTL Simulation : 206 / 396 [100.00%] @ "42625000"
+// RTL Simulation : 207 / 396 [100.00%] @ "42835000"
+// RTL Simulation : 208 / 396 [100.00%] @ "43045000"
+// RTL Simulation : 209 / 396 [100.00%] @ "43255000"
+// RTL Simulation : 210 / 396 [100.00%] @ "43465000"
+// RTL Simulation : 211 / 396 [100.00%] @ "43675000"
+// RTL Simulation : 212 / 396 [100.00%] @ "43885000"
+// RTL Simulation : 213 / 396 [100.00%] @ "44095000"
+// RTL Simulation : 214 / 396 [100.00%] @ "44305000"
+// RTL Simulation : 215 / 396 [100.00%] @ "44515000"
+// RTL Simulation : 216 / 396 [100.00%] @ "44725000"
+// RTL Simulation : 217 / 396 [100.00%] @ "44935000"
+// RTL Simulation : 218 / 396 [100.00%] @ "45115000"
+// RTL Simulation : 219 / 396 [100.00%] @ "45295000"
+// RTL Simulation : 220 / 396 [100.00%] @ "45475000"
+// RTL Simulation : 221 / 396 [100.00%] @ "45655000"
+// RTL Simulation : 222 / 396 [100.00%] @ "45835000"
+// RTL Simulation : 223 / 396 [100.00%] @ "46015000"
+// RTL Simulation : 224 / 396 [100.00%] @ "46195000"
+// RTL Simulation : 225 / 396 [100.00%] @ "46375000"
+// RTL Simulation : 226 / 396 [100.00%] @ "46555000"
+// RTL Simulation : 227 / 396 [100.00%] @ "46735000"
+// RTL Simulation : 228 / 396 [100.00%] @ "46915000"
+// RTL Simulation : 229 / 396 [100.00%] @ "47095000"
+// RTL Simulation : 230 / 396 [100.00%] @ "47275000"
+// RTL Simulation : 231 / 396 [100.00%] @ "47455000"
+// RTL Simulation : 232 / 396 [100.00%] @ "47635000"
+// RTL Simulation : 233 / 396 [100.00%] @ "47815000"
+// RTL Simulation : 234 / 396 [100.00%] @ "47995000"
+// RTL Simulation : 235 / 396 [100.00%] @ "48175000"
+// RTL Simulation : 236 / 396 [100.00%] @ "48355000"
+// RTL Simulation : 237 / 396 [100.00%] @ "48535000"
+// RTL Simulation : 238 / 396 [100.00%] @ "48715000"
+// RTL Simulation : 239 / 396 [100.00%] @ "48895000"
+// RTL Simulation : 240 / 396 [100.00%] @ "49075000"
+// RTL Simulation : 241 / 396 [100.00%] @ "49255000"
+// RTL Simulation : 242 / 396 [100.00%] @ "49435000"
+// RTL Simulation : 243 / 396 [100.00%] @ "49645000"
+// RTL Simulation : 244 / 396 [100.00%] @ "49825000"
+// RTL Simulation : 245 / 396 [100.00%] @ "50005000"
+// RTL Simulation : 246 / 396 [100.00%] @ "50185000"
+// RTL Simulation : 247 / 396 [100.00%] @ "50395000"
+// RTL Simulation : 248 / 396 [100.00%] @ "50575000"
+// RTL Simulation : 249 / 396 [100.00%] @ "50785000"
+// RTL Simulation : 250 / 396 [100.00%] @ "50995000"
+// RTL Simulation : 251 / 396 [100.00%] @ "51205000"
+// RTL Simulation : 252 / 396 [100.00%] @ "51415000"
+// RTL Simulation : 253 / 396 [100.00%] @ "51595000"
+// RTL Simulation : 254 / 396 [100.00%] @ "51805000"
+// RTL Simulation : 255 / 396 [100.00%] @ "51985000"
+// RTL Simulation : 256 / 396 [100.00%] @ "52195000"
+// RTL Simulation : 257 / 396 [100.00%] @ "52405000"
+// RTL Simulation : 258 / 396 [100.00%] @ "52585000"
+// RTL Simulation : 259 / 396 [100.00%] @ "52795000"
+// RTL Simulation : 260 / 396 [100.00%] @ "52975000"
+// RTL Simulation : 261 / 396 [100.00%] @ "53155000"
+// RTL Simulation : 262 / 396 [100.00%] @ "53335000"
+// RTL Simulation : 263 / 396 [100.00%] @ "53515000"
+// RTL Simulation : 264 / 396 [100.00%] @ "53695000"
+// RTL Simulation : 265 / 396 [100.00%] @ "53875000"
+// RTL Simulation : 266 / 396 [100.00%] @ "54055000"
+// RTL Simulation : 267 / 396 [100.00%] @ "54235000"
+// RTL Simulation : 268 / 396 [100.00%] @ "54415000"
+// RTL Simulation : 269 / 396 [100.00%] @ "54595000"
+// RTL Simulation : 270 / 396 [100.00%] @ "54775000"
+// RTL Simulation : 271 / 396 [100.00%] @ "54955000"
+// RTL Simulation : 272 / 396 [100.00%] @ "55135000"
+// RTL Simulation : 273 / 396 [100.00%] @ "55315000"
+// RTL Simulation : 274 / 396 [100.00%] @ "55495000"
+// RTL Simulation : 275 / 396 [100.00%] @ "55675000"
+// RTL Simulation : 276 / 396 [100.00%] @ "55855000"
+// RTL Simulation : 277 / 396 [100.00%] @ "56035000"
+// RTL Simulation : 278 / 396 [100.00%] @ "56215000"
+// RTL Simulation : 279 / 396 [100.00%] @ "56395000"
+// RTL Simulation : 280 / 396 [100.00%] @ "56575000"
+// RTL Simulation : 281 / 396 [100.00%] @ "56755000"
+// RTL Simulation : 282 / 396 [100.00%] @ "56935000"
+// RTL Simulation : 283 / 396 [100.00%] @ "57115000"
+// RTL Simulation : 284 / 396 [100.00%] @ "57295000"
+// RTL Simulation : 285 / 396 [100.00%] @ "57475000"
+// RTL Simulation : 286 / 396 [100.00%] @ "57655000"
+// RTL Simulation : 287 / 396 [100.00%] @ "57835000"
+// RTL Simulation : 288 / 396 [100.00%] @ "58015000"
+// RTL Simulation : 289 / 396 [100.00%] @ "58195000"
+// RTL Simulation : 290 / 396 [100.00%] @ "58375000"
+// RTL Simulation : 291 / 396 [100.00%] @ "58555000"
+// RTL Simulation : 292 / 396 [100.00%] @ "58735000"
+// RTL Simulation : 293 / 396 [100.00%] @ "58915000"
+// RTL Simulation : 294 / 396 [100.00%] @ "59095000"
+// RTL Simulation : 295 / 396 [100.00%] @ "59275000"
+// RTL Simulation : 296 / 396 [100.00%] @ "59455000"
+// RTL Simulation : 297 / 396 [100.00%] @ "59665000"
+// RTL Simulation : 298 / 396 [100.00%] @ "59875000"
+// RTL Simulation : 299 / 396 [100.00%] @ "60085000"
+// RTL Simulation : 300 / 396 [100.00%] @ "60295000"
+// RTL Simulation : 301 / 396 [100.00%] @ "60505000"
+// RTL Simulation : 302 / 396 [100.00%] @ "60715000"
+// RTL Simulation : 303 / 396 [100.00%] @ "60925000"
+// RTL Simulation : 304 / 396 [100.00%] @ "61135000"
+// RTL Simulation : 305 / 396 [100.00%] @ "61345000"
+// RTL Simulation : 306 / 396 [100.00%] @ "61555000"
+// RTL Simulation : 307 / 396 [100.00%] @ "61765000"
+// RTL Simulation : 308 / 396 [100.00%] @ "61975000"
+// RTL Simulation : 309 / 396 [100.00%] @ "62185000"
+// RTL Simulation : 310 / 396 [100.00%] @ "62395000"
+// RTL Simulation : 311 / 396 [100.00%] @ "62605000"
+// RTL Simulation : 312 / 396 [100.00%] @ "62815000"
+// RTL Simulation : 313 / 396 [100.00%] @ "63025000"
+// RTL Simulation : 314 / 396 [100.00%] @ "63235000"
+// RTL Simulation : 315 / 396 [100.00%] @ "63445000"
+// RTL Simulation : 316 / 396 [100.00%] @ "63655000"
+// RTL Simulation : 317 / 396 [100.00%] @ "63865000"
+// RTL Simulation : 318 / 396 [100.00%] @ "64075000"
+// RTL Simulation : 319 / 396 [100.00%] @ "64285000"
+// RTL Simulation : 320 / 396 [100.00%] @ "64495000"
+// RTL Simulation : 321 / 396 [100.00%] @ "64705000"
+// RTL Simulation : 322 / 396 [100.00%] @ "64915000"
+// RTL Simulation : 323 / 396 [100.00%] @ "65125000"
+// RTL Simulation : 324 / 396 [100.00%] @ "65335000"
+// RTL Simulation : 325 / 396 [100.00%] @ "65545000"
+// RTL Simulation : 326 / 396 [100.00%] @ "65755000"
+// RTL Simulation : 327 / 396 [100.00%] @ "65965000"
+// RTL Simulation : 328 / 396 [100.00%] @ "66175000"
+// RTL Simulation : 329 / 396 [100.00%] @ "66385000"
+// RTL Simulation : 330 / 396 [100.00%] @ "66595000"
+// RTL Simulation : 331 / 396 [100.00%] @ "66805000"
+// RTL Simulation : 332 / 396 [100.00%] @ "67015000"
+// RTL Simulation : 333 / 396 [100.00%] @ "67225000"
+// RTL Simulation : 334 / 396 [100.00%] @ "67435000"
+// RTL Simulation : 335 / 396 [100.00%] @ "67645000"
+// RTL Simulation : 336 / 396 [100.00%] @ "67855000"
+// RTL Simulation : 337 / 396 [100.00%] @ "68065000"
+// RTL Simulation : 338 / 396 [100.00%] @ "68275000"
+// RTL Simulation : 339 / 396 [100.00%] @ "68485000"
+// RTL Simulation : 340 / 396 [100.00%] @ "68695000"
+// RTL Simulation : 341 / 396 [100.00%] @ "68905000"
+// RTL Simulation : 342 / 396 [100.00%] @ "69115000"
+// RTL Simulation : 343 / 396 [100.00%] @ "69325000"
+// RTL Simulation : 344 / 396 [100.00%] @ "69535000"
+// RTL Simulation : 345 / 396 [100.00%] @ "69745000"
+// RTL Simulation : 346 / 396 [100.00%] @ "69955000"
+// RTL Simulation : 347 / 396 [100.00%] @ "70165000"
+// RTL Simulation : 348 / 396 [100.00%] @ "70375000"
+// RTL Simulation : 349 / 396 [100.00%] @ "70585000"
+// RTL Simulation : 350 / 396 [100.00%] @ "70795000"
+// RTL Simulation : 351 / 396 [100.00%] @ "71005000"
+// RTL Simulation : 352 / 396 [100.00%] @ "71215000"
+// RTL Simulation : 353 / 396 [100.00%] @ "71425000"
+// RTL Simulation : 354 / 396 [100.00%] @ "71635000"
+// RTL Simulation : 355 / 396 [100.00%] @ "71845000"
+// RTL Simulation : 356 / 396 [100.00%] @ "72055000"
+// RTL Simulation : 357 / 396 [100.00%] @ "72265000"
+// RTL Simulation : 358 / 396 [100.00%] @ "72475000"
+// RTL Simulation : 359 / 396 [100.00%] @ "72685000"
+// RTL Simulation : 360 / 396 [100.00%] @ "72895000"
+// RTL Simulation : 361 / 396 [100.00%] @ "73105000"
+// RTL Simulation : 362 / 396 [100.00%] @ "73315000"
+// RTL Simulation : 363 / 396 [100.00%] @ "73525000"
+// RTL Simulation : 364 / 396 [100.00%] @ "73735000"
+// RTL Simulation : 365 / 396 [100.00%] @ "73945000"
+// RTL Simulation : 366 / 396 [100.00%] @ "74155000"
+// RTL Simulation : 367 / 396 [100.00%] @ "74365000"
+// RTL Simulation : 368 / 396 [100.00%] @ "74575000"
+// RTL Simulation : 369 / 396 [100.00%] @ "74785000"
+// RTL Simulation : 370 / 396 [100.00%] @ "74995000"
+// RTL Simulation : 371 / 396 [100.00%] @ "75205000"
+// RTL Simulation : 372 / 396 [100.00%] @ "75415000"
+// RTL Simulation : 373 / 396 [100.00%] @ "75595000"
+// RTL Simulation : 374 / 396 [100.00%] @ "75805000"
+// RTL Simulation : 375 / 396 [100.00%] @ "76015000"
+// RTL Simulation : 376 / 396 [100.00%] @ "76225000"
+// RTL Simulation : 377 / 396 [100.00%] @ "76435000"
+// RTL Simulation : 378 / 396 [100.00%] @ "76645000"
+// RTL Simulation : 379 / 396 [100.00%] @ "76855000"
+// RTL Simulation : 380 / 396 [100.00%] @ "77065000"
+// RTL Simulation : 381 / 396 [100.00%] @ "77275000"
+// RTL Simulation : 382 / 396 [100.00%] @ "77485000"
+// RTL Simulation : 383 / 396 [100.00%] @ "77695000"
+// RTL Simulation : 384 / 396 [100.00%] @ "77905000"
+// RTL Simulation : 385 / 396 [100.00%] @ "78115000"
+// RTL Simulation : 386 / 396 [100.00%] @ "78325000"
+// RTL Simulation : 387 / 396 [100.00%] @ "78535000"
+// RTL Simulation : 388 / 396 [100.00%] @ "78745000"
+// RTL Simulation : 389 / 396 [100.00%] @ "78955000"
+// RTL Simulation : 390 / 396 [100.00%] @ "79165000"
+// RTL Simulation : 391 / 396 [100.00%] @ "79375000"
+// RTL Simulation : 392 / 396 [100.00%] @ "79585000"
+// RTL Simulation : 393 / 396 [100.00%] @ "79795000"
+// RTL Simulation : 394 / 396 [100.00%] @ "80005000"
+// RTL Simulation : 395 / 396 [100.00%] @ "80215000"
+// RTL Simulation : 396 / 396 [100.00%] @ "80425000"
+////////////////////////////////////////////////////////////////////////////////////
+$finish called at time : 80555 ns : File "/tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 18699
+## quit
+INFO: [Common 17-206] Exiting xsim at Thu Apr  9 04:00:31 2026...
+Test 1: Functional Verification
+
+Test 2: Preamble Detection (Matched Filter Response)
+  Peak correlation: 11000 at sample 24
+  Expected peak at sample 25 (preamble fully aligned)
+  NMSE: -inf dB
+  NMSE meets -45 dB target.
+
+Test 3: Noise Rejection
+  Average correlation magnitude for random noise: 985
+  Peak correlation for preamble: 11000
+  Peak-to-noise ratio: 11
+
+PASS
+INFO: [COSIM-1000] *** C/RTL co-simulation finished: PASS ***

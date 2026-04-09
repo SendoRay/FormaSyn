@@ -1,0 +1,3 @@
+/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/fir_rrc/kernel.cpp:3:10: fatal error: 'cmath' file not found
+#include <cmath>
+         ^~~~~~~

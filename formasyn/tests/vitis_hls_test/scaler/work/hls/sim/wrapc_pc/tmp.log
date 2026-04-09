@@ -1,0 +1,10 @@
+Testing gain=unity (1)
+  NMSE = -100 dB (threshold: -50 dB)
+Testing gain=0.5 (0.5)
+  NMSE = -85.5299 dB (threshold: -50 dB)
+Testing gain=1.5 (1.5)
+  NMSE = -95.5093 dB (threshold: -50 dB)
+Testing gain=0.1 (0.0999756)
+  NMSE = -100 dB (threshold: -50 dB)
+Testing edge cases...
+PASS

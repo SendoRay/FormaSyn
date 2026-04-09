@@ -1,0 +1,4 @@
+vec_dot_mul_16s_16s_32_1_1
+vec_dot_mac_muladd_16s_16s_32s_33_4_1
+vec_dot_control_s_axi
+vec_dot

@@ -1,0 +1,37 @@
+{
+  "variant_id": "scaler_fixed_point_int16_q14",
+  "example_name": "scaler",
+  "function_name": "scaler",
+  "model": "claude-sonnet-4-5-20250929",
+  "description": "Fixed-point scalar multiplier with Q1.14 gain coefficient",
+  "formula_graph": {
+    "nodes": [
+      {
+        "type": "Map",
+        "input_ref": "x_in",
+        "func": "multiply",
+        "func_params": {
+          "gain": "gain",
+          "frac_bits": 14
+        },
+        "output_ref": "y_out"
+      }
+    ]
+  },
+  "parameters": {
+    "data_width": 16,
+    "gain_width": 16,
+    "frac_bits": 14,
+    "gain_format": "Q1.14"
+  },
+  "constraints": {
+    "nmse_dB": -50,
+    "target_ii": 1
+  },
+  "schedule_summary": {
+    "node_count": 1,
+    "input_nodes": ["x_in", "gain"],
+    "output_nodes": ["y_out"],
+    "expected_ii": 1
+  }
+}

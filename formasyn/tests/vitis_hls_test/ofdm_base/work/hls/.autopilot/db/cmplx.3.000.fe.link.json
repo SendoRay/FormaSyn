@@ -1,0 +1,81 @@
+{
+  "0": {
+    "basicblocks": 10,
+    "calls": "3",
+    "control_depth": 2,
+    "def_use_depth": 3,
+    "file": "kernel.cpp",
+    "fileloc": 87,
+    "instructions": 39,
+    "loads": {
+      "L": 2
+    },
+    "memory_accesses": 4,
+    "name": "ofdm_base",
+    "stores": {
+      "T": 2
+    },
+    "total_instructions": 17137
+  },
+  "1": {
+    "basicblocks": 1,
+    "calls": "",
+    "control_depth": 0,
+    "def_use_depth": 2,
+    "file": "kernel.cpp",
+    "fileloc": 6,
+    "instructions": 23,
+    "loads": {
+      "L": 2
+    },
+    "memory_accesses": 0,
+    "name": "butterfly",
+    "stores": {
+      "L": 2
+    },
+    "total_instructions": 2003
+  },
+  "2": {
+    "basicblocks": 1,
+    "calls": "",
+    "control_depth": 0,
+    "def_use_depth": 1,
+    "file": "kernel.h",
+    "fileloc": 40,
+    "instructions": 105,
+    "memory_accesses": 0,
+    "name": "__cxx_global_var_init",
+    "total_instructions": 6337
+  },
+  "3": {
+    "basicblocks": 37,
+    "calls": "1 1 1 1 1 1 1 1",
+    "control_depth": 1,
+    "def_use_depth": 4,
+    "file": "kernel.cpp",
+    "fileloc": 21,
+    "instructions": 304,
+    "loads": {
+      "G": 9,
+      "L": 18
+    },
+    "memory_accesses": 63,
+    "name": "ifft_16",
+    "stores": {
+      "L": 26
+    },
+    "total_instructions": 17098
+  },
+  "4": {
+    "basicblocks": 1,
+    "calls": "2",
+    "control_depth": 0,
+    "def_use_depth": 0,
+    "file": "kernel.pp.0.cpp",
+    "fileloc": 0,
+    "instructions": 2,
+    "memory_accesses": 0,
+    "name": "",
+    "total_instructions": 6339
+  }
+}

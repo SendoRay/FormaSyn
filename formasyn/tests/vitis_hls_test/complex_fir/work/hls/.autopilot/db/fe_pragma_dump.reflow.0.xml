@@ -1,0 +1,39 @@
+<pragmas>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="ssdm_int<32, true>::ssdm_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<40, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowBaseC" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="_ZN8ssdm_intILi40ELb1EEC2EDq40_i" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<33>::ap_int<33, true>(ap_int_base<33, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="_ZN8ssdm_intILi33ELb1EEC2EDq33_i" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="ssdm_int<16, true>::ssdm_int(short)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<33, true>::ap_int_base<32, true>(ap_int_base<32, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<33, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>::ap_int_base<16, true>(ap_int_base<16, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<16>::ap_int<40>(ap_int<40> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::ap_int_base<40, true>(ap_int_base<40, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowBaseC" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="bool ap_int_base<40, true>::operator><16, true>(ap_int_base<16, true> const&) const" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="bool ap_int_base<40, true>::operator<<16, true>(ap_int_base<16, true> const&) const" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowCsim" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<32>::ap_int<32, true>(ap_int_base<32, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<40>::ap_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::RType<16, true>::mult operator*<16, true, 16, true>(ap_int_base<16, true> const&, ap_int_base<16, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>::RType<32, true>::minus operator-<32, true, 32, true>(ap_int_base<32, true> const&, ap_int_base<32, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<16>::ap_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>::RType<32, true>::plus operator+<32, true, 32, true>(ap_int_base<32, true> const&, ap_int_base<32, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="kernel.cpp" line="26" pragmaType="pipeline" parentfunction="kernel" off="0" ii="1" style=""/>
+<pragma file="kernel.cpp" line="73" pragmaType="unroll" parentfunction="kernel" factor="-1" skip_exit_check="0"/>
+<pragma file="kernel.cpp" line="59" pragmaType="unroll" parentfunction="kernel" factor="-1" skip_exit_check="0"/>
+<pragma file="kernel.cpp" line="21" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="x_real" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="22" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="x_imag" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="23" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="y_real" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="24" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="y_imag" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="25" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="48" pragmaType="array_partition" parentfunction="kernel" dim="1" factor="0" mode="complete" dynamic="0" variable="coeffs_real"/>
+<pragma file="kernel.cpp" line="49" pragmaType="array_partition" parentfunction="kernel" dim="1" factor="0" mode="complete" dynamic="0" variable="coeffs_imag"/>
+<pragma file="kernel.cpp" line="54" pragmaType="array_partition" parentfunction="kernel" dim="1" factor="0" mode="complete" dynamic="0" variable="_ZZ6kernel6ap_intILi16EES0_RS0_S1_E14shift_reg_real"/>
+<pragma file="kernel.cpp" line="55" pragmaType="array_partition" parentfunction="kernel" dim="1" factor="0" mode="complete" dynamic="0" variable="_ZZ6kernel6ap_intILi16EES0_RS0_S1_E14shift_reg_imag"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<40, true>& ap_int_base<40, true>::operator+=<33, true>(ap_int_base<33, true> const&)" off="0" region="0" recursive="0"/>
+</pragmas>

@@ -1,0 +1,21 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="bpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=bpsk_mapper" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:8:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="bpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=return bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:9:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="bpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=bit_in" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:10:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="bpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=y_out" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:20:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="bpsk_mapper" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=bpsk_lut type=ROM_1P" ARG_PragmaType="bind_storage" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INTERFACE" msg_id="214-219" msg_severity="ERROR" msg_loc="kernel.cpp:7:0" msg_body="Vitis kernel mode requires that all s_axilite ports must be bundled into one bundle. The following ports ('return' and 'bit_in,y_out', in function 'bpsk_mapper(ap_uint&lt;1&gt;, ap_int&lt;16&gt;*)') have different bundle names: 'control' and 'control_r'. Consider removing the bundle names on these ports.">
+        <args Function="bpsk_mapper(ap_uint&lt;1&gt;, ap_int&lt;16&gt;*)" Function-DebugLoc="File kernel.cpp Line 7 Column 0" Name="islist return bit_in,y_out control control_r"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

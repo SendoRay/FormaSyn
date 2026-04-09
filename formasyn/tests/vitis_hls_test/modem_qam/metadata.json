@@ -1,0 +1,45 @@
+{
+    "name": "qam16_mapper",
+    "description": "16-QAM Modulator with Gray-coded LUT-based mapping",
+    "type": "kernel",
+    "version": "1.0.0",
+    "target": "vitis_hls",
+    "interface": {
+        "input": [
+            {
+                "name": "bits_in",
+                "width": 4,
+                "type": "ap_uint",
+                "description": "Input 4-bit symbol (I:bits[3:2], Q:bits[1:0])"
+            }
+        ],
+        "output": [
+            {
+                "name": "y_real",
+                "width": 16,
+                "type": "ap_int",
+                "description": "I-component of constellation point"
+            },
+            {
+                "name": "y_imag",
+                "width": 16,
+                "type": "ap_int",
+                "description": "Q-component of constellation point"
+            }
+        ]
+    },
+    "parameters": {
+        "constellation_points": 16,
+        "scale_factor": 1000,
+        "evm_threshold_percent": 3,
+        "coding": "gray"
+    },
+    "constellation": {
+        "levels": [-3000, -1000, 1000, 3000],
+        "mapping": "Gray: 00->-3, 01->-1, 11->+1, 10->+3"
+    },
+    "requirements": {
+        "target_ii": 1,
+        "target_clock_ns": 5
+    }
+}

@@ -1,0 +1,3 @@
+relativeroot=/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/fft_radix2
+original_argv=--mode hls --csim --config hls_config.cfg --work_dir work 
+

@@ -1,0 +1,3 @@
+relativeroot=/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/agc_loop
+original_argv=--mode hls --cosim --config hls_config.cfg --work_dir work 
+

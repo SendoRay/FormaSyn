@@ -85,10 +85,10 @@ $(ObjDir)/$(APATB_UTIL).o: $(APATB_UTIL).cpp
 	$(Echo) "   Compiling $<" $(AVE_DIR_DLOG)
 	$(Verb) $(CXX) -fno-builtin-isinf -fno-builtin-isnan -c $(TOOLCHAIN) $(IFLAG) $(WFLAG) $< -o $@
 
-$(ObjDir)/vec_add_tb.cpp_pre.cpp.tb.o : vec_add_tb.cpp_pre.cpp.tb.cpp $(ObjDir)/.dir
-	$(Echo) "   Compiling vec_add_tb.cpp_pre.cpp.tb.cpp" $(AVE_DIR_DLOG)
+$(ObjDir)/kernel_tb.cpp_pre.cpp.tb.o : kernel_tb.cpp_pre.cpp.tb.cpp $(ObjDir)/.dir
+	$(Echo) "   Compiling kernel_tb.cpp_pre.cpp.tb.cpp" $(AVE_DIR_DLOG)
 	$(Verb) $(CC) ${CCFLAG} ${TOOLCHAIN} -std=gnu++14 -fno-builtin-isinf -fno-builtin-isnan -c -Wno-unknown-pragmas -Wno-unknown-pragmas $(IFLAG) $(DFLAG) $< -o $@; \
 
-$(ObjDir)/vec_add.cpp_pre.cpp.tb.o : vec_add.cpp_pre.cpp.tb.cpp $(ObjDir)/.dir
-	$(Echo) "   Compiling vec_add.cpp_pre.cpp.tb.cpp" $(AVE_DIR_DLOG)
+$(ObjDir)/kernel.cpp_pre.cpp.tb.o : kernel.cpp_pre.cpp.tb.cpp $(ObjDir)/.dir
+	$(Echo) "   Compiling kernel.cpp_pre.cpp.tb.cpp" $(AVE_DIR_DLOG)
 	$(Verb) $(CC) ${CCFLAG} ${TOOLCHAIN} -std=gnu++14 -fno-builtin-isinf -fno-builtin-isnan -c  $(IFLAG) $(DFLAG) $< -o $@; \

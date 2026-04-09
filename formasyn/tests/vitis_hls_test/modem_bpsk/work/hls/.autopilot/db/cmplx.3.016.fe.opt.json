@@ -1,0 +1,20 @@
+{
+  "0": {
+    "basicblocks": 1,
+    "calls": "",
+    "control_depth": 0,
+    "def_use_depth": 2,
+    "file": "kernel.cpp",
+    "fileloc": 7,
+    "instructions": 16,
+    "loads": {
+      "G": 1
+    },
+    "memory_accesses": 0,
+    "name": "bpsk_mapper",
+    "stores": {
+      "T": 1
+    },
+    "total_instructions": 16
+  }
+}

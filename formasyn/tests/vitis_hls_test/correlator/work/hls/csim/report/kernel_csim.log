@@ -1,0 +1,21 @@
+INFO: [SIM 2] *************** CSIM start ***************
+INFO: [SIM 4] CSIM will launch CLANG as the compiler.
+   Compiling ../../../../kernel_tb.cpp in debug mode
+   Compiling ../../../../kernel.cpp in debug mode
+   Generating csim.exe
+Test 1: Functional Verification
+
+Test 2: Preamble Detection (Matched Filter Response)
+  Peak correlation: 11000 at sample 24
+  Expected peak at sample 25 (preamble fully aligned)
+  NMSE: -inf dB
+  NMSE meets -45 dB target.
+
+Test 3: Noise Rejection
+  Average correlation magnitude for random noise: 985
+  Peak correlation for preamble: 11000
+  Peak-to-noise ratio: 11
+
+PASS
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************

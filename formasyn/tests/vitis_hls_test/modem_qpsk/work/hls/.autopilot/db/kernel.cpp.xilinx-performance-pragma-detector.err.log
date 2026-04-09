@@ -1,0 +1,3 @@
+/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/kernel.cpp:2:10: fatal error: 'cmath' file not found
+#include <cmath>
+         ^~~~~~~

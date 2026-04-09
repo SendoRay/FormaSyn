@@ -1,0 +1,2 @@
+  CREATE_STREAM @0 {NAME:kernel_subsys_test_sequence_lib T:Transactions SCOPE:uvm_test_top.top_env.kernel_virtual_sqr STREAM:1930}
+  CREATE_STREAM @155000 {NAME:kernel_subsys_test_sequence_lib T:Transactions SCOPE:uvm_test_top.top_env.axi_lite_control.vsqr STREAM:2833}

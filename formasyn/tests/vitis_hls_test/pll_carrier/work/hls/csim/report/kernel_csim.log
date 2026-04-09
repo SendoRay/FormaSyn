@@ -1,0 +1,18 @@
+INFO: [SIM 2] *************** CSIM start ***************
+INFO: [SIM 4] CSIM will launch CLANG as the compiler.
+   Compiling ../../../../kernel_tb.cpp in debug mode
+   Compiling ../../../../kernel.cpp in debug mode
+   Generating csim.exe
+Test 1: Frequency offset recovery
+WARNING: assign NaN to ap integer value
+WARNING: assign NaN to ap integer value
+  Max phase error after 500 samples: 179.891 degrees
+  Lock achieved at sample: 501
+  PASS: PLL completed 2000 samples
+
+Test 2: Constant phase offset
+  Errors in last 100 samples: 0
+
+PASS
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************

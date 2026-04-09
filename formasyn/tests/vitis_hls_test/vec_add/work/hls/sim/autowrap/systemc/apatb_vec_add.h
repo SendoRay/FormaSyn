@@ -9,4 +9,4 @@
 extern "C" void AESL_WRAP_vec_add (
 volatile void* a,
 volatile void* b,
-volatile void* c);
+volatile void* y);

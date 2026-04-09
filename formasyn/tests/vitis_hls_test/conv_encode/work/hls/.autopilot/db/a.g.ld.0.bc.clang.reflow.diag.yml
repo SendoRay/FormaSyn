@@ -1,0 +1,106 @@
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+DebugLoc:        { File: kernel.cpp, Line: 20, Column: 17 }
+Function:        _Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE
+Args:            
+  - Callee:          'ShiftReg<2>::ShiftReg()'
+    DebugLoc:        { File: ./kernel.h, Line: 24, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          'conv_encode(hls::stream<ap_uint<1>, 0>&, hls::stream<ap_uint<2>, 0>&, ap_uint<32>)'
+    DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: kernel.cpp, Line: 48, Column: 19 }
+Function:        _Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'ShiftReg<2>::shift(ap_uint<1>)'
+    DebugLoc:        { File: ./kernel.h, Line: 26, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'conv_encode(hls::stream<ap_uint<1>, 0>&, hls::stream<ap_uint<2>, 0>&, ap_uint<32>)'
+    DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            inline
+Name:            AlwaysInline
+DebugLoc:        { File: kernel.cpp, Line: 29, Column: 41 }
+Function:        _Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'ShiftReg<2>::read() const'
+    DebugLoc:        { File: ./kernel.h, Line: 31, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'conv_encode(hls::stream<ap_uint<1>, 0>&, hls::stream<ap_uint<2>, 0>&, ap_uint<32>)'
+    DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+  - String:          ''''
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+DebugLoc:        { File: kernel.cpp, Line: 20, Column: 17 }
+Function:        _Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE
+Args:            
+  - Callee:          'ShiftReg<2>::ShiftReg()'
+    DebugLoc:        { File: ./kernel.h, Line: 24, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          'conv_encode(hls::stream<ap_uint<1>, 0>&, hls::stream<ap_uint<2>, 0>&, ap_uint<32>)'
+    DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_conv_encode_ir
+Args:            
+  - Callee:          'conv_encode(hls::stream<ap_uint<1>, 0>&, hls::stream<ap_uint<2>, 0>&, ap_uint<32>)'
+    DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_conv_encode_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            reflow-inliner
+Name:            Inline
+DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+Function:        _Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE
+Args:            
+  - String:          'Inlining function '''
+  - Callee:          'ShiftReg<2>::ShiftReg()'
+    DebugLoc:        { File: ./kernel.h, Line: 24, Column: 0 }
+  - String:          ''' into '''
+  - Caller:          'conv_encode(hls::stream<ap_uint<1>, 0>&, hls::stream<ap_uint<2>, 0>&, ap_uint<32>)'
+    DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+  - String:          ''''
+...
+--- !Passed
+Pass:            reflow-extract-cfg-in-dataflow
+Name:            LoopExtractionForDataflow
+DebugLoc:        { File: kernel.cpp, Line: 22, Column: 22 }
+Function:        _Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE
+Args:            
+  - String:          'Changing loop '''
+  - LoopName:        Loop_VITIS_LOOP_22_1_proc
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:22:22'
+  - String:          ') to a process function for dataflow in function '''
+  - Name:            conv_encode
+  - String:          ''''
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+DebugLoc:        { File: kernel.cpp, Line: 22, Column: 39 }
+Function:        _Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE
+Args:            
+  - Callee:          Loop_VITIS_LOOP_22_1_proc
+    DebugLoc:        { File: kernel.cpp, Line: 0, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          'conv_encode(hls::stream<ap_uint<1>, 0>&, hls::stream<ap_uint<2>, 0>&, ap_uint<32>)'
+    DebugLoc:        { File: kernel.cpp, Line: 11, Column: 0 }
+  - String:          ' because it should never be inlined (cost=never)'
+...

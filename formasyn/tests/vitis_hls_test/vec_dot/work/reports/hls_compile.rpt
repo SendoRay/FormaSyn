@@ -1,0 +1,140 @@
+
+
+================================================================
+== Synthesis Summary Report of 'vec_dot'
+================================================================
++ General Information: 
+    * Date:           Thu Apr  9 04:23:14 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        work
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: zynq
+    * Target device:  xc7z020-clg400-1
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +-----------+------+------+---------+---------+----------+---------+------+----------+------+--------+-----------+----------+-----+
+    |  Modules  | Issue|      |      Latency      | Iteration|         | Trip |          |      |        |           |          |     |
+    |  & Loops  | Type | Slack| (cycles)|   (ns)  |  Latency | Interval| Count| Pipelined| BRAM |   DSP  |     FF    |    LUT   | URAM|
+    +-----------+------+------+---------+---------+----------+---------+------+----------+------+--------+-----------+----------+-----+
+    |+ vec_dot  |    II|  1.72|       12|  120.000|         -|        8|     -|       yes|     -|  8 (3%)|  654 (~0%)|  596 (1%)|    -|
+    +-----------+------+------+---------+---------+----------+---------+------+----------+------+--------+-----------+----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 6             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL     | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER     | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER   | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR   | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | y_1      | 0x30   | 32    | R      | Data signal of y                 |                                                                                    |
+| s_axi_control | y_2      | 0x34   | 32    | R      | Data signal of y                 |                                                                                    |
+| s_axi_control | y_ctrl   | 0x38   | 32    | R      | Control signal of y              | 0=y_ap_vld                                                                         |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+-------------+
+| Argument | Direction | Datatype    |
++----------+-----------+-------------+
+| a        | in        | ap_int<16>* |
+| b        | in        | ap_int<16>* |
+| y        | out       | ap_int<40>* |
++----------+-----------+-------------+
+
+* SW-to-HW Mapping
++----------+---------------+----------+----------------------------------+
+| Argument | HW Interface  | HW Type  | HW Info                          |
++----------+---------------+----------+----------------------------------+
+| a        | s_axi_control | memory   | name=a offset=16 range=16        |
+| b        | s_axi_control | memory   | name=b offset=32 range=16        |
+| y        | s_axi_control | register | name=y_1 offset=0x30 range=32    |
+| y        | s_axi_control | register | name=y_2 offset=0x34 range=32    |
+| y        | s_axi_control | register | name=y_ctrl offset=0x38 range=32 |
++----------+---------------+----------+----------------------------------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++------------------------------------+-----+--------+--------------+------+-----------+---------+
+| Name                               | DSP | Pragma | Variable     | Op   | Impl      | Latency |
++------------------------------------+-----+--------+--------------+------+-----------+---------+
+| + vec_dot                          | 8   |        |              |      |           |         |
+|   mac_muladd_16s_16s_32s_33_4_1_U5 | 1   |        | sum          | mul  | dsp_slice | 3       |
+|   mac_muladd_16s_16s_32s_33_4_1_U5 | 1   |        | sext_ln11    | sext | dsp_slice | 3       |
+|   mul_16s_16s_32_1_1_U1            | 1   |        | mul_ln15     | mul  | auto      | 0       |
+|   mul_16s_16s_32_1_1_U2            | 1   |        | mul_ln15_1   | mul  | auto      | 0       |
+|   mac_muladd_16s_16s_32s_33_4_1_U6 | 1   |        | mul_ln15_2   | mul  | dsp_slice | 3       |
+|   mac_muladd_16s_16s_32s_33_4_1_U6 | 1   |        | sext_ln15_10 | sext | dsp_slice | 3       |
+|   mul_16s_16s_32_1_1_U3            | 1   |        | mul_ln15_3   | mul  | auto      | 0       |
+|   mac_muladd_16s_16s_32s_33_4_1_U7 | 1   |        | mul_ln15_4   | mul  | dsp_slice | 3       |
+|   mac_muladd_16s_16s_32s_33_4_1_U7 | 1   |        | sext_ln15_16 | sext | dsp_slice | 3       |
+|   mul_16s_16s_32_1_1_U4            | 1   |        | mul_ln15_5   | mul  | auto      | 0       |
+|   mac_muladd_16s_16s_32s_33_4_1_U8 | 1   |        | mul_ln15_6   | mul  | dsp_slice | 3       |
+|   mac_muladd_16s_16s_32s_33_4_1_U8 | 1   |        | sext_ln15_22 | sext | dsp_slice | 3       |
+|   mac_muladd_16s_16s_32s_33_4_1_U5 | 1   |        | add_ln15     | add  | dsp_slice | 3       |
+|   mac_muladd_16s_16s_32s_33_4_1_U6 | 1   |        | add_ln15_1   | add  | dsp_slice | 3       |
+|   add_ln15_2_fu_313_p2             |     |        | add_ln15_2   | add  | fabric    | 0       |
+|   mac_muladd_16s_16s_32s_33_4_1_U7 | 1   |        | add_ln15_3   | add  | dsp_slice | 3       |
+|   mac_muladd_16s_16s_32s_33_4_1_U8 | 1   |        | add_ln15_4   | add  | dsp_slice | 3       |
+|   add_ln15_5_fu_353_p2             |     |        | add_ln15_5   | add  | fabric    | 0       |
+|   sum_1_fu_365_p2                  |     |        | sum_1        | add  | fabric    | 0       |
++------------------------------------+-----+--------+--------------+------+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name              | Usage     | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                   |           |           |      |      |        |          |      |         | Banks            |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| + vec_dot         |           |           | 0    | 0    |        |          |      |         |                  |
+|   control_s_axi_U | interface | s_axilite |      |      |        |          |      |         |                  |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------+--------------------------------+---------------------------------+
+| Type      | Options                        | Location                        |
++-----------+--------------------------------+---------------------------------+
+| INTERFACE | mode=ap_memory port=a          | kernel.cpp:4 in vec_dot, a      |
+| INTERFACE | mode=ap_memory port=b          | kernel.cpp:5 in vec_dot, b      |
+| INTERFACE | mode=ap_vld port=y             | kernel.cpp:6 in vec_dot, y      |
+| INTERFACE | mode=ap_ctrl_chain port=return | kernel.cpp:7 in vec_dot, return |
+| PIPELINE  | ii=1                           | kernel.cpp:9 in vec_dot         |
+| UNROLL    | factor=1                       | kernel.cpp:14 in vec_dot        |
++-----------+--------------------------------+---------------------------------+
+
+

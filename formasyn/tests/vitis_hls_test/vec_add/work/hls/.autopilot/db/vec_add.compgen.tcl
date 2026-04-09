@@ -1,10 +1,5 @@
 # This script segment is generated automatically by AutoPilot
 
-if {${::AESL::PGuard_rtl_comp_handler}} {
-	::AP::rtl_comp_handler vec_add_gmem_m_axi BINDTYPE {interface} TYPE {adapter} IMPL {m_axi}
-}
-
-
 # clear list
 if {${::AESL::PGuard_autoexp_gen}} {
     cg_default_interface_gen_dc_begin
@@ -16,27 +11,39 @@ set axilite_register_dict [dict create]
 set port_control {
 a { 
 	dir I
-	width 64
-	depth 1
-	mode ap_none
+	width 16
+	depth 8
+	mode ap_memory
 	offset 16
-	offset_end 27
+	offset_end 31
+	core_op ram_1p
+	core_impl auto
+	core_latency 1
+	byte_write 0
 }
 b { 
 	dir I
-	width 64
-	depth 1
-	mode ap_none
-	offset 28
-	offset_end 39
+	width 16
+	depth 8
+	mode ap_memory
+	offset 32
+	offset_end 47
+	core_op ram_1p
+	core_impl auto
+	core_latency 1
+	byte_write 0
 }
-c { 
-	dir I
-	width 64
-	depth 1
-	mode ap_none
-	offset 40
-	offset_end 51
+y { 
+	dir O
+	width 16
+	depth 8
+	mode ap_memory
+	offset 48
+	offset_end 63
+	core_op ram_1p
+	core_impl auto
+	core_latency 1
+	byte_write 0
 }
 ap_start { }
 ap_done { }

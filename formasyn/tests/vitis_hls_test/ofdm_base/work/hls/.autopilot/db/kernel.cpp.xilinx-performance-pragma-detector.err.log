@@ -1,0 +1,4 @@
+In file included from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/kernel.cpp:1:
+/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ofdm_base/kernel.h:5:10: fatal error: 'complex' file not found
+#include <complex>
+         ^~~~~~~~~

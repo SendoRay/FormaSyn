@@ -3,18 +3,18 @@
     "basicblocks": 7,
     "calls": "",
     "control_depth": 1,
-    "def_use_depth": 3,
-    "file": "vec_add.cpp",
-    "fileloc": 1,
-    "instructions": 20,
+    "def_use_depth": 2,
+    "file": "kernel.cpp",
+    "fileloc": 3,
+    "instructions": 36,
     "loads": {
-      "T": 2
+      "L": 1
     },
-    "memory_accesses": 3,
+    "memory_accesses": 4,
     "name": "vec_add",
     "stores": {
       "T": 1
     },
-    "total_instructions": 20
+    "total_instructions": 157
   }
 }

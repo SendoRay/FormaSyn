@@ -1,0 +1,36 @@
+{
+  "variant_id": "channel_estimate_ls_int16",
+  "example_name": "channel_estimate",
+  "function_name": "channel_estimate",
+  "model": "claude-sonnet-4-5-20250929",
+  "description": "LS Channel Estimator using least squares algorithm",
+  "formula_graph": {
+    "nodes": [
+      {
+        "type": "Map",
+        "input_refs": ["rx_pilot", "pilot"],
+        "func": "ls_estimate",
+        "func_params": {
+          "algorithm": "H = rx_pilot * conj(pilot) / |pilot|^2"
+        },
+        "output_ref": "H"
+      }
+    ]
+  },
+  "parameters": {
+    "data_width": 16,
+    "algorithm": "least_squares",
+    "normalization_shift": 14
+  },
+  "constraints": {
+    "nmse_dB": -20,
+    "snr_condition": "high",
+    "target_ii": 1
+  },
+  "schedule_summary": {
+    "node_count": 1,
+    "input_nodes": ["rx_real", "rx_imag", "p_real", "p_imag"],
+    "output_nodes": ["h_real", "h_imag"],
+    "expected_ii": 1
+  }
+}

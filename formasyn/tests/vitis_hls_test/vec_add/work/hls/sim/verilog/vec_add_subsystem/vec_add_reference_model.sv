@@ -8,31 +8,18 @@
 
 `ifndef VEC_ADD_REFERENCE_MODEL_SV
 `define VEC_ADD_REFERENCE_MODEL_SV
-typedef class vec_add_reference_model;
-class memaccess_axi_state_cbs extends axi_pkg::axi_state_cbs;
-    vec_add_reference_model refm;
-    string memid;
-    //function new(string name="memaccess_axi_state_cbs");
-    //    super.new(name);
-    //endfunction
-    virtual function void memmodel_read_fromar(ref logic[7:0] data[$], input longint addr, input longint len);
-        if(memid=="gmem") refm.mem_blk_pages_gmem.read_elems_pipepage(data, addr, len);
-    endfunction
-endclass
 
 class vec_add_reference_model extends uvm_component;
-`define TV_IN_gmem "../tv/cdatafile/c.vec_add.autotvin_gmem.dat"
-`define TV_OUT_gmem "../tv/rtldatafile/rtl.vec_add.autotvout_gmem.dat"
-`define TV_IN_OFFSET_a "../tv/cdatafile/c.vec_add.autotvin_a.dat"
-`define TV_IN_OFFSET_b "../tv/cdatafile/c.vec_add.autotvin_b.dat"
-`define TV_IN_OFFSET_c "../tv/cdatafile/c.vec_add.autotvin_c.dat"
 `define TV_IN_a "../tv/cdatafile/c.vec_add.autotvin_a.dat"
 `define TV_OUT_a ""
 `define TV_IN_b "../tv/cdatafile/c.vec_add.autotvin_b.dat"
 `define TV_OUT_b ""
-`define TV_IN_c "../tv/cdatafile/c.vec_add.autotvin_c.dat"
-`define TV_OUT_c ""
+`define TV_IN_y ""
+`define TV_OUT_y "../tv/rtldatafile/rtl.vec_add.autotvout_y.dat"
+    bit  read_data_finish_control;
     bit  write_data_finish_control;
+    event allaxilite_read_data_finish;
+    event allaxilite_read_one_transaction_finish;
     event allaxilite_write_data_finish;
     event allaxilite_write_one_transaction_finish;
     event write_start_finish;
@@ -47,10 +34,9 @@ class vec_add_reference_model extends uvm_component;
     vec_add_config vec_add_cfg;
     virtual interface misc_interface misc_if;
 
-    mem_model_pages_with_diffofst#(512,8) mem_blk_pages_gmem;
-    int blk_id_gmem = 0;
-    memaccess_axi_state_cbs axi_memaccess_cb_gmem;
-
+    mem_model_pages#(16,8) mem_blk_pages_control_a;
+    mem_model_pages#(16,8) mem_blk_pages_control_b;
+    mem_model_pages#(16,8) mem_blk_pages_control_y;
     
     `uvm_component_utils_begin(vec_add_reference_model)
         `uvm_field_int (trans_num_idx, UVM_DEFAULT)
@@ -60,9 +46,6 @@ class vec_add_reference_model extends uvm_component;
         super.build_phase(phase);
         if(!uvm_config_db#(virtual misc_interface)::get(this, "", "misc_if", misc_if))
             `uvm_fatal(this.get_full_name(), "No misc_if from high level")
-        axi_memaccess_cb_gmem = new;
-        axi_memaccess_cb_gmem.refm = this;
-        axi_memaccess_cb_gmem.memid = "gmem";
     endfunction
 
     function new (string name = "", uvm_component parent = null);
@@ -73,16 +56,25 @@ class vec_add_reference_model extends uvm_component;
     virtual task run_phase(uvm_phase phase);
         string fpath[$];
 misc_if.dut2tb_ap_done = 0;
-        fpath.push_back(`TV_IN_gmem);
-        mem_blk_pages_gmem = mem_model_pages_with_diffofst#(512,8)::type_id::create("mem_blk_pages_gmem");
-        mem_blk_pages_gmem.whole_page_size=1216;
-        mem_blk_pages_gmem.maxi_bundlevar_fpath["a"]=`TV_IN_OFFSET_a;
-        mem_blk_pages_gmem.maxi_bundlevar_fpath["b"]=`TV_IN_OFFSET_b;
-        mem_blk_pages_gmem.maxi_bundlevar_fpath["c"]=`TV_IN_OFFSET_c;
-        mem_blk_pages_gmem.set_binary(1);
-        mem_blk_pages_gmem.tvinload_pagechk_atinit(fpath, 3*((512+7)/8), 0, 0, "");
-        mem_blk_pages_gmem.tvoutdump_atinit(`TV_OUT_gmem);
-        fpath.delete();
+
+        fpath.push_back(`TV_IN_a);
+        mem_blk_pages_control_a = mem_model_pages#(16,8)::type_id::create("mem_blk_pages_control_a");
+        mem_blk_pages_control_a.set_binary(1);
+        mem_blk_pages_control_a.tvinload_pagechk_atinit(fpath, 8*((16+7)/8), 0, 16, "");
+        fpath.delete;
+
+
+        fpath.push_back(`TV_IN_b);
+        mem_blk_pages_control_b = mem_model_pages#(16,8)::type_id::create("mem_blk_pages_control_b");
+        mem_blk_pages_control_b.set_binary(1);
+        mem_blk_pages_control_b.tvinload_pagechk_atinit(fpath, 8*((16+7)/8), 0, 32, "");
+        fpath.delete;
+
+
+        mem_blk_pages_control_y = mem_model_pages#(16,8)::type_id::create("mem_blk_pages_control_y");
+        mem_blk_pages_control_y.set_binary(1);
+        mem_blk_pages_control_y.init_pages(trans_num_total, 8*((16+7)/8), 48);
+        mem_blk_pages_control_y.tvoutdump_atinit(`TV_OUT_y);
 
         fork
             forever begin
@@ -93,11 +85,20 @@ misc_if.dut2tb_ap_done = 0;
                 -> allaxilite_write_data_finish;
             end
             forever begin
+                wait(read_data_finish_control);
+                `uvm_info("", "trigger_allaxilite_data_read_finish", UVM_LOW)
+                @(posedge misc_if.clock);
+                read_data_finish_control = 0;
+                -> allaxilite_read_data_finish;
+            end
+            forever begin
                 //this is non-pipeline case
                 forever begin
                     @(negedge misc_if.clock);
                     if(misc_if.dut2tb_ap_done===1) break;
                 end
+                @(posedge misc_if.clock);
+                @allaxilite_read_data_finish;
                 @(posedge misc_if.clock);
                 @allaxilite_write_data_finish;
                 @(posedge misc_if.clock);
@@ -125,6 +126,8 @@ misc_if.dut2tb_ap_done = 0;
                         -> misc_if.dut2tb_ap_ready_evt;
                     end
                 join_none
+                @allaxilite_read_data_finish;
+                @(posedge misc_if.clock);
                 -> ap_done_for_nexttrans;
                 `uvm_info(this.get_full_name(), "trigger event ap_done_for_nexttrans", UVM_LOW)
                 fork
@@ -136,10 +139,6 @@ misc_if.dut2tb_ap_done = 0;
                 join_none
             end
 
-            for(int i=1; i<1; i++) begin
-                @dut2tb_ap_ready;
-                mem_blk_pages_gmem.incr_rd_page_idx() ;
-            end
             forever begin
                 forever begin
                     @(negedge misc_if.clock);
@@ -152,13 +151,6 @@ misc_if.dut2tb_ap_done = 0;
             end
         join
     endtask
-
-    virtual function void write_axi_wtr_gmem(axi_pkg::axi_transfer tr);
-        mem_blk_pages_gmem.write_elems_pipepage(tr.data,tr.byte_addr);
-    endfunction
-
-    virtual function void write_axi_rtr_gmem(axi_pkg::axi_transfer tr);
-    endfunction
 
     virtual function void write_axi_wtr_control(axi_pkg::axi_transfer tr);
         if(tr.addr == 0 && tr.len == 0 && tr.data[0][0]==1) begin //addr 0 and bit 0 are parameter
@@ -189,6 +181,7 @@ misc_if.dut2tb_ap_done = 0;
                 misc_if.dut2tb_ap_idle = tr.data[0][2];
             end
         end else begin
+            mem_blk_pages_control_y.write_elems_frontpage(tr.data, tr.byte_addr);
         end
     endfunction
 endclass

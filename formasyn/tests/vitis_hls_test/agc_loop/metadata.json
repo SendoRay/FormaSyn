@@ -1,0 +1,44 @@
+{
+  "variant_id": "agc_loop_int16",
+  "example_name": "agc_loop",
+  "function_name": "agc_loop",
+  "model": "claude-sonnet-4-5-20250929",
+  "description": "AGC Loop - Automatic Gain Control with Feedback using Cycle pattern",
+  "formula_graph": {
+    "nodes": [
+      {
+        "type": "Cycle",
+        "input_ref": "x",
+        "body": [
+          {"op": "abs", "input": "x", "output": "|x|"},
+          {"op": "subtract_from", "params": {"target": 1000}, "input": "|x|", "output": "e"},
+          {"op": "multiply", "params": {"mu": 0.01}, "input": "e", "output": "delta"},
+          {"op": "add", "input": ["delta", "g_d1"], "output": "g"},
+          {"op": "clamp", "params": {"min": 0.125, "max": 8.0}, "input": "g", "output": "g_clamped"},
+          {"op": "multiply", "input": ["x", "g_clamped"], "output": "y"}
+        ],
+        "feedback_refs": {"g": "g_d1"},
+        "output_ref": "y"
+      }
+    ]
+  },
+  "parameters": {
+    "target_magnitude": 1000,
+    "mu": 0.01,
+    "max_gain": 8.0,
+    "min_gain": 0.125,
+    "data_width": 16,
+    "convergence_time": 1000
+  },
+  "constraints": {
+    "target_dsp": 2,
+    "target_ii": 1
+  },
+  "schedule_summary": {
+    "node_count": 1,
+    "input_nodes": ["x_in"],
+    "output_nodes": ["y_out"],
+    "expected_ii": 1,
+    "feedback_loop": true
+  }
+}

@@ -1,0 +1,30 @@
+--- !HLSUnsupported
+Pass:            reflow-default-interface-builder-new
+Name:            InterfaceVitisSAxiLiteLimitError
+DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+Function:        _Z11qpsk_mapper7ap_uintILi2EEP6ap_intILi16EES3_
+Args:            
+  - String:          'Vitis kernel mode requires that all s_axilite ports must be bundled into one bundle. The following ports ('''
+  - Name:            return
+  - String:          ''' and '''
+  - Name:            bits_in,y_real,y_imag
+  - String:          ''', in function '''
+  - Function:        'qpsk_mapper(ap_uint<2>, ap_int<16>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ''') have different bundle names: '''
+  - Name:            control
+  - String:          ''' and '''
+  - Name:            control_r
+  - String:          '''. Consider removing the bundle names on these ports.'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_qpsk_mapper_ir
+Args:            
+  - Callee:          'qpsk_mapper(ap_uint<2>, ap_int<16>*, ap_int<16>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_qpsk_mapper_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...

@@ -1,7 +1,7 @@
 <profile>
 
 <section name = "Vitis HLS Report for 'vec_add'" level="0">
-<item name = "Date">Wed Mar 11 09:00:10 2026
+<item name = "Date">Thu Apr  9 04:22:05 2026
 </item>
 <item name = "Version">2025.1 (Build 6135595 on May 21 2025)</item>
 <item name = "Project">work</item>
@@ -15,7 +15,7 @@
 <section name = "" level="1">
 <item name = "Summary"><table name="" hasTotal="0">
 <keys size="4">Clock, Target, Estimated, Uncertainty</keys>
-<column name="ap_clk">10.00 ns, 7.300 ns, 2.70 ns</column>
+<column name="ap_clk">10.00 ns, 6.721 ns, 2.70 ns</column>
 </table>
 </item>
 </section>
@@ -24,7 +24,7 @@
 <section name = "" level="1">
 <item name = "Summary"><table name="" hasTotal="0">
 <keys size="8">, min, max, min, max, min, max, Type</keys>
-<column name="">143, 143, 1.430 us, 1.430 us, 2, 2, yes</column>
+<column name="">9, 9, 90.000 ns, 90.000 ns, 9, 9, yes</column>
 </table>
 </item>
 <item name = "Detail">

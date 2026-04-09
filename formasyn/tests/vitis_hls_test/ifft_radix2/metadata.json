@@ -1,0 +1,99 @@
+{
+  "name": "ifft_radix2",
+  "description": "16-point Radix-2 IFFT kernel using FFT + conj_scale approach",
+  "version": "1.0.0",
+  "author": "FormaSyn",
+  "license": "MIT",
+  "kernel": {
+    "top_function": "ifft_radix2",
+    "language": "cpp",
+    "clock_period": 10,
+    "target_ii": 1
+  },
+  "specifications": {
+    "nfft": 16,
+    "n_stages": 4,
+    "data_type": {
+      "real": "ap_fixed<16,8>",
+      "imag": "ap_fixed<16,8>"
+    },
+    "twiddle_type": {
+      "real": "ap_fixed<18,2>",
+      "imag": "ap_fixed<18,2>"
+    },
+    "scale_type": {
+      "real": "ap_fixed<16,2>",
+      "imag": "ap_fixed<16,2>"
+    },
+    "sfdr_db": 60,
+    "input_width": 16,
+    "output_width": 16
+  },
+  "interfaces": {
+    "in": {
+      "type": "ap_memory",
+      "width": 32,
+      "description": "Input complex array (frequency domain)"
+    },
+    "out": {
+      "type": "ap_memory",
+      "width": 32,
+      "description": "Output complex array (time domain)"
+    }
+  },
+  "algorithm": {
+    "type": "radix2_dit_ifft",
+    "approach": "fft_conj_scale",
+    "stages": [
+      "conjugate_input",
+      "fft_internal",
+      "conjugate_scale_output"
+    ],
+    "formula_graph": "conj -> fft -> conj_scale",
+    "scale_factor": "1/NFFT"
+  },
+  "resources": {
+    "estimated": {
+      "bram": 0,
+      "dsp": 8,
+      "ff": 2048,
+      "lut": 4096
+    }
+  },
+  "files": [
+    {
+      "name": "kernel.h",
+      "type": "header",
+      "description": "Kernel header with type definitions"
+    },
+    {
+      "name": "kernel.cpp",
+      "type": "source",
+      "description": "Main kernel implementation"
+    },
+    {
+      "name": "kernel_tb.cpp",
+      "type": "testbench",
+      "description": "Testbench with round-trip verification"
+    },
+    {
+      "name": "hls_config.cfg",
+      "type": "config",
+      "description": "Vitis HLS configuration"
+    }
+  ],
+  "build": {
+    "command": "vitis-run --mode hls --config hls_config.cfg --work_dir work",
+    "dependencies": [
+      "xilinx_hls"
+    ]
+  },
+  "tags": [
+    "ifft",
+    "fft",
+    "radix2",
+    "dsp",
+    "signal_processing",
+    "fixed_point"
+  ]
+}

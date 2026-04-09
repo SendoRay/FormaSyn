@@ -1,0 +1,144 @@
+
+
+================================================================
+== Vitis HLS Report for 'conv_encode'
+================================================================
+* Date:           Thu Apr  9 04:24:16 2026
+
+* Version:        2025.1 (Build 6135595 on May 21 2025)
+* Project:        work
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  5.728 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+----------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline |
+    |   min   |   max   |    min   |    max   | min | max |   Type   |
+    +---------+---------+----------+----------+-----+-----+----------+
+    |        ?|        ?|         ?|         ?|    ?|    ?|  dataflow|
+    +---------+---------+----------+----------+-----+-----+----------+
+
+    + Detail: 
+        * Instance: 
+        +------------------------------+---------------------------+---------+---------+----------+----------+-----+-----+------------------------------------------------+
+        |                              |                           |  Latency (cycles) |  Latency (absolute) |  Interval |                    Pipeline                    |
+        |           Instance           |           Module          |   min   |   max   |    min   |    max   | min | max |                      Type                      |
+        +------------------------------+---------------------------+---------+---------+----------+----------+-----+-----+------------------------------------------------+
+        |Loop_VITIS_LOOP_22_1_proc_U0  |Loop_VITIS_LOOP_22_1_proc  |        ?|        ?|         ?|         ?|    0|    0|  loop auto-rewind stp (delay=0 clock cycles(s))|
+        +------------------------------+---------------------------+---------+---------+----------+----------+-----+-----+------------------------------------------------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       -|      -|    -|
+|FIFO             |        -|    -|       -|      -|    -|
+|Instance         |        0|    -|     114|    261|    -|
+|Memory           |        -|    -|       -|      -|    -|
+|Multiplexer      |        -|    -|       -|      -|    -|
+|Register         |        -|    -|       3|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |        0|    0|     117|    261|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      280|  220|  106400|  53200|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |        0|    0|      ~0|     ~0|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +------------------------------+---------------------------+---------+----+----+-----+-----+
+    |           Instance           |           Module          | BRAM_18K| DSP| FF | LUT | URAM|
+    +------------------------------+---------------------------+---------+----+----+-----+-----+
+    |Loop_VITIS_LOOP_22_1_proc_U0  |Loop_VITIS_LOOP_22_1_proc  |        0|   0|  40|  157|    0|
+    |control_s_axi_U               |control_s_axi              |        0|   0|  74|  104|    0|
+    +------------------------------+---------------------------+---------+----+----+-----+-----+
+    |Total                         |                           |        0|   0| 114|  261|    0|
+    +------------------------------+---------------------------+---------+----+----+-----+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    N/A
+
+    * Multiplexer: 
+    N/A
+
+    * Register: 
+    +--------------+---+----+-----+-----------+
+    |     Name     | FF| LUT| Bits| Const Bits|
+    +--------------+---+----+-----+-----------+
+    |ap_rst_n_inv  |  1|   0|    1|          0|
+    |ap_rst_reg_1  |  1|   0|    1|          0|
+    |ap_rst_reg_2  |  1|   0|    1|          0|
+    +--------------+---+----+-----+-----------+
+    |Total         |  3|   0|    3|          0|
+    +--------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------------------+-----+-----+---------------+---------------+--------------+
+|       RTL Ports       | Dir | Bits|    Protocol   | Source Object |    C Type    |
++-----------------------+-----+-----+---------------+---------------+--------------+
+|s_axi_control_AWVALID  |   in|    1|          s_axi|        control|        scalar|
+|s_axi_control_AWREADY  |  out|    1|          s_axi|        control|        scalar|
+|s_axi_control_AWADDR   |   in|    5|          s_axi|        control|        scalar|
+|s_axi_control_WVALID   |   in|    1|          s_axi|        control|        scalar|
+|s_axi_control_WREADY   |  out|    1|          s_axi|        control|        scalar|
+|s_axi_control_WDATA    |   in|   32|          s_axi|        control|        scalar|
+|s_axi_control_WSTRB    |   in|    4|          s_axi|        control|        scalar|
+|s_axi_control_ARVALID  |   in|    1|          s_axi|        control|        scalar|
+|s_axi_control_ARREADY  |  out|    1|          s_axi|        control|        scalar|
+|s_axi_control_ARADDR   |   in|    5|          s_axi|        control|        scalar|
+|s_axi_control_RVALID   |  out|    1|          s_axi|        control|        scalar|
+|s_axi_control_RREADY   |   in|    1|          s_axi|        control|        scalar|
+|s_axi_control_RDATA    |  out|   32|          s_axi|        control|        scalar|
+|s_axi_control_RRESP    |  out|    2|          s_axi|        control|        scalar|
+|s_axi_control_BVALID   |  out|    1|          s_axi|        control|        scalar|
+|s_axi_control_BREADY   |   in|    1|          s_axi|        control|        scalar|
+|s_axi_control_BRESP    |  out|    2|          s_axi|        control|        scalar|
+|ap_clk                 |   in|    1|  ap_ctrl_chain|    conv_encode|  return value|
+|ap_rst_n               |   in|    1|  ap_ctrl_chain|    conv_encode|  return value|
+|interrupt              |  out|    1|  ap_ctrl_chain|    conv_encode|  return value|
+|bit_in_stream_dout     |   in|    1|        ap_fifo|  bit_in_stream|       pointer|
+|bit_in_stream_empty_n  |   in|    1|        ap_fifo|  bit_in_stream|       pointer|
+|bit_in_stream_read     |  out|    1|        ap_fifo|  bit_in_stream|       pointer|
+|y_out_stream_din       |  out|    2|        ap_fifo|   y_out_stream|       pointer|
+|y_out_stream_full_n    |   in|    1|        ap_fifo|   y_out_stream|       pointer|
+|y_out_stream_write     |  out|    1|        ap_fifo|   y_out_stream|       pointer|
++-----------------------+-----+-----+---------------+---------------+--------------+
+

@@ -1,3 +1,17 @@
 <pragmas>
-<pragma file="vec_add.cpp" line="2" pragmaType="pipeline" parentfunction="vec_add" off="0" ii="1" style=""/>
+<pragma file="kernel.cpp" line="9" pragmaType="pipeline" parentfunction="vec_add" off="0" ii="1" style=""/>
+<pragma file="kernel.cpp" line="12" pragmaType="unroll" parentfunction="vec_add" factor="1" skip_exit_check="0"/>
+<pragma file="kernel.cpp" line="4" pragmaType="interface" parentfunction="vec_add" mode="ap_memory" port="a" storage_type="-1" impl="-1" latency="-1" name="" depth="-1"/>
+<pragma file="kernel.cpp" line="5" pragmaType="interface" parentfunction="vec_add" mode="ap_memory" port="b" storage_type="-1" impl="-1" latency="-1" name="" depth="-1"/>
+<pragma file="kernel.cpp" line="6" pragmaType="interface" parentfunction="vec_add" mode="ap_memory" port="y" storage_type="-1" impl="-1" latency="-1" name="" depth="-1"/>
+<pragma file="kernel.cpp" line="7" pragmaType="interface" parentfunction="vec_add" mode="ap_ctrl_chain" port="return" name=""/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowCsim" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="_ZN8ssdm_intILi17ELb1EEC2EDq17_i" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<17, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<17>::ap_int<17, true>(ap_int_base<17, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="ssdm_int<16, true>::ssdm_int(short)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<17, true>::ap_int_base<16, true>(ap_int_base<16, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::RType<16, true>::plus operator+<16, true, 16, true>(ap_int_base<16, true> const&, ap_int_base<16, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<16>::ap_int<17>(ap_int<17> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::ap_int_base<17, true>(ap_int_base<17, true> const&)" off="0" region="0" recursive="0"/>
 </pragmas>

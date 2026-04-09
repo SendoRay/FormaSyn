@@ -1,0 +1,4 @@
+Result = 2040
+Expected = 2040
+NMSE = -inf dB
+Test PASSED (NMSE <= -50 dB)

@@ -1,0 +1,187 @@
+
+
+================================================================
+== Vitis HLS Report for 'kernel'
+================================================================
+* Date:           Thu Apr  9 03:50:12 2026
+
+* Version:        2025.1 (Build 6135595 on May 21 2025)
+* Project:        work
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  7.157 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+-----------+-----------+-----+-----+---------+
+    |  Latency (cycles) |   Latency (absolute)  |  Interval | Pipeline|
+    |   min   |   max   |    min    |    max    | min | max |   Type  |
+    +---------+---------+-----------+-----------+-----+-----+---------+
+    |        1|        1|  10.000 ns|  10.000 ns|    1|    1|      yes|
+    +---------+---------+-----------+-----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       0|    423|    -|
+|FIFO             |        -|    -|       -|      -|    -|
+|Instance         |        0|    -|      96|    136|    -|
+|Memory           |        -|    -|       -|      -|    -|
+|Multiplexer      |        -|    -|       0|     18|    -|
+|Register         |        -|    -|     351|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |        0|    0|     447|    577|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      280|  220|  106400|  53200|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |        0|    0|      ~0|      1|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +-----------------+---------------+---------+----+----+-----+-----+
+    |     Instance    |     Module    | BRAM_18K| DSP| FF | LUT | URAM|
+    +-----------------+---------------+---------+----+----+-----+-----+
+    |control_s_axi_U  |control_s_axi  |        0|   0|  96|  136|    0|
+    +-----------------+---------------+---------+----+----+-----+-----+
+    |Total            |               |        0|   0|  96|  136|    0|
+    +-----------------+---------------+---------+----+----+-----+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +---------------------------+----------+----+---+----+------------+------------+
+    |       Variable Name       | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +---------------------------+----------+----+---+----+------------+------------+
+    |acc_fu_455_p2              |         +|   0|  0|  27|          20|          20|
+    |add_ln61_10_fu_421_p2      |         +|   0|  0|  26|          19|          19|
+    |add_ln61_1_fu_345_p2       |         +|   0|  0|  24|          17|          17|
+    |add_ln61_2_fu_355_p2       |         +|   0|  0|  18|          18|          18|
+    |add_ln61_3_fu_442_p2       |         +|   0|  0|  19|          19|          19|
+    |add_ln61_4_fu_361_p2       |         +|   0|  0|  24|          17|          17|
+    |add_ln61_5_fu_371_p2       |         +|   0|  0|  24|          17|          17|
+    |add_ln61_6_fu_381_p2       |         +|   0|  0|  25|          18|          18|
+    |add_ln61_7_fu_391_p2       |         +|   0|  0|  24|          17|          17|
+    |add_ln61_8_fu_401_p2       |         +|   0|  0|  24|          17|          17|
+    |add_ln61_9_fu_411_p2       |         +|   0|  0|  25|          18|          18|
+    |add_ln61_fu_433_p2         |         +|   0|  0|  19|          19|          19|
+    |sub_ln54_1_fu_247_p2       |         -|   0|  0|  24|           1|          17|
+    |sub_ln54_2_fu_257_p2       |         -|   0|  0|  24|           1|          17|
+    |sub_ln54_fu_237_p2         |         -|   0|  0|  24|           1|          17|
+    |sub_ln61_1_fu_325_p2       |         -|   0|  0|  25|          18|          18|
+    |sub_ln61_2_fu_339_p2       |         -|   0|  0|  18|          18|          18|
+    |sub_ln61_fu_311_p2         |         -|   0|  0|  25|          18|          18|
+    |ap_block_pp0_stage0_01001  |        or|   0|  0|   2|           1|           1|
+    |ap_enable_pp0              |       xor|   0|  0|   2|           1|           2|
+    +---------------------------+----------+----+---+----+------------+------------+
+    |Total                      |          |   0|  0| 423|         275|         324|
+    +---------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +---------+----+-----------+-----+-----------+
+    |   Name  | LUT| Input Size| Bits| Total Bits|
+    +---------+----+-----------+-----+-----------+
+    |ap_done  |   9|          2|    1|          2|
+    |y_out    |   9|          2|   32|         64|
+    +---------+----+-----------+-----+-----------+
+    |Total    |  18|          4|   33|         66|
+    +---------+----+-----------+-----+-----------+
+
+    * Register: 
+    +---------------------------------------------------+----+----+-----+-----------+
+    |                        Name                       | FF | LUT| Bits| Const Bits|
+    +---------------------------------------------------+----+----+-----+-----------+
+    |add_ln61_10_reg_481                                |  19|   0|   19|          0|
+    |add_ln61_2_reg_476                                 |  18|   0|   18|          0|
+    |ap_CS_fsm                                          |   1|   0|    1|          0|
+    |ap_done_reg                                        |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter1                            |   1|   0|    1|          0|
+    |ap_rst_n_inv                                       |   1|   0|    1|          0|
+    |ap_rst_reg_1                                       |   1|   0|    1|          0|
+    |ap_rst_reg_2                                       |   1|   0|    1|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg               |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_1             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_2             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_3             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_4             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_5             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_6             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_7             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_8             |  16|   0|   16|          0|
+    |kernel_ap_int_16_ap_int_32_shift_reg_9             |  16|   0|   16|          0|
+    |p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_10  |  16|   0|   16|          0|
+    |p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_11  |  16|   0|   16|          0|
+    |p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_12  |  16|   0|   16|          0|
+    |p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_13  |  16|   0|   16|          0|
+    |p_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg_14  |  16|   0|   16|          0|
+    |sub_ln61_1_reg_471                                 |  18|   0|   18|          0|
+    |sub_ln61_reg_466                                   |  18|   0|   18|          0|
+    |y_out_preg                                         |  32|   0|   32|          0|
+    +---------------------------------------------------+----+----+-----+-----------+
+    |Total                                              | 351|   0|  351|          0|
+    +---------------------------------------------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------------------+-----+-----+---------------+--------------+--------------+
+|       RTL Ports       | Dir | Bits|    Protocol   | Source Object|    C Type    |
++-----------------------+-----+-----+---------------+--------------+--------------+
+|s_axi_control_AWVALID  |   in|    1|          s_axi|       control|       pointer|
+|s_axi_control_AWREADY  |  out|    1|          s_axi|       control|       pointer|
+|s_axi_control_AWADDR   |   in|    5|          s_axi|       control|       pointer|
+|s_axi_control_WVALID   |   in|    1|          s_axi|       control|       pointer|
+|s_axi_control_WREADY   |  out|    1|          s_axi|       control|       pointer|
+|s_axi_control_WDATA    |   in|   32|          s_axi|       control|       pointer|
+|s_axi_control_WSTRB    |   in|    4|          s_axi|       control|       pointer|
+|s_axi_control_ARVALID  |   in|    1|          s_axi|       control|       pointer|
+|s_axi_control_ARREADY  |  out|    1|          s_axi|       control|       pointer|
+|s_axi_control_ARADDR   |   in|    5|          s_axi|       control|       pointer|
+|s_axi_control_RVALID   |  out|    1|          s_axi|       control|       pointer|
+|s_axi_control_RREADY   |   in|    1|          s_axi|       control|       pointer|
+|s_axi_control_RDATA    |  out|   32|          s_axi|       control|       pointer|
+|s_axi_control_RRESP    |  out|    2|          s_axi|       control|       pointer|
+|s_axi_control_BVALID   |  out|    1|          s_axi|       control|       pointer|
+|s_axi_control_BREADY   |   in|    1|          s_axi|       control|       pointer|
+|s_axi_control_BRESP    |  out|    2|          s_axi|       control|       pointer|
+|ap_clk                 |   in|    1|  ap_ctrl_chain|        kernel|  return value|
+|ap_rst_n               |   in|    1|  ap_ctrl_chain|        kernel|  return value|
+|interrupt              |  out|    1|  ap_ctrl_chain|        kernel|  return value|
++-----------------------+-----+-----+---------------+--------------+--------------+
+

@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Wed May 21 22:58:25 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Thu Apr  9 04:26:44 2026
+# Process ID         : 4063473
+# Current directory  : /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/scaler/work/hls/impl/ip
+# Command line       : vivado -notrace -mode batch -source run_ippack.tcl
+# Log file           : /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/scaler/work/hls/impl/ip/vivado.log
+# Journal file       : /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/scaler/work/hls/impl/ip/vivado.jou
+# Running On         : h3c-chengzhy
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 22.04.5 LTS
+# Processor Detail   : AMD EPYC 9684X 96-Core Processor
+# CPU Frequency      : 1476.544 MHz
+# CPU Physical cores : 192
+# CPU Logical cores  : 384
+# Host memory        : 1081728 MB
+# Swap memory        : 0 MB
+# Total Virtual      : 1081728 MB
+# Available Virtual  : 1077505 MB
+#-----------------------------------------------------------
+source run_ippack.tcl -notrace

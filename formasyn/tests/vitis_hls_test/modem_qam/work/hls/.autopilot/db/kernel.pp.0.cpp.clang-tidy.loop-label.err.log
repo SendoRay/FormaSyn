@@ -1,0 +1,3 @@
+1 error generated.
+Error while processing /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qam/work/hls/.autopilot/db/kernel.pp.0.cpp.
+clang-tidy applied 4 of 4 suggested fixes.

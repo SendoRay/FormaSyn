@@ -1,0 +1,82 @@
+INFO: [SIM 2] *************** CSIM start ***************
+INFO: [SIM 4] CSIM will launch CLANG as the compiler.
+   Compiling ../../../../kernel_tb.cpp in debug mode
+   Compiling ../../../../kernel.cpp in debug mode
+   Generating csim.exe
+========================================
+LDPC Check Node Update (Min-Sum) Testbench
+========================================
+Configuration:
+  - Max Check Node Degree: 6
+  - Number of Check Nodes: 4
+  - LLR Width: 6 bits (1 integer)
+
+=== Test 1: All Positive LLRs ===
+Input LLRs: -0.5 0.5 0 -1 
+DUT Output: -1 -1 -1 -1 
+Golden Output: 0 0 0.5 0 
+  Mismatch at index 0: DUT=-1, Golden=0, diff=1
+  Mismatch at index 1: DUT=-1, Golden=0, diff=1
+  Mismatch at index 2: DUT=-1, Golden=0.5, diff=1.5
+  Mismatch at index 3: DUT=-1, Golden=0, diff=1
+TEST FAILED
+
+=== Test 2: Mixed Signs ===
+Input LLRs: -0.5 -0.5 0 -1 
+DUT Output: -1 -1 -1 -1 
+Golden Output: 0 0 -0.5 0 
+  Mismatch at index 0: DUT=-1, Golden=0, diff=1
+  Mismatch at index 1: DUT=-1, Golden=0, diff=1
+  Mismatch at index 2: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 3: DUT=-1, Golden=0, diff=1
+TEST FAILED
+
+=== Test 3: Maximum Degree (6) ===
+Input LLRs: 0.5 -1 -0.5 -0.25 0 0.5 
+DUT Output: -1 -1 -1 -1 -1 -1 
+  Mismatch at index 0: DUT=-1, Golden=0, diff=1
+  Mismatch at index 1: DUT=-1, Golden=0, diff=1
+  Mismatch at index 2: DUT=-1, Golden=0, diff=1
+  Mismatch at index 3: DUT=-1, Golden=0, diff=1
+  Mismatch at index 4: DUT=-1, Golden=-0.25, diff=0.75
+  Mismatch at index 5: DUT=-1, Golden=0, diff=1
+TEST FAILED
+
+=== Test 4: Multiple Check Nodes ===
+  Mismatch at index 0: DUT=-1, Golden=0.75, diff=1.75
+  Mismatch at index 1: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 2: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 3: DUT=-1, Golden=0.5, diff=1.5
+Check node 0 FAILED
+  Mismatch at index 0: DUT=-1, Golden=0.75, diff=1.75
+  Mismatch at index 1: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 2: DUT=-1, Golden=-0.5, diff=0.5
+Check node 1 FAILED
+  Mismatch at index 0: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 1: DUT=-1, Golden=0.5, diff=1.5
+  Mismatch at index 2: DUT=-1, Golden=0.5, diff=1.5
+  Mismatch at index 3: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 4: DUT=-1, Golden=0.5, diff=1.5
+Check node 2 FAILED
+  Mismatch at index 0: DUT=-1, Golden=0.75, diff=1.75
+  Mismatch at index 1: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 2: DUT=-1, Golden=-0.5, diff=0.5
+  Mismatch at index 3: DUT=-1, Golden=0.5, diff=1.5
+Check node 3 FAILED
+TEST FAILED
+
+=== Test 5: Min-Sum Property Verification ===
+Input LLRs: 0.5 0.59375 0 0.375 
+Output C2V: -1 -1 -1 -1 
+Checking min-sum property...
+  Property violation at index 0: magnitude=1
+  Property violation at index 1: magnitude=1
+  Property violation at index 2: magnitude=1
+  Property violation at index 3: magnitude=1
+TEST FAILED
+
+========================================
+All tests completed
+========================================
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************

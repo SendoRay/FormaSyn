@@ -1,0 +1,14 @@
+{
+    "0": {
+        "name": "kernel",
+        "file": "kernel.cpp",
+        "fileloc": "19",
+        "instructions": "44",
+        "total_instructions": "44",
+        "calls": "",
+        "basicblocks": "1",
+        "memory_accesses": "3",
+        "control_depth": "0",
+        "def_use_depth": "8"
+    }
+}

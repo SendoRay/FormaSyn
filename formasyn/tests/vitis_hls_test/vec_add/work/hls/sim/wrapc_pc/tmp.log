@@ -1,1 +1,2 @@
-PASS
+NMSE = -inf dB
+Test PASSED (NMSE <= -50 dB)

@@ -1,0 +1,7 @@
+Running: xsim.dir/kernel/xsimk -simmode gui -testplusarg UVM_VERBOSITY=UVM_NONE -testplusarg UVM_TESTNAME=kernel_test_lib -testplusarg UVM_TIMEOUT=20000000000000 -wdb kernel.wdb -simrunnum 0 -socket 43419
+Design successfully loaded
+Design Loading Memory Usage: 198416 KB (Peak: 198416 KB)
+Design Loading CPU Usage: 1740 ms
+Simulation completed
+Simulation Memory Usage: 1227568 KB (Peak: 1227568 KB)
+Simulation CPU Usage: 8950 ms

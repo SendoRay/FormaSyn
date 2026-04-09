@@ -1,0 +1,84 @@
+  **** HLS Build v2025.1 6135595
+INFO: [HLS 200-2005] Using work_dir /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/work 
+INFO: [HLS 200-2176] Writing Vitis IDE component file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/work/vitis-comp.json
+INFO: [HLS 200-10] Creating and opening component '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/work'.
+INFO: [HLS 200-1505] Using default flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2025.1%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-2174] Applying component config ini file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/hls_config.cfg
+INFO: [HLS 200-1465] Applying config ini 'syn.file=kernel.cpp' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/hls_config.cfg(7)
+INFO: [HLS 200-10] Adding design file '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/kernel.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'tb.file=kernel_tb.cpp' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/hls_config.cfg(8)
+INFO: [HLS 200-10] Adding test bench file '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/kernel_tb.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'syn.top=kernel' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/hls_config.cfg(6)
+INFO: [HLS 200-1465] Applying config ini 'flow_target=vitis' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/hls_config.cfg(5)
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2025.1%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_latency=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_rtl -register_reset_num=3
+INFO: [HLS 200-1465] Applying config ini 'part=xc7z020clg400-1' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/hls_config.cfg(1)
+INFO: [HLS 200-1611] Setting target device to 'xc7z020-clg400-1'
+INFO: [HLS 200-1465] Applying config ini 'clock=10ns' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/hls_config.cfg(4)
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-2176] Writing Vitis IDE component file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/ldpc_vnu/work/vitis-comp.json
+INFO: [SIM 211-2] *************** CSIM start ***************
+INFO: [SIM 211-4] CSIM will launch CLANG as the compiler.
+INFO: [HLS 200-2036] Building debug C Simulation binaries
+   Compiling ../../../../kernel_tb.cpp in debug mode
+   Compiling ../../../../kernel.cpp in debug mode
+   Generating csim.exe
+========================================
+LDPC Variable Node Update Testbench
+========================================
+Configuration:
+  - Max Variable Node Degree: 3
+  - Number of Variable Nodes: 8
+  - LLR Width: 6 bits (1 integer)
+
+=== Test 1: Positive Channel LLR Only ===
+Channel LLR: -0.5
+Decision: 1 (expected 0 for positive LLR)
+V2C[0]: -0.5 (should equal channel LLR)
+V2C[1]: -0.5 (should equal channel LLR)
+TEST FAILED
+
+=== Test 2: Negative Channel LLR with C2V ===
+Channel LLR: -1
+C2V[0]: 0.5
+C2V[1]: -0.3125
+C2V[2]: 0.78125
+Decision: 1
+V2C[0]: -0.53125 (total - C2V[0])
+V2C[1]: 0.28125 (total - C2V[1])
+V2C[2]: -0.8125 (total - C2V[2])
+TEST PASSED
+
+=== Test 3: Degree 1 (Edge Case) ===
+Channel LLR: 0.75
+C2V[0]: -0.25
+Decision: 0 (expected 0)
+V2C[0]: 0.75 (should equal channel LLR)
+TEST PASSED
+
+=== Test 4: Multiple Variable Nodes ===
+Processed 8 variable nodes
+TEST PASSED
+
+=== Test 5: Extrinsic Property Verification ===
+Channel LLR: -1
+C2V messages: 0.5, 0.28125, 0.1875
+V2C messages: -0.53125, -0.3125, -0.21875
+Expected V2C: 1.5, 1.7, 1.8
+Extrinsic property violation at index 0
+Extrinsic property violation at index 1
+Extrinsic property violation at index 2
+TEST FAILED
+
+========================================
+All tests completed
+========================================
+INFO: [SIM 211-1] CSim done with 0 errors.
+INFO: [SIM 211-3] *************** CSIM finish ***************
+INFO: [HLS 200-112] Total CPU user time: 7.5 seconds. Total CPU system time: 1.91 seconds. Total elapsed time: 8.96 seconds; peak allocated memory: 260.836 MB.
+INFO: [vitis-run 60-791] Total elapsed time: 0h 0m 13s

@@ -1,0 +1,65 @@
+{
+  "kernel": {
+    "name": "ldpc_cnu_min_sum",
+    "description": "LDPC Check Node Update using Min-Sum Algorithm",
+    "version": "1.0.0",
+    "type": "channel_coding",
+    "category": "ldpc_decoder"
+  },
+  "specifications": {
+    "max_check_node_degree": 6,
+    "num_check_nodes": 4,
+    "llr_width": 6,
+    "llr_integer_bits": 1,
+    "algorithm": "min_sum",
+    "sign_computation": "xor",
+    "magnitude_computation": "min"
+  },
+  "interfaces": {
+    "v2c_input": {
+      "name": "v2c_msgs",
+      "type": "fixed_point_array",
+      "width": 6,
+      "integer_width": 1,
+      "dimensions": [4, 6],
+      "description": "Variable-to-check messages"
+    },
+    "degree_input": {
+      "name": "degree",
+      "type": "int_array",
+      "size": 4,
+      "description": "Actual degree per check node"
+    },
+    "c2v_output": {
+      "name": "c2v_msgs",
+      "type": "fixed_point_array",
+      "width": 6,
+      "integer_width": 1,
+      "dimensions": [4, 6],
+      "description": "Check-to-variable messages"
+    },
+    "control": {
+      "type": "ap_ctrl_chain"
+    }
+  },
+  "performance": {
+    "target_clock_ns": 5,
+    "pipeline_ii": 1,
+    "latency": "fixed"
+  },
+  "algorithm": {
+    "name": "min_sum",
+    "description": "Min-sum approximation for check node update",
+    "sign_formula": "product_of_signs = XOR(signs)",
+    "magnitude_formula": "min_magnitude = min(|LLR| excluding self)",
+    "output_formula": "L(r_ji) = product_of_signs × min_magnitude"
+  },
+  "resources": {
+    "estimated": {
+      "dsp48": 0,
+      "bram": 0,
+      "lut": 800,
+      "ff": 400
+    }
+  }
+}

@@ -17,29 +17,23 @@
 `define AUTOTB_MAX_ALLOW_LATENCY  15000000
 `define AUTOTB_CLOCK_PERIOD_DIV2 5.00
 
-`define AESL_DEPTH_gmem 1
 `define AESL_DEPTH_a 1
 `define AESL_DEPTH_b 1
-`define AESL_DEPTH_c 1
-`define AUTOTB_TVIN_gmem  "../tv/cdatafile/c.vec_add.autotvin_gmem.dat"
+`define AESL_DEPTH_y 1
 `define AUTOTB_TVIN_a  "../tv/cdatafile/c.vec_add.autotvin_a.dat"
 `define AUTOTB_TVIN_b  "../tv/cdatafile/c.vec_add.autotvin_b.dat"
-`define AUTOTB_TVIN_c  "../tv/cdatafile/c.vec_add.autotvin_c.dat"
-`define AUTOTB_TVIN_gmem_out_wrapc  "../tv/rtldatafile/rtl.vec_add.autotvin_gmem.dat"
 `define AUTOTB_TVIN_a_out_wrapc  "../tv/rtldatafile/rtl.vec_add.autotvin_a.dat"
 `define AUTOTB_TVIN_b_out_wrapc  "../tv/rtldatafile/rtl.vec_add.autotvin_b.dat"
-`define AUTOTB_TVIN_c_out_wrapc  "../tv/rtldatafile/rtl.vec_add.autotvin_c.dat"
-`define AUTOTB_TVOUT_gmem  "../tv/cdatafile/c.vec_add.autotvout_gmem.dat"
-`define AUTOTB_TVOUT_gmem_out_wrapc  "../tv/rtldatafile/rtl.vec_add.autotvout_gmem.dat"
+`define AUTOTB_TVOUT_y  "../tv/cdatafile/c.vec_add.autotvout_y.dat"
+`define AUTOTB_TVOUT_y_out_wrapc  "../tv/rtldatafile/rtl.vec_add.autotvout_y.dat"
 module `AUTOTB_TOP;
 
 parameter AUTOTB_TRANSACTION_NUM = 1;
 parameter PROGRESS_TIMEOUT = 10000000;
-parameter LATENCY_ESTIMATION = 143;
-parameter LENGTH_a = 1;
-parameter LENGTH_b = 1;
-parameter LENGTH_c = 1;
-parameter LENGTH_gmem = 3;
+parameter LATENCY_ESTIMATION = 9;
+parameter LENGTH_a = 8;
+parameter LENGTH_b = 8;
+parameter LENGTH_y = 8;
 
 reg AESL_clock;
 reg rst;
@@ -77,51 +71,6 @@ wire  control_BVALID;
 wire  control_BREADY;
 wire [1 : 0] control_BRESP;
 wire  control_INTERRUPT;
-wire  gmem_AWVALID;
-wire  gmem_AWREADY;
-wire [63 : 0] gmem_AWADDR;
-wire [0 : 0] gmem_AWID;
-wire [7 : 0] gmem_AWLEN;
-wire [2 : 0] gmem_AWSIZE;
-wire [1 : 0] gmem_AWBURST;
-wire [1 : 0] gmem_AWLOCK;
-wire [3 : 0] gmem_AWCACHE;
-wire [2 : 0] gmem_AWPROT;
-wire [3 : 0] gmem_AWQOS;
-wire [3 : 0] gmem_AWREGION;
-wire [0 : 0] gmem_AWUSER;
-wire  gmem_WVALID;
-wire  gmem_WREADY;
-wire [511 : 0] gmem_WDATA;
-wire [63 : 0] gmem_WSTRB;
-wire  gmem_WLAST;
-wire [0 : 0] gmem_WID;
-wire [0 : 0] gmem_WUSER;
-wire  gmem_ARVALID;
-wire  gmem_ARREADY;
-wire [63 : 0] gmem_ARADDR;
-wire [0 : 0] gmem_ARID;
-wire [7 : 0] gmem_ARLEN;
-wire [2 : 0] gmem_ARSIZE;
-wire [1 : 0] gmem_ARBURST;
-wire [1 : 0] gmem_ARLOCK;
-wire [3 : 0] gmem_ARCACHE;
-wire [2 : 0] gmem_ARPROT;
-wire [3 : 0] gmem_ARQOS;
-wire [3 : 0] gmem_ARREGION;
-wire [0 : 0] gmem_ARUSER;
-wire  gmem_RVALID;
-wire  gmem_RREADY;
-wire [511 : 0] gmem_RDATA;
-wire  gmem_RLAST;
-wire [0 : 0] gmem_RID;
-wire [0 : 0] gmem_RUSER;
-wire [1 : 0] gmem_RRESP;
-wire  gmem_BVALID;
-wire  gmem_BREADY;
-wire [1 : 0] gmem_BRESP;
-wire [0 : 0] gmem_BID;
-wire [0 : 0] gmem_BUSER;
 integer done_cnt = 0;
 integer AESL_ready_cnt = 0;
 integer ready_cnt = 0;
@@ -131,6 +80,7 @@ reg ready_last_n;
 reg ready_delay_last_n;
 reg done_delay_last_n;
 reg interface_done = 0;
+wire control_read_data_finish;
 wire control_write_data_finish;
 wire AESL_slave_start;
 reg AESL_slave_start_lock = 0;
@@ -171,52 +121,7 @@ wire ap_rst_n_n;
     .s_axi_control_BRESP(control_BRESP),
     .interrupt(control_INTERRUPT),
     .ap_clk(ap_clk),
-    .ap_rst_n(ap_rst_n),
-    .m_axi_gmem_AWVALID(gmem_AWVALID),
-    .m_axi_gmem_AWREADY(gmem_AWREADY),
-    .m_axi_gmem_AWADDR(gmem_AWADDR),
-    .m_axi_gmem_AWID(gmem_AWID),
-    .m_axi_gmem_AWLEN(gmem_AWLEN),
-    .m_axi_gmem_AWSIZE(gmem_AWSIZE),
-    .m_axi_gmem_AWBURST(gmem_AWBURST),
-    .m_axi_gmem_AWLOCK(gmem_AWLOCK),
-    .m_axi_gmem_AWCACHE(gmem_AWCACHE),
-    .m_axi_gmem_AWPROT(gmem_AWPROT),
-    .m_axi_gmem_AWQOS(gmem_AWQOS),
-    .m_axi_gmem_AWREGION(gmem_AWREGION),
-    .m_axi_gmem_AWUSER(gmem_AWUSER),
-    .m_axi_gmem_WVALID(gmem_WVALID),
-    .m_axi_gmem_WREADY(gmem_WREADY),
-    .m_axi_gmem_WDATA(gmem_WDATA),
-    .m_axi_gmem_WSTRB(gmem_WSTRB),
-    .m_axi_gmem_WLAST(gmem_WLAST),
-    .m_axi_gmem_WID(gmem_WID),
-    .m_axi_gmem_WUSER(gmem_WUSER),
-    .m_axi_gmem_ARVALID(gmem_ARVALID),
-    .m_axi_gmem_ARREADY(gmem_ARREADY),
-    .m_axi_gmem_ARADDR(gmem_ARADDR),
-    .m_axi_gmem_ARID(gmem_ARID),
-    .m_axi_gmem_ARLEN(gmem_ARLEN),
-    .m_axi_gmem_ARSIZE(gmem_ARSIZE),
-    .m_axi_gmem_ARBURST(gmem_ARBURST),
-    .m_axi_gmem_ARLOCK(gmem_ARLOCK),
-    .m_axi_gmem_ARCACHE(gmem_ARCACHE),
-    .m_axi_gmem_ARPROT(gmem_ARPROT),
-    .m_axi_gmem_ARQOS(gmem_ARQOS),
-    .m_axi_gmem_ARREGION(gmem_ARREGION),
-    .m_axi_gmem_ARUSER(gmem_ARUSER),
-    .m_axi_gmem_RVALID(gmem_RVALID),
-    .m_axi_gmem_RREADY(gmem_RREADY),
-    .m_axi_gmem_RDATA(gmem_RDATA),
-    .m_axi_gmem_RLAST(gmem_RLAST),
-    .m_axi_gmem_RID(gmem_RID),
-    .m_axi_gmem_RUSER(gmem_RUSER),
-    .m_axi_gmem_RRESP(gmem_RRESP),
-    .m_axi_gmem_BVALID(gmem_BVALID),
-    .m_axi_gmem_BREADY(gmem_BREADY),
-    .m_axi_gmem_BRESP(gmem_BRESP),
-    .m_axi_gmem_BID(gmem_BID),
-    .m_axi_gmem_BUSER(gmem_BUSER));
+    .ap_rst_n(ap_rst_n));
 assign ap_clk = AESL_clock;
 assign ap_rst_n = AESL_reset;
 assign ap_rst_n_n = ~AESL_reset;

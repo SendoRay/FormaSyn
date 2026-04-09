@@ -1,0 +1,18 @@
+<pragmas>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<40, true>& ap_int_base<40, true>::operator+=<32, true>(ap_int_base<32, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="_ZN8ssdm_intILi40ELb1EEC2EDq40_i" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<32>::ap_int<32, true>(ap_int_base<32, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="ssdm_int<32, true>::ssdm_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowBaseC" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>::ap_int_base<16, true>(ap_int_base<16, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<40>::ap_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<40, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="kernel.cpp" line="9" pragmaType="pipeline" parentfunction="vec_dot" off="0" ii="1" style=""/>
+<pragma file="kernel.cpp" line="14" pragmaType="unroll" parentfunction="vec_dot" factor="1" skip_exit_check="0"/>
+<pragma file="kernel.cpp" line="4" pragmaType="interface" parentfunction="vec_dot" mode="ap_memory" port="a" storage_type="-1" impl="-1" latency="-1" name="" depth="-1"/>
+<pragma file="kernel.cpp" line="5" pragmaType="interface" parentfunction="vec_dot" mode="ap_memory" port="b" storage_type="-1" impl="-1" latency="-1" name="" depth="-1"/>
+<pragma file="kernel.cpp" line="6" pragmaType="interface" parentfunction="vec_dot" mode="ap_vld" port="y" name="" register="0"/>
+<pragma file="kernel.cpp" line="7" pragmaType="interface" parentfunction="vec_dot" mode="ap_ctrl_chain" port="return" name=""/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::RType<16, true>::mult operator*<16, true, 16, true>(ap_int_base<16, true> const&, ap_int_base<16, true> const&)" off="0" region="0" recursive="0"/>
+</pragmas>

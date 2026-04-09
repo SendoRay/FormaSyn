@@ -1,0 +1,24 @@
+/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/conv_encode/kernel.cpp:15:32: warning: 'Ap_stable' in '#pragma HLS INTERFACE' is deprecated, use 'Stable Pragma' instead [-Wignored-hls-pragmas]
+    #pragma HLS INTERFACE mode=ap_stable port=num_bits
+                               ^
+In file included from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/conv_encode/kernel.cpp:1:
+In file included from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/conv_encode/kernel.h:5:
+In file included from /tools/Xilinx/2025.1/Vitis/common/technology/autopilot/hls_stream.h:12:
+/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/hls_stream_39.h:98:9: error: use of undeclared identifier '__fpga_fifo_pop'
+        __fpga_fifo_pop(&V, &dout);
+        ^
+/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/hls_stream_39.h:109:9: note: in instantiation of member function 'hls::stream<ap_uint<1>, 0>::read' requested here
+        read(tmp);
+        ^
+/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/conv_encode/kernel.cpp:26:43: note: in instantiation of member function 'hls::stream<ap_uint<1>, 0>::read' requested here
+        ap_uint<1> bit_in = bit_in_stream.read();
+                                          ^
+In file included from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/conv_encode/kernel.cpp:1:
+In file included from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/conv_encode/kernel.h:5:
+In file included from /tools/Xilinx/2025.1/Vitis/common/technology/autopilot/hls_stream.h:12:
+/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/hls_stream_39.h:127:9: error: use of undeclared identifier '__fpga_fifo_push'
+        __fpga_fifo_push(&V, &din);
+        ^
+/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/conv_encode/kernel.cpp:45:22: note: in instantiation of member function 'hls::stream<ap_uint<2>, 0>::write' requested here
+        y_out_stream.write(y_out);
+                     ^

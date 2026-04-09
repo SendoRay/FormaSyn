@@ -1,0 +1,20 @@
+{
+    "0": {
+        "name": "vec_mul",
+        "file": "kernel.cpp",
+        "fileloc": "3",
+        "instructions": "89",
+        "total_instructions": "89",
+        "calls": "",
+        "basicblocks": "1",
+        "memory_accesses": "24",
+        "control_depth": "0",
+        "def_use_depth": "3",
+        "loads": {
+            "T": "16"
+        },
+        "stores": {
+            "T": "8"
+        }
+    }
+}

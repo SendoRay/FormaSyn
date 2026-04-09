@@ -1,0 +1,23 @@
+[
+  {
+    "functionLabel": "",
+    "functionName": "vec_dot",
+    "id": 0,
+    "ifcond": "",
+    "insert_position": "",
+    "label": "",
+    "pragma": {
+      "name": "TOP",
+      "option": [
+        {
+          "name": "name",
+          "value": "vec_dot"
+        }
+      ]
+    },
+    "slx": false,
+    "sourceFile": "",
+    "sourceLine": 0,
+    "success": true
+  }
+]

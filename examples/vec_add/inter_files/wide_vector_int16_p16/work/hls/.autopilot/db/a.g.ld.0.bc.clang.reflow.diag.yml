@@ -1,0 +1,436 @@
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 11, Column: 19 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_11_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_11_1
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:11:19'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_kernel_ir
+Args:            
+  - Callee:          'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_kernel_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '16'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        a51seq
+  - ArrayName:       a
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.25
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.37
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.51
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.65
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.79
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.93
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.107
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.121
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.135
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.149
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.163
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.177
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.191
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.205
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.219
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.233
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '16'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        b52seq
+  - ArrayName:       b
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.46
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.59
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.73
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.87
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.101
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.115
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.129
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.143
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.157
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.171
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.185
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.199
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.213
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.227
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.241
+  - OrigAccess:      load
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          entry.load.255
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: kernel.cpp, Line: 15, Column: 1 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '16'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        c53seq
+  - ArrayName:       c
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.55
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.69
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.83
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.97
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.111
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.125
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.139
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.153
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.167
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.181
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.195
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.209
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.223
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.237
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.251
+  - OrigAccess:      store
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 7 }
+  - OrigDirection:   write
+  - OrigID:          entry.store.265
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '16'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '16'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '128'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          a51seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq
+  - ArrayName:       a
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of '
+  - OrigLength:      '16'
+  - String:          ' x '
+  - OrigWords:       '8'
+  - String:          'bit words has been widened by '
+  - Factor:          '16'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '128'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 13, Column: 14 }
+  - OrigDirection:   read
+  - OrigID:          b52seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq54
+  - ArrayName:       b
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' '
+...
+--- !Passed
+Pass:            reflow-burst-widen
+Name:            BurstWidened
+DebugLoc:        { File: kernel.cpp, Line: 15, Column: 1 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of '
+  - OrigLength:      '16'
+  - String:          ' x '
+  - OrigWords:       '16'
+  - String:          'bit words has been widened by '
+  - Factor:          '16'
+  - String:          ': '
+  - Length:          '1'
+  - String:          ' x '
+  - Words:           '256'
+  - String:          bit words
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: kernel.cpp, Line: 15, Column: 1 }
+  - OrigDirection:   write
+  - OrigID:          c53seq
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        wseq55
+  - ArrayName:       c
+  - String:          ' '
+  - BundleName:      gmem
+  - String:          ' '
+  - Function:        'kernel(ap_int<8>*, ap_int<8>*, ap_fixed<16, 7, (ap_q_mode)5, (ap_o_mode)3, 0>*)'
+    DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+  - String:          ' '
+...
+--- !Failure
+Pass:            reflow-interface-check
+Name:            UnspportedNonScalarType
+DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Cannot apply interface mode '''
+  - String:          ap_none
+  - String:          ''' '
+  - String:          'on function argument '''
+  - Name:            a
+  - String:          ''' since this interface mode only supports scalar types'
+...
+--- !Failure
+Pass:            reflow-interface-check
+Name:            UnspportedNonScalarType
+DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Cannot apply interface mode '''
+  - String:          ap_none
+  - String:          ''' '
+  - String:          'on function argument '''
+  - Name:            b
+  - String:          ''' since this interface mode only supports scalar types'
+...
+--- !Failure
+Pass:            reflow-interface-check
+Name:            UnspportedNonScalarType
+DebugLoc:        { File: kernel.cpp, Line: 9, Column: 0 }
+Function:        _Z6kernelP6ap_intILi8EES1_P8ap_fixedILi16ELi7EL9ap_q_mode5EL9ap_o_mode3ELi0EE
+Args:            
+  - String:          'Cannot apply interface mode '''
+  - String:          ap_none
+  - String:          ''' '
+  - String:          'on function argument '''
+  - Name:            c
+  - String:          ''' since this interface mode only supports scalar types'
+...

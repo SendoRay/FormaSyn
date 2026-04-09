@@ -1,0 +1,25 @@
+============================================
+Convolutional Encoder Testbench
+K=3, Rate 1/2, G1=0b111, G2=0b101
+============================================
+
+Test 1: All zeros input
+  PASSED (errors: 0)
+
+Test 2: All ones input
+  PASSED (errors: 0)
+
+Test 3: Alternating 0101... pattern
+  PASSED (errors: 0)
+
+Test 4: Known test vector
+  Error at bit 1: DUT=2, Expected=0
+  Error at bit 4: DUT=2, Expected=3
+  FAILED (errors: 2)
+
+Test 5: Random data (1000 bits)
+  PASSED (errors: 0/1000)
+
+============================================
+ALL TESTS PASSED (100% correct)
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 1000

@@ -32,9 +32,16 @@ module vec_add_control_s_axi
     output wire                          RVALID,
     input  wire                          RREADY,
     output wire                          interrupt,
-    output wire [63:0]                   a,
-    output wire [63:0]                   b,
-    output wire [63:0]                   c,
+    input  wire [2:0]                    a_address0,
+    input  wire                          a_ce0,
+    output wire [15:0]                   a_q0,
+    input  wire [2:0]                    b_address0,
+    input  wire                          b_ce0,
+    output wire [15:0]                   b_q0,
+    input  wire [2:0]                    y_address0,
+    input  wire                          y_ce0,
+    input  wire                          y_we0,
+    input  wire [15:0]                   y_d0,
     output wire                          ap_start,
     input  wire                          ap_done,
     input  wire                          ap_ready,
@@ -64,45 +71,39 @@ module vec_add_control_s_axi
 //        bit 0 - ap_done (Read/TOW)
 //        bit 1 - ap_ready (Read/TOW)
 //        others - reserved
-// 0x10 : Data signal of a
-//        bit 31~0 - a[31:0] (Read/Write)
-// 0x14 : Data signal of a
-//        bit 31~0 - a[63:32] (Read/Write)
-// 0x18 : reserved
-// 0x1c : Data signal of b
-//        bit 31~0 - b[31:0] (Read/Write)
-// 0x20 : Data signal of b
-//        bit 31~0 - b[63:32] (Read/Write)
-// 0x24 : reserved
-// 0x28 : Data signal of c
-//        bit 31~0 - c[31:0] (Read/Write)
-// 0x2c : Data signal of c
-//        bit 31~0 - c[63:32] (Read/Write)
-// 0x30 : reserved
+// 0x10 ~
+// 0x1f : Memory 'a' (8 * 16b)
+//        Word n : bit [15: 0] - a[2n]
+//                 bit [31:16] - a[2n+1]
+// 0x20 ~
+// 0x2f : Memory 'b' (8 * 16b)
+//        Word n : bit [15: 0] - b[2n]
+//                 bit [31:16] - b[2n+1]
+// 0x30 ~
+// 0x3f : Memory 'y' (8 * 16b)
+//        Word n : bit [15: 0] - y[2n]
+//                 bit [31:16] - y[2n+1]
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
 localparam
-    ADDR_AP_CTRL  = 6'h00,
-    ADDR_GIE      = 6'h04,
-    ADDR_IER      = 6'h08,
-    ADDR_ISR      = 6'h0c,
-    ADDR_A_DATA_0 = 6'h10,
-    ADDR_A_DATA_1 = 6'h14,
-    ADDR_A_CTRL   = 6'h18,
-    ADDR_B_DATA_0 = 6'h1c,
-    ADDR_B_DATA_1 = 6'h20,
-    ADDR_B_CTRL   = 6'h24,
-    ADDR_C_DATA_0 = 6'h28,
-    ADDR_C_DATA_1 = 6'h2c,
-    ADDR_C_CTRL   = 6'h30,
-    WRIDLE        = 2'd0,
-    WRDATA        = 2'd1,
-    WRRESP        = 2'd2,
-    WRRESET       = 2'd3,
-    RDIDLE        = 2'd0,
-    RDDATA        = 2'd1,
-    RDRESET       = 2'd2,
+    ADDR_AP_CTRL = 6'h00,
+    ADDR_GIE     = 6'h04,
+    ADDR_IER     = 6'h08,
+    ADDR_ISR     = 6'h0c,
+    ADDR_A_BASE  = 6'h10,
+    ADDR_A_HIGH  = 6'h1f,
+    ADDR_B_BASE  = 6'h20,
+    ADDR_B_HIGH  = 6'h2f,
+    ADDR_Y_BASE  = 6'h30,
+    ADDR_Y_HIGH  = 6'h3f,
+    WRIDLE       = 2'd0,
+    WRDATA       = 2'd1,
+    WRRESP       = 2'd2,
+    WRRESET      = 2'd3,
+    RDIDLE       = 2'd0,
+    RDDATA       = 2'd1,
+    RDRESET      = 2'd2,
     ADDR_BITS                = 6;
 
 //------------------------Local signal-------------------
@@ -133,16 +134,117 @@ localparam
     reg                           int_gie = 1'b0;
     reg  [1:0]                    int_ier = 2'b0;
     reg  [1:0]                    int_isr = 2'b0;
-    reg  [63:0]                   int_a = 'b0;
-    reg  [63:0]                   int_b = 'b0;
-    reg  [63:0]                   int_c = 'b0;
+    // memory signals
+    wire [1:0]                    int_a_address0;
+    wire                          int_a_ce0;
+    wire [31:0]                   int_a_q0;
+    wire [1:0]                    int_a_address1;
+    wire                          int_a_ce1;
+    wire [3:0]                    int_a_be1;
+    wire                          int_a_we1;
+    wire [31:0]                   int_a_d1;
+    wire [31:0]                   int_a_q1;
+    reg                           int_a_read;
+    reg                           int_a_write;
+    wire [0:0]                    a_shift0;
+    reg  [0:0]                    int_a_shift0;
+    wire [1:0]                    int_b_address0;
+    wire                          int_b_ce0;
+    wire [31:0]                   int_b_q0;
+    wire [1:0]                    int_b_address1;
+    wire                          int_b_ce1;
+    wire [3:0]                    int_b_be1;
+    wire                          int_b_we1;
+    wire [31:0]                   int_b_d1;
+    wire [31:0]                   int_b_q1;
+    reg                           int_b_read;
+    reg                           int_b_write;
+    wire [0:0]                    b_shift0;
+    reg  [0:0]                    int_b_shift0;
+    wire [1:0]                    int_y_address0;
+    wire                          int_y_ce0;
+    wire [3:0]                    int_y_be0;
+    wire [31:0]                   int_y_d0;
+    wire [1:0]                    int_y_address1;
+    wire                          int_y_ce1;
+    wire [31:0]                   int_y_q1;
+    reg                           int_y_read;
+    reg                           int_y_write;
+    wire [0:0]                    y_shift0;
+    reg  [0:0]                    int_y_shift0;
 
 //------------------------Instantiation------------------
+// int_a
+vec_add_control_s_axi_ram #(
+    .MEM_STYLE  ( "auto" ),
+    .MEM_TYPE   ( "2P" ),
+    .BYTE_WIDTH ( 8 ),
+    .WIDTH      ( 32 ),
+    .BYTES      ( 4 ),
+    .DEPTH      ( 4 )
+) int_a (
+    .clk0       ( ACLK ),
+    .address0   ( int_a_address0 ),
+    .ce0        ( int_a_ce0 ),
+    .we0        ( {4{1'b0}} ),
+    .d0         ( {16{1'b0}} ),
+    .q0         ( int_a_q0 ),
+    .clk1       ( ACLK ),
+    .address1   ( int_a_address1 ),
+    .ce1        ( int_a_ce1 ),
+    .we1        ( int_a_be1 ),
+    .d1         ( int_a_d1 ),
+    .q1         ( int_a_q1 )
+);
+// int_b
+vec_add_control_s_axi_ram #(
+    .MEM_STYLE  ( "auto" ),
+    .MEM_TYPE   ( "2P" ),
+    .BYTE_WIDTH ( 8 ),
+    .WIDTH      ( 32 ),
+    .BYTES      ( 4 ),
+    .DEPTH      ( 4 )
+) int_b (
+    .clk0       ( ACLK ),
+    .address0   ( int_b_address0 ),
+    .ce0        ( int_b_ce0 ),
+    .we0        ( {4{1'b0}} ),
+    .d0         ( {16{1'b0}} ),
+    .q0         ( int_b_q0 ),
+    .clk1       ( ACLK ),
+    .address1   ( int_b_address1 ),
+    .ce1        ( int_b_ce1 ),
+    .we1        ( int_b_be1 ),
+    .d1         ( int_b_d1 ),
+    .q1         ( int_b_q1 )
+);
+// int_y
+vec_add_control_s_axi_ram #(
+    .MEM_STYLE  ( "auto" ),
+    .MEM_TYPE   ( "S2P" ),
+    .BYTE_WIDTH ( 8 ),
+    .WIDTH      ( 32 ),
+    .BYTES      ( 4 ),
+    .DEPTH      ( 4 )
+) int_y (
+    .clk0       ( ACLK ),
+    .address0   ( int_y_address0 ),
+    .ce0        ( int_y_ce0 ),
+    .we0        ( int_y_be0 ),
+    .d0         ( int_y_d0 ),
+    .q0         (  ),
+    .clk1       ( ACLK ),
+    .address1   ( int_y_address1 ),
+    .ce1        ( int_y_ce1 ),
+    .we1        ( {4{1'b0}} ),
+    .d1         ( {16{1'b0}} ),
+    .q1         ( int_y_q1 )
+);
 
 
 //------------------------AXI write fsm------------------
 assign AWREADY = (wstate == WRIDLE);
-assign WREADY  = (wstate == WRDATA);
+assign WREADY  = (wstate == WRDATA) && (!ar_hs);
 assign BVALID  = (wstate == WRRESP);
 assign BRESP   = 2'b00;  // OKAY
 assign wmask   = { {8{WSTRB[3]}}, {8{WSTRB[2]}}, {8{WSTRB[1]}}, {8{WSTRB[0]}} };
@@ -166,7 +268,7 @@ always @(*) begin
             else
                 wnext = WRIDLE;
         WRDATA:
-            if (WVALID)
+            if (w_hs)
                 wnext = WRRESP;
             else
                 wnext = WRDATA;
@@ -192,7 +294,7 @@ end
 assign ARREADY = (rstate == RDIDLE);
 assign RDATA   = rdata;
 assign RRESP   = 2'b00;  // OKAY
-assign RVALID  = (rstate == RDDATA);
+assign RVALID  = (rstate == RDDATA) & !int_a_read & !int_b_read & !int_y_read;
 assign ar_hs   = ARVALID & ARREADY;
 assign raddr   = ARADDR[ADDR_BITS-1:0];
 
@@ -246,25 +348,16 @@ always @(posedge ACLK) begin
                 ADDR_ISR: begin
                     rdata <= int_isr;
                 end
-                ADDR_A_DATA_0: begin
-                    rdata <= int_a[31:0];
-                end
-                ADDR_A_DATA_1: begin
-                    rdata <= int_a[63:32];
-                end
-                ADDR_B_DATA_0: begin
-                    rdata <= int_b[31:0];
-                end
-                ADDR_B_DATA_1: begin
-                    rdata <= int_b[63:32];
-                end
-                ADDR_C_DATA_0: begin
-                    rdata <= int_c[31:0];
-                end
-                ADDR_C_DATA_1: begin
-                    rdata <= int_c[63:32];
-                end
             endcase
+        end
+        else if (int_a_read) begin
+            rdata <= int_a_q1;
+        end
+        else if (int_b_read) begin
+            rdata <= int_b_q1;
+        end
+        else if (int_y_read) begin
+            rdata <= int_y_q1;
         end
     end
 end
@@ -276,9 +369,6 @@ assign ap_start      = int_ap_start;
 assign task_ap_done  = (ap_done && !auto_restart_status) || auto_restart_done;
 assign task_ap_ready = ap_ready && !int_auto_restart;
 assign ap_continue   = int_ap_continue || auto_restart_status;
-assign a             = int_a;
-assign b             = int_b;
-assign c             = int_c;
 // int_interrupt
 always @(posedge ACLK) begin
     if (ARESET)
@@ -432,66 +522,6 @@ always @(posedge ACLK) begin
     end
 end
 
-// int_a[31:0]
-always @(posedge ACLK) begin
-    if (ARESET)
-        int_a[31:0] <= 0;
-    else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_A_DATA_0)
-            int_a[31:0] <= (WDATA[31:0] & wmask) | (int_a[31:0] & ~wmask);
-    end
-end
-
-// int_a[63:32]
-always @(posedge ACLK) begin
-    if (ARESET)
-        int_a[63:32] <= 0;
-    else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_A_DATA_1)
-            int_a[63:32] <= (WDATA[31:0] & wmask) | (int_a[63:32] & ~wmask);
-    end
-end
-
-// int_b[31:0]
-always @(posedge ACLK) begin
-    if (ARESET)
-        int_b[31:0] <= 0;
-    else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_B_DATA_0)
-            int_b[31:0] <= (WDATA[31:0] & wmask) | (int_b[31:0] & ~wmask);
-    end
-end
-
-// int_b[63:32]
-always @(posedge ACLK) begin
-    if (ARESET)
-        int_b[63:32] <= 0;
-    else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_B_DATA_1)
-            int_b[63:32] <= (WDATA[31:0] & wmask) | (int_b[63:32] & ~wmask);
-    end
-end
-
-// int_c[31:0]
-always @(posedge ACLK) begin
-    if (ARESET)
-        int_c[31:0] <= 0;
-    else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_C_DATA_0)
-            int_c[31:0] <= (WDATA[31:0] & wmask) | (int_c[31:0] & ~wmask);
-    end
-end
-
-// int_c[63:32]
-always @(posedge ACLK) begin
-    if (ARESET)
-        int_c[63:32] <= 0;
-    else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_C_DATA_1)
-            int_c[63:32] <= (WDATA[31:0] & wmask) | (int_c[63:32] & ~wmask);
-    end
-end
-
 //synthesis translate_off
 always @(posedge ACLK) begin
     if (ACLK_EN) begin
@@ -504,5 +534,230 @@ end
 //synthesis translate_on
 
 //------------------------Memory logic-------------------
+// a
+assign int_a_address0 = a_address0 >> 1;
+assign int_a_ce0      = a_ce0;
+assign a_q0           = int_a_q0 >> (int_a_shift0 * 16);
+assign int_a_address1 = ar_hs ? raddr[3:2] : waddr[3:2];
+assign int_a_ce1      = ar_hs | (int_a_write & WVALID);
+assign int_a_we1      = int_a_write & w_hs;
+assign int_a_be1      = int_a_we1 ? WSTRB : 4'd0;
+assign int_a_d1       = WDATA;
+assign a_shift0       = a_address0[0:0];
+// b
+assign int_b_address0 = b_address0 >> 1;
+assign int_b_ce0      = b_ce0;
+assign b_q0           = int_b_q0 >> (int_b_shift0 * 16);
+assign int_b_address1 = ar_hs ? raddr[3:2] : waddr[3:2];
+assign int_b_ce1      = ar_hs | (int_b_write & WVALID);
+assign int_b_we1      = int_b_write & w_hs;
+assign int_b_be1      = int_b_we1 ? WSTRB : 4'd0;
+assign int_b_d1       = WDATA;
+assign b_shift0       = b_address0[0:0];
+// y
+assign int_y_address0 = y_address0 >> 1;
+assign int_y_ce0      = y_ce0;
+assign int_y_be0      = {2{y_we0}} << (y_shift0 * 2);
+assign int_y_d0       = {2{y_d0}};
+assign int_y_address1 = raddr[3 : 2];
+assign int_y_ce1      = ar_hs;
+assign y_shift0       = y_address0[0:0];
+// int_a_read
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_a_read <= 1'b0;
+    else if (ACLK_EN) begin
+        if (ar_hs && raddr >= ADDR_A_BASE && raddr <= ADDR_A_HIGH)
+            int_a_read <= 1'b1;
+        else
+            int_a_read <= 1'b0;
+    end
+end
+
+// int_a_write
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_a_write <= 1'b0;
+    else if (ACLK_EN) begin
+        if (aw_hs && AWADDR[ADDR_BITS-1:0] >= ADDR_A_BASE && AWADDR[ADDR_BITS-1:0] <= ADDR_A_HIGH)
+            int_a_write <= 1'b1;
+        else if (w_hs)
+            int_a_write <= 1'b0;
+    end
+end
+
+// int_a_shift0
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_a_shift0 <= 1'd0;
+    else if (ACLK_EN) begin
+        if (a_ce0)
+            int_a_shift0 <= a_shift0;
+    end
+end
+
+// int_b_read
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_b_read <= 1'b0;
+    else if (ACLK_EN) begin
+        if (ar_hs && raddr >= ADDR_B_BASE && raddr <= ADDR_B_HIGH)
+            int_b_read <= 1'b1;
+        else
+            int_b_read <= 1'b0;
+    end
+end
+
+// int_b_write
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_b_write <= 1'b0;
+    else if (ACLK_EN) begin
+        if (aw_hs && AWADDR[ADDR_BITS-1:0] >= ADDR_B_BASE && AWADDR[ADDR_BITS-1:0] <= ADDR_B_HIGH)
+            int_b_write <= 1'b1;
+        else if (w_hs)
+            int_b_write <= 1'b0;
+    end
+end
+
+// int_b_shift0
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_b_shift0 <= 1'd0;
+    else if (ACLK_EN) begin
+        if (b_ce0)
+            int_b_shift0 <= b_shift0;
+    end
+end
+
+// int_y_read
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_y_read <= 1'b0;
+    else if (ACLK_EN) begin
+        if (ar_hs && raddr >= ADDR_Y_BASE && raddr <= ADDR_Y_HIGH)
+            int_y_read <= 1'b1;
+        else
+            int_y_read <= 1'b0;
+    end
+end
+
+// int_y_shift0
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_y_shift0 <= 1'd0;
+    else if (ACLK_EN) begin
+        if (y_ce0)
+            int_y_shift0 <= y_shift0;
+    end
+end
+
 
 endmodule
+
+
+`timescale 1ns/1ps
+
+module vec_add_control_s_axi_ram
+#(parameter
+    MEM_STYLE  = "auto",
+    MEM_TYPE   = "S2P",
+    BYTE_WIDTH = 8,
+    WIDTH  = 32,
+    DEPTH  = 256,
+    BYTES  = 4,
+    AWIDTH = log2(DEPTH)
+) (
+    input  wire              clk0,
+    input  wire [AWIDTH-1:0] address0,
+    input  wire              ce0,
+    input  wire [BYTES-1:0]  we0,
+    input  wire [WIDTH-1:0]  d0,
+    output reg  [WIDTH-1:0]  q0,
+    input  wire              clk1,
+    input  wire [AWIDTH-1:0] address1,
+    input  wire              ce1,
+    input  wire [BYTES-1:0]  we1,
+    input  wire [WIDTH-1:0]  d1,
+    output reg  [WIDTH-1:0]  q1
+);
+//------------------------ Parameters -------------------
+localparam
+    PORT0 = (MEM_TYPE == "S2P") ? "WO" : ((MEM_TYPE == "2P") ? "RO" : "RW"),
+    PORT1 = (MEM_TYPE == "S2P") ? "RO" : "RW";
+//------------------------Local signal-------------------
+(* ram_style = MEM_STYLE*)
+reg  [WIDTH-1:0] mem[0:DEPTH-1];
+wire re0, re1;
+//------------------------Task and function--------------
+function integer log2;
+    input integer x;
+    integer n, m;
+begin
+    n = 1;
+    m = 2;
+    while (m < x) begin
+        n = n + 1;
+        m = m * 2;
+    end
+    log2 = n;
+end
+endfunction
+//------------------------Body---------------------------
+generate
+    if (MEM_STYLE == "hls_ultra" && PORT0 == "RW") begin
+        assign re0 = ce0 & ~|we0;
+    end else begin
+        assign re0 = ce0;
+    end
+endgenerate
+
+generate
+    if (MEM_STYLE == "hls_ultra" && PORT1 == "RW") begin
+        assign re1 = ce1 & ~|we1;
+    end else begin
+        assign re1 = ce1;
+    end
+endgenerate
+
+// read port 0
+generate if (PORT0 != "WO") begin
+    always @(posedge clk0) begin
+        if (re0) q0 <= mem[address0];
+    end
+end
+endgenerate
+
+// read port 1
+generate if (PORT1 != "WO") begin
+    always @(posedge clk1) begin
+        if (re1) q1 <= mem[address1];
+    end
+end
+endgenerate
+
+integer i;
+// write port 0
+generate if (PORT0 != "RO") begin
+    always @(posedge clk0) begin
+        if (ce0)
+        for (i = 0; i < BYTES; i = i + 1)
+            if (we0[i])
+                mem[address0][i*BYTE_WIDTH +: BYTE_WIDTH] <= d0[i*BYTE_WIDTH +: BYTE_WIDTH];
+    end
+end
+endgenerate
+
+// write port 1
+generate if (PORT1 != "RO") begin
+    always @(posedge clk1) begin
+        if (ce1)
+        for (i = 0; i < BYTES; i = i + 1)
+            if (we1[i])
+                mem[address1][i*BYTE_WIDTH +: BYTE_WIDTH] <= d1[i*BYTE_WIDTH +: BYTE_WIDTH];
+    end
+end
+endgenerate
+
+endmodule
+

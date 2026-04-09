@@ -1,0 +1,31 @@
+<pragmas>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="_ZN8ssdm_intILi2ELb1EEC2EDq2_i" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<18>::ap_int<18, true>(ap_int_base<18, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="_ZN8ssdm_intILi18ELb1EEC2EDq18_i" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<18, true>::ap_int_base<16, true>(ap_int_base<16, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<18, true>::ap_int_base<2, true>(ap_int_base<2, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<18, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<17, true>::ap_int_base<18, true>(ap_int_base<18, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowBaseC" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="_ZN8ssdm_intILi17ELb1EEC2EDq17_i" off="0" region="0" recursive="0"/>
+<pragma file="/tools/Xilinx/2025.1/Vitis/common/technology/autopilot/etc/ap_common.h" line="534" pragmaType="inline" parentfunction="ssdm_int<32, true>::ssdm_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<2, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<32>::ap_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowBaseC" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>::ap_int_base(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<17>::ap_int<18>(ap_int<18> const&)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="checkOverflowCsim" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int<2>::ap_int(int)" off="0" region="0" recursive="0"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<16, true>::RType<2, true>::mult operator*<16, true, 2, true>(ap_int_base<16, true> const&, ap_int_base<2, true> const&)" off="0" region="0" recursive="0"/>
+<pragma file="kernel.cpp" line="16" pragmaType="pipeline" parentfunction="kernel" off="0" ii="1" style=""/>
+<pragma file="kernel.cpp" line="60" pragmaType="unroll" parentfunction="kernel" factor="-1" skip_exit_check="0"/>
+<pragma file="kernel.cpp" line="53" pragmaType="unroll" parentfunction="kernel" factor="-1" skip_exit_check="0"/>
+<pragma file="kernel.cpp" line="42" pragmaType="unroll" parentfunction="kernel" factor="-1" skip_exit_check="0"/>
+<pragma file="kernel.cpp" line="13" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="x_in" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="14" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="y_out" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="15" pragmaType="interface" parentfunction="kernel" mode="s_axilite" port="" bundle="control" offset="-1" name="" clock="" impl="" register="0"/>
+<pragma file="kernel.cpp" line="34" pragmaType="array_partition" parentfunction="kernel" dim="1" factor="0" mode="complete" dynamic="0" variable="preamble"/>
+<pragma file="kernel.cpp" line="38" pragmaType="array_partition" parentfunction="kernel" dim="1" factor="0" mode="complete" dynamic="0" variable="_ZZ6kernel6ap_intILi16EERS_ILi32EEE9shift_reg"/>
+<pragma file="kernel.cpp" line="50" pragmaType="array_partition" parentfunction="kernel" dim="1" factor="0" mode="complete" dynamic="0" variable="products"/>
+<pragma file="" line="0" pragmaType="inline" parentfunction="ap_int_base<32, true>& ap_int_base<32, true>::operator+=<17, true>(ap_int_base<17, true> const&)" off="0" region="0" recursive="0"/>
+</pragmas>

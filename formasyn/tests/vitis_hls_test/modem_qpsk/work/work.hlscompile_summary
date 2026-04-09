@@ -1,0 +1,245 @@
+<ENTRY>
+{
+ "thisFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/work.hlscompile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Apr  9 04:26:25 2026",
+ "timestampMillis": "1775708785202",
+ "buildStep": {
+  "cmdId": "5e963cf4-bb6a-47b3-9437-f1e24ad3dc5d",
+  "name": "v++",
+  "logFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/logs/work.steps.log",
+  "commandLine": "/tools/Xilinx/2025.1/Vitis/bin/unwrapped/lnx64.o/v++  -c --mode hls --config hls_config.cfg --work_dir work ",
+  "args": [
+   "-c",
+   "--mode",
+   "hls",
+   "--config",
+   "hls_config.cfg",
+   "--work_dir",
+   "work"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/hls_config.cfg",
+    "content": "part=xc7z020clg400-1\n\n[hls]\nclock=10ns\nflow_target=vitis\nsyn.top=qpsk_mapper\nsyn.file=kernel.cpp\ntb.file=kernel_tb.cpp\n"
+   }
+  ],
+  "cwd": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:26:25 2026",
+ "timestampMillis": "1775708785202",
+ "status": {
+  "cmdId": "5e963cf4-bb6a-47b3-9437-f1e24ad3dc5d",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu Apr  9 04:26:29 2026",
+ "timestampMillis": "1775708789318",
+ "buildSummary": {
+  "hardwarePlatform": "",
+  "hardwareDsa": "",
+  "platformDirectory": "",
+  "runtime": "",
+  "systemConfig": "",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "qpsk_mapper",
+     "file": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/qpsk_mapper.zip",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/kernel.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "2025.1"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Apr  9 04:26:29 2026",
+ "timestampMillis": "1775708789319",
+ "buildStep": {
+  "cmdId": "da83a65c-38a2-48c4-b841-49fb277ab7bb",
+  "name": "",
+  "logFile": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/hls/hls.log",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:26:29 2026",
+ "timestampMillis": "1775708789319",
+ "status": {
+  "cmdId": "da83a65c-38a2-48c4-b841-49fb277ab7bb",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:29 2026",
+ "timestampMillis": "1775708789319",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/hls/hls_data.json",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:29 2026",
+ "timestampMillis": "1775708789319",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/hls/syn/report/csynth.rpt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:29 2026",
+ "timestampMillis": "1775708789319",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/hls/syn/report/csynth.xml",
+  "name": "",
+  "fileType": "XML",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:39 2026",
+ "timestampMillis": "1775708799392",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_DATAFLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:39 2026",
+ "timestampMillis": "1775708799393",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_FUNCTION_CALL_GRAPH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:39 2026",
+ "timestampMillis": "1775708799393",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_SCHEDULE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:26:39 2026",
+ "timestampMillis": "1775708799394",
+ "status": {
+  "cmdId": "da83a65c-38a2-48c4-b841-49fb277ab7bb",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  9 04:26:39 2026",
+ "timestampMillis": "1775708799470",
+ "status": {
+  "cmdId": "5e963cf4-bb6a-47b3-9437-f1e24ad3dc5d",
+  "state": "CS_FAILED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:39 2026",
+ "timestampMillis": "1775708799533",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/reports/v++_compile_work_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  9 04:26:39 2026",
+ "timestampMillis": "1775708799534",
+ "report": {
+  "path": "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qpsk/work/reports/.db/v++_compile_work_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

@@ -1,0 +1,81 @@
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 85, Column: 22 }
+Function:        _Z6kernel6ap_intILi16EERS0_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_85_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 46, Column: 19 }
+Function:        _Z6kernel6ap_intILi16EERS0_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_46_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 12, Column: 0 }
+Function:        _Z6kernel6ap_intILi16EERS0_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_85_2
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:85:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '5'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 12, Column: 0 }
+Function:        _Z6kernel6ap_intILi16EERS0_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_46_1
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:46:19'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '16'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_kernel_ir
+Args:            
+  - Callee:          'kernel(ap_int<16>, ap_int<16>&)'
+    DebugLoc:        { File: kernel.cpp, Line: 12, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_kernel_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: kernel.cpp, Line: 42, Column: 0 }
+Function:        _Z6kernel6ap_intILi16EERS0_
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          _ZZ6kernel6ap_intILi16EERS0_E9shift_reg
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...

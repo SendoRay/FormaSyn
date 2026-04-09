@@ -76,10 +76,8 @@ proc check_tvin_file {} {
 		puts stdout "[debug_prompt arg check_sim.tcl] start...";
 	}
     set rtlfilelist {
-         "c.vec_add.autotvin_gmem.dat"
          "c.vec_add.autotvin_a.dat"
          "c.vec_add.autotvin_b.dat"
-         "c.vec_add.autotvin_c.dat"
     }
     foreach rtlfile $rtlfilelist {
         if {[file isfile $rtlfile]} {
@@ -99,7 +97,7 @@ proc check_tvout_file {} {
 		puts stdout "[debug_prompt arg check_sim.tcl] start...";
 	}
     set rtlfilelist {
-         "rtl.vec_add.autotvout_gmem.dat"
+         "rtl.vec_add.autotvout_y.dat"
     }
     foreach rtlfile $rtlfilelist {
         if {[file isfile $rtlfile]} {

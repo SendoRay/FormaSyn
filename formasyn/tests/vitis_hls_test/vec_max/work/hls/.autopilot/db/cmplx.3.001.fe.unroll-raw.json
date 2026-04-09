@@ -1,0 +1,20 @@
+{
+  "0": {
+    "basicblocks": 18,
+    "calls": "",
+    "control_depth": 1,
+    "def_use_depth": 9,
+    "file": "kernel.cpp",
+    "fileloc": 3,
+    "instructions": 74,
+    "loads": {
+      "T": 15
+    },
+    "memory_accesses": 17,
+    "name": "vec_max",
+    "stores": {
+      "T": 2
+    },
+    "total_instructions": 74
+  }
+}

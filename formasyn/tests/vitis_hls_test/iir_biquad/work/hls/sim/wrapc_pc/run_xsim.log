@@ -1,0 +1,348 @@
+PASS
+Vivado Simulator v2025.1.0
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /tools/Xilinx/2025.1/Vivado/bin/unwrapped/lnx64.o/xelab xil_defaultlib.apatb_kernel_top xil_defaultlib.glbl -Oenable_linking_all_libraries -prj kernel.prj -L smartconnect_v1_0 -L axi_protocol_checker_v1_1_12 -L axi_protocol_checker_v1_1_13 -L axis_protocol_checker_v1_1_11 -L axis_protocol_checker_v1_1_12 -L xil_defaultlib -L unisims_ver -L xpm -L floating_point_v7_1_20 -L floating_point_v7_0_25 --lib ieee_proposed=./ieee_proposed -L uvm -relax -i ./svr -i ./svtb -i ./file_agent -i ./kernel_subsystem -s kernel 
+Multi-threading is on. Using 127 slave threads.
+WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by AMD, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the "-mt off -v 1" switches to see more information from the C compiler. The following environment variables have been detected:
+    LIBRARY_PATH
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/kernel.autotb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module apatb_kernel_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/kernel_mul_32s_9s_40_2_1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module kernel_mul_32s_9s_40_2_1
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/kernel.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module kernel
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/kernel_control_s_axi.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module kernel_control_s_axi
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/dataflow_monitor.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dataflow_monitor
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/file_agent/file_agent_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/axivip/axi_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/axivip/axi_if.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/kernel_subsystem/kernel_subsystem_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/svtb/misc_interface.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/iir_biquad/work/hls/sim/verilog/svtb/sv_module_top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sv_module_top
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/proj/primebuilds/9999.0_PRIME_0428_0031/installs/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 4356. Module uvm_pkg doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/proj/primebuilds/9999.0_PRIME_0428_0031/installs/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 4356. Module uvm_pkg doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4468] File : /proj/primebuilds/9999.0_PRIME_0428_0031/installs/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv, Line : 25994, RANDC variable size more than 8 bits. This will be treated as a RAND variable instead.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package xil_defaultlib.$unit_sv_module_top_sv
+Compiling package uvm.uvm_pkg
+Compiling package std.std
+Compiling package xil_defaultlib.axi_pkg
+Compiling package xil_defaultlib.kernel_subsystem_pkg
+Compiling package xil_defaultlib.file_agent_pkg
+Compiling package xil_defaultlib.$unit_dataflow_monitor_sv
+Compiling module xil_defaultlib.kernel_control_s_axi
+Compiling module xil_defaultlib.kernel_mul_32s_9s_40_2_1(NUM_STA...
+Compiling module xil_defaultlib.kernel
+Compiling module xil_defaultlib.misc_interface_default
+Compiling module xil_defaultlib.axi_if(ADDR_WIDTH=5,STRB_WIDTH=4...
+Compiling module xil_defaultlib.sv_module_top
+Compiling module xil_defaultlib.nodf_module_intf_default
+Compiling module xil_defaultlib.dataflow_monitor_1
+Compiling module xil_defaultlib.apatb_kernel_top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot kernel
+
+****** xsim v2025.1 (64-bit)
+  **** SW Build 6140274 on Wed May 21 22:58:25 MDT 2025
+  **** IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+  **** SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+  **** Start of session at: Thu Apr  9 02:37:12 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/kernel/xsim_script.tcl
+# xsim {kernel} -testplusarg UVM_VERBOSITY=UVM_NONE -testplusarg UVM_TESTNAME=kernel_test_lib -testplusarg UVM_TIMEOUT=20000000000000 -autoloadwcfg -tclbatch {kernel.tcl}
+Time resolution is 1 ps
+source kernel.tcl
+## run all
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18601) @ 0: reporter [UVM/RELNOTES] 
+----------------------------------------------------------------
+UVM-1.2
+(C) 2007-2014 Mentor Graphics Corporation
+(C) 2007-2014 Cadence Design Systems, Inc.
+(C) 2006-2014 Synopsys, Inc.
+(C) 2011-2013 Cypress Semiconductor Corp.
+(C) 2013-2014 NVIDIA Corporation
+----------------------------------------------------------------
+
+  ***********       IMPORTANT RELEASE NOTES         ************
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_NO_DEPRECATED undefined.
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+
+      (Specify +UVM_NO_RELNOTES to turn off this notice)
+
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18648) @ 0: reporter [NO_DPI_TSTNAME] UVM_NO_DPI defined--getting UVM_TESTNAME directly, without DPI
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(18752) @ 0: reporter [UVMTOP] UVM testbench topology:
+------------------------------------------------------------------------------------
+Name                         Type                              Size  Value          
+------------------------------------------------------------------------------------
+uvm_test_top                 kernel_test_lib                   -     @364           
+  top_env                    kernel_env                        -     @375           
+    axi_lite_control         uvm_env                           -     @396           
+      item_rtr_port          uvm_analysis_port                 -     @415           
+      item_wtr_port          uvm_analysis_port                 -     @405           
+      master                 uvm_agent                         -     @788           
+        ardrv                uvm_driver #(REQ,RSP)             -     @1463          
+          item_read_imp      uvm_analysis_port                 -     @1492          
+          rsp_port           uvm_analysis_port                 -     @1482          
+          seq_item_port      uvm_seq_item_pull_port            -     @1472          
+          m_num_sent         integral                          32    'h0            
+        arsqr                axi_sequencer                     -     @1502          
+          rsp_export         uvm_analysis_export               -     @1511          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1629          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        awdrv                uvm_driver #(REQ,RSP)             -     @935           
+          item_read_imp      uvm_analysis_port                 -     @964           
+          rsp_port           uvm_analysis_port                 -     @954           
+          seq_item_port      uvm_seq_item_pull_port            -     @944           
+          m_num_sent         integral                          32    'h0            
+        awsqr                axi_sequencer                     -     @974           
+          rsp_export         uvm_analysis_export               -     @983           
+          seq_item_export    uvm_seq_item_pull_imp             -     @1101          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        bdrv                 uvm_driver #(REQ,RSP)             -     @1287          
+          item_read_imp      uvm_analysis_port                 -     @1316          
+          rsp_port           uvm_analysis_port                 -     @1306          
+          seq_item_port      uvm_seq_item_pull_port            -     @1296          
+          m_num_sent         integral                          32    'h0            
+        bsqr                 axi_sequencer                     -     @1326          
+          rsp_export         uvm_analysis_export               -     @1335          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1453          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        rdrv                 uvm_driver #(REQ,RSP)             -     @1639          
+          item_read_imp      uvm_analysis_port                 -     @1668          
+          rsp_port           uvm_analysis_port                 -     @1658          
+          seq_item_port      uvm_seq_item_pull_port            -     @1648          
+          m_num_sent         integral                          32    'h0            
+        rsqr                 axi_sequencer                     -     @1678          
+          rsp_export         uvm_analysis_export               -     @1687          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1805          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+        wdrv                 uvm_driver #(REQ,RSP)             -     @1111          
+          item_read_imp      uvm_analysis_port                 -     @1140          
+          rsp_port           uvm_analysis_port                 -     @1130          
+          seq_item_port      uvm_seq_item_pull_port            -     @1120          
+          m_num_sent         integral                          32    'h0            
+        wsqr                 axi_sequencer                     -     @1150          
+          rsp_export         uvm_analysis_export               -     @1159          
+          seq_item_export    uvm_seq_item_pull_imp             -     @1277          
+          arbitration_queue  array                             0     -              
+          lock_queue         array                             0     -              
+          num_last_reqs      integral                          32    'd1            
+          num_last_rsps      integral                          32    'd1            
+      monitor                uvm_monitor                       -     @610           
+        item_ar2r_port       uvm_analysis_port                 -     @679           
+        item_ar_port         uvm_analysis_port                 -     @649           
+        item_aw2b_port       uvm_analysis_port                 -     @669           
+        item_aw_port         uvm_analysis_port                 -     @619           
+        item_b_port          uvm_analysis_port                 -     @639           
+        item_r_port          uvm_analysis_port                 -     @659           
+        item_w_port          uvm_analysis_port                 -     @629           
+        checks_enable        integral                          1     'h1            
+        coverage_enable      integral                          1     'h1            
+      state                  axi_state                         -     @689           
+        ar2r_imp             uvm_analysis_imp_ar2r             -     @758           
+        ar_imp               uvm_analysis_imp_ar               -     @728           
+        aw2b_imp             uvm_analysis_imp_aw2b             -     @748           
+        aw_imp               uvm_analysis_imp_aw               -     @698           
+        b_imp                uvm_analysis_imp_b                -     @718           
+        item_rtr_port        uvm_analysis_port                 -     @778           
+        item_wtr_port        uvm_analysis_port                 -     @768           
+        r_imp                uvm_analysis_imp_r                -     @738           
+        w_imp                uvm_analysis_imp_w                -     @708           
+        avg_rate             integral                          32    'h0            
+        exp_rate             integral                          32    'h0            
+        win_size             integral                          32    'h0            
+        bqnum_for_slaseq     integral                          32    'h0            
+        rq_from_model_num    integral                          32    'h0            
+      vsqr                   axi_virtual_sequencer             -     @797           
+        rsp_export           uvm_analysis_export               -     @806           
+        seq_item_export      uvm_seq_item_pull_imp             -     @924           
+        arbitration_queue    array                             0     -              
+        lock_queue           array                             0     -              
+        num_last_reqs        integral                          32    'd1            
+        num_last_rsps        integral                          32    'd1            
+      cfg                    axi_cfg                           -     @390           
+        has_checker          integral                          1     'h1            
+        has_coverage         integral                          1     'h1            
+        id_num               integral                          32    'h1            
+        reset_level          reset_level_enum                  32    RESET_LEVEL_LOW
+        drv_type             drv_type_enum                     32    MASTER         
+        write_latency_mode   latency_mode_enum                 32    CHANNEL_FIRST  
+        read_latency_mode    latency_mode_enum                 32    CHANNEL_FIRST  
+        clatency             axi_latency                       -     @391           
+          wr_latency         integral                          32    'h0            
+          rd_latency         integral                          32    'h0            
+    kernel_virtual_sqr       kernel_virtual_sequencer          -     @467           
+      rsp_export             uvm_analysis_export               -     @476           
+      seq_item_export        uvm_seq_item_pull_imp             -     @594           
+      arbitration_queue      array                             0     -              
+      lock_queue             array                             0     -              
+      num_last_reqs          integral                          32    'd1            
+      num_last_rsps          integral                          32    'd1            
+    refm                     kernel_reference_model            -     @425           
+      trans_num_idx          integral                          32    'h0            
+    subsys_mon               kernel_subsystem_monitor          -     @438           
+      control_rtr_imp        uvm_analysis_imp_axi_rtr_control  -     @457           
+      control_wtr_imp        uvm_analysis_imp_axi_wtr_control  -     @447           
+      scbd                   kernel_scoreboard                 -     @1892          
+        refm                 kernel_reference_model            -     @425           
+          trans_num_idx      integral                          32    'h0            
+    refm                     kernel_reference_model            -     @425           
+    kernel_virtual_sqr       kernel_virtual_sequencer          -     @467           
+    kernel_cfg               kernel_config                     -     @389           
+      control_cfg            axi_cfg                           -     @390           
+        has_checker          integral                          1     'h1            
+        has_coverage         integral                          1     'h1            
+        id_num               integral                          32    'h1            
+        reset_level          reset_level_enum                  32    RESET_LEVEL_LOW
+        drv_type             drv_type_enum                     32    MASTER         
+        write_latency_mode   latency_mode_enum                 32    CHANNEL_FIRST  
+        read_latency_mode    latency_mode_enum                 32    CHANNEL_FIRST  
+        clatency             axi_latency                       -     @391           
+          wr_latency         integral                          32    'h0            
+          rd_latency         integral                          32    'h0            
+      check_ena              integral                          32    'h0            
+      cover_ena              integral                          32    'h0            
+------------------------------------------------------------------------------------
+
+UVM_INFO /tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv(20867) @ 0: reporter [UVM/COMP/NAMECHECK] This implementation of the component name checks requires DPI to be enabled
+////////////////////////////////////////////////////////////////////////////////////
+// Inter-Transaction Progress: Completed Transaction / Total Transaction
+// Intra-Transaction Progress: Measured Latency / Latency Estimation * 100%
+//
+// RTL Simulation : "Inter-Transaction Progress" ["Intra-Transaction Progress"] @ "Simulation Time"
+////////////////////////////////////////////////////////////////////////////////////
+// RTL Simulation : 0 / 100 [0.00%] @ "125000"
+// RTL Simulation : 1 / 100 [100.00%] @ "315000"
+// RTL Simulation : 2 / 100 [100.00%] @ "545000"
+// RTL Simulation : 3 / 100 [100.00%] @ "775000"
+// RTL Simulation : 4 / 100 [100.00%] @ "1005000"
+// RTL Simulation : 5 / 100 [100.00%] @ "1235000"
+// RTL Simulation : 6 / 100 [100.00%] @ "1465000"
+// RTL Simulation : 7 / 100 [100.00%] @ "1695000"
+// RTL Simulation : 8 / 100 [100.00%] @ "1925000"
+// RTL Simulation : 9 / 100 [100.00%] @ "2155000"
+// RTL Simulation : 10 / 100 [100.00%] @ "2385000"
+// RTL Simulation : 11 / 100 [100.00%] @ "2615000"
+// RTL Simulation : 12 / 100 [100.00%] @ "2845000"
+// RTL Simulation : 13 / 100 [100.00%] @ "3075000"
+// RTL Simulation : 14 / 100 [100.00%] @ "3305000"
+// RTL Simulation : 15 / 100 [100.00%] @ "3535000"
+// RTL Simulation : 16 / 100 [100.00%] @ "3765000"
+// RTL Simulation : 17 / 100 [100.00%] @ "3995000"
+// RTL Simulation : 18 / 100 [100.00%] @ "4225000"
+// RTL Simulation : 19 / 100 [100.00%] @ "4455000"
+// RTL Simulation : 20 / 100 [100.00%] @ "4685000"
+// RTL Simulation : 21 / 100 [100.00%] @ "4915000"
+// RTL Simulation : 22 / 100 [100.00%] @ "5145000"
+// RTL Simulation : 23 / 100 [100.00%] @ "5375000"
+// RTL Simulation : 24 / 100 [100.00%] @ "5605000"
+// RTL Simulation : 25 / 100 [100.00%] @ "5835000"
+// RTL Simulation : 26 / 100 [100.00%] @ "6065000"
+// RTL Simulation : 27 / 100 [100.00%] @ "6295000"
+// RTL Simulation : 28 / 100 [100.00%] @ "6525000"
+// RTL Simulation : 29 / 100 [100.00%] @ "6755000"
+// RTL Simulation : 30 / 100 [100.00%] @ "6985000"
+// RTL Simulation : 31 / 100 [100.00%] @ "7215000"
+// RTL Simulation : 32 / 100 [100.00%] @ "7445000"
+// RTL Simulation : 33 / 100 [100.00%] @ "7675000"
+// RTL Simulation : 34 / 100 [100.00%] @ "7905000"
+// RTL Simulation : 35 / 100 [100.00%] @ "8135000"
+// RTL Simulation : 36 / 100 [100.00%] @ "8365000"
+// RTL Simulation : 37 / 100 [100.00%] @ "8595000"
+// RTL Simulation : 38 / 100 [100.00%] @ "8825000"
+// RTL Simulation : 39 / 100 [100.00%] @ "9055000"
+// RTL Simulation : 40 / 100 [100.00%] @ "9285000"
+// RTL Simulation : 41 / 100 [100.00%] @ "9515000"
+// RTL Simulation : 42 / 100 [100.00%] @ "9745000"
+// RTL Simulation : 43 / 100 [100.00%] @ "9975000"
+// RTL Simulation : 44 / 100 [100.00%] @ "10205000"
+// RTL Simulation : 45 / 100 [100.00%] @ "10435000"
+// RTL Simulation : 46 / 100 [100.00%] @ "10665000"
+// RTL Simulation : 47 / 100 [100.00%] @ "10895000"
+// RTL Simulation : 48 / 100 [100.00%] @ "11125000"
+// RTL Simulation : 49 / 100 [100.00%] @ "11355000"
+// RTL Simulation : 50 / 100 [100.00%] @ "11585000"
+// RTL Simulation : 51 / 100 [100.00%] @ "11815000"
+// RTL Simulation : 52 / 100 [100.00%] @ "12045000"
+// RTL Simulation : 53 / 100 [100.00%] @ "12275000"
+// RTL Simulation : 54 / 100 [100.00%] @ "12505000"
+// RTL Simulation : 55 / 100 [100.00%] @ "12735000"
+// RTL Simulation : 56 / 100 [100.00%] @ "12965000"
+// RTL Simulation : 57 / 100 [100.00%] @ "13195000"
+// RTL Simulation : 58 / 100 [100.00%] @ "13425000"
+// RTL Simulation : 59 / 100 [100.00%] @ "13655000"
+// RTL Simulation : 60 / 100 [100.00%] @ "13885000"
+// RTL Simulation : 61 / 100 [100.00%] @ "14115000"
+// RTL Simulation : 62 / 100 [100.00%] @ "14345000"
+// RTL Simulation : 63 / 100 [100.00%] @ "14575000"
+// RTL Simulation : 64 / 100 [100.00%] @ "14805000"
+// RTL Simulation : 65 / 100 [100.00%] @ "15035000"
+// RTL Simulation : 66 / 100 [100.00%] @ "15265000"
+// RTL Simulation : 67 / 100 [100.00%] @ "15495000"
+// RTL Simulation : 68 / 100 [100.00%] @ "15725000"
+// RTL Simulation : 69 / 100 [100.00%] @ "15955000"
+// RTL Simulation : 70 / 100 [100.00%] @ "16185000"
+// RTL Simulation : 71 / 100 [100.00%] @ "16415000"
+// RTL Simulation : 72 / 100 [100.00%] @ "16645000"
+// RTL Simulation : 73 / 100 [100.00%] @ "16875000"
+// RTL Simulation : 74 / 100 [100.00%] @ "17105000"
+// RTL Simulation : 75 / 100 [100.00%] @ "17335000"
+// RTL Simulation : 76 / 100 [100.00%] @ "17565000"
+// RTL Simulation : 77 / 100 [100.00%] @ "17795000"
+// RTL Simulation : 78 / 100 [100.00%] @ "18025000"
+// RTL Simulation : 79 / 100 [100.00%] @ "18255000"
+// RTL Simulation : 80 / 100 [100.00%] @ "18485000"
+// RTL Simulation : 81 / 100 [100.00%] @ "18715000"
+// RTL Simulation : 82 / 100 [100.00%] @ "18945000"
+// RTL Simulation : 83 / 100 [100.00%] @ "19175000"
+// RTL Simulation : 84 / 100 [100.00%] @ "19405000"
+// RTL Simulation : 85 / 100 [100.00%] @ "19635000"
+// RTL Simulation : 86 / 100 [100.00%] @ "19865000"
+// RTL Simulation : 87 / 100 [100.00%] @ "20095000"
+// RTL Simulation : 88 / 100 [100.00%] @ "20325000"
+// RTL Simulation : 89 / 100 [100.00%] @ "20555000"
+// RTL Simulation : 90 / 100 [100.00%] @ "20785000"
+// RTL Simulation : 91 / 100 [100.00%] @ "21015000"
+// RTL Simulation : 92 / 100 [100.00%] @ "21245000"
+// RTL Simulation : 93 / 100 [100.00%] @ "21475000"
+// RTL Simulation : 94 / 100 [100.00%] @ "21705000"
+// RTL Simulation : 95 / 100 [100.00%] @ "21935000"
+// RTL Simulation : 96 / 100 [100.00%] @ "22165000"
+// RTL Simulation : 97 / 100 [100.00%] @ "22395000"
+// RTL Simulation : 98 / 100 [100.00%] @ "22625000"
+// RTL Simulation : 99 / 100 [100.00%] @ "22855000"
+// RTL Simulation : 100 / 100 [100.00%] @ "23085000"
+////////////////////////////////////////////////////////////////////////////////////
+$finish called at time : 23215 ns : File "/tools/Xilinx/2025.1/Vivado/data/system_verilog/uvm_1.2/xlnx_uvm_package.sv" Line 18699
+## quit
+INFO: [Common 17-206] Exiting xsim at Thu Apr  9 02:37:15 2026...
+PASS

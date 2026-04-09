@@ -9,7 +9,6 @@
     `define VEC_ADD_VIRTUAL_SEQUENCER__SV                    
                                                                        
     class vec_add_virtual_sequencer extends uvm_sequencer;         
-        axi_pkg::axi_virtual_sequencer gmem_sqr; 
         axi_pkg::axi_virtual_sequencer control_sqr; 
  
         function new (string name, uvm_component parent);              

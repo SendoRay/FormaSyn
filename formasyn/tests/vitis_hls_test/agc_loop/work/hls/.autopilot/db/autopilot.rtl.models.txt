@@ -1,0 +1,4 @@
+kernel_sparsemux_7_2_16_1_1
+kernel_mac_muladd_16s_16ns_28s_32_4_1
+kernel_control_s_axi
+kernel

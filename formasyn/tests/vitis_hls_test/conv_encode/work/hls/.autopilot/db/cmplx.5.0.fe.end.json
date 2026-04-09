@@ -1,0 +1,35 @@
+{
+    "0": {
+        "name": "conv_encode",
+        "file": "kernel.cpp",
+        "fileloc": "7",
+        "instructions": "14",
+        "total_instructions": "42",
+        "calls": "1",
+        "basicblocks": "1",
+        "memory_accesses": "0",
+        "control_depth": "0",
+        "def_use_depth": "1"
+    },
+    "1": {
+        "name": "_Z11conv_encodeRN3hls6streamI7ap_uintILi1EELi0EEERNS0_IS1_ILi2EELi0EEES1_ILi32EE_for.inc",
+        "file": "kernel.cpp",
+        "fileloc": "0",
+        "instructions": "28",
+        "total_instructions": "28",
+        "calls": "",
+        "basicblocks": "4",
+        "memory_accesses": "6",
+        "control_depth": "1",
+        "def_use_depth": "1",
+        "loads": {
+            "L": "2"
+        },
+        "stores": {
+            "L": "4"
+        },
+        "loops": {
+            "L": "1"
+        }
+    }
+}

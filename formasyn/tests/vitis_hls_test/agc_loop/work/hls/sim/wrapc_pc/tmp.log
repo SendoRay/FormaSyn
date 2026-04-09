@@ -1,0 +1,30 @@
+Test 1: Step Input Response
+  Step input = 200
+  Sample | DUT Output | Golden Output | Diff
+  0 | -1600 | 1600 | 3200
+  1 | -1600 | 1600 | 3200
+  2 | -1600 | 1600 | 3200
+  3 | -1600 | 1600 | 3200
+  4 | -1600 | 1600 | 3200
+  5 | -1600 | 1600 | 3200
+  6 | -1600 | 1600 | 3200
+  7 | -1600 | 1600 | 3200
+  8 | -1600 | 1600 | 3200
+  9 | -1600 | 1600 | 3200
+  20 | -1600 | 1600 | 3200
+  40 | -1600 | 1600 | 3200
+  60 | -1600 | 1600 | 3200
+  80 | -1600 | 1600 | 3200
+
+Test 2: Convergence Verification
+  Warning: Did not converge within 1000 samples
+
+Test 3: Large Input - Gain Reduction
+  Large input = 2000
+  Initial output magnitude: 250
+  Final output magnitude: 250
+  Target magnitude: 1000
+
+Test 4: Alternating Input
+
+PASS

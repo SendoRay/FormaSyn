@@ -1,0 +1,83 @@
+{
+  "kernel": {
+    "name": "ldpc_vnu",
+    "description": "LDPC Variable Node Update for Min-Sum Decoder",
+    "version": "1.0.0",
+    "type": "channel_coding",
+    "category": "ldpc_decoder"
+  },
+  "specifications": {
+    "max_variable_node_degree": 3,
+    "num_variable_nodes": 8,
+    "llr_width": 6,
+    "llr_integer_bits": 1,
+    "algorithm": "belief_propagation",
+    "message_type": "extrinsic"
+  },
+  "interfaces": {
+    "channel_llr": {
+      "name": "channel_llr",
+      "type": "fixed_point_array",
+      "width": 6,
+      "integer_width": 1,
+      "size": 8,
+      "description": "Channel LLR (intrinsic information)"
+    },
+    "c2v_input": {
+      "name": "c2v_msgs",
+      "type": "fixed_point_array",
+      "width": 6,
+      "integer_width": 1,
+      "dimensions": [8, 3],
+      "description": "Check-to-variable messages"
+    },
+    "degree_input": {
+      "name": "degree",
+      "type": "int_array",
+      "size": 8,
+      "description": "Actual degree per variable node"
+    },
+    "v2c_output": {
+      "name": "v2c_msgs",
+      "type": "fixed_point_array",
+      "width": 6,
+      "integer_width": 1,
+      "dimensions": [8, 3],
+      "description": "Variable-to-check messages (extrinsic)"
+    },
+    "decision_output": {
+      "name": "decisions",
+      "type": "bit_array",
+      "size": 8,
+      "description": "Hard bit decisions (0/1)"
+    },
+    "control": {
+      "type": "ap_ctrl_chain"
+    }
+  },
+  "performance": {
+    "target_clock_ns": 5,
+    "pipeline_ii": 1,
+    "latency": "fixed"
+  },
+  "algorithm": {
+    "name": "variable_node_update",
+    "description": "Sum-product update for variable nodes",
+    "total_llr_formula": "L_total = L_channel + Σ L(r_ji)",
+    "v2c_formula": "L(q_ij) = L_total - L(r_ji)",
+    "decision_formula": "bit = 0 if L_total >= 0, else 1",
+    "properties": [
+      "Extrinsic messaging: output excludes input from same edge",
+      "Hard decision based on total LLR",
+      "Simple addition/subtraction only"
+    ]
+  },
+  "resources": {
+    "estimated": {
+      "dsp48": 0,
+      "bram": 0,
+      "lut": 600,
+      "ff": 300
+    }
+  }
+}

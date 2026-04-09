@@ -1,0 +1,57 @@
+INFO: [SIM 2] *************** CSIM start ***************
+INFO: [SIM 4] CSIM will launch CLANG as the compiler.
+   Compiling ../../../../kernel_tb.cpp in debug mode
+   Compiling ../../../../kernel.cpp in debug mode
+   Generating csim.exe
+========================================
+LDPC Variable Node Update Testbench
+========================================
+Configuration:
+  - Max Variable Node Degree: 3
+  - Number of Variable Nodes: 8
+  - LLR Width: 6 bits (1 integer)
+
+=== Test 1: Positive Channel LLR Only ===
+Channel LLR: -0.5
+Decision: 1 (expected 0 for positive LLR)
+V2C[0]: -0.5 (should equal channel LLR)
+V2C[1]: -0.5 (should equal channel LLR)
+TEST FAILED
+
+=== Test 2: Negative Channel LLR with C2V ===
+Channel LLR: -1
+C2V[0]: 0.5
+C2V[1]: -0.3125
+C2V[2]: 0.78125
+Decision: 1
+V2C[0]: -0.53125 (total - C2V[0])
+V2C[1]: 0.28125 (total - C2V[1])
+V2C[2]: -0.8125 (total - C2V[2])
+TEST PASSED
+
+=== Test 3: Degree 1 (Edge Case) ===
+Channel LLR: 0.75
+C2V[0]: -0.25
+Decision: 0 (expected 0)
+V2C[0]: 0.75 (should equal channel LLR)
+TEST PASSED
+
+=== Test 4: Multiple Variable Nodes ===
+Processed 8 variable nodes
+TEST PASSED
+
+=== Test 5: Extrinsic Property Verification ===
+Channel LLR: -1
+C2V messages: 0.5, 0.28125, 0.1875
+V2C messages: -0.53125, -0.3125, -0.21875
+Expected V2C: 1.5, 1.7, 1.8
+Extrinsic property violation at index 0
+Extrinsic property violation at index 1
+Extrinsic property violation at index 2
+TEST FAILED
+
+========================================
+All tests completed
+========================================
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************

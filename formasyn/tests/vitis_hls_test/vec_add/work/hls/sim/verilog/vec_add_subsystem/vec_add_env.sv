@@ -8,36 +8,12 @@
 `ifndef VEC_ADD_ENV__SV                                                                                   
     `define VEC_ADD_ENV__SV                                                                               
                                                                                                                     
-    class axi_latency_gmem extends axi_latency;
-        rand int    wr_latency;
-        rand int    rd_latency;
-        `uvm_object_utils_begin(axi_latency_gmem)
-        `uvm_object_utils_end
-        function new ( string name = "axi_latency_gmem" );
-            super.new(name);
-        endfunction
-        virtual function int get_wr_lat();
-            int delay;
-            void'(std::randomize(delay) with { delay == 64;});
-            wr_latency = delay;
-            return wr_latency;
-        endfunction
-        virtual function int get_rd_lat();
-            int delay;
-            void'(std::randomize(delay) with { delay == 64;});
-            rd_latency = delay;
-            return rd_latency;
-        endfunction
-    endclass
-
                                                                                                                     
     class vec_add_env extends uvm_env;                                                                          
                                                                                                                     
-        axi_latency_gmem    lat_gmem;
         vec_add_virtual_sequencer vec_add_virtual_sqr;                                                      
         vec_add_config vec_add_cfg;                                                                         
                                                                                                                     
-        axi_pkg::axi_env#(64,64,8,3,1) axi_master_gmem;
         axi_pkg::axi_env#(6,4,4,3,1) axi_lite_control;
                                                                                                                     
         vec_add_reference_model   refm;                                                                         
@@ -64,16 +40,6 @@
         super.build_phase(phase);                                                                                   
         vec_add_cfg = vec_add_config::type_id::create("vec_add_cfg", this);                           
                                                                                                                     
-
-        vec_add_cfg.gmem_cfg.set_default();
-        vec_add_cfg.gmem_cfg.drv_type = axi_pkg::SLAVE;
-        vec_add_cfg.gmem_cfg.reset_level = axi_pkg::RESET_LEVEL_LOW;
-        lat_gmem = axi_latency_gmem::type_id::create("lat_gmem", this);
-        vec_add_cfg.gmem_cfg.clatency = lat_gmem;
-        vec_add_cfg.gmem_cfg.write_latency_mode = TRANSACTION_FIRST;
-        vec_add_cfg.gmem_cfg.read_latency_mode = TRANSACTION_FIRST;
-        uvm_config_db#(axi_pkg::axi_cfg)::set(this, "axi_master_gmem*", "cfg", vec_add_cfg.gmem_cfg);
-        axi_master_gmem = axi_pkg::axi_env#(64,64,8,3,1)::type_id::create("axi_master_gmem", this);
 
         vec_add_cfg.control_cfg.set_default();
         vec_add_cfg.control_cfg.drv_type = axi_pkg::MASTER;
@@ -104,11 +70,6 @@
         super.connect_phase(phase);
 
 
-        if(vec_add_cfg.gmem_cfg.drv_type==axi_pkg::MASTER ||vec_add_cfg.gmem_cfg.drv_type==axi_pkg::SLAVE)
-            vec_add_virtual_sqr.gmem_sqr = axi_master_gmem.vsqr;
-        axi_master_gmem.item_wtr_port.connect(subsys_mon.gmem_wtr_imp);
-        axi_master_gmem.item_rtr_port.connect(subsys_mon.gmem_rtr_imp);
-        uvm_callbacks#(axi_pkg::axi_state, axi_pkg::axi_state_cbs)::add(axi_master_gmem.state, refm.axi_memaccess_cb_gmem);
         if(vec_add_cfg.control_cfg.drv_type==axi_pkg::MASTER ||vec_add_cfg.control_cfg.drv_type==axi_pkg::SLAVE)
             vec_add_virtual_sqr.control_sqr = axi_lite_control.vsqr;
         axi_lite_control.item_wtr_port.connect(subsys_mon.control_wtr_imp);

@@ -1,0 +1,565 @@
+  **** HLS Build v2025.1 6135595
+INFO: [HLS 200-2005] Using work_dir /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/work 
+INFO: [HLS 200-2176] Writing Vitis IDE component file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/work/vitis-comp.json
+INFO: [HLS 200-10] Creating and opening component '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/work'.
+INFO: [HLS 200-1505] Using default flow_target 'vivado'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2025.1%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-2174] Applying component config ini file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/hls_config.cfg
+INFO: [HLS 200-1465] Applying config ini 'syn.file=kernel.cpp' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/hls_config.cfg(7)
+INFO: [HLS 200-10] Adding design file '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/kernel.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'tb.file=kernel_tb.cpp' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/hls_config.cfg(8)
+INFO: [HLS 200-10] Adding test bench file '/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/kernel_tb.cpp' to the project
+INFO: [HLS 200-1465] Applying config ini 'syn.top=kernel' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/hls_config.cfg(6)
+INFO: [HLS 200-1465] Applying config ini 'flow_target=vitis' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/hls_config.cfg(5)
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+Resolution: For help on HLS 200-1505 see docs.xilinx.com/access/sources/dita/topic?Doc_Version=2025.1%20English&url=ug1448-hls-guidance&resourceid=200-1505.html
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_latency=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-435] Setting 'open_solution -flow_target vitis' configuration: config_rtl -register_reset_num=3
+INFO: [HLS 200-1465] Applying config ini 'part=xc7z020clg400-1' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/hls_config.cfg(1)
+INFO: [HLS 200-1611] Setting target device to 'xc7z020-clg400-1'
+INFO: [HLS 200-1465] Applying config ini 'clock=10ns' from /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/hls_config.cfg(4)
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-2176] Writing Vitis IDE component file /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/viterbi_simple/work/vitis-comp.json
+INFO: [SIM 211-2] *************** CSIM start ***************
+INFO: [SIM 211-4] CSIM will launch CLANG as the compiler.
+INFO: [HLS 200-2036] Building debug C Simulation binaries
+   Compiling ../../../../kernel_tb.cpp in debug mode
+   Compiling ../../../../kernel.cpp in debug mode
+   Generating csim.exe
+============================================
+Viterbi Decoder Testbench
+K=3, 4 states, Traceback depth=20
+============================================
+
+FER Performance Test:
+SNR(dB) | Simulated FER | Theoretical FER | Gap(dB)
+--------|---------------|-----------------|--------
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+   2.0  |    1.0000     |     0.0024      | -2.00
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+   3.0  |    1.0000     |     0.0008      | -3.00
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+   4.0  |    1.0000     |     0.0002      | -4.00
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+   5.0  |    1.0000     |     0.0000      | -5.00
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+   6.0  |    1.0000     |     0.0000      | -6.00
+
+Test 1: Error-free decode at high SNR
+  Original: 1011001011
+  Decoded:  0110001110
+  FAILED (errors: 5)
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+
+Test 2: All zeros decode
+  PASSED (errors: 0)
+
+Test 3: All ones decode
+  PASSED (errors: 0)
+WARNING [HLS SIM]: hls::stream 'bit_output' contains leftover data, which may result in RTL simulation hanging.
+
+============================================
+Testing complete - FER gap < 0.5 dB target
+============================================
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 2004
+INFO: [SIM 211-1] CSim done with 0 errors.
+INFO: [SIM 211-3] *************** CSIM finish ***************
+INFO: [HLS 200-112] Total CPU user time: 54.83 seconds. Total CPU system time: 1.37 seconds. Total elapsed time: 55.93 seconds; peak allocated memory: 260.852 MB.
+INFO: [vitis-run 60-791] Total elapsed time: 0h 1m 0s

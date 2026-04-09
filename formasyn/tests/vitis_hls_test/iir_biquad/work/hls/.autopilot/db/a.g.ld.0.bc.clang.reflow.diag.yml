@@ -1,0 +1,11 @@
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_kernel_ir
+Args:            
+  - Callee:          'kernel(ap_int<16>, ap_int<16>&)'
+    DebugLoc:        { File: kernel.cpp, Line: 7, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_kernel_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...

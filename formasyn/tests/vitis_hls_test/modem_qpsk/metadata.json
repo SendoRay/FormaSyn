@@ -1,0 +1,46 @@
+{
+    "name": "qpsk_mapper",
+    "description": "QPSK Modulator with LUT-based mapping",
+    "type": "kernel",
+    "version": "1.0.0",
+    "target": "vitis_hls",
+    "interface": {
+        "input": [
+            {
+                "name": "bits_in",
+                "width": 2,
+                "type": "ap_uint",
+                "description": "Input 2-bit symbol"
+            }
+        ],
+        "output": [
+            {
+                "name": "y_real",
+                "width": 16,
+                "type": "ap_int",
+                "description": "I-component of constellation point"
+            },
+            {
+                "name": "y_imag",
+                "width": 16,
+                "type": "ap_int",
+                "description": "Q-component of constellation point"
+            }
+        ]
+    },
+    "parameters": {
+        "constellation_points": 4,
+        "scale_factor": 1000,
+        "evm_threshold_percent": 5
+    },
+    "constellation": {
+        "00": {"i": 707, "q": 707},
+        "01": {"i": 707, "q": -707},
+        "10": {"i": -707, "q": 707},
+        "11": {"i": -707, "q": -707}
+    },
+    "requirements": {
+        "target_ii": 1,
+        "target_clock_ns": 5
+    }
+}

@@ -9,8 +9,6 @@
 `ifndef VEC_ADD_SUBSYSTEM_MONITOR_SV
 `define VEC_ADD_SUBSYSTEM_MONITOR_SV
 
-`uvm_analysis_imp_decl(_axi_wtr_gmem)
-`uvm_analysis_imp_decl(_axi_rtr_gmem)
 `uvm_analysis_imp_decl(_axi_wtr_control)
 `uvm_analysis_imp_decl(_axi_rtr_control)
 
@@ -22,8 +20,6 @@ class vec_add_subsystem_monitor extends uvm_component;
     `uvm_component_utils_begin(vec_add_subsystem_monitor)
     `uvm_component_utils_end
 
-    uvm_analysis_imp_axi_wtr_gmem#(axi_pkg::axi_transfer, vec_add_subsystem_monitor) gmem_wtr_imp;
-    uvm_analysis_imp_axi_rtr_gmem#(axi_pkg::axi_transfer, vec_add_subsystem_monitor) gmem_rtr_imp;
     uvm_analysis_imp_axi_wtr_control#(axi_pkg::axi_transfer, vec_add_subsystem_monitor) control_wtr_imp;
     uvm_analysis_imp_axi_rtr_control#(axi_pkg::axi_transfer, vec_add_subsystem_monitor) control_rtr_imp;
 
@@ -41,20 +37,8 @@ class vec_add_subsystem_monitor extends uvm_component;
 
     function new (string name = "", uvm_component parent = null);
         super.new(name, parent);
-        gmem_wtr_imp = new("gmem_wtr_imp", this);
-        gmem_rtr_imp = new("gmem_rtr_imp", this);
         control_wtr_imp = new("control_wtr_imp", this);
         control_rtr_imp = new("control_rtr_imp", this);
-    endfunction
-
-    virtual function void write_axi_wtr_gmem(axi_transfer tr);
-        refm.write_axi_wtr_gmem(tr);
-        scbd.write_axi_wtr_gmem(tr);
-    endfunction
-
-    virtual function void write_axi_rtr_gmem(axi_transfer tr);
-        refm.write_axi_rtr_gmem(tr);
-        scbd.write_axi_rtr_gmem(tr);
     endfunction
 
     virtual function void write_axi_wtr_control(axi_transfer tr);

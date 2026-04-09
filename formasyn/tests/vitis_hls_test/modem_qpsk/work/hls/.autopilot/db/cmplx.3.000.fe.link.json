@@ -1,0 +1,22 @@
+{
+  "0": {
+    "basicblocks": 5,
+    "calls": "",
+    "control_depth": 0,
+    "def_use_depth": 3,
+    "file": "kernel.cpp",
+    "fileloc": 9,
+    "instructions": 39,
+    "loads": {
+      "G": 4
+    },
+    "memory_accesses": 0,
+    "name": "qpsk_mapper",
+    "stores": {
+      "G": 2,
+      "L": 1,
+      "T": 2
+    },
+    "total_instructions": 185
+  }
+}

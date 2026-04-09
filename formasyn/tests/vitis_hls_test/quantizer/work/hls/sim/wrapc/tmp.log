@@ -1,0 +1,8 @@
+Bits=8: SQNR = 100 dB (expected >= 48 dB)
+Bits=12: SQNR = 100 dB (expected >= 72 dB)
+Bits=16: SQNR = 100 dB (expected >= 96 dB)
+Bits=20: SQNR = 100 dB (expected >= 120 dB)
+Bits=24: SQNR = 100 dB (expected >= 144 dB)
+WARNING: SQNR below expected for bits=24
+Testing edge cases...
+PASS

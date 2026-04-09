@@ -1,0 +1,3 @@
+/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/modem_qam/kernel.cpp:34:54: error: Invalid Directive: for current device, ROM_1P +  is invalid combination for BIND_STORAGE's option 'type + impl'
+    #pragma HLS BIND_STORAGE variable=qam16_lut type=ROM_1P
+                                                     ^

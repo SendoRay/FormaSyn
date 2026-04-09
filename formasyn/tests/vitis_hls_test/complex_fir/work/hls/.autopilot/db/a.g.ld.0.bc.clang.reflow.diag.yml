@@ -1,0 +1,99 @@
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 72, Column: 22 }
+Function:        _Z6kernel6ap_intILi16EES0_RS0_S1_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_72_2
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-infer-unroll
+Name:            ImplicitUnroll
+DebugLoc:        { File: kernel.cpp, Line: 58, Column: 19 }
+Function:        _Z6kernel6ap_intILi16EES0_RS0_S1_
+Args:            
+  - String:          'Loop '''
+  - LoopName:        VITIS_LOOP_58_1
+  - String:          ''' is marked as complete unroll implied by the pipeline pragma'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 20, Column: 0 }
+Function:        _Z6kernel6ap_intILi16EES0_RS0_S1_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_72_2
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:72:22'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '8'
+...
+--- !Passed
+Pass:            reflow-pragma-loop-unroll
+Name:            PragmaFullyUnroll
+DebugLoc:        { File: kernel.cpp, Line: 20, Column: 0 }
+Function:        _Z6kernel6ap_intILi16EES0_RS0_S1_
+Args:            
+  - String:          'Unrolling loop '''
+  - LoopName:        VITIS_LOOP_58_1
+  - String:          ''' ('
+  - LoopLoc:         'kernel.cpp:58:19'
+  - String:          ') '
+  - String:          'in function '''
+  - String:          kernel
+  - String:          ''' completely with a factor of '
+  - Factor:          '7'
+...
+--- !Missed
+Pass:            inline
+Name:            NeverInline
+Function:        apatb_kernel_ir
+Args:            
+  - Callee:          'kernel(ap_int<16>, ap_int<16>, ap_int<16>&, ap_int<16>&)'
+    DebugLoc:        { File: kernel.cpp, Line: 20, Column: 0 }
+  - String:          ' not inlined into '
+  - Caller:          apatb_kernel_ir
+  - String:          ' because it should never be inlined (cost=never)'
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: kernel.cpp, Line: 52, Column: 0 }
+Function:        _Z6kernel6ap_intILi16EES0_RS0_S1_
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          _ZZ6kernel6ap_intILi16EES0_RS0_S1_E14shift_reg_real
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...
+--- !Passed
+Pass:            reflow-array-partition
+Name:            ArrayXform
+DebugLoc:        { File: kernel.cpp, Line: 53, Column: 0 }
+Function:        _Z6kernel6ap_intILi16EES0_RS0_S1_
+Args:            
+  - String:          'Applying '
+  - String:          array_partition
+  - String:          ' to '''
+  - UOName:          _ZZ6kernel6ap_intILi16EES0_RS0_S1_E14shift_reg_imag
+  - String:          ''':'
+  - String:          ' '
+  - Mode:            Complete
+  - String:          ' partitioning'
+  - String:          ' on dimension '
+  - Dim:             '1'
+  - String:          .
+...

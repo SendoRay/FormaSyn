@@ -1,0 +1,37 @@
+{
+  "variant_id": "quantizer_fixed_point_int32",
+  "example_name": "quantizer",
+  "function_name": "quantizer",
+  "model": "claude-sonnet-4-5-20250929",
+  "description": "Fixed-point quantizer with configurable bit-width and fractional precision",
+  "formula_graph": {
+    "nodes": [
+      {
+        "type": "Map",
+        "input_ref": "x_in",
+        "func": "quantize",
+        "func_params": {
+          "bits": "bits",
+          "frac": "frac"
+        },
+        "output_ref": "y_out"
+      }
+    ]
+  },
+  "parameters": {
+    "input_width": 32,
+    "output_width": 32,
+    "bits_max": 32,
+    "frac_max": 32
+  },
+  "constraints": {
+    "sqnr_dB": "6*bits",
+    "target_ii": 1
+  },
+  "schedule_summary": {
+    "node_count": 1,
+    "input_nodes": ["x_in", "bits", "frac"],
+    "output_nodes": ["y_out"],
+    "expected_ii": 1
+  }
+}

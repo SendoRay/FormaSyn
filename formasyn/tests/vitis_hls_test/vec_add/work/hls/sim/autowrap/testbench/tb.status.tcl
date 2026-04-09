@@ -1,1 +1,1 @@
-set ::AESL_AUTOSIM::gTopFileName /home/chengzhy/vitis_hls_test/work/hls/./sim/autowrap/testbench/vec_add.cpp_pre.cpp.tb.cpp
+set ::AESL_AUTOSIM::gTopFileName /home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls/./sim/autowrap/testbench/kernel.cpp_pre.cpp.tb.cpp

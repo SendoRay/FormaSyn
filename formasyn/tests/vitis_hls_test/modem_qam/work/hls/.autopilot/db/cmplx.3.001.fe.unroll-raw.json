@@ -1,0 +1,20 @@
+{
+  "0": {
+    "basicblocks": 2,
+    "calls": "",
+    "control_depth": 0,
+    "def_use_depth": 2,
+    "file": "kernel.cpp",
+    "fileloc": 9,
+    "instructions": 19,
+    "loads": {
+      "G": 2
+    },
+    "memory_accesses": 0,
+    "name": "qam16_mapper",
+    "stores": {
+      "T": 2
+    },
+    "total_instructions": 19
+  }
+}

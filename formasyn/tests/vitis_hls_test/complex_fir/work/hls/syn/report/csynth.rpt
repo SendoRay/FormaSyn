@@ -1,0 +1,172 @@
+
+
+================================================================
+== Synthesis Summary Report of 'kernel'
+================================================================
++ General Information: 
+    * Date:           Thu Apr  9 04:15:53 2026
+    * Version:        2025.1 (Build 6135595 on May 21 2025)
+    * Project:        work
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: zynq
+    * Target device:  xc7z020-clg400-1
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+----------+-----+
+    |  Modules | Issue|      |      Latency     | Iteration|         | Trip |          |      |         |           |          |     |
+    |  & Loops | Type | Slack| (cycles)|  (ns)  |  Latency | Interval| Count| Pipelined| BRAM |   DSP   |     FF    |    LUT   | URAM|
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+----------+-----+
+    |+ kernel  |     -|  1.37|        5|  50.000|         -|        1|     -|       yes|     -|  16 (7%)|  944 (~0%)|  593 (1%)|    -|
+    +----------+------+------+---------+--------+----------+---------+------+----------+------+---------+-----------+----------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 6             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL     | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER     | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER   | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR   | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | x_real   | 0x10   | 32    | W      | Data signal of x_real            |                                                                                    |
+| s_axi_control | x_imag   | 0x18   | 32    | W      | Data signal of x_imag            |                                                                                    |
+| s_axi_control | y_real   | 0x20   | 32    | R      | Data signal of y_real            |                                                                                    |
+| s_axi_control | y_imag   | 0x30   | 32    | R      | Data signal of y_imag            |                                                                                    |
++---------------+----------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++----------+-----------+-------------+
+| Argument | Direction | Datatype    |
++----------+-----------+-------------+
+| x_real   | in        | ap_int<16>  |
+| x_imag   | in        | ap_int<16>  |
+| y_real   | out       | ap_int<16>& |
+| y_imag   | out       | ap_int<16>& |
++----------+-----------+-------------+
+
+* SW-to-HW Mapping
++----------+---------------+----------+----------------------------------+
+| Argument | HW Interface  | HW Type  | HW Info                          |
++----------+---------------+----------+----------------------------------+
+| x_real   | s_axi_control | register | name=x_real offset=0x10 range=32 |
+| x_imag   | s_axi_control | register | name=x_imag offset=0x18 range=32 |
+| y_real   | s_axi_control | register | name=y_real offset=0x20 range=32 |
+| y_imag   | s_axi_control | register | name=y_imag offset=0x30 range=32 |
++----------+---------------+----------+----------------------------------+
+
+
+================================================================
+== Bind Op Report
+================================================================
++-------------------------------------+-----+--------+----------------------+--------+-----------+---------+
+| Name                                | DSP | Pragma | Variable             | Op     | Impl      | Latency |
++-------------------------------------+-----+--------+----------------------+--------+-----------+---------+
+| + kernel                            | 16  |        |                      |        |           |         |
+|   mac_muladd_16s_7ns_25s_25_4_1_U9  | 1   |        | prod_i_hr_8          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U10 | 1   |        | prod_q_hr_8          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U9  | 1   |        | sext_ln82            | sext   | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U10 | 1   |        | sext_ln70            | sext   | dsp_slice | 3       |
+|   mul_16s_9ns_25_1_1_U1             | 1   |        | prod_i_hr            | mul    | auto      | 0       |
+|   mul_16s_9ns_25_1_1_U2             | 1   |        | prod_q_hr            | mul    | auto      | 0       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U11 | 1   |        | prod_i_hr_2          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U12 | 1   |        | prod_q_hr_2          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U11 | 1   |        | sext_ln82_1          | sext   | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U12 | 1   |        | sext_ln75_3          | sext   | dsp_slice | 3       |
+|   mul_16s_11ns_27_1_1_U3            | 1   |        | prod_i_hr_3          | mul    | auto      | 0       |
+|   mul_16s_11ns_27_1_1_U4            | 1   |        | prod_q_hr_3          | mul    | auto      | 0       |
+|   mul_16s_11ns_27_1_1_U5            | 1   |        | prod_i_hr_4          | mul    | auto      | 0       |
+|   mul_16s_11ns_27_1_1_U6            | 1   |        | prod_q_hr_4          | mul    | auto      | 0       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U13 | 1   |        | prod_i_hr_5          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U14 | 1   |        | prod_q_hr_5          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U13 | 1   |        | sext_ln82_2          | sext   | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U14 | 1   |        | sext_ln75_7          | sext   | dsp_slice | 3       |
+|   mul_16s_9ns_25_1_1_U7             | 1   |        | prod_i_hr_6          | mul    | auto      | 0       |
+|   mul_16s_9ns_25_1_1_U8             | 1   |        | prod_q_hr_6          | mul    | auto      | 0       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U15 | 1   |        | prod_i_hr_7          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U16 | 1   |        | prod_q_hr_7          | mul    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U15 | 1   |        | sext_ln81            | sext   | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U11 | 1   |        | add_ln81             | add    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U13 | 1   |        | add_ln81_1           | add    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U15 | 1   |        | add_ln81_3           | add    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U9  | 1   |        | add_ln81_4           | add    | dsp_slice | 3       |
+|   add_ln81_5_fu_372_p2              |     |        | add_ln81_5           | add    | fabric    | 0       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U16 | 1   |        | sext_ln82_3          | sext   | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U12 | 1   |        | add_ln82             | add    | dsp_slice | 3       |
+|   mac_muladd_16s_9ns_27s_27_4_1_U14 | 1   |        | add_ln82_1           | add    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U16 | 1   |        | add_ln82_3           | add    | dsp_slice | 3       |
+|   mac_muladd_16s_7ns_25s_25_4_1_U10 | 1   |        | add_ln82_4           | add    | dsp_slice | 3       |
+|   add_ln82_5_fu_384_p2              |     |        | add_ln82_5           | add    | fabric    | 0       |
+|   icmp_ln91_fu_442_p2               |     |        | icmp_ln91            | setgt  | auto      | 0       |
+|   icmp_ln92_fu_464_p2               |     |        | icmp_ln92            | setlt  | auto      | 0       |
+|   result_real_fu_472_p3             |     |        | result_real          | select | auto_sel  | 0       |
+|   empty_fu_479_p2                   |     |        | empty                | or     | auto      | 0       |
+|   result_real_1_0_0_05_fu_484_p3    |     |        | result_real_1_0_0_05 | select | auto_sel  | 0       |
+|   icmp_ln95_fu_458_p2               |     |        | icmp_ln95            | setgt  | auto      | 0       |
+|   icmp_ln96_fu_493_p2               |     |        | icmp_ln96            | setlt  | auto      | 0       |
+|   result_imag_fu_501_p3             |     |        | result_imag          | select | auto_sel  | 0       |
+|   empty_13_fu_508_p2                |     |        | empty_13             | or     | auto      | 0       |
+|   result_imag_1_0_0_06_fu_513_p3    |     |        | result_imag_1_0_0_06 | select | auto_sel  | 0       |
++-------------------------------------+-----+--------+----------------------+--------+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name              | Usage     | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                   |           |           |      |      |        |          |      |         | Banks            |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| + kernel          |           |           | 0    | 0    |        |          |      |         |                  |
+|   control_s_axi_U | interface | s_axilite |      |      |        |          |      |         |                  |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------------+--------------------------------------+-----------------------------------------+
+| Type            | Options                              | Location                                |
++-----------------+--------------------------------------+-----------------------------------------+
+| INTERFACE       | s_axilite port=x_real bundle=control | kernel.cpp:21 in kernel, x_real         |
+| INTERFACE       | s_axilite port=x_imag bundle=control | kernel.cpp:22 in kernel, x_imag         |
+| INTERFACE       | s_axilite port=y_real bundle=control | kernel.cpp:23 in kernel, y_real         |
+| INTERFACE       | s_axilite port=y_imag bundle=control | kernel.cpp:24 in kernel, y_imag         |
+| INTERFACE       | s_axilite port=return bundle=control | kernel.cpp:25 in kernel, return         |
+| PIPELINE        | ii=1                                 | kernel.cpp:26 in kernel                 |
+| ARRAY_PARTITION | variable=coeffs_real complete        | kernel.cpp:48 in kernel, coeffs_real    |
+| ARRAY_PARTITION | variable=coeffs_imag complete        | kernel.cpp:49 in kernel, coeffs_imag    |
+| ARRAY_PARTITION | variable=shift_reg_real complete     | kernel.cpp:54 in kernel, shift_reg_real |
+| ARRAY_PARTITION | variable=shift_reg_imag complete     | kernel.cpp:55 in kernel, shift_reg_imag |
+| UNROLL          |                                      | kernel.cpp:59 in kernel                 |
+| UNROLL          |                                      | kernel.cpp:73 in kernel                 |
++-----------------+--------------------------------------+-----------------------------------------+
+
+

@@ -1,0 +1,13 @@
+<root versionMajor = "1" versionMinor = "5">
+  <kernel name="ofdm_base" language="c" vlnv="xilinx.com:hls:ofdm_base:1.0" attributes="" hash="" preferredWorkGroupSizeMultiple="0" workGroupSize="1" debug="false" compileOptions="" profileType="none" hwControlProtocol="ap_ctrl_chain">
+    <ports>
+      <port name="S_AXI_CONTROL" portType="addressable" mode="slave" base="0x0" range="0x100" dataWidth="32"/>
+    </ports>
+    <args>
+      <arg id="0" name="in" addressQualifier="0" port="S_AXI_CONTROL" hostOffset="0x0" hostSize="0x40" offset="0x40" size="0x40" type="complex&lt;ap_fixed&lt;16, 3, AP_TRN, AP_WRAP, 0&gt; &gt;*"/>
+      <arg id="1" name="out" addressQualifier="0" port="S_AXI_CONTROL" hostOffset="0x0" hostSize="0x50" offset="0x80" size="0x80" type="complex&lt;ap_fixed&lt;16, 3, AP_TRN, AP_WRAP, 0&gt; &gt;*"/>
+    </args>
+    <compileWorkGroupSize x="1" y="1" z="1"/>
+    <maxWorkGroupSize x="1" y="1" z="1"/>
+  </kernel>
+</root>

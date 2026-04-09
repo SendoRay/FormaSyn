@@ -1,0 +1,57 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=kernel" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:15:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=x_in bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:16:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=y_out bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:17:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=return bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:18:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:33:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=coeffs complete" ARG_PragmaType="array_partition" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:37:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=shift_reg complete" ARG_PragmaType="array_partition" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:41:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:48:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="variable=products complete" ARG_PragmaType="array_partition" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:51:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="kernel.cpp:58:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="kernel" ARG_PragmaIsValid="1" ARG_PragmaType="unroll" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="kernel.cpp:57:22" msg_body="Loop 'VITIS_LOOP_57_3' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_57_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="kernel.cpp:50:19" msg_body="Loop 'VITIS_LOOP_50_2' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_50_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-291" msg_severity="INFO" msg_loc="kernel.cpp:40:19" msg_body="Loop 'VITIS_LOOP_40_1' is marked as complete unroll implied by the pipeline pragma">
+        <args LoopName="VITIS_LOOP_40_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_57_3' (kernel.cpp:57:22) in function 'kernel' completely with a factor of 33">
+        <args Factor="33" LoopLoc="kernel.cpp:57:22" LoopName="VITIS_LOOP_57_3"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_50_2' (kernel.cpp:50:19) in function 'kernel' completely with a factor of 33">
+        <args Factor="33" LoopLoc="kernel.cpp:50:19" LoopName="VITIS_LOOP_50_2"/>
+    </msg>
+    <msg msg_groups="PRAGMA_UNROLL" msg_id="214-186" msg_severity="INFO" msg_loc="kernel.cpp:14:0" msg_body="Unrolling loop 'VITIS_LOOP_40_1' (kernel.cpp:40:19) in function 'kernel' completely with a factor of 32">
+        <args Factor="32" LoopLoc="kernel.cpp:40:19" LoopName="VITIS_LOOP_40_1"/>
+    </msg>
+    <msg msg_groups="PRAGMA_MISC" msg_id="214-248" msg_severity="INFO" msg_loc="kernel.cpp:36:0" msg_body="Applying array_partition to '_ZZ6kernel6ap_intILi16EERS0_E9shift_reg': Complete partitioning on dimension 1.">
+        <args Dim="1" Mode="Complete" UOName="_ZZ6kernel6ap_intILi16EERS0_E9shift_reg"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

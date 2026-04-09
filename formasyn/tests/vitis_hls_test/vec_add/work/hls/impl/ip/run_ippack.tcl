@@ -6,8 +6,8 @@
 # 
 # ==============================================================
 source -notrace "/tools/Xilinx/2025.1/Vitis/common/scripts/ipxhls.tcl"
-set ip_out_dir "/home/chengzhy/vitis_hls_test/work/hls/impl/ip"
-set data_file "/home/chengzhy/vitis_hls_test/work/hls/hls_data.json"
+set ip_out_dir "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls/impl/ip"
+set data_file "/home/chengzhy/FormaSyn/formasyn/tests/vitis_hls_test/vec_add/work/hls/hls_data.json"
 set src_dir [file dir $data_file]
 set ip_types {vitis sysgen}
 set ippack_opts_dict {}
