@@ -13,10 +13,16 @@
 from __future__ import annotations
 
 import logging
-import os
-import re
 from dataclasses import dataclass
 from typing import Optional
+
+from FormaSyn.formasyn.utils.cpp_utils import (
+    extract_function_name,
+    extract_function_signature,
+    extract_param_specs,
+    extract_preamble,
+    format_literal,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -96,9 +102,9 @@ class TestbenchGenerator:
         Returns:
             完整的 testbench.cpp 源码字符串.
         """
-        preamble = self._extract_preamble(hls_cpp_code)
-        signature = self._extract_function_signature(hls_cpp_code)
-        param_specs = self._extract_param_specs(signature)
+        preamble = extract_preamble(hls_cpp_code)
+        signature = extract_function_signature(hls_cpp_code)
+        param_specs = extract_param_specs(signature)
 
         lines = [
             "#include <cstdio>",
@@ -125,13 +131,13 @@ class TestbenchGenerator:
                 values = test_inputs[name]
                 if is_array:
                     arr_str = ", ".join(
-                        self._format_literal(v, dtype) for v in values
+                        format_literal(v, dtype) for v in values
                     )
                     lines.append(f"    {decl_type} {name}[] = {{{arr_str}}};")
                 else:
                     value = values[0] if values else 0.0
                     lines.append(
-                        f"    {decl_type} {name} = {self._format_literal(value, dtype)};"
+                        f"    {decl_type} {name} = {format_literal(value, dtype)};"
                     )
                 continue
 
@@ -144,7 +150,7 @@ class TestbenchGenerator:
                 unmatched_golden.remove(golden_name)
 
             values = golden_outputs[golden_name]
-            arr_str = ", ".join(self._format_literal(v, "double") for v in values)
+            arr_str = ", ".join(format_literal(v, "double") for v in values)
             lines.append(f"    double golden_{golden_name}[] = {{{arr_str}}};")
 
             if is_array:
@@ -180,7 +186,7 @@ class TestbenchGenerator:
         args: list[str] = [spec["name"] for spec in param_specs]
         if csr_data is not None:
             args.extend(["row_ptr", "col_idx"])
-        lines.append(f"    {self._extract_function_name(hls_cpp_code)}({', '.join(args)});")
+        lines.append(f"    {extract_function_name(hls_cpp_code)}({', '.join(args)});")
         lines.append("")
         lines.append("    int mismatch_count = 0;")
 
@@ -253,8 +259,8 @@ class TestbenchGenerator:
         if '#include "kernel.h"' not in hls_cpp_code:
             return ""
 
-        signature = self._extract_function_signature(hls_cpp_code)
-        preamble = self._extract_preamble(hls_cpp_code)
+        signature = extract_function_signature(hls_cpp_code)
+        preamble = extract_preamble(hls_cpp_code)
 
         preamble_lines: list[str] = []
         for raw in preamble.splitlines():
@@ -284,7 +290,7 @@ class TestbenchGenerator:
         Returns:
             包含所有生成内容的 TestbundleArtifacts.
         """
-        function_name = self._extract_function_name(spec.hls_cpp_code)
+        function_name = extract_function_name(spec.hls_cpp_code)
         src_name = f"{function_name}.cpp"
         tb_name = f"{function_name}_tb.cpp"
 
@@ -309,125 +315,6 @@ class TestbenchGenerator:
             kernel_header=kernel_header,
             function_name=function_name,
         )
-
-    @staticmethod
-    def _extract_function_name(code: str) -> str:
-        """从 C++ 源码中提取顶层函数名."""
-        match = re.search(r"\bvoid\s+([A-Za-z_]\w*)\s*\(", code)
-        if match:
-            return match.group(1)
-        return "kernel"
-
-    @staticmethod
-    def _extract_function_signature(code: str) -> str:
-        """从 C++ 源码中提取完整的顶层函数签名."""
-        match = re.search(r"(void\s+[A-Za-z_]\w*\s*\([\s\S]*?\))\s*\{", code)
-        if not match:
-            raise ValueError("Unable to extract function signature from HLS C++")
-        return match.group(1).strip()
-
-    @staticmethod
-    def _extract_preamble(code: str) -> str:
-        """返回函数体之前的 includes/typedef 部分."""
-        signature = TestbenchGenerator._extract_function_signature(code)
-        idx = code.find(signature)
-        if idx == -1:
-            raise ValueError("Unable to extract HLS preamble")
-        return code[:idx].rstrip()
-
-    @staticmethod
-    def _extract_param_specs(signature: str) -> list[dict[str, object]]:
-        """从函数签名中提取有序的参数规范."""
-        params_str = signature[signature.find("(") + 1: signature.rfind(")")]
-        params = TestbenchGenerator._split_params(params_str)
-        specs: list[dict[str, object]] = []
-
-        for param in params:
-            p = param.strip()
-            if not p:
-                continue
-
-            array_match = re.match(
-                r"(.+?)\s+([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]$",
-                p,
-            )
-            if array_match:
-                dtype = array_match.group(1).strip()
-                specs.append(
-                    {
-                        "name": array_match.group(2),
-                        "dtype": dtype,
-                        "decl_type": dtype.replace("&", "").strip(),
-                        "is_array": True,
-                        "array_len": int(array_match.group(3)),
-                    }
-                )
-                continue
-
-            ref_match = re.match(r"(.+?)\s*&\s*([A-Za-z_]\w*)$", p)
-            if ref_match:
-                dtype = (ref_match.group(1).strip() + "&").strip()
-                specs.append(
-                    {
-                        "name": ref_match.group(2),
-                        "dtype": dtype,
-                        "decl_type": ref_match.group(1).strip(),
-                        "is_array": False,
-                        "array_len": 1,
-                    }
-                )
-                continue
-
-            ptr_match = re.match(r"(.+?)\s+([A-Za-z_]\w*)$", p)
-            if ptr_match:
-                dtype = ptr_match.group(1).strip()
-                specs.append(
-                    {
-                        "name": ptr_match.group(2),
-                        "dtype": dtype,
-                        "decl_type": dtype.replace("&", "").strip(),
-                        "is_array": False,
-                        "array_len": 1,
-                    }
-                )
-
-        return specs
-
-    @staticmethod
-    def _split_params(params_str: str) -> list[str]:
-        """分割参数列表，保留模板中的逗号."""
-        params: list[str] = []
-        current: list[str] = []
-        depth = 0
-
-        for ch in params_str:
-            if ch == "<":
-                depth += 1
-            elif ch == ">" and depth > 0:
-                depth -= 1
-
-            if ch == "," and depth == 0:
-                param = "".join(current).strip()
-                if param:
-                    params.append(param)
-                current = []
-                continue
-            current.append(ch)
-
-        tail = "".join(current).strip()
-        if tail:
-            params.append(tail)
-        return params
-
-    @staticmethod
-    def _format_literal(value: float, dtype: str) -> str:
-        """格式化字面量用于生成的 testbench."""
-        if dtype in {"double", "float"}:
-            return f"{value:.17g}"
-        if float(value).is_integer():
-            return f"({dtype}){int(value)}"
-        return f"({dtype})({value:.17g})"
-
 
 def parse_output(stdout: str, prefix: str = _OUTPUT_PREFIX) -> dict[str, list[float]]:
     """解析 testbench 输出的 ``@@OUTPUT name:v0,v1,...`` 行.

@@ -6,15 +6,17 @@ L3b 质量仿真根据 kernel_type 分发到具体的 Simulator 实现。
 
 from __future__ import annotations
 
+import ctypes
 import logging
 import os
-import platform
 import subprocess
 import tempfile
 from abc import ABC, abstractmethod
 from typing import Optional
 
-import numpy as np
+from FormaSyn.formasyn.utils.cpp_utils import extract_function_name
+from FormaSyn.formasyn.utils.hls_mock import strip_hls_pragmas, write_mock_headers
+from FormaSyn.formasyn.utils.metrics import compute_nmse, compute_sign_error_rate
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +30,6 @@ class QualitySimulator(ABC):
     子类需要：
     1. 实现 kernel_type 类属性，指定适用的算法类别
     2. 实现 evaluate() 方法，运行仿真并返回质量指标
-    3. 可选：实现 _compile_to_so() 方法，自定义编译逻辑
     """
 
     kernel_type: str = ""
@@ -56,49 +57,7 @@ class QualitySimulator(ABC):
             质量指标字典，如 {'nmse_db': -45.3, 'sfdr_db': 65.2}
         """
 
-    @staticmethod
-    def _strip_hls_specifics(code: str) -> str:
-        """移除 g++ 不支持的 HLS 特定 pragma."""
-        stripped: list[str] = []
-        for line in code.splitlines():
-            if line.lstrip().startswith("#pragma HLS"):
-                continue
-            stripped.append(line)
-        return "\n".join(stripped) + "\n"
-
-    @staticmethod
-    def _write_mock_hls_headers(out_dir: str, hls_header_code: str | None = None) -> None:
-        """写入最小化的 HLS 兼容头文件，用于 host 仿真.
-
-        Args:
-            out_dir: 输出目录.
-            hls_header_code: 可选的 kernel.h 内容，如果提供则写入.
-        """
-        headers = {
-            "ap_int.h": (
-                "#pragma once\n"
-                "#include <cstdint>\n"
-                "template<int W> using ap_int = int;\n"
-                "template<int W> using ap_uint = unsigned int;\n"
-            ),
-            "ap_fixed.h": (
-                "#pragma once\n"
-                "#include \"ap_int.h\"\n"
-                "template<int W, int I=0> using ap_fixed = double;\n"
-            ),
-            "hls_stream.h": (
-                "#pragma once\n"
-                "template<typename T> struct hls_stream {};\n"
-            ),
-        }
-        for name, content in headers.items():
-            with open(os.path.join(out_dir, name), "w", encoding="utf-8") as f:
-                f.write(content)
-
-        # 如果提供了 kernel.h 内容，写入它
-        if hls_header_code:
-            with open(os.path.join(out_dir, "kernel.h"), "w", encoding="utf-8") as f:
-                f.write(hls_header_code)
+    # -- 编译工具方法 ---------------------------------------------------------
 
     @staticmethod
     def _compile_to_so(
@@ -126,9 +85,8 @@ class QualitySimulator(ABC):
         with open(src_path, "w", encoding="utf-8") as f:
             f.write(hls_cpp_code)
 
-        QualitySimulator._write_mock_hls_headers(tmp_dir, hls_header_code)
+        write_mock_headers(tmp_dir, hls_header_code)
 
-        # 编译为 .so
         cmd = [
             "g++",
             "-std=c++14",
@@ -158,78 +116,71 @@ class QualitySimulator(ABC):
 
         return so_path
 
+    # -- SO 调用 ---------------------------------------------------------------
+
+    @staticmethod
+    def _run_so_simple(
+        so_path: str,
+        function_name: str,
+        test_inputs: dict[str, list[float]],
+        golden_outputs: dict[str, list[float]],
+        csr_data: Optional[dict[str, list[int]]],
+    ) -> dict[str, list[float]]:
+        """通过 ctypes 调用编译好的 .so 并返回输出.
+
+        假定函数签名形式为: void kernel(..., output[], int output_len, ...)
+        """
+        lib = ctypes.CDLL(so_path)
+
+        func = getattr(lib, function_name, None)
+        if func is None:
+            raise RuntimeError(f"Function '{function_name}' not found in {so_path}")
+
+        args = []
+        for key, values in test_inputs.items():
+            arr = (ctypes.c_double * len(values))(*values)
+            args.append(arr)
+            args.append(ctypes.c_int(len(values)))
+
+        for key in golden_outputs:
+            out_len = len(golden_outputs[key])
+            out_array = (ctypes.c_double * out_len)()
+            args.append(out_array)
+            args.append(ctypes.c_int(out_len))
+
+        if csr_data is not None:
+            rp_arr = (ctypes.c_int * len(csr_data["row_ptr"]))(*csr_data["row_ptr"])
+            ci_arr = (ctypes.c_int * len(csr_data["col_idx"]))(*csr_data["col_idx"])
+            args.append(rp_arr)
+            args.append(ctypes.c_int(len(csr_data["row_ptr"])))
+            args.append(ci_arr)
+            args.append(ctypes.c_int(len(csr_data["col_idx"])))
+
+        func(*args)
+
+        result = {}
+        for key, out_array in zip(golden_outputs.keys(), args[2 * len(test_inputs)::2]):
+            result[key] = list(out_array)
+
+        return result
+
+    # -- 指标计算 (委托给共享工具模块) -----------------------------------------
+
     @staticmethod
     def _compute_nmse(
         golden: dict[str, list[float]],
         actual: dict[str, list[float]],
     ) -> float:
-        """计算归一化均方误差（NMSE）dB.
-
-        Args:
-            golden: Golden 参考输出.
-            actual: 实际输出.
-
-        Returns:
-            NMSE in dB.
-        """
-        power_signal = 0.0
-        power_noise = 0.0
-
-        for key in golden:
-            g = np.array(golden[key], dtype=np.float64)
-            a = np.array(actual.get(key, [0.0] * len(golden[key])), dtype=np.float64)
-            min_len = min(len(g), len(a))
-            g, a = g[:min_len], a[:min_len]
-
-            power_signal += float(np.sum(g ** 2))
-            power_noise += float(np.sum((g - a) ** 2))
-
-        if power_signal < 1e-30:
-            return 0.0
-        return 10 * np.log10(max(power_noise, 1e-30) / power_signal)
+        """计算归一化均方误差（NMSE）dB."""
+        return compute_nmse(golden, actual)
 
     @staticmethod
     def _compute_sign_error_rate(
         golden: dict[str, list[float]],
         actual: dict[str, list[float]],
     ) -> tuple[float, float, float]:
-        """计算符号错误率和 SNR 惩罚.
-
-        Args:
-            golden: Golden 参考输出.
-            actual: 实际输出.
-
-        Returns:
-            (sign_error_rate, snr_penalty_db, power_signal)
-        """
-        import math
-
-        sign_errors = 0
-        total_elements = 0
-        power_signal = 0.0
-        power_noise = 0.0
-
-        for key in golden:
-            g = np.array(golden[key], dtype=np.float64)
-            a = np.array(actual.get(key, [0.0] * len(golden[key])), dtype=np.float64)
-            min_len = min(len(g), len(a))
-            g, a = g[:min_len], a[:min_len]
-
-            sign_errors += int(np.sum(np.sign(g) != np.sign(a)))
-            total_elements += min_len
-            power_signal += float(np.sum(g ** 2))
-            power_noise += float(np.sum((g - a) ** 2))
-
-        sign_error_rate = sign_errors / max(total_elements, 1)
-
-        if power_noise > 0 and power_signal > 0:
-            snr_golden = 10 * math.log10(power_signal / 1e-10)
-            snr_actual = 10 * math.log10(power_signal / max(power_noise, 1e-30))
-            snr_penalty_db = max(0.0, snr_golden - snr_actual)
-        else:
-            snr_penalty_db = 0.0
-
-        return sign_error_rate, snr_penalty_db, power_signal
+        """计算符号错误率和 SNR 惩罚."""
+        return compute_sign_error_rate(golden, actual)
 
 
 def get_simulator(kernel_type: str) -> type[QualitySimulator]:
@@ -257,8 +208,7 @@ def get_simulator(kernel_type: str) -> type[QualitySimulator]:
         "transform": TransformSimulator,
         "detection": DetectionSimulator,
         "synchronization": SyncSimulator,
-        # 简单算术运算使用通用仿真器
-        "elementwise": TransformSimulator,  # 复用 TransformSimulator 的 NMSE 计算
+        "elementwise": TransformSimulator,
         "arithmetic": TransformSimulator,
         "generic": TransformSimulator,
     }

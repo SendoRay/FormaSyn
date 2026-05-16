@@ -475,26 +475,6 @@ FormulaGraph([
 
 ---
 
-## IR 三层架构
-
-```
-MathDialect (数学语义层)
-    ├── op_type: "map" | "reduce" | "shift_reg" | "delay" | "message_pass" | "cycle" | "iteration" | "switch"
-    ├── op_detail: 算子参数
-    └── shape: 输出张量形状
-
-AlgoHWDialect (算法-硬件映射层)
-    ├── data_type: TensorType
-    ├── parallelism: int
-    ├── approx_method: str
-    └── saturation_guard: bool
-
-HLSScheduleDialect (调度层)
-    ├── unroll_factor: int
-    ├── pipeline_ii: int
-    ├── array_partition: str
-    └── bram_banks: int
-```
 
 ---
 
@@ -513,5 +493,3 @@ HLSScheduleDialect (调度层)
 
 ---
 
-*版本: 1.0*  
-*日期: 2026-04-08*

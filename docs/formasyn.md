@@ -456,3 +456,32 @@ class L2Result:
 7. **不能把不同 kernel_type 的 Simulator 逻辑混写**（每个 Simulator 只处理自己的类型）
 9. **不能用 print() 做日志**（全部用 logging）
 10. **不能写没有测试的模块**（每个模块必须有对应的 test_*.py）
+
+
+
+
+
+P0 — 安全（必须修）                                                                                                           
+                                                                                                                                
+  1. API Key 硬编码 — base_agent.py:16 和 test_api.py:13 明文写死了 API Key，提交到公开仓库即泄露。应改为环境变量或 .env        
+  文件读取。                                                                                                                    
+                  
+  P1 — 代码质量（推荐修）                                                                                                       
+                  
+  2. 大量重复代码 — testbench 生成（l1_checker.py vs testbench_gen.py）、参数解析（两个位置）、mock 头文件生成（两个位置）、NMSE
+   计算（三个位置）完全重复。应提取公共工具模块。
+  3. 配置系统形同虚设 — base_agent.py 试图从 config.yaml 读取覆盖配置，但文件根本不存在。应删除死代码或创建真实配置。           
+  4. 路径导入 hack — formasyn/checker/__init__.py 和 agent/diagnostic.py 使用 FormaSyn.formasyn.* 绝对导入，依赖 run.py 修改    
+  sys.path。应改为相对导入。                                                                                                    
+  5. 检测模块职责重叠 — checker/diagnostic.py 和 agent/diagnostic.py 功能重复。                                                 
+                                                                                                                                
+  P2 — 测试与文档                                                                                                               
+                                                                                                                                
+  6. 测试覆盖仅 6% — 只有 agent 模块有测试，其余 7 个核心模块全无。                                                             
+  7. README.md 过时 — 引用已不存在的 feedback/pragma_tuner.py 和 deep_loop.py。
+                                                                                                                                
+  P3 — 架构扩展                                                                                                                 
+                                                                                                                                
+  8. 5 种算子不够 — supported_kernels.py 标记需要扩展 (ButterflyOp, TrellisOp 等)，当前 DSL 表达能力有限。                      
+  9. 缺少 pyproject.toml/requirements.txt — 无法锁定依赖版本。
+                                                                          

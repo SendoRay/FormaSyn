@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
-"""测试 API 连接和可用性"""
+"""测试 API 连接和可用性。"""
 
 import os
-import sys
-
-# 添加项目路径
-sys.path.insert(0, '/home/chengzhy')
 
 import httpx
 import json
 
-API_KEY = "sk-kxzxgaFXQRfi14ZNDJ2YhzSqmcBQiQBYSPjXkiFKEZocfpU3"
-BASE_URL = "https://api.tryallai.com"
-MODEL = "gpt-5-codex-high"
+# 从环境变量读取配置
+API_KEY = os.environ.get("FORMASYN_API_KEY", "")
+BASE_URL = os.environ.get("FORMASYN_BASE_URL", "https://api.tryallai.com")
+MODEL = os.environ.get("FORMASYN_MODEL", "gpt-5-codex-high")
 
 
 def test_api_raw_http():

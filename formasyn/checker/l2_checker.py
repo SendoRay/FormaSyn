@@ -21,6 +21,7 @@ from FormaSyn.formasyn.checker.diagnostic import (
     diagnose_resource_error,
     diagnose_resource_error_with_ii,
 )
+from FormaSyn.formasyn.utils.hls_mock import vitis_available
 
 logger = logging.getLogger(__name__)
 
@@ -105,7 +106,7 @@ class L2Checker:
         """
         result = L2Result(variant_id=variant_id)
 
-        if not self._vitis_available():
+        if not vitis_available():
             logger.info("v++ 不可用，跳过 L2 验证 [%s]", variant_id)
             result.skipped = True
             result.passed = True
@@ -156,24 +157,6 @@ class L2Checker:
             )
 
         return result
-
-    @staticmethod
-    def _vitis_available() -> bool:
-        """Check if v++ command is on PATH."""
-        try:
-            subprocess.run(
-                ["v++", "--version"],
-                capture_output=True, text=True, timeout=10,
-            )
-            return True
-        except (
-            FileNotFoundError,
-            NotADirectoryError,
-            PermissionError,
-            subprocess.TimeoutExpired,
-            OSError,
-        ):
-            return False
 
     def _run_csynth(
         self,

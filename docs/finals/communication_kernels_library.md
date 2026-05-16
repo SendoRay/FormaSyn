@@ -1,7 +1,5 @@
 # FormaSyn 通信算子库
 
-基于 8 个核心算子：Map, Reduce, ShiftReg, Delay, MessagePass, Cycle, Iteration, Switch
-
 ---
 
 ## 验证指标说明
@@ -11,7 +9,6 @@
 | 算子类别 | 核心指标 | 统一阈值 |
 |----------|----------|----------|
 | **滤波** | NMSE | ≤ -40 dB |
-| **同步** | 见具体算子 | - |
 | **变换** | SFDR | ≥ 60 dB |
 | **调制** | EVM | ≤ 3% |
 | **编码** | FER差距 | < 0.5 dB |
