@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-import yaml
 from openai import OpenAI
 
 # 环境变量名称常量
@@ -39,7 +38,7 @@ def _load_dotenv() -> None:
 
 
 def _load_api_config() -> tuple[str, str, str]:
-    """加载 API 配置：环境变量 > .env 文件 > config.yaml。
+    """加载 API 配置，优先级：环境变量 > .env 文件。
 
     环境变量名：
       - FORMASYN_API_KEY
@@ -47,32 +46,13 @@ def _load_api_config() -> tuple[str, str, str]:
       - FORMASYN_MODEL      （例如 gpt-5-codex-high）
 
     返回 (api_key, base_url, model)，未配置时为空字符串。
-    实际使用时的验证延迟到 BaseAgent 初始化时。
     """
-    # 首次调用时尝试加载 .env
     _load_dotenv()
 
     api_key = os.environ.get(ENV_API_KEY, "")
     base_url = os.environ.get(ENV_BASE_URL, "")
     model = os.environ.get(ENV_MODEL, "")
 
-    # 可选：从项目 config.yaml 读取覆盖（优先级最低）
-    project_config_path = Path(__file__).resolve().parents[2] / "config.yaml"
-    if project_config_path.exists():
-        try:
-            with open(project_config_path) as f:
-                config = yaml.safe_load(f) or {}
-            api_config = config.get("api", {})
-            if not api_key and api_config.get("api_key"):
-                api_key = api_config["api_key"]
-            if not base_url and api_config.get("base_url"):
-                base_url = api_config["base_url"]
-            if not model and api_config.get("model"):
-                model = api_config["model"]
-        except Exception:
-            pass
-
-    # 确保 base_url 包含 /v1 后缀
     if base_url and not base_url.endswith("/v1"):
         base_url = base_url + "/v1"
 
