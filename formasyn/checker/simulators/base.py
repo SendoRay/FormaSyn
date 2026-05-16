@@ -14,9 +14,9 @@ import tempfile
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from FormaSyn.formasyn.utils.cpp_utils import extract_function_name
-from FormaSyn.formasyn.utils.hls_mock import strip_hls_pragmas, write_mock_headers
-from FormaSyn.formasyn.utils.metrics import compute_nmse, compute_sign_error_rate
+from ...utils.cpp_utils import extract_function_name
+from ...utils.hls_mock import strip_hls_pragmas, write_mock_headers
+from ...utils.metrics import compute_nmse, compute_sign_error_rate
 
 logger = logging.getLogger(__name__)
 
@@ -195,11 +195,11 @@ def get_simulator(kernel_type: str) -> type[QualitySimulator]:
     Raises:
         ValueError: 如果 kernel_type 不支持.
     """
-    from FormaSyn.formasyn.checker.simulators.ber_sim import BERSimulator
-    from FormaSyn.formasyn.checker.simulators.detection_sim import DetectionSimulator
-    from FormaSyn.formasyn.checker.simulators.filter_sim import FilterSimulator
-    from FormaSyn.formasyn.checker.simulators.sync_sim import SyncSimulator
-    from FormaSyn.formasyn.checker.simulators.transform_sim import TransformSimulator
+    from .ber_sim import BERSimulator
+    from .detection_sim import DetectionSimulator
+    from .filter_sim import FilterSimulator
+    from .sync_sim import SyncSimulator
+    from .transform_sim import TransformSimulator
 
     sim_map: dict[str, type[QualitySimulator]] = {
         "channel_coding": BERSimulator,

@@ -29,23 +29,20 @@ from typing import Any, Callable
 import yaml
 
 ROOT = Path(__file__).resolve().parent
-PARENT = ROOT.parent
-if str(PARENT) not in sys.path:
-    sys.path.insert(0, str(PARENT))
 
-from FormaSyn.formasyn.agent.codegen_agent import ScheduleCodegenAgent
-from FormaSyn.formasyn.agent.dse_agent import DSEAgent
-from FormaSyn.formasyn.checker.diagnostic import FailureContext, FailureStage
-from FormaSyn.formasyn.checker.l1_checker import L1Checker
-from FormaSyn.formasyn.checker.l2_checker import L2Checker
-from FormaSyn.formasyn.checker.l3_checker import L3Checker
-from FormaSyn.formasyn.checker.pre_checker import PreChecker
-from FormaSyn.formasyn.dsl.parser import parse
-from FormaSyn.formasyn.dsl.template_engine import TemplateEngine
-from FormaSyn.formasyn.feedback.loop import FeedbackLoop
-from FormaSyn.formasyn.golden.generator import GoldenModelGenerator
-from FormaSyn.formasyn.golden.quant_analyzer import QuantizationAnalyzer
-from FormaSyn.formasyn.solver.roofline_solver import ResourceOverflowError, RooflineSolver
+from formasyn.agent.codegen_agent import ScheduleCodegenAgent
+from formasyn.agent.dse_agent import DSEAgent
+from formasyn.checker.diagnostic import FailureContext, FailureStage
+from formasyn.checker.l1_checker import L1Checker
+from formasyn.checker.l2_checker import L2Checker
+from formasyn.checker.l3_checker import L3Checker
+from formasyn.checker.pre_checker import PreChecker
+from formasyn.dsl.parser import parse
+from formasyn.dsl.template_engine import TemplateEngine
+from formasyn.feedback.loop import FeedbackLoop
+from formasyn.golden.generator import GoldenModelGenerator
+from formasyn.golden.quant_analyzer import QuantizationAnalyzer
+from formasyn.solver.roofline_solver import ResourceOverflowError, RooflineSolver
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)

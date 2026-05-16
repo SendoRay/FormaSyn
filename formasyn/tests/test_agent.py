@@ -8,14 +8,14 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from FormaSyn.formasyn.agent.dse_agent import (
+from ..agent.dse_agent import (
     DSEAgent,
     IntentJSON,
     QuantSpec,
     _VALID_APPROX_METHODS,
 )
-from FormaSyn.formasyn.agent.knowledge_prompt import COMM_KNOWLEDGE_PROMPT
-from FormaSyn.formasyn.ir.math_dialect import MathDialect
+from ..agent.knowledge_prompt import COMM_KNOWLEDGE_PROMPT
+from ..ir.math_dialect import MathDialect
 
 
 # ---------------------------------------------------------------------------

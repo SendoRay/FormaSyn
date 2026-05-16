@@ -7,9 +7,9 @@ Provides:
 - ``TestbenchGenerator``: Golden outputs -> HLS testbench.cpp for L1/L3.
 """
 
-from FormaSyn.formasyn.golden.generator import GoldenCompileError, GoldenModelGenerator
-from FormaSyn.formasyn.golden.quant_analyzer import QuantizationAnalyzer, QuantSpec
-from FormaSyn.formasyn.golden.testbench_gen import (
+from .generator import GoldenCompileError, GoldenModelGenerator
+from .quant_analyzer import QuantizationAnalyzer, QuantSpec
+from .testbench_gen import (
     TestbenchGenerator,
     TestbundleArtifacts,
     TestbenchSpec,

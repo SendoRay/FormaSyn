@@ -16,7 +16,7 @@ import logging
 from dataclasses import dataclass
 from typing import Optional
 
-from FormaSyn.formasyn.utils.cpp_utils import (
+from ..utils.cpp_utils import (
     extract_function_name,
     extract_function_signature,
     extract_param_specs,

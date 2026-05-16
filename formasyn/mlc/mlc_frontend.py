@@ -19,8 +19,8 @@ from typing import Optional
 import numpy as np
 from scipy import sparse
 
-from FormaSyn.formasyn.dsl.operators import FormulaGraph
-from FormaSyn.formasyn.ir.math_dialect import MathDialect, MathNode
+from ..dsl.operators import FormulaGraph
+from ..ir.math_dialect import MathDialect, MathNode
 
 logger = logging.getLogger(__name__)
 

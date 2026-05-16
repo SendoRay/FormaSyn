@@ -18,8 +18,8 @@ from typing import Optional
 
 import numpy as np
 
-from FormaSyn.formasyn.ir.math_dialect import MathDialect
-from FormaSyn.formasyn.ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
+from ..ir.math_dialect import MathDialect
+from ..ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
 
 logger = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
 """FormaSyn Roofline Solver package."""
 
-from FormaSyn.formasyn.solver.roofline_solver import (
+from .roofline_solver import (
     ResourceOverflowError,
     RooflineSolver,
 )

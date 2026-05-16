@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
 
-from FormaSyn.formasyn.agent.base_agent import BaseAgent, _LOADED_MODEL
+from ..agent.base_agent import BaseAgent, _LOADED_MODEL
 
 logger = logging.getLogger(__name__)
 

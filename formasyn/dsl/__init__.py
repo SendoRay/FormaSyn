@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from FormaSyn.formasyn.dsl.operators import (
+from .operators import (
     AnyOp,
     DelayOp,
     Domain,

@@ -15,5 +15,7 @@ venv/
 env/
 ENV/
 
+.env
+
 .DS_Store
 .gitignore

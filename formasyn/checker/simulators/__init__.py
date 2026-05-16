@@ -4,15 +4,15 @@
 根据 kernel_type 自动选择对应的 Simulator。
 """
 
-from FormaSyn.formasyn.checker.simulators.base import (
+from .base import (
     QualitySimulator,
     get_simulator,
 )
-from FormaSyn.formasyn.checker.simulators.ber_sim import BERSimulator
-from FormaSyn.formasyn.checker.simulators.detection_sim import DetectionSimulator
-from FormaSyn.formasyn.checker.simulators.filter_sim import FilterSimulator
-from FormaSyn.formasyn.checker.simulators.sync_sim import SyncSimulator
-from FormaSyn.formasyn.checker.simulators.transform_sim import TransformSimulator
+from .ber_sim import BERSimulator
+from .detection_sim import DetectionSimulator
+from .filter_sim import FilterSimulator
+from .sync_sim import SyncSimulator
+from .transform_sim import TransformSimulator
 
 __all__ = [
     "QualitySimulator",

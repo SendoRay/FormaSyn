@@ -14,8 +14,8 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from FormaSyn.formasyn.checker.metrics import PreCheckResult
-from FormaSyn.formasyn.golden.testbench_gen import TestbenchGenerator, TestbenchSpec
+from .metrics import PreCheckResult
+from ..golden.testbench_gen import TestbenchGenerator, TestbenchSpec
 
 logger = logging.getLogger(__name__)
 

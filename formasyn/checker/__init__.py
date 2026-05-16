@@ -1,12 +1,12 @@
 """FormaSyn verification pipeline: L1/L2/L3 checkers and diagnostic agent."""
 
 # L1/L2/L3 Checkers
-from FormaSyn.formasyn.checker.l1_checker import L1Checker
-from FormaSyn.formasyn.checker.l2_checker import L2Checker
-from FormaSyn.formasyn.checker.l3_checker import L3Checker
+from .l1_checker import L1Checker
+from .l2_checker import L2Checker
+from .l3_checker import L3Checker
 
 # Diagnostic (LLM-based + rule-based fallback)
-from FormaSyn.formasyn.checker.diagnostic import (
+from .diagnostic import (
     DiagnosticAgent,
     FailureContext,
     FailureStage,
@@ -17,7 +17,7 @@ from FormaSyn.formasyn.checker.diagnostic import (
 )
 
 # Metrics (unified data structures)
-from FormaSyn.formasyn.checker.metrics import (
+from .metrics import (
     HardwareBudget,
     L1Result,
     L2Result,
@@ -28,7 +28,7 @@ from FormaSyn.formasyn.checker.metrics import (
 )
 
 # Pre-checker
-from FormaSyn.formasyn.checker.pre_checker import PreChecker
+from .pre_checker import PreChecker
 
 __all__ = [
     # Checkers

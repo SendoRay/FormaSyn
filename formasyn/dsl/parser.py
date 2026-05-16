@@ -10,7 +10,7 @@ import logging
 from dataclasses import asdict
 from typing import Any
 
-from FormaSyn.formasyn.dsl.operators import (
+from .operators import (
     AnyOp,
     DelayOp,
     FormulaGraph,
@@ -19,7 +19,7 @@ from FormaSyn.formasyn.dsl.operators import (
     ReduceOp,
     ShiftRegOp,
 )
-from FormaSyn.formasyn.ir.math_dialect import MathDialect, MathNode
+from ..ir.math_dialect import MathDialect, MathNode
 
 logger = logging.getLogger(__name__)
 

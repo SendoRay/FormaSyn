@@ -16,7 +16,7 @@ from typing import Optional
 
 import networkx as nx
 
-from FormaSyn.formasyn.ir.math_dialect import MathDialect, MathNode
+from ..ir.math_dialect import MathDialect, MathNode
 
 logger = logging.getLogger(__name__)
 

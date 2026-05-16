@@ -14,7 +14,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import Optional
 
-from FormaSyn.formasyn.checker.diagnostic import FailureContext
+from .diagnostic import FailureContext
 
 logger = logging.getLogger(__name__)
 

@@ -11,7 +11,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import Optional
 
-from FormaSyn.formasyn.ir.algo_hw_dialect import AlgoHWNode
+from .algo_hw_dialect import AlgoHWNode
 
 logger = logging.getLogger(__name__)
 

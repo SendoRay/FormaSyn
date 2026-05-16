@@ -18,15 +18,15 @@ import logging
 from dataclasses import dataclass, field
 from typing import Any, Optional
 
-from FormaSyn.formasyn.agent.diagnostic import (
+from ..agent.diagnostic import (
     AgentDiagnostic,
     DiagnosticResult,
     RecoveryAction,
     RecoveryLayer,
 )
-from FormaSyn.formasyn.checker.diagnostic import FailureContext, FailureStage
-from FormaSyn.formasyn.ir.algo_hw_dialect import AlgoHWDialect
-from FormaSyn.formasyn.ir.schedule_dialect import HLSScheduleDialect
+from ..checker.diagnostic import FailureContext, FailureStage
+from ..ir.algo_hw_dialect import AlgoHWDialect
+from ..ir.schedule_dialect import HLSScheduleDialect
 
 logger = logging.getLogger(__name__)
 

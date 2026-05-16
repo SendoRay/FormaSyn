@@ -20,20 +20,20 @@ import subprocess
 import tempfile
 from typing import Optional
 
-from FormaSyn.formasyn.checker.diagnostic import (
+from .diagnostic import (
     diagnose_compile_error,
     diagnose_numeric_error,
 )
-from FormaSyn.formasyn.checker.metrics import L1Result
-from FormaSyn.formasyn.golden.testbench_gen import TestbenchGenerator, parse_output
-from FormaSyn.formasyn.utils.cpp_utils import extract_function_name
-from FormaSyn.formasyn.utils.hls_mock import (
+from .metrics import L1Result
+from ..golden.testbench_gen import TestbenchGenerator, parse_output
+from ..utils.cpp_utils import extract_function_name
+from ..utils.hls_mock import (
     strip_hls_pragmas,
     tool_available,
     vitis_available,
     write_mock_headers,
 )
-from FormaSyn.formasyn.utils.metrics import compute_nmse, compute_sign_error_rate
+from ..utils.metrics import compute_nmse, compute_sign_error_rate
 
 logger = logging.getLogger(__name__)
 
@@ -290,7 +290,7 @@ def _ensure_local_kernel_header(hls_cpp_code: str, out_dir: str) -> None:
     if '#include "kernel.h"' not in hls_cpp_code:
         return
 
-    from FormaSyn.formasyn.utils.cpp_utils import extract_function_signature
+    from ..utils.cpp_utils import extract_function_signature
 
     signature = extract_function_signature(hls_cpp_code)
     header_lines = [

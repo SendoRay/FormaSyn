@@ -21,12 +21,12 @@ from __future__ import annotations
 import logging
 from typing import Optional
 
-from FormaSyn.formasyn.checker.diagnostic import (
+from .diagnostic import (
     FailureContext,
     diagnose_quality_error,
 )
-from FormaSyn.formasyn.checker.metrics import L3Result
-from FormaSyn.formasyn.checker.simulators import get_simulator
+from .metrics import L3Result
+from .simulators import get_simulator
 
 logger = logging.getLogger(__name__)
 

@@ -15,8 +15,8 @@ from typing import Optional
 
 import numpy as np
 
-from FormaSyn.formasyn.golden.generator import GoldenModelGenerator
-from FormaSyn.formasyn.ir.math_dialect import MathDialect
+from .generator import GoldenModelGenerator
+from ..ir.math_dialect import MathDialect
 
 logger = logging.getLogger(__name__)
 

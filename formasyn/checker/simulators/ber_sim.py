@@ -8,9 +8,9 @@ from __future__ import annotations
 import logging
 from typing import Optional
 
-from FormaSyn.formasyn.checker.simulators.base import QualitySimulator
-from FormaSyn.formasyn.utils.cpp_utils import extract_function_name
-from FormaSyn.formasyn.utils.hls_mock import strip_hls_pragmas
+from .base import QualitySimulator
+from ...utils.cpp_utils import extract_function_name
+from ...utils.hls_mock import strip_hls_pragmas
 
 logger = logging.getLogger(__name__)
 

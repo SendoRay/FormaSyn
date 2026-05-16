@@ -15,13 +15,13 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from typing import Optional
 
-from FormaSyn.formasyn.checker.diagnostic import (
+from .diagnostic import (
     FailureContext,
     FailureStage,
     diagnose_resource_error,
     diagnose_resource_error_with_ii,
 )
-from FormaSyn.formasyn.utils.hls_mock import vitis_available
+from ..utils.hls_mock import vitis_available
 
 logger = logging.getLogger(__name__)
 

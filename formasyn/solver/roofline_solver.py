@@ -19,8 +19,8 @@ import re
 from dataclasses import asdict
 from typing import ClassVar
 
-from FormaSyn.formasyn.ir.algo_hw_dialect import AlgoHWDialect, AlgoHWNode
-from FormaSyn.formasyn.ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
+from ..ir.algo_hw_dialect import AlgoHWDialect, AlgoHWNode
+from ..ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
 
 logger = logging.getLogger(__name__)
 
