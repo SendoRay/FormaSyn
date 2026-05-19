@@ -271,7 +271,7 @@ class FeedbackLoop:
             actions_taken = self._apply_template_engine_action(ir, action_type, params)
         
         elif layer == RecoveryLayer.ROOFLINE_SOLVER:
-            actions_taken = self._apply_roofline_action(ir, action_type, params)
+            actions_taken = self._apply_schedule_action(ir, action_type, params)
         
         elif layer == RecoveryLayer.MLC_BACKEND:
             actions_taken = self._apply_mlc_action(ir, action_type, params)
@@ -338,7 +338,7 @@ class FeedbackLoop:
         
         return actions
 
-    def _apply_roofline_action(
+    def _apply_schedule_action(
         self,
         ir: AlgoHWDialect,
         action_type: str,
@@ -367,7 +367,7 @@ class FeedbackLoop:
         
         elif action_type == "reduce_parallelism_and_bitwidth":
             # Combined action
-            para_actions = self._apply_roofline_action(ir, "reduce_parallelism", params)
+            para_actions = self._apply_schedule_action(ir, "reduce_parallelism", params)
             quant_actions = self._apply_template_engine_action(
                 ir, "relax_quant", 
                 {"int_bits_increment": 0, "frac_bits_increment": params.get("bitwidth_reduction", 2)}

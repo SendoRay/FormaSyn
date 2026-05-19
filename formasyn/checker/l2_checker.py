@@ -18,7 +18,6 @@ from typing import Optional
 from .diagnostic import (
     FailureContext,
     FailureStage,
-    diagnose_resource_error,
     diagnose_resource_error_with_ii,
 )
 from ..utils.hls_mock import vitis_available

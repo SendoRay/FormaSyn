@@ -36,6 +36,7 @@ class AlgoHWNode(MathNode):
     saturation_guard: bool = False
     quant_int_bits: int = 8
     quant_frac_bits: int = 0
+    iteration_strategy: Optional[str] = None  # "pipelined" | "iterative" (for IterationOp nodes)
 
 
 @dataclass
@@ -63,6 +64,7 @@ class AlgoHWDialect:
     output_nodes: list[str] = field(default_factory=list)
     estimated_dsp: Optional[int] = None
     estimated_bram: Optional[int] = None
+    quality_bound: dict[str, float] = field(default_factory=dict)
 
     @classmethod
     def example_ldpc_cnu(cls) -> AlgoHWDialect:

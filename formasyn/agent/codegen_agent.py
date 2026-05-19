@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .base_agent import BaseAgent, _LOADED_MODEL
+from .knowledge_prompt import COMM_KNOWLEDGE_PROMPT
 from ..ir.schedule_dialect import HLSScheduleDialect, ScheduleNode
 
 logger = logging.getLogger(__name__)
@@ -34,6 +35,19 @@ Code requirements:
 - I/O params: cover schedule.input_nodes and schedule.output_nodes
 - kernel.cpp: include <ap_int.h> and <ap_fixed.h>
 - kernel.h: include guard and function declaration
+- Honor unroll_factor, pipeline_ii, array_partition_type from the schedule
+- If address_mapping_code is non-empty, integrate it into the inner loop body
+- Use #pragma HLS PIPELINE II=<pipeline_ii> on the innermost computation loop
+- Use #pragma HLS ARRAY_PARTITION for arrays with partition info
+- Ensure PIPELINE and DATAFLOW are never in the same scope
+- Use ap_fixed<total_bits, int_bits> types matching the schedule data_type fields
+
+Hardware cost reference:
+- ap_int<8> multiply = 1 DSP
+- ap_int<16> multiply = 2 DSP
+- ap_fixed<16,4> multiply = 3 DSP
+- add/sub/min/max/XOR = 0 DSP (pure LUT)
+- lut_tanh (256-depth) = 0 DSP, 1 BRAM18
 """
 
 
@@ -96,7 +110,7 @@ class ScheduleCodegenAgent(BaseAgent):
                     system_prompt=_CODEGEN_SCHEMA,
                     user_prompt=user_prompt,
                     temperature=0.1,
-                    timeout=10.0,  # 10秒超时
+                    timeout=60.0,
                 )
                 tool_calls = self._parse_codegen_response(raw)
             except Exception as e:
@@ -274,12 +288,64 @@ class ScheduleCodegenAgent(BaseAgent):
         )
 
     @staticmethod
+    def _get_representative_compute_node(
+        schedule: HLSScheduleDialect,
+    ) -> ScheduleNode | None:
+        """Find the main compute node (first non-input node) for pragma decisions."""
+        for nid, node in schedule.nodes.items():
+            if node.op_type != "input":
+                return node
+        return None
+
+    @staticmethod
+    def _emit_loop_pragmas(
+        node: ScheduleNode | None,
+        schedule: HLSScheduleDialect,
+        dim: int,
+    ) -> list[str]:
+        """Generate HLS pragmas from schedule decisions — single source of truth."""
+        if node is None:
+            return [f"        #pragma HLS PIPELINE II={schedule.expected_ii}"]
+
+        lines: list[str] = []
+        uf = node.unroll_factor
+        ii = node.pipeline_ii
+
+        if uf >= dim:
+            # Full unroll: all iterations execute in parallel, II=1
+            lines.append("        #pragma HLS PIPELINE II=1")
+            lines.append("        #pragma HLS UNROLL")
+        elif uf > 1:
+            lines.append(f"        #pragma HLS PIPELINE II={ii}")
+            lines.append(f"        #pragma HLS UNROLL factor={uf}")
+        else:
+            lines.append(f"        #pragma HLS PIPELINE II={ii}")
+
+        return lines
+
+    @staticmethod
+    def _emit_array_partition(
+        node: ScheduleNode | None,
+        var_name: str,
+    ) -> str | None:
+        """Generate array partition pragma from schedule if needed."""
+        if node is None:
+            return None
+        part = node.array_partition_type
+        if part == "complete":
+            return f"    #pragma HLS ARRAY_PARTITION variable={var_name} complete"
+        if part == "cyclic":
+            uf = node.unroll_factor
+            return f"    #pragma HLS ARRAY_PARTITION variable={var_name} cyclic factor={uf}"
+        return None
+
+    @staticmethod
     def _fallback_codegen_tool_calls(
         schedule: HLSScheduleDialect,
         *,
         function_name: str,
     ) -> list[dict[str, str]]:
-        """Deterministic fallback codegen with pattern-aware logic."""
+        """Deterministic fallback codegen — all pragma decisions come from the schedule."""
         params: list[str] = []
         for node_id in schedule.input_nodes:
             n = schedule.nodes[node_id]
@@ -291,107 +357,59 @@ class ScheduleCodegenAgent(BaseAgent):
             params.append(f"    {n.data_type} {node_id}[{size}]")
         sig = f"void {function_name}(\n" + ",\n".join(params) + "\n)"
 
-        body_lines: list[str] = []
-        body_lines.append(f"    #pragma HLS PIPELINE II={schedule.expected_ii}")
-
-        # 分析节点拓扑来推断代码模式
         nodes = schedule.nodes
         input_nodes = schedule.input_nodes
         output_nodes = schedule.output_nodes
+        compute_node = ScheduleCodegenAgent._get_representative_compute_node(schedule)
 
-        # DEBUG: 打印节点信息
-        with open("/tmp/formasyn_codegen_debug.log", "a") as f:
-            f.write(f"=== {schedule.variant_id} ===\n")
-            f.write(f"input_nodes: {input_nodes}\n")
-            f.write(f"output_nodes: {output_nodes}\n")
-            for nid, n in nodes.items():
-                f.write(f"{nid}: op_type={n.op_type}, op_detail={n.op_detail}, data_type={n.data_type}\n")
+        body_lines: list[str] = []
 
-        # 检查是否有 FIR 模式: shift_reg -> map(multiply) -> reduce(add)
-        has_shift_reg = any(
-            nodes[nid].op_type == "shift_reg" for nid in nodes
-        )
+        # Array partition pragmas (from schedule, not hardcoded)
+        for node_id in input_nodes + output_nodes:
+            pragma = ScheduleCodegenAgent._emit_array_partition(compute_node, node_id)
+            if pragma:
+                body_lines.append(pragma)
+
+        # Detect kernel pattern
+        has_shift_reg = any(n.op_type == "shift_reg" for n in nodes.values())
         has_map_multiply = any(
-            nodes[nid].op_type == "map" and
-            nodes[nid].op_detail.get("func") == "multiply"
-            for nid in nodes
+            n.op_type == "map" and n.op_detail.get("func") == "multiply"
+            for n in nodes.values()
         )
         has_reduce_add = any(
-            nodes[nid].op_type == "reduce" and
-            nodes[nid].op_detail.get("op") == "add"
-            for nid in nodes
+            n.op_type == "reduce" and n.op_detail.get("op") == "add"
+            for n in nodes.values()
         )
 
-        with open("/tmp/formasyn_codegen_debug.log", "a") as f:
-            f.write(f"FIR detection: has_shift_reg={has_shift_reg}, has_map_multiply={has_map_multiply}, has_reduce_add={has_reduce_add}\n")
-
         if has_shift_reg and has_map_multiply and has_reduce_add:
-            # FIR 滤波器模式
-            # 提取系数（处理可能的嵌套结构）
-            coeffs = []
-            for nid, n in nodes.items():
-                if n.op_type == "map" and n.op_detail.get("func") == "multiply":
-                    # 尝试多种路径获取系数
-                    fp = n.op_detail.get("func_params", {})
-                    coeffs = fp.get("coeffs", [])
-                    if not coeffs:
-                        # 处理嵌套情况 {'func_params': {'func_params': {'coeffs': [...]}}}
-                        fp2 = fp.get("func_params", {})
-                        coeffs = fp2.get("coeffs", [])
-                    if coeffs:
-                        break
-
-            if coeffs:
-                # 生成 FIR 代码
-                coeff_strs = [f"static const ap_fixed<16,4> coeffs[{len(coeffs)}] = {{"
-                              + ", ".join(f"{c:.6f}" for c in coeffs) + "};"]
-                body_lines.extend(coeff_strs)
-
-                input_id = input_nodes[0] if input_nodes else "x_in"
-                output_id = output_nodes[0] if output_nodes else "y_out"
-                tap_count = len(coeffs)
-
-                # FIR 滤波器：处理整个输入数组（使用 tap_count 作为默认大小）
-                input_size = nodes[input_nodes[0]].shape[0] if nodes[input_nodes[0]].shape and nodes[input_nodes[0]].shape[0] > 1 else tap_count
-                body_lines.append(f"    static ap_fixed<16,4> shift_reg[{tap_count}] = {{0}};")
-                body_lines.append(f"    #pragma HLS ARRAY_PARTITION variable=shift_reg complete")
-                body_lines.append("")
-                body_lines.append(f"    for (int n = 0; n < {input_size}; n++) {{")
-                body_lines.append(f"        #pragma HLS PIPELINE II=1")
-                body_lines.append(f"        ap_fixed<32,8> acc = 0;")
-                body_lines.append("")
-                body_lines.append(f"        for (int i = {tap_count-1}; i > 0; i--) {{")
-                body_lines.append(f"            #pragma HLS UNROLL")
-                body_lines.append(f"            shift_reg[i] = shift_reg[i-1];")
-                body_lines.append(f"        }}")
-                body_lines.append(f"        shift_reg[0] = (ap_fixed<16,4>){input_id}[n];")
-                body_lines.append("")
-                body_lines.append(f"        for (int i = 0; i < {tap_count}; i++) {{")
-                body_lines.append(f"            #pragma HLS UNROLL")
-                body_lines.append(f"            acc += shift_reg[i] * coeffs[i];")
-                body_lines.append(f"        }}")
-                body_lines.append(f"        {output_id}[n] = acc;")
-                body_lines.append(f"    }}")
-            else:
-                # 没有系数，使用简单复制
-                ScheduleCodegenAgent._generate_simple_copy(body_lines, input_nodes, output_nodes)
+            ScheduleCodegenAgent._generate_fir_body(
+                body_lines, schedule, input_nodes, output_nodes, compute_node,
+            )
 
         elif len(input_nodes) == 2 and len(output_nodes) == 1:
-            # 二元运算 (如 vec_add)
+            # Binary elementwise (vec_add)
             a_id, b_id = input_nodes[0], input_nodes[1]
             c_id = output_nodes[0]
-            size = nodes[input_nodes[0]].shape[0] if nodes[input_nodes[0]].shape else 16
+            size = nodes[a_id].shape[0] if nodes[a_id].shape else 16
             body_lines.append(f"    for (int i = 0; i < {size}; i++) {{")
-            body_lines.append(f"        #pragma HLS UNROLL")
+            body_lines.extend(
+                ScheduleCodegenAgent._emit_loop_pragmas(compute_node, schedule, size)
+            )
             body_lines.append(f"        {c_id}[i] = {a_id}[i] + {b_id}[i];")
             body_lines.append(f"    }}")
 
-        elif len(input_nodes) == 1 and len(output_nodes) == 1:
-            # 单输入单输出
-            ScheduleCodegenAgent._generate_simple_copy(body_lines, input_nodes, output_nodes)
-
         else:
-            ScheduleCodegenAgent._generate_simple_copy(body_lines, input_nodes, output_nodes)
+            # Generic: copy first input to each output
+            first_in = input_nodes[0] if input_nodes else "x_in"
+            for out_id in output_nodes:
+                size = nodes.get(out_id)
+                dim = size.shape[0] if size and size.shape else 16
+                body_lines.append(f"    for (int i = 0; i < {dim}; i++) {{")
+                body_lines.extend(
+                    ScheduleCodegenAgent._emit_loop_pragmas(compute_node, schedule, dim)
+                )
+                body_lines.append(f"        {out_id}[i] = {first_in}[i];")
+                body_lines.append(f"    }}")
 
         cpp = "\n".join([
             "#include <ap_int.h>",
@@ -423,14 +441,54 @@ class ScheduleCodegenAgent(BaseAgent):
         ]
 
     @staticmethod
-    def _generate_simple_copy(
+    def _generate_fir_body(
         body_lines: list[str],
+        schedule: HLSScheduleDialect,
         input_nodes: list[str],
         output_nodes: list[str],
+        compute_node: ScheduleNode | None,
     ) -> None:
-        """生成简单的复制逻辑."""
-        first_input = input_nodes[0] if input_nodes else "x_in"
-        for out_id in output_nodes:
-            body_lines.append(f"    for (int i = 0; i < 16; i++) {{")
-            body_lines.append(f"        {out_id}[i] = {first_input}[i];")
-            body_lines.append(f"    }}")
+        """Generate FIR filter body with schedule-driven pragmas."""
+        nodes = schedule.nodes
+        coeffs: list[float] = []
+        for n in nodes.values():
+            if n.op_type == "map" and n.op_detail.get("func") == "multiply":
+                fp = n.op_detail.get("func_params", {})
+                coeffs = fp.get("coeffs", [])
+                if not coeffs:
+                    coeffs = fp.get("func_params", {}).get("coeffs", [])
+                if coeffs:
+                    break
+
+        if not coeffs:
+            return
+
+        input_id = input_nodes[0] if input_nodes else "x_in"
+        output_id = output_nodes[0] if output_nodes else "y_out"
+        tap_count = len(coeffs)
+        input_size = nodes[input_nodes[0]].shape[0] if nodes[input_nodes[0]].shape and nodes[input_nodes[0]].shape[0] > 1 else tap_count
+        out_dt = compute_node.data_type if compute_node else "ap_fixed<16,4>"
+        acc_bits = (compute_node.quant_int_bits + compute_node.quant_frac_bits) * 2 if compute_node else 32
+        acc_int = compute_node.quant_int_bits * 2 if compute_node else 8
+
+        body_lines.append(f"    static const {out_dt} coeffs[{tap_count}] = {{"
+                          + ", ".join(f"{c:.6f}" for c in coeffs) + "};")
+        body_lines.append(f"    static {out_dt} shift_reg[{tap_count}] = {{0}};")
+        body_lines.append(f"    #pragma HLS ARRAY_PARTITION variable=shift_reg complete")
+        body_lines.append("")
+        body_lines.append(f"    for (int n = 0; n < {input_size}; n++) {{")
+        body_lines.append(f"        #pragma HLS PIPELINE II=1")
+        body_lines.append(f"        ap_fixed<{acc_bits},{acc_int}> acc = 0;")
+        body_lines.append("")
+        body_lines.append(f"        for (int i = {tap_count - 1}; i > 0; i--) {{")
+        body_lines.append(f"            #pragma HLS UNROLL")
+        body_lines.append(f"            shift_reg[i] = shift_reg[i-1];")
+        body_lines.append(f"        }}")
+        body_lines.append(f"        shift_reg[0] = ({out_dt}){input_id}[n];")
+        body_lines.append("")
+        body_lines.append(f"        for (int i = 0; i < {tap_count}; i++) {{")
+        body_lines.append(f"            #pragma HLS UNROLL")
+        body_lines.append(f"            acc += shift_reg[i] * coeffs[i];")
+        body_lines.append(f"        }}")
+        body_lines.append(f"        {output_id}[n] = acc;")
+        body_lines.append(f"    }}")

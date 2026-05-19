@@ -167,6 +167,7 @@ class L3Result:
     variant_id: str
     passed: bool = False
     cosim_passed: bool = False
+    cosim_skipped: bool = False
     quality_passed: bool = False
     quality_metrics: dict[str, float] = field(default_factory=dict)
     failure: Optional[FailureContext] = None

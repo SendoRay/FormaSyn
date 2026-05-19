@@ -1,0 +1,15 @@
+# examples/vec_add/constraints.yaml
+
+hardware_constraints:
+  target_device: "xcu200-fsgd2104-2-e"
+  clock_target_mhz: 200
+  max_dsp: 64
+  max_bram_18k: 100
+  target_ii: 10000
+
+algorithm_metrics:
+  evaluator_type: "WaveformEvaluator"
+  kernel_type: "elementwise"
+  tolerance:
+    nmse_db: -40.0
+

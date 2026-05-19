@@ -21,7 +21,7 @@ from .golden.generator import GoldenModelGenerator
 from .ir.algo_hw_dialect import AlgoHWDialect
 from .ir.math_dialect import MathDialect
 from .ir.schedule_dialect import HLSScheduleDialect
-from .solver.roofline_solver import RooflineSolver
+from .solver.schedule_builder import ScheduleBuilder
 
 __all__ = [
     # IR
@@ -39,7 +39,7 @@ __all__ = [
     "CodegenArtifacts",
     "AgentDiagnostic",
     # Solver
-    "RooflineSolver",
+    "ScheduleBuilder",
     # Checker
     "L1Checker",
     "L2Checker",

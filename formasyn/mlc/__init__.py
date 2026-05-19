@@ -1,10 +1,5 @@
-"""FormaSyn MLC: Memory Layout Compiler (frontend + backend)."""
+"""FormaSyn MLC: Memory Layout Compiler."""
 
-from .mlc_frontend import MissingGraphDataError, MLCFrontend
-from .mlc_backend import MLCBackend
+from .memory_layout import MemoryLayoutPass, MissingGraphDataError
 
-__all__ = [
-    "MissingGraphDataError",
-    "MLCFrontend",
-    "MLCBackend",
-]
+__all__ = ["MemoryLayoutPass", "MissingGraphDataError"]

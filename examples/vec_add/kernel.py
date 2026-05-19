@@ -1,0 +1,25 @@
+"""Vector add kernel: c = a + b.
+
+Data flow::
+
+    a ----\
+           +--> map(add) --> c
+    b ----/
+"""
+
+from __future__ import annotations
+
+import formasyn.dsl as fp
+
+VEC_LEN = 16
+
+
+def build_vec_add() -> fp.FormulaGraph:
+    """Construct a vector-add kernel c = a + b."""
+    graph = fp.FormulaGraph(
+        name="vec_add",
+        inputs={"a": [VEC_LEN], "b": [VEC_LEN]},
+        outputs=["c"],
+    )
+    graph.add(fp.map("a", func="add", output="c", other_ref="b"))
+    return graph

@@ -1,8 +1,5 @@
-"""FormaSyn Roofline Solver package."""
+"""FormaSyn Schedule Builder package."""
 
-from .roofline_solver import (
-    ResourceOverflowError,
-    RooflineSolver,
-)
+from .schedule_builder import ResourceOverflowError, ScheduleBuilder
 
-__all__ = ["ResourceOverflowError", "RooflineSolver"]
+__all__ = ["ResourceOverflowError", "ScheduleBuilder"]

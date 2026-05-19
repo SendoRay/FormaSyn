@@ -16,11 +16,13 @@ logger = logging.getLogger(__name__)
 VALID_MAP_FUNCS: set[str] = {
     "multiply", "tanh", "atanh", "sign", "abs",
     "lut", "clamp", "quantize", "xor_reduce", "add",
+    "butterfly", "cordic", "bit_reverse", "soft_demapper",
+    "gf2_multiply", "conj", "negate", "subtract",
 }
 
 VALID_REDUCE_OPS: set[str] = {"add", "mul", "min", "max", "xor"}
 
-VALID_DOMAIN_KINDS: set[str] = {"all", "neighbors", "window"}
+VALID_DOMAIN_KINDS: set[str] = {"all", "neighbors", "window", "decimate", "interpolate"}
 
 VALID_NODE_TYPES: set[str] = {"variable_node", "check_node"}
 
@@ -174,7 +176,72 @@ class MessagePassOp(OpBase):
             )
 
 
-AnyOp = Union[MapOp, ReduceOp, DelayOp, ShiftRegOp, MessagePassOp]
+@dataclass
+class FeedbackEdge:
+    """Describes a feedback connection within a CycleOp.
+
+    Attributes:
+        src: Output signal name from the body that feeds back.
+        dst: Input signal name in the body that receives the feedback.
+        delay: Number of clock cycles of delay (z^{-delay}).
+    """
+
+    src: str
+    dst: str
+    delay: int = 1
+
+
+@dataclass
+class CycleOp(OpBase):
+    """Feedback/recurrence operator for IIR, PLL, AGC, etc.
+
+    Wraps a sub-graph (body) with explicit feedback edges.
+    Enables expressing algorithms with internal state.
+
+    Attributes:
+        body: List of operators forming the recurrent computation.
+        feedback_edges: Connections from body outputs back to body inputs.
+        init_values: Initial values for feedback signals at reset.
+        output_ref: Name of the output signal.
+    """
+
+    body: list = field(default_factory=list)
+    feedback_edges: list[FeedbackEdge] = field(default_factory=list)
+    init_values: dict[str, float] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.feedback_edges:
+            raise ValueError("CycleOp requires at least one feedback_edge")
+
+
+@dataclass
+class IterationOp(OpBase):
+    """Multi-stage iteration operator for FFT butterflies, Viterbi, etc.
+
+    Describes the mathematical structure of an iterative algorithm:
+    "apply body N times, passing carry signals between stages."
+
+    Implementation choice (unroll all stages vs reuse hardware) is a
+    scheduling decision made in AlgoHW/Schedule dialect, NOT here.
+
+    Attributes:
+        body: List of operators forming one iteration stage.
+        count: Number of iterations/stages (e.g. log2(N) for FFT).
+        carry: Signals passed from one iteration to the next
+            as (output_name, input_name) pairs.
+        output_ref: Name of the output signal.
+    """
+
+    body: list = field(default_factory=list)
+    count: int = 1
+    carry: list[tuple[str, str]] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        if self.count < 1:
+            raise ValueError("IterationOp count must be >= 1")
+
+
+AnyOp = Union[MapOp, ReduceOp, DelayOp, ShiftRegOp, MessagePassOp, CycleOp, IterationOp]
 
 
 @dataclass

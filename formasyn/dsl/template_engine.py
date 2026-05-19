@@ -16,6 +16,7 @@ from ..agent.dse_agent import IntentJSON
 from ..golden.quant_analyzer import QuantSpec
 from ..ir.algo_hw_dialect import AlgoHWDialect, AlgoHWNode
 from ..ir.math_dialect import MathDialect, MathNode
+from ..rewrites.rules import RewriteCatalog
 
 logger = logging.getLogger(__name__)
 
@@ -374,6 +375,16 @@ _APPROX_HANDLERS: dict[
     "lut_tanh": _apply_lut_tanh,
 }
 
+# Mapping from approx_method to formal rewrite rule names
+# Used by RewriteCatalog for quality bound computation and composability checks
+_APPROX_TO_RULES: dict[str, list[str]] = {
+    "spa_exact": [],
+    "min_sum": ["R1_tanh_to_minsum"],
+    "normalized_min_sum": ["R1_tanh_to_minsum", "R2_normalized_minsum"],
+    "offset_min_sum": ["R1_tanh_to_minsum", "R3_offset_minsum"],
+    "lut_tanh": ["R4_lut_tanh"],
+}
+
 
 # ---------------------------------------------------------------------------
 # TemplateEngine
@@ -383,7 +394,11 @@ class TemplateEngine:
     """Render an IntentJSON + MathDialect into a fully-annotated AlgoHWDialect.
 
     All transformations are deterministic — no LLM involvement.
+    Uses RewriteCatalog for quality-bound tracking and composability checks.
     """
+
+    def __init__(self) -> None:
+        self._catalog = RewriteCatalog()
 
     def render(
         self,
@@ -418,28 +433,37 @@ class TemplateEngine:
         }
         output_nodes = list(math_dialect.output_nodes)
 
-        # 2. Apply approximation rewrite
+        # 2. Composability check + approximation rewrite
+        rule_names = _APPROX_TO_RULES.get(approx, [])
+        conflicts = self._catalog.check_composability(rule_names)
+        if conflicts:
+            for conflict in conflicts:
+                logger.warning("Rewrite composability conflict: %s", conflict)
+
         handler = _APPROX_HANDLERS[approx]
         nodes, output_nodes = handler(nodes, output_nodes, intent)
 
-        # 3. Tag approx_method on every node
+        # 3. Compute quality bound from rewrite rules
+        quality_bound = self._catalog.compute_combined_bound(rule_names)
+
+        # 4. Tag approx_method on every node
         for node in nodes.values():
             node.approx_method = approx
 
-        # 4. Quantisation annotation
+        # 5. Quantisation annotation
         self._annotate_quant(nodes, intent, quant_specs)
 
-        # 5. Parallelism
+        # 6. Parallelism
         parallelism = intent["parallelism"]
         for node in nodes.values():
             node.parallelism = parallelism
 
-        # 6. Saturation guard
+        # 7. Saturation guard
         sat = intent["enable_saturation"]
         for node in nodes.values():
             node.saturation_guard = sat
 
-        # 7. DSP estimation
+        # 8. DSP estimation
         estimated_dsp = self._estimate_dsp(nodes, parallelism)
 
         dialect = AlgoHWDialect(
@@ -450,6 +474,7 @@ class TemplateEngine:
             input_nodes=list(math_dialect.input_nodes),
             output_nodes=output_nodes,
             estimated_dsp=estimated_dsp,
+            quality_bound=quality_bound,
         )
 
         logger.info(
@@ -484,8 +509,14 @@ class TemplateEngine:
                 int_bits = qs.recommended_int_bits
                 frac_bits = qs.recommended_frac_bits
             else:
-                # 默认值：根据节点类型选择合适的默认值
                 int_bits, frac_bits = _get_default_quant_for_node(node)
+
+            # Framework invariant: pure-integer operations should not
+            # produce fixed-point types.  QuantizationAnalyzer may
+            # recommend frac_bits > 0 because its perturbation injects
+            # fractional noise, but the actual operation is integer-only.
+            if _is_integer_only_node(node, nodes):
+                frac_bits = 0
 
             total = int_bits + frac_bits
             if frac_bits > 0:
@@ -534,3 +565,48 @@ def _get_default_quant_for_node(node: AlgoHWNode) -> tuple[int, int]:
 
     # 默认使用 ap_int<8>
     return 8, 0
+
+
+# Integer-only operations: these should never produce ap_fixed types
+# regardless of what QuantizationAnalyzer recommends.
+_INTEGER_ONLY_FUNCS = frozenset({"add", "sub", "min", "max", "xor", "sign", "abs", "negate"})
+_INTEGER_ONLY_REDUCE_OPS = frozenset({"add", "min", "max", "xor"})
+
+
+def _is_integer_only_node(
+    node: AlgoHWNode,
+    all_nodes: dict[str, AlgoHWNode],
+) -> bool:
+    """Determine if a node's operation is inherently integer-only.
+
+    A node is integer-only when:
+    - It's a map with an integer func (add, sub, min, max, xor, sign, abs)
+      AND has no float-point coefficients
+    - It's a reduce with an integer op (add, min, max, xor)
+      AND all inputs are also integer-only
+    - It's an input node
+
+    Nodes involving multiply with float coefficients, tanh, atanh, lut,
+    shift_reg with FIR coefficients, etc. are NOT integer-only.
+    """
+    if node.op_type == "input":
+        return True
+
+    if node.op_type == "map":
+        func = node.op_detail.get("func", "")
+        if func not in _INTEGER_ONLY_FUNCS:
+            return False
+        # Check for float coefficients (e.g. multiply with float coeff)
+        fp = node.op_detail.get("func_params", {})
+        if "coeffs" in fp:
+            return False
+        coeff = fp.get("coeff")
+        if isinstance(coeff, float) and coeff != int(coeff):
+            return False
+        return True
+
+    if node.op_type == "reduce":
+        op = node.op_detail.get("op", "")
+        return op in _INTEGER_ONLY_REDUCE_OPS
+
+    return False

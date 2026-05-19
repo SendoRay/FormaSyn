@@ -1,14 +1,9 @@
-"""HLS-Aware Roofline Solver: coarse resource estimation and scheduling.
+"""Schedule Builder: coarse resource estimation and HLS pragma assignment.
 
 Transforms an AlgoHWDialect into an HLSScheduleDialect by computing
 tile sizes, unroll factors, pipeline IIs, array partitioning, and
 resource estimates. Acts as the first gate to filter obviously
 infeasible design points before expensive Vitis HLS synthesis.
-
-Design philosophy:
-- Regular access (FIR, FFT): precise estimation.
-- Irregular graph access (LDPC): conservative (pessimistic) estimation,
-  just to weed out clearly over-budget variants.
 """
 
 from __future__ import annotations
@@ -80,7 +75,7 @@ def _op_key(node: AlgoHWNode) -> str:
     return detail.get("op") or detail.get("func") or ""
 
 
-class RooflineSolver:
+class ScheduleBuilder:
     """Coarse HLS resource estimator and schedule generator.
 
     Args:

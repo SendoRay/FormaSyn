@@ -39,6 +39,7 @@ class MathNode:
     input_nodes: list[str] = field(default_factory=list)
     is_irregular_access: bool = False
     csr_ref: Optional[str] = None
+    has_feedback: bool = False
 
 
 @dataclass

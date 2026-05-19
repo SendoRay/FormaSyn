@@ -31,6 +31,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from .base_agent import BaseAgent
+from .knowledge_prompt import COMM_KNOWLEDGE_PROMPT
 from ..ir.math_dialect import MathDialect
 
 logger = logging.getLogger(__name__)
@@ -120,7 +121,9 @@ _DSE_SYSTEM_PROMPT = """你是 FormaSyn 设计空间探索（DSE）专家。
 ```
 
 **注意**: 每个变体必须包含 `variant_name`、`approx_method`、`parallelism` 和 `enable_saturation` 字段，缺一不可。\n**重要**: 只输出纯 JSON 数组，不要包含任何其他文字或 markdown 标记。
-"""
+
+====== 领域知识参考 ======
+""" + COMM_KNOWLEDGE_PROMPT
 
 
 # ---------------------------------------------------------------------------
@@ -157,10 +160,15 @@ class DSEAgent(BaseAgent):
             "parallelism_range": [1, 2, 4, 8, 16],
             "quant_focus": "向量元素位宽",
         },
-        "ldpc": {
+        "channel_coding": {
             "default_approx": "min_sum",
             "parallelism_range": [1, 2, 4, 8],
             "quant_focus": "消息位宽",
+        },
+        "demodulation": {
+            "default_approx": "spa_exact",
+            "parallelism_range": [1, 2, 4, 8],
+            "quant_focus": "LLR 软信息精度",
         },
         "detection": {
             "default_approx": "spa_exact",
@@ -171,6 +179,11 @@ class DSEAgent(BaseAgent):
             "default_approx": "spa_exact",
             "parallelism_range": [1, 2, 4, 8],
             "quant_focus": "变换系数精度",
+        },
+        "synchronization": {
+            "default_approx": "spa_exact",
+            "parallelism_range": [1, 2, 4],
+            "quant_focus": "相位/频率精度",
         },
     }
 

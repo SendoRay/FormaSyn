@@ -5,15 +5,14 @@ from .l1_checker import L1Checker
 from .l2_checker import L2Checker
 from .l3_checker import L3Checker
 
-# Diagnostic (LLM-based + rule-based fallback)
+# Diagnostic (rule-based helpers + data types)
 from .diagnostic import (
-    DiagnosticAgent,
     FailureContext,
     FailureStage,
     diagnose_compile_error,
     diagnose_numeric_error,
     diagnose_quality_error,
-    diagnose_resource_error,
+    diagnose_resource_error_with_ii,
 )
 
 # Metrics (unified data structures)
@@ -35,14 +34,13 @@ __all__ = [
     "L1Checker",
     "L2Checker",
     "L3Checker",
-    # Diagnostic Agent
-    "DiagnosticAgent",
+    # Diagnostic
     "FailureContext",
     "FailureStage",
     "diagnose_compile_error",
     "diagnose_numeric_error",
     "diagnose_quality_error",
-    "diagnose_resource_error",
+    "diagnose_resource_error_with_ii",
     # Metrics
     "HardwareBudget",
     "L1Result",

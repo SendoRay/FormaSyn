@@ -12,8 +12,10 @@ from typing import Any
 
 from .operators import (
     AnyOp,
+    CycleOp,
     DelayOp,
     FormulaGraph,
+    IterationOp,
     MapOp,
     MessagePassOp,
     ReduceOp,
@@ -29,6 +31,8 @@ _OP_TYPE_MAP: dict[type, str] = {
     DelayOp: "delay",
     ShiftRegOp: "shift_reg",
     MessagePassOp: "message_pass",
+    CycleOp: "cycle",
+    IterationOp: "iteration",
 }
 
 
@@ -66,6 +70,25 @@ def _extract_op_detail(op: AnyOp) -> dict[str, Any]:
             "schedule": op.schedule,
         }
 
+    if isinstance(op, CycleOp):
+        return {
+            "feedback_edges": [
+                {"src": e.src, "dst": e.dst, "delay": e.delay}
+                for e in op.feedback_edges
+            ],
+            "init_values": dict(op.init_values),
+            "body_ops": [_extract_op_detail(sub) for sub in op.body],
+            "num_body_ops": len(op.body),
+        }
+
+    if isinstance(op, IterationOp):
+        return {
+            "count": op.count,
+            "carry": list(op.carry),
+            "body_ops": [_extract_op_detail(sub) for sub in op.body],
+            "num_body_ops": len(op.body),
+        }
+
     raise TypeError(f"Unknown operator type: {type(op)}")
 
 
@@ -90,6 +113,12 @@ def _infer_shape(op: AnyOp, known_shapes: dict[str, list[int]]) -> list[int]:
     if isinstance(op, MessagePassOp):
         return list(input_shape)
 
+    if isinstance(op, CycleOp):
+        return list(input_shape)
+
+    if isinstance(op, IterationOp):
+        return list(input_shape)
+
     return [1]
 
 
@@ -97,6 +126,11 @@ def _resolve_input_ref(op: AnyOp) -> str:
     """Extract the input_ref name used to look up the upstream node."""
     if isinstance(op, MessagePassOp):
         return op.graph_ref
+    if isinstance(op, (CycleOp, IterationOp)):
+        # Composite ops: first body op's input ref serves as dependency
+        if op.body:
+            return _resolve_input_ref(op.body[0])
+        return ""
     return getattr(op, "input_ref", "")
 
 
@@ -154,6 +188,9 @@ def parse(graph: FormulaGraph) -> MathDialect:
             is_irregular = True
             csr_ref = f"{op.graph_ref}_csr"
 
+        # CycleOp: mark as having feedback (affects II constraints)
+        has_feedback = isinstance(op, CycleOp)
+
         nodes[node_id] = MathNode(
             node_id=node_id,
             op_type=op_type,
@@ -162,6 +199,7 @@ def parse(graph: FormulaGraph) -> MathDialect:
             input_nodes=input_nodes,
             is_irregular_access=is_irregular,
             csr_ref=csr_ref,
+            has_feedback=has_feedback,
         )
         signal_to_node[op.output_ref] = node_id
         known_shapes[op.output_ref] = shape
