@@ -1,0 +1,15 @@
+# examples/qpsk_demod/constraints.yaml
+
+hardware_constraints:
+  target_device: "xcu200-fsgd2104-2-e"
+  clock_target_mhz: 300
+  max_dsp: 16
+  max_bram_18k: 4
+  target_ii: 1
+
+algorithm_metrics:
+  evaluator_type: "BERCurveEvaluator"
+  kernel_type: "demodulation"
+  tolerance:
+    nmse_db: -30.0
+    ber_penalty_db: 0.2

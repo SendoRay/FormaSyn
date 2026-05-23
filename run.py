@@ -687,6 +687,22 @@ EXAMPLE_SPECS: dict[str, ExampleSpec] = {
         name="vec_add",
         build_graph=lambda args: _import_and_build("vec_add", "build_vec_add"),
     ),
+    "fft_radix2": ExampleSpec(
+        name="fft_radix2",
+        build_graph=lambda args: _import_and_build("fft_radix2", "build_fft_radix2"),
+    ),
+    "qpsk_demod": ExampleSpec(
+        name="qpsk_demod",
+        build_graph=lambda args: _import_and_build("qpsk_demod", "build_qpsk_demod"),
+    ),
+    "matched_filter": ExampleSpec(
+        name="matched_filter",
+        build_graph=lambda args: _import_and_build("matched_filter", "build_matched_filter"),
+    ),
+    "timing_recovery": ExampleSpec(
+        name="timing_recovery",
+        build_graph=lambda args: _import_and_build("timing_recovery", "build_timing_recovery"),
+    ),
 }
 
 

@@ -1,0 +1,9 @@
+# Test input data for timing recovery loop
+# 4x oversampled BPSK signal with slight timing offset
+# Symbol pattern: +1, -1, +1, +1 (oversampled at 4 sps)
+
+rx_samples:
+  - 0.25
+  - 0.85
+  - 0.95
+  - 0.60

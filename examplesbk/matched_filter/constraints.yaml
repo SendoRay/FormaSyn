@@ -1,0 +1,15 @@
+# examples/matched_filter/constraints.yaml
+
+hardware_constraints:
+  target_device: "xcu200-fsgd2104-2-e"
+  clock_target_mhz: 300
+  max_dsp: 16
+  max_bram_18k: 2
+  target_ii: 1
+
+algorithm_metrics:
+  evaluator_type: "WaveformEvaluator"
+  kernel_type: "detection"
+  tolerance:
+    nmse_db: -40.0
+    detection_threshold: 0.8
