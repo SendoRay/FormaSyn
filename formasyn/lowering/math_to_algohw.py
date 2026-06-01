@@ -502,8 +502,13 @@ class TemplateEngine:
 
         for nid, node in nodes.items():
             if nid in overrides:
-                int_bits = overrides[nid]
-                frac_bits = 0
+                ov = overrides[nid]
+                if isinstance(ov, dict):
+                    int_bits = ov.get("int_bits", 8)
+                    frac_bits = ov.get("frac_bits", 0)
+                else:
+                    int_bits = int(ov)
+                    frac_bits = 0
             elif nid in quant_specs:
                 qs = quant_specs[nid]
                 int_bits = qs.recommended_int_bits
