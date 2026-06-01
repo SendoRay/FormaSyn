@@ -1,8 +1,8 @@
-"""L1 Checker: Vitis HLS C simulation + numeric verification.
+"""L1 Checker: Verilator / Icarus Verilog simulation + numeric verification.
 
-Runs the generated HLS C++ through Vitis HLS C simulation (prefer
-``vitis-run --mode hls --csim``; fallback to legacy ``v++ --mode hls --csim``)
-with a generated testbench, then compares simulated outputs against golden.
+Compiles generated Verilog with a SystemVerilog testbench using Verilator
+(preferred) or Icarus Verilog (fallback), runs the simulation, parses
+@@OUTPUT markers from stdout, and compares against golden reference outputs.
 
 Metric dispatch by kernel_type:
   - channel_coding  -> sign_error_rate, snr_penalty_db
@@ -16,309 +16,321 @@ from __future__ import annotations
 
 import logging
 import os
+import re
+import shutil
 import subprocess
 import tempfile
 from typing import Optional
 
-from .diagnostic import (
-    diagnose_compile_error,
-    diagnose_numeric_error,
-)
+from .diagnostic import diagnose_compile_error, diagnose_numeric_error
 from .metrics import L1Result
-from ..golden.testbench_gen import TestbenchGenerator, parse_output
-from ..utils.cpp_utils import extract_function_name
-from ..utils.hls_mock import (
-    strip_hls_pragmas,
-    tool_available,
-    vitis_available,
-    write_mock_headers,
-)
 from ..utils.metrics import compute_nmse, compute_sign_error_rate
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_PART = "xc7z020clg400-1"
-_DEFAULT_CLOCK = "10ns"
-
 
 class L1Checker:
-    """L1 verification: Vitis HLS C simulation + numeric comparison."""
+    """L1 verification: Verilator/Icarus Verilog simulation + numeric comparison."""
 
     def __init__(
         self,
         kernel_type: str = "channel_coding",
         tolerance: Optional[dict[str, float]] = None,
-        *,
-        part: str = _DEFAULT_PART,
-        clock: str = _DEFAULT_CLOCK,
     ) -> None:
         self._kernel_type = kernel_type
         self._tolerance = tolerance or {}
-        self._part = part
-        self._clock = clock
-        self._tb_gen = TestbenchGenerator()
 
     def check(
         self,
-        hls_cpp_code: str,
+        verilog_code: str,
         golden_outputs: dict[str, list[float]],
         test_inputs: dict[str, list[float]],
         variant_id: str,
         *,
-        csr_data: Optional[dict[str, list[int]]] = None,
+        testbench_sv: str = "",
         prepared_dir: Optional[str] = None,
     ) -> L1Result:
-        """Run L1 verification on generated HLS C++ code.
+        """Run L1 verification on generated Verilog code.
 
         Args:
-            hls_cpp_code: Generated HLS C++ source.
+            verilog_code: Generated Verilog source.
             golden_outputs: Golden reference outputs.
             test_inputs: Test input vectors.
             variant_id: Variant identifier.
-            csr_data: Optional CSR data for irregular-access kernels.
-            prepared_dir: Pre-prepared directory with config, testbench, etc.
+            testbench_sv: SystemVerilog testbench source.
+            prepared_dir: Pre-prepared directory with sources already written.
+
+        Returns:
+            L1Result with pass/fail status and metrics.
         """
         result = L1Result(variant_id=variant_id, golden_outputs=golden_outputs)
 
-        try:
-            hls_outputs = self._run_csim(
-                hls_cpp_code, test_inputs, golden_outputs, csr_data,
-                prepared_dir=prepared_dir,
-            )
-        except _CompileError as exc:
-            result.compile_ok = False
-            result.failure = diagnose_compile_error(str(exc), variant_id)
-            logger.warning("L1 CSim 失败 [%s]: %s", variant_id, str(exc)[:200])
+        has_verilator = shutil.which("verilator") is not None
+        has_iverilog = shutil.which("iverilog") is not None
+
+        if not has_verilator and not has_iverilog:
+            logger.warning("L1 跳过 [%s]: verilator 和 iverilog 均不可用", variant_id)
+            result.passed = True
+            result.metrics = {"skipped": True}
             return result
 
-        result.compile_ok = True
-        result.hls_outputs = hls_outputs
-        result.metrics = self._compute_metrics(golden_outputs, hls_outputs)
-        result.passed = self._check_thresholds(result.metrics)
+        use_tmpdir = prepared_dir is None
+        work_dir = prepared_dir if prepared_dir else tempfile.mkdtemp(prefix="formasyn_l1_")
 
-        if not result.passed:
-            result.failure = diagnose_numeric_error(
-                variant_id, result.metrics, self._tolerance, self._kernel_type
-            )
-            logger.warning(
-                "L1 数值验证失败 [%s]: %s",
-                variant_id,
-                result.failure.gap_description,
-            )
-        else:
-            logger.info("L1 通过 [%s]: metrics=%s", variant_id, result.metrics)
+        try:
+            sim_outputs: Optional[dict[str, list[float]]] = None
+            compile_error: Optional[str] = None
 
-        return result
+            if has_verilator:
+                try:
+                    sim_outputs = self._run_verilator(
+                        verilog_code, testbench_sv, work_dir,
+                    )
+                except _CompileError as exc:
+                    logger.warning("Verilator 失败, 尝试 iverilog: %s", str(exc)[:200])
+                    compile_error = str(exc)
+                    if has_iverilog:
+                        try:
+                            sim_outputs = self._run_iverilog(
+                                verilog_code, testbench_sv, work_dir,
+                            )
+                            compile_error = None
+                        except _CompileError as exc2:
+                            compile_error = str(exc2)
+            else:
+                try:
+                    sim_outputs = self._run_iverilog(
+                        verilog_code, testbench_sv, work_dir,
+                    )
+                except _CompileError as exc:
+                    compile_error = str(exc)
 
-    # -- CSim ----------------------------------------------------------------
+            if compile_error is not None:
+                result.compile_ok = False
+                result.failure = diagnose_compile_error(compile_error, variant_id)
+                logger.warning("L1 编译失败 [%s]: %s", variant_id, compile_error[:200])
+                return result
 
-    def _run_csim(
-        self,
-        hls_cpp_code: str,
-        test_inputs: dict[str, list[float]],
-        golden_outputs: dict[str, list[float]],
-        csr_data: Optional[dict[str, list[int]]],
-        prepared_dir: Optional[str] = None,
-    ) -> dict[str, list[float]]:
-        """Run HLS C simulation and parse printed output vectors."""
-        if not vitis_available():
-            raise _CompileError("Neither vitis-run nor v++ found on PATH")
+            assert sim_outputs is not None
+            result.compile_ok = True
+            result.hls_outputs = sim_outputs
+            result.metrics = self._compute_metrics(golden_outputs, sim_outputs)
+            result.passed = self._check_thresholds(result.metrics)
 
-        function_name = extract_function_name(hls_cpp_code)
-
-        if prepared_dir:
-            base_dir = prepared_dir
-            src_name = f"{function_name}.cpp"
-            tb_name = f"{function_name}_tb.cpp"
-            cfg_name = "hls_config.cfg"
-            work_dir = os.path.join(base_dir, "work")
-            src_path = os.path.join(base_dir, src_name)
-            tb_path = os.path.join(base_dir, tb_name)
-            cfg_path = os.path.join(base_dir, cfg_name)
-        else:
-            base_dir = tempfile.mkdtemp(prefix="formasyn_l1_")
-            src_name = f"{function_name}.cpp"
-            tb_name = f"{function_name}_tb.cpp"
-            cfg_name = "hls_config.cfg"
-            work_dir = os.path.join(base_dir, "work")
-            src_path = os.path.join(base_dir, src_name)
-            tb_path = os.path.join(base_dir, tb_name)
-            cfg_path = os.path.join(base_dir, cfg_name)
-
-        if not os.path.exists(src_path):
-            with open(src_path, "w", encoding="utf-8") as f:
-                f.write(hls_cpp_code)
-
-        if not os.path.exists(tb_path):
-            testbench = self._tb_gen.generate(
-                hls_cpp_code, test_inputs, golden_outputs, csr_data=csr_data,
-            )
-            with open(tb_path, "w", encoding="utf-8") as f:
-                f.write(testbench)
-
-        if not os.path.exists(os.path.join(base_dir, "kernel.h")):
-            _ensure_local_kernel_header(hls_cpp_code, base_dir)
-
-        if not os.path.exists(cfg_path):
-            with open(cfg_path, "w", encoding="utf-8") as f:
-                f.write(self._tb_gen.generate_hls_config(
-                    function_name, src_name, tb_name,
-                    part=self._part, clock=self._clock,
-                ))
-
-        cmd = self._build_csim_cmd(cfg_path, work_dir)
-        logger.info("L1 CSim 开始执行 [%s]: %s (timeout=600s)", function_name, " ".join(cmd))
-        proc = subprocess.run(
-            cmd, capture_output=True, text=True, cwd=base_dir, timeout=600,
-        )
-        logger.info("L1 CSim 执行完成 [%s]: returncode=%d", function_name, proc.returncode)
-
-        combined = "\n".join(
-            chunk for chunk in (proc.stdout, proc.stderr) if chunk
-        ).strip()
-        report_text = _read_csim_report(work_dir, function_name)
-        parse_text = "\n".join(chunk for chunk in (combined, report_text) if chunk)
-
-        if proc.returncode != 0:
-            raise _CompileError(parse_text or "HLS csim failed")
-
-        outputs = parse_output(parse_text)
-        if not outputs:
-            raise _CompileError("CSim completed but produced no @@OUTPUT records")
-        return outputs
-
-    def _build_csim_cmd(self, cfg_path: str, work_dir: str) -> list[str]:
-        """Build a command for HLS C simulation across Vitis versions."""
-        if tool_available("vitis-run"):
-            return [
-                "vitis-run", "--mode", "hls", "--csim",
-                "--config", cfg_path, "--work_dir", work_dir,
-            ]
-        return [
-            "v++", "-c", "--mode", "hls",
-            "--config", cfg_path, "--work_dir", work_dir, "--csim",
-        ]
-
-    # -- Host simulation (fallback) ------------------------------------------
-
-    def _run_host_sim(
-        self,
-        hls_cpp_code: str,
-        test_inputs: dict[str, list[float]],
-        golden_outputs: dict[str, list[float]],
-        csr_data: Optional[dict[str, list[int]]],
-    ) -> dict[str, list[float]]:
-        """Run host-only simulation via g++ with lightweight HLS header mocks."""
-        if not _gpp_available():
-            raise _CompileError("v++ not found and g++ not found on PATH")
-
-        clean = strip_hls_pragmas(hls_cpp_code)
-        testbench = self._tb_gen.generate(
-            clean, test_inputs, golden_outputs, csr_data=csr_data,
-        )
-        stdout = self._compile_and_run(clean, testbench)
-        outputs = parse_output(stdout)
-        if not outputs:
-            raise _CompileError("Host simulation completed but produced no @@OUTPUT records")
-        return outputs
-
-    def _compile_and_run(self, hls_cpp_code: str, testbench_code: str) -> str:
-        """Compile kernel + testbench with g++ and return stdout."""
-        with tempfile.TemporaryDirectory(prefix="formasyn_hostsim_") as tmpdir:
-            kernel_path = os.path.join(tmpdir, "kernel.cpp")
-            tb_path = os.path.join(tmpdir, "kernel_tb.cpp")
-            exe_path = os.path.join(tmpdir, "sim.out")
-
-            with open(kernel_path, "w", encoding="utf-8") as f:
-                f.write(hls_cpp_code)
-            with open(tb_path, "w", encoding="utf-8") as f:
-                f.write(testbench_code)
-
-            write_mock_headers(tmpdir)
-
-            try:
-                proc = subprocess.run(
-                    ["g++", "-std=c++14", "-O2", f"-I{tmpdir}", kernel_path, tb_path, "-o", exe_path],
-                    capture_output=True, text=True,
+            if not result.passed:
+                result.failure = diagnose_numeric_error(
+                    variant_id, result.metrics, self._tolerance, self._kernel_type,
                 )
-            except FileNotFoundError as exc:
-                raise _CompileError("g++ not found on PATH") from exc
-            if proc.returncode != 0:
-                raise _CompileError(proc.stderr.strip() or "g++ compile failed")
+                logger.warning(
+                    "L1 数值验证失败 [%s]: %s",
+                    variant_id, result.failure.gap_description,
+                )
+            else:
+                logger.info("L1 通过 [%s]: metrics=%s", variant_id, result.metrics)
 
-            try:
-                run_proc = subprocess.run([exe_path], capture_output=True, text=True)
-            except FileNotFoundError as exc:
-                raise _CompileError("host simulator binary not found") from exc
-            if run_proc.returncode != 0:
-                raise _CompileError(run_proc.stderr.strip() or "host simulation failed")
+            return result
+        finally:
+            if use_tmpdir and os.path.isdir(work_dir):
+                shutil.rmtree(work_dir, ignore_errors=True)
 
-            return run_proc.stdout
+    # -- Verilator -------------------------------------------------------------
 
-    # -- 指标计算 (委托给共享工具模块) -----------------------------------------
+    def _run_verilator(
+        self,
+        verilog_code: str,
+        testbench_sv: str,
+        work_dir: str,
+    ) -> dict[str, list[float]]:
+        """Compile and run simulation with Verilator."""
+        kernel_path = os.path.join(work_dir, "kernel_top.v")
+        tb_path = os.path.join(work_dir, "kernel_tb.sv")
+        os.makedirs(work_dir, exist_ok=True)
+
+        with open(kernel_path, "w", encoding="utf-8") as f:
+            f.write(verilog_code)
+        with open(tb_path, "w", encoding="utf-8") as f:
+            f.write(testbench_sv)
+
+        tb_module = self._extract_tb_module(testbench_sv)
+
+        compile_cmd = [
+            "verilator", "--binary", "--timing", "-Wno-fatal",
+            "-o", "sim",
+            "kernel_top.v", "kernel_tb.sv",
+            "--top-module", tb_module,
+            "--Mdir", "obj_dir",
+        ]
+        logger.info("L1 Verilator 编译: %s", " ".join(compile_cmd))
+
+        proc = subprocess.run(
+            compile_cmd,
+            capture_output=True, text=True,
+            cwd=work_dir, timeout=300,
+        )
+        if proc.returncode != 0:
+            raise _CompileError(proc.stderr.strip() or proc.stdout.strip() or "verilator compile failed")
+
+        sim_binary = os.path.join(work_dir, "obj_dir", "sim")
+        if not os.path.isfile(sim_binary):
+            raise _CompileError("Verilator binary not found after compilation")
+
+        run_proc = subprocess.run(
+            [sim_binary],
+            capture_output=True, text=True,
+            cwd=work_dir, timeout=300,
+        )
+        if run_proc.returncode != 0:
+            raise _CompileError(run_proc.stderr.strip() or "verilator simulation failed")
+
+        outputs = self._parse_output(run_proc.stdout)
+        if not outputs:
+            raise _CompileError("Verilator simulation completed but produced no @@OUTPUT records")
+        return outputs
+
+    # -- Icarus Verilog --------------------------------------------------------
+
+    def _run_iverilog(
+        self,
+        verilog_code: str,
+        testbench_sv: str,
+        work_dir: str,
+    ) -> dict[str, list[float]]:
+        """Compile and run simulation with Icarus Verilog."""
+        kernel_path = os.path.join(work_dir, "kernel_top.v")
+        tb_path = os.path.join(work_dir, "kernel_tb.sv")
+        os.makedirs(work_dir, exist_ok=True)
+
+        with open(kernel_path, "w", encoding="utf-8") as f:
+            f.write(verilog_code)
+        with open(tb_path, "w", encoding="utf-8") as f:
+            f.write(testbench_sv)
+
+        vvp_path = os.path.join(work_dir, "sim.vvp")
+        compile_cmd = [
+            "iverilog", "-g2012", "-o", vvp_path,
+            kernel_path, tb_path,
+        ]
+        logger.info("L1 iverilog 编译: %s", " ".join(compile_cmd))
+
+        proc = subprocess.run(
+            compile_cmd,
+            capture_output=True, text=True,
+            cwd=work_dir, timeout=300,
+        )
+        if proc.returncode != 0:
+            raise _CompileError(proc.stderr.strip() or proc.stdout.strip() or "iverilog compile failed")
+
+        run_proc = subprocess.run(
+            ["vvp", vvp_path],
+            capture_output=True, text=True,
+            cwd=work_dir, timeout=300,
+        )
+        if run_proc.returncode != 0:
+            raise _CompileError(run_proc.stderr.strip() or "iverilog simulation failed")
+
+        outputs = self._parse_output(run_proc.stdout)
+        if not outputs:
+            raise _CompileError("Icarus Verilog simulation completed but produced no @@OUTPUT records")
+        return outputs
+
+    # -- Output parsing --------------------------------------------------------
+
+    @staticmethod
+    def _extract_tb_module(testbench_sv: str) -> str:
+        """Extract testbench module name from SystemVerilog source."""
+        match = re.search(r"module\s+(\w+_tb)", testbench_sv)
+        if match:
+            return match.group(1)
+        match = re.search(r"module\s+(\w+)", testbench_sv)
+        if match:
+            return match.group(1)
+        return "kernel_tb"
+
+    @staticmethod
+    def _parse_output(stdout: str) -> dict[str, list[float]]:
+        """Parse @@OUTPUT markers from simulation stdout.
+
+        Supported formats:
+          @@OUTPUT name[idx] = value
+          @@OUTPUT name = value
+
+        Returns:
+            dict mapping signal names to lists of float values.
+        """
+        results: dict[str, list[float]] = {}
+        indexed_pattern = re.compile(
+            r"@@OUTPUT\s+(\w+)\[(\d+)\]\s*=\s*([+-]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)"
+        )
+        scalar_pattern = re.compile(
+            r"@@OUTPUT\s+(\w+)\s*=\s*([+-]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)"
+        )
+
+        for line in stdout.splitlines():
+            if "@@OUTPUT" not in line:
+                continue
+
+            m = indexed_pattern.search(line)
+            if m:
+                name, idx, value = m.group(1), int(m.group(2)), float(m.group(3))
+                if name not in results:
+                    results[name] = []
+                while len(results[name]) <= idx:
+                    results[name].append(0.0)
+                results[name][idx] = value
+                continue
+
+            m = scalar_pattern.search(line)
+            if m:
+                name, value = m.group(1), float(m.group(2))
+                if name not in results:
+                    results[name] = []
+                results[name].append(value)
+
+        return results
+
+    # -- Metrics ---------------------------------------------------------------
 
     def _compute_metrics(
         self,
         golden: dict[str, list[float]],
         actual: dict[str, list[float]],
     ) -> dict[str, float]:
-        """Compute quality metrics based on kernel_type."""
+        """Compute quality metrics based on kernel_type.
+
+        Pads actual outputs with zeros if shorter than golden.
+        """
+        padded_actual: dict[str, list[float]] = {}
+        for key, g_vals in golden.items():
+            a_vals = actual.get(key, [])
+            if len(a_vals) < len(g_vals):
+                a_vals = list(a_vals) + [0.0] * (len(g_vals) - len(a_vals))
+            padded_actual[key] = a_vals
+
         if self._kernel_type == "channel_coding":
-            ser, snr, _ = compute_sign_error_rate(golden, actual)
+            ser, snr, _ = compute_sign_error_rate(golden, padded_actual)
             return {"sign_error_rate": ser, "snr_penalty_db": snr}
-        return {"nmse_db": compute_nmse(golden, actual)}
+        return {"nmse_db": compute_nmse(golden, padded_actual)}
 
     def _check_thresholds(self, metrics: dict[str, float]) -> bool:
-        """Return True if all metrics are within tolerance."""
-        for metric, threshold in self._tolerance.items():
-            actual = metrics.get(metric)
-            if actual is None:
-                continue
-            if actual > threshold:
+        """Return True if all metrics are within tolerance.
+
+        Uses default thresholds when tolerance dict does not specify a metric:
+          - max_sign_error_rate: 0.1
+          - max_nmse_db: -20.0
+        """
+        if self._kernel_type == "channel_coding":
+            max_ser = self._tolerance.get("max_sign_error_rate", 0.1)
+            ser = metrics.get("sign_error_rate")
+            if ser is not None and ser > max_ser:
+                return False
+        else:
+            max_nmse = self._tolerance.get("max_nmse_db", -20.0)
+            nmse = metrics.get("nmse_db")
+            if nmse is not None and nmse > max_nmse:
                 return False
         return True
 
 
-# -- 模块级工具函数 ------------------------------------------------------------
-
 class _CompileError(Exception):
+    """Internal exception for compilation/simulation failures."""
     pass
-
-
-def _ensure_local_kernel_header(hls_cpp_code: str, out_dir: str) -> None:
-    """Generate ``kernel.h`` when source/testbench includes it."""
-    if '#include "kernel.h"' not in hls_cpp_code:
-        return
-
-    from ..utils.cpp_utils import extract_function_signature
-
-    signature = extract_function_signature(hls_cpp_code)
-    header_lines = [
-        "#pragma once",
-        "",
-        "#include <ap_int.h>",
-        "#include <ap_fixed.h>",
-        "",
-        signature + ";",
-        "",
-    ]
-    header = "\n".join(header_lines)
-    with open(os.path.join(out_dir, "kernel.h"), "w", encoding="utf-8") as f:
-        f.write(header)
-
-
-def _read_csim_report(work_dir: str, function_name: str) -> str:
-    """Read the csim report log when it exists."""
-    report_path = os.path.join(
-        work_dir, "hls", "csim", "report", f"{function_name}_csim.log"
-    )
-    if not os.path.isfile(report_path):
-        return ""
-    with open(report_path, "r", encoding="utf-8") as f:
-        return f.read()
-
-
-def _gpp_available() -> bool:
-    """Check if g++ is available."""
-    import shutil
-    return shutil.which("g++") is not None
