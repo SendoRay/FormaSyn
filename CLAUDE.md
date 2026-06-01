@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目简介
 
-FormaSyn 是一个 AI 驱动的编译器框架，将通信算法（LDPC、FIR 等）的数学描述自动转化为可综合的 Vitis HLS C++ FPGA 实现，包含三级验证流水线。
+FormaSyn 是一个 AI 驱动的编译器框架，将通信算法（LDPC、FIR 等）的数学描述自动转化为可综合的 Verilog FPGA 实现。核心论点：结构化三层 IR 提升 LLM 硬件代码生成能力。使用开源工具链（Verilator + Yosys）进行三级验证。
 
 ## 开发规范
 
@@ -52,7 +52,12 @@ python run.py vec_add
 ### 依赖安装
 
 ```bash
-pip install numpy scipy networkx openai pyyaml
+pip install numpy scipy networkx openai pyyaml jinja2
+
+# 开源验证工具（可选，缺失时自动跳过）
+# Verilator: brew install verilator 或 apt install verilator
+# Yosys: brew install yosys 或 apt install yosys
+# Icarus Verilog (L1 备选): brew install icarus-verilog
 ```
 
 
@@ -60,17 +65,18 @@ pip install numpy scipy networkx openai pyyaml
 
 ### 管线阶段 (run.py::FormaSynPipeline)
 
-执行管线共 7 个阶段：
+执行管线共 10 个阶段：
 
 1. **DSL 解析** (`formasyn/dsl/parser.py`) — `FormulaGraph` → `MathDialect` (纯数学 DAG)
-2. **MLC 分析** (`formasyn/mlc/`) — 标记不规则访问节点, 转 H-matrix → CSR (仅图算法)
+2. **不规则访问分析** (`formasyn/analysis/irregular_access.py`) — 标记不规则访问节点, 转 H-matrix → CSR (仅图算法)
 3. **Golden 模型生成** (`formasyn/golden/`) — float64 C++ 参考模型 + 量化分析
 4. **DSE** (`formasyn/agent/dse_agent.py`) — LLM 生成多个硬件变体 (Intent JSON)
-5. **模板引擎** (`formasyn/dsl/template_engine.py`) — Intent → `AlgoHWDialect` (近似重写 + 量化 + 并行度 + 质量上界)
-6. **ScheduleBuilder** (`formasyn/solver/schedule_builder.py`) — `AlgoHWDialect` → `HLSScheduleDialect` (pragma 分配 + 资源预估)
-7. **MLC 编译** (`formasyn/mlc/`) — BRAM bank 分配 + 地址映射代码生成 (仅图算法)
-8. **代码生成** (`formasyn/agent/codegen_agent.py`) — `HLSScheduleDialect` → kernel.cpp/h
-
+5. **模板引擎** (`formasyn/lowering/math_to_algohw.py`) — Intent → `AlgoHWDialect` (近似重写 + 量化 + 并行度 + 质量上界)
+6. **RTL 调度** (`formasyn/lowering/algohw_to_rtl.py`) — `AlgoHWDialect` → `RTLScheduleDialect` (ASAP 调度 + 资源预估)
+7. **内存布局** (`formasyn/lowering/memory_layout.py`) — BRAM bank 分配 + 地址映射 (仅图算法)
+8. **Verilog 代码生成** (`formasyn/codegen/verilog_agent.py`) — `RTLScheduleDialect` → Verilog (LLM 驱动 + scaffold)
+9. **Testbench 生成** (`formasyn/codegen/testbench_gen.py`) — SystemVerilog testbench
+10. **三层验证** — L1 (Verilator) / L2 (Yosys) / L3 (质量仿真)
 
 
 ### 三层 Dialect 架构
@@ -81,27 +87,28 @@ DSL / MathDialect (纯数学语义: "算什么")
 ├── CycleOp:     body + feedback_edges + init_values → 差分方程
 ├── IterationOp: body + count + carry → 多级迭代数学结构
 └── ❌ 无 strategy, 无 pipeline, 无 unroll, 无任何硬件概念
-         ↓ TemplateEngine 降级
+         ↓ TemplateEngine (lowering/math_to_algohw.py)
 AlgoHWDialect (硬件映射: "怎么算")
-├── iteration_strategy: "pipelined" | "iterative"
 ├── approx_method:      "min_sum" | "lut_tanh" | ...
 ├── parallelism:        1, 2, 4, 8...
 ├── quant_int/frac_bits: 量化位宽
 └── saturation_guard:   饱和保护
-         ↓ ScheduleBuilder 降级
-HLSScheduleDialect (调度: "具体 pragma 怎么写")
-├── unroll_factor, pipeline_ii, array_partition_type
-├── bram_banks, tile_size, address_mapping_code
-└── 直接映射到 #pragma HLS 指令
+         ↓ RTLScheduler (lowering/algohw_to_rtl.py)
+RTLScheduleDialect (RTL 调度: "具体硬件结构")
+├── pipeline_stage, latency_cycles, register_output
+├── storage_type: register | bram | lutram
+├── exec_mode: combinational | pipelined | iterative
+├── fsm_states, fsm_transitions
+└── 直接映射到 Verilog 结构
 ```
 
 ### Dialect 设计原则
 
-- **DSL 层只有数学**：递归、迭代次数、数据依赖。不知道"硬件"这个概念的存在。任何调度/实现相关的字段（strategy, unroll, pipeline）都不允许出现在此层。
-- **AlgoHW 层做算法级硬件决策**：展开 vs 复用、近似方法、位宽选择。但不指定具体 pragma 值。
-- **Schedule 层翻译为 pragma 参数**：直接对应 Vitis HLS 的 `#pragma HLS PIPELINE II=`, `ARRAY_PARTITION`, `UNROLL` 等。
+- **DSL 层只有数学**：递归、迭代次数、数据依赖。不知道"硬件"这个概念的存在。任何调度/实现相关的字段都不允许出现在此层。
+- **AlgoHW 层做算法级硬件决策**：展开 vs 复用、近似方法、位宽选择。但不指定具体 RTL 结构。
+- **RTLSchedule 层映射到 Verilog 结构**：pipeline stage → register boundary, storage_type → reg/BRAM, exec_mode → FSM/pipeline/combinational。
 - **信息只向下流动**：高层 dialect 不依赖低层 dialect 的任何字段。新增字段前先问"这属于哪一层？"
-- **每层可独立验证**：MathDialect 可以生成 golden C++ 做数值验证；AlgoHWDialect 可以做资源估算；ScheduleDialect 可以直接生成 HLS 代码。
+- **每层可独立验证**：MathDialect 可以生成 golden C++ 做数值验证；AlgoHWDialect 可以做资源估算；RTLScheduleDialect 可以直接生成 Verilog。
 
 ### DSL 算子设计原则
 
@@ -112,44 +119,48 @@ HLSScheduleDialect (调度: "具体 pragma 怎么写")
 
 ### 三级验证
 
-- **L1** (`formasyn/checker/l1_checker.py`): g++ 编译, 与 golden 对比 (NMSE/符号错误率)
-- **L2** (`formasyn/checker/l2_checker.py`): Vitis HLS csim + csynth, 验证 DSP/BRAM/II
-- **L3** (`formasyn/checker/l3_checker.py`): Co-Sim + 信号质量 (BER/SFDR/EVM/RMSE)
+- **L1** (`formasyn/checker/l1_checker.py`): Verilator / Icarus Verilog RTL 仿真, 与 golden 对比 (NMSE/符号错误率)
+- **L2** (`formasyn/checker/l2_checker.py`): Yosys 综合, 验证 DSP/BRAM/LUT/FF 资源
+- **L3** (`formasyn/checker/l3_checker.py`): Python 质量仿真 (BER/SFDR/EVM/RMSE)
 
 ### 反馈循环
 
-`formasyn/feedback/loop.py` + `formasyn/agent/diagnostic.py`: 验证失败时由 LLM 诊断故障原因并回退到对应 IR 层重试。
+`formasyn/feedback/loop.py` + `formasyn/agent/diagnostic.py`: 三级嵌套迭代。验证失败时由 LLM 诊断故障原因，决策回退层：
+- **内层** (codegen): 重新生成 Verilog
+- **中层** (schedule): 调整 RTL 调度参数（并行度、pipeline stage）
+- **外层** (DSE): 触发新一轮设计空间探索
 
 ## 模块分布
 
 | 模块 | 路径 | 职责 |
 |------|------|------|
 | DSL | `formasyn/dsl/` | 7 种算子 (`MapOp`, `ReduceOp`, `DelayOp`, `ShiftRegOp`, `MessagePassOp`, `CycleOp`, `IterationOp`) + `FormulaGraph` |
-| IR | `formasyn/ir/` | 三层 IR：`MathDialect` → `AlgoHWDialect` → `HLSScheduleDialect` |
-| Agent | `formasyn/agent/` | LLM 代理 (DSE/代码生成/诊断), 知识注入 (`knowledge_prompt.py`) |
+| IR | `formasyn/ir/` | 三层 IR：`MathDialect` → `AlgoHWDialect` → `RTLScheduleDialect` |
+| Lowering | `formasyn/lowering/` | 降级 pass：`math_to_algohw` (模板引擎), `algohw_to_rtl` (ASAP 调度), `memory_layout` (BRAM 映射) |
+| Codegen | `formasyn/codegen/` | LLM Verilog 生成 (`verilog_agent`), 模块骨架 (`scaffold`), testbench (`testbench_gen`) |
+| Agent | `formasyn/agent/` | LLM 代理 (DSE/诊断), 知识注入 (`knowledge_prompt.py`) |
 | Golden | `formasyn/golden/` | C++ 参考模型、量化分析、测试台生成 |
-| Checker | `formasyn/checker/` | L1/L2/L3 验证 + 信号质量模拟器 (BER/Filter/Transform/Detection/Sync) |
-| Solver | `formasyn/solver/` | `ScheduleBuilder`: pragma 分配 + 资源预估 (AlgoHW → Schedule) |
-| MLC | `formasyn/mlc/` | `MemoryLayoutPass`: 不规则访问分析 + BRAM 映射 (统一类, 两阶段方法) |
+| Checker | `formasyn/checker/` | L1 (Verilator) / L2 (Yosys) / L3 (质量仿真) + 信号质量模拟器 |
+| Analysis | `formasyn/analysis/` | 不规则访问分析 (`irregular_access`) + 区间分析 + 频谱诊断 |
+| Feedback | `formasyn/feedback/` | 三级嵌套反馈循环 (`loop.py`) |
 | Rewrites | `formasyn/rewrites/` | 代数重写规则 + 质量上界证明 (已集成到 TemplateEngine) |
-| Analysis | `formasyn/analysis/` | 区间分析 + BER bound 验证 + 频谱诊断 (待集成) |
 | Research | `formasyn/research/optimizer/` | NSGA-II Pareto 优化 (研究原型, 未接入管线) |
 
 ## 关键设计约束
 
 - 项目无 `pyproject.toml` 或 `requirements.txt` — 直接以 `python run.py` 方式运行
 - 示例注册在 `run.py::ExampleSpec` 字典中, 每个示例需提供 `kernel.py` + `constraints.yaml`
-- 产物输出目录: `examplesbk/<name>/<variant_id>/kernel.cpp`
-- 超资源变体在 ScheduleBuilder 阶段标记 `SKIP`, 不会中断管线
+- 产物输出目录: `examplesbk/<name>/<variant_id>/<kernel_name>_top.v`
+- Verilator/Yosys 缺失时自动跳过对应验证层
 
 ## 架构不变量（修改代码时必须遵守）
 
-1. **Dialect 层次隔离**：DSL 层禁止出现硬件/调度概念；AlgoHW 层禁止出现 pragma 细节
-2. **LLM 是工具不是核心**：LLM 搜索重写规则组合 / 生成 intent / 诊断故障，不直接写最终 HLS 代码的关键路径
+1. **Dialect 层次隔离**：DSL 层禁止出现硬件/调度概念；AlgoHW 层禁止出现 RTL 细节
+2. **LLM 是核心代码生成器**：LLM 根据结构化 IR (RTLScheduleDialect JSON) + scaffold 模板生成 Verilog。这是本项目的核心研究论点。
 3. **每条重写规则必须有 QualityBound**：`formasyn/rewrites/` 中的规则必须声明可证明的质量退化上界
 4. **信号名串联依赖**：算子间通过 `output_ref` → `input_ref` 显式连接，parser 据此构建 DAG
 5. **kernel_type 统一命名**：使用 `channel_coding`（不是 `ldpc`）、`filtering`、`transform`、`detection`、`demodulation`、`synchronization`、`elementwise`
-6. **验证层独立性**：L1 只需 g++，L2 需要 Vitis HLS，L3 需要 Vitis + 质量模拟器。各层可独立跳过
+6. **验证层独立性**：L1 需要 Verilator/Icarus，L2 需要 Yosys，L3 需要 Python 质量模拟器。各层可独立跳过
 
 ## 三个研究方向
 
@@ -163,8 +174,8 @@ HLSScheduleDialect (调度: "具体 pragma 怎么写")
 - 局部修复（某节点 +2 frac_bits）替代全局放松（所有节点 +2 bits）
 
 ### 方向 C：跨层联合 Pareto 优化 (`formasyn/research/optimizer/pareto.py`)
-- 同时在 Math×AlgoHW×Schedule 三层搜索
-- 研究原型, 未接入管线 (DesignPoint 的 schedule 参数会被 ScheduleBuilder 覆盖)
+- 同时在 Math×AlgoHW×RTLSchedule 三层搜索
+- 研究原型, 未接入管线
 
 ## 添加新示例
 
