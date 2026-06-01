@@ -1,14 +1,17 @@
 """FormaSyn 主入口：串联所有模块执行 DSE 流水线。
 
-按照 formasyn.md 定义的流程：
+按照三层 IR 架构的流程：
 1. 输入阶段：命令行参数 + constraints.yaml + test_data.yaml
 2. DSL 到算法 IR：parser.py → MathDialect
-3. Golden 基线与量化建议：generator.py + quant_analyzer.py
-4. LLM 设计空间探索：dse_agent.py → IntentJSON[]
-5. 模板渲染与硬件映射：template_engine.py + roofline_solver.py + mlc_frontend/backend.py
-6. 代码生成：codegen_agent.py → HLS C++
-7. 三层验证：L1/L2/L3 checker
-8. 失败反馈：diagnostic.py + loop.py
+3. 不规则访问分析：标记 irregular_access + CSR 构建
+4. Golden 基线与量化建议：generator.py + quant_analyzer.py
+5. LLM 设计空间探索：dse_agent.py → IntentJSON[]
+6. 模板渲染与硬件映射：math_to_algohw.py → AlgoHWDialect
+7. RTL 调度：algohw_to_rtl.py → RTLScheduleDialect
+8. 内存布局：memory_layout.py → BRAM bank 分配
+9. LLM Verilog 代码生成：verilog_agent.py → Verilog
+10. 三层验证：L1 (Verilator) / L2 (Yosys) / L3 (质量仿真)
+11. 失败反馈：diagnostic.py + loop.py
 
 Usage::
 
@@ -30,21 +33,22 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent
 
-from formasyn.agent.codegen_agent import ScheduleCodegenAgent
 from formasyn.agent.diagnostic import RecoveryLayer
 from formasyn.agent.dse_agent import DSEAgent
+from formasyn.analysis.irregular_access import analyze_irregular_access
 from formasyn.checker.diagnostic import FailureContext, FailureStage
 from formasyn.checker.l1_checker import L1Checker
 from formasyn.checker.l2_checker import L2Checker
 from formasyn.checker.l3_checker import L3Checker
-from formasyn.checker.pre_checker import PreChecker
+from formasyn.codegen.verilog_agent import VerilogCodegenAgent
+from formasyn.codegen.testbench_gen import VerilogTestbenchGenerator
 from formasyn.dsl.parser import parse
-from formasyn.dsl.template_engine import TemplateEngine
 from formasyn.feedback.loop import FeedbackLoop
 from formasyn.golden.generator import GoldenModelGenerator
 from formasyn.golden.quant_analyzer import QuantizationAnalyzer
-from formasyn.mlc import MemoryLayoutPass
-from formasyn.solver import ResourceOverflowError, ScheduleBuilder
+from formasyn.lowering.math_to_algohw import TemplateEngine
+from formasyn.lowering.algohw_to_rtl import RTLScheduler
+from formasyn.lowering.memory_layout import assign_memory_layout
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -122,7 +126,7 @@ def load_example_config(example_name: str) -> ExampleConfig:
 # ---------------------------------------------------------------------------
 
 def build_l1_checker(config: ExampleConfig) -> L1Checker:
-    """构建 L1 Checker。"""
+    """构建 L1 Checker（Verilator / Icarus Verilog）。"""
     return L1Checker(
         kernel_type=config.kernel_type,
         tolerance=config.tolerance,
@@ -130,13 +134,15 @@ def build_l1_checker(config: ExampleConfig) -> L1Checker:
 
 
 def build_l2_checker(config: ExampleConfig) -> L2Checker:
-    """构建 L2 Checker。"""
+    """构建 L2 Checker（Yosys 综合）。"""
     hw = config.hardware_constraints
     budget = {
-        "dsp": hw.get("max_dsp", 999999),
-        "bram": hw.get("max_bram_18k", 999999),
+        "max_dsp": hw.get("max_dsp", 999999),
+        "max_bram": hw.get("max_bram_18k", 999999),
+        "max_lut": hw.get("max_lut", 999999),
+        "max_ff": hw.get("max_ff", 999999),
     }
-    clock_mhz = hw.get("clock_target_mhz", 200)
+    clock_mhz = hw.get("clock_target_mhz", 250)
     return L2Checker(
         hw_budget=budget,
         target_ii=hw.get("target_ii", 1),
@@ -145,7 +151,7 @@ def build_l2_checker(config: ExampleConfig) -> L2Checker:
 
 
 def build_l3_checker(config: ExampleConfig, golden_outputs: dict[str, list[float]]) -> L3Checker:
-    """构建 L3 Checker。"""
+    """构建 L3 Checker（质量仿真）。"""
     return L3Checker(
         kernel_type=config.kernel_type,
         quality_target=config.tolerance,
@@ -170,13 +176,13 @@ class PipelineResult:
 class FormaSynPipeline:
     """FormaSyn DSE 流水线。
 
-    按照 formasyn.md 定义的流程执行：
+    三层 IR 架构：
     1. DSL → MathDialect
     2. MathDialect → Golden + QuantSpec
     3. MathDialect + QuantSpec → IntentJSON[] (via DSEAgent)
-    4. IntentJSON → AlgoHWDialect → ScheduleDialect
-    5. ScheduleDialect → HLS C++
-    6. HLS C++ → L1/L2/L3 验证
+    4. IntentJSON → AlgoHWDialect → RTLScheduleDialect
+    5. RTLScheduleDialect → Verilog (via LLM)
+    6. Verilog → L1 (Verilator) / L2 (Yosys) / L3 (质量仿真)
     7. 失败 → Diagnostic + Loop 反馈
     """
 
@@ -205,25 +211,14 @@ class FormaSynPipeline:
         self.force_fallback = force_fallback
 
         # 初始化模块
-        # 从 constraints 中提取时钟配置
-        clock_mhz = config.hardware_constraints.get("clock_target_mhz", 200)
-        clock_ns = f"{round(1000.0 / clock_mhz, 2)}ns"
-        part = config.hardware_constraints.get("target_device", "xc7z020clg400-1")
+        clock_mhz = config.hardware_constraints.get("clock_target_mhz", 250)
 
-        self.pre_checker = PreChecker(
-            examples_root=EXAMPLES_DIR,
-            part=part,
-            clock=clock_ns,
-        )
         self.engine = TemplateEngine()
-        self.solver = ScheduleBuilder(
-            bram_kb=config.hardware_constraints.get("max_bram_18k", 32) * 18,
-            dsp_count=config.hardware_constraints.get("max_dsp", 64),
-            freq_mhz=config.hardware_constraints.get("clock_target_mhz", 250),
-            enforce_budget=False,
+        self.scheduler = RTLScheduler(
+            clock_period_ns=round(1000.0 / clock_mhz, 2),
         )
-        self.mlc = MemoryLayoutPass()
-        self.codegen_agent = ScheduleCodegenAgent(artifact_root=EXAMPLES_DIR)
+        self.codegen_agent = VerilogCodegenAgent(artifact_root=EXAMPLES_DIR)
+        self.tb_gen = VerilogTestbenchGenerator()
 
         # 初始化 DSE Agent（如果启用 DSE）
         self.dse_agent: DSEAgent | None = None
@@ -238,8 +233,9 @@ class FormaSynPipeline:
         logger.info(f"==> [1/7] 解析算法 {self.config.name} 到 Math Dialect ...")
         math_dialect = parse(self.graph)
 
-        # MLC Frontend: 标注不规则访问节点并生成 CSR
-        math_dialect = self.mlc.analyze(self.graph, math_dialect)
+        # 不规则访问分析：标注 irregular_access 节点并生成 CSR
+        output_dir = str(EXAMPLES_DIR / self.config.name)
+        math_dialect = analyze_irregular_access(self.graph, math_dialect, output_dir)
 
         # 提取 CSR 数据（如果有）
         csr_data = self._extract_csr_data()
@@ -265,7 +261,9 @@ class FormaSynPipeline:
         total_variants = 0
         rounds = 0
 
-        feedback_loop = FeedbackLoop(max_iterations=self.max_rounds)
+        feedback_loop = FeedbackLoop(
+            max_codegen=3, max_schedule=3, max_dse=self.max_rounds,
+        )
         feedback_text: str | None = None
 
         while rounds < self.max_rounds:
@@ -303,10 +301,10 @@ class FormaSynPipeline:
             if passed_variants:
                 break
 
-            if not feedback_loop.can_iterate or self.dse_agent is None:
+            if feedback_loop.state.dse_round >= self.max_rounds or self.dse_agent is None:
                 break
 
-            feedback_text = feedback_loop.generate_feedback_for_llm(round_failures)
+            feedback_text = feedback_loop.generate_feedback_for_dse()
             logger.info("  生成反馈文本，准备下一轮迭代")
 
         return PipelineResult(
@@ -403,10 +401,10 @@ class FormaSynPipeline:
             max_recover_attempts = 3
             for attempt in range(max_recover_attempts):
                 current_ir = self._get_recovery_ir(ir_state, failure.failed_at)
-                loop_result = feedback_loop.recover(current_ir, failure)
+                loop_result = feedback_loop.diagnose_and_recover(current_ir, failure)
 
-                if loop_result.should_deep_loop:
-                    logger.info("Agent 决策: 触发深度迭代")
+                if loop_result.should_retry_dse:
+                    logger.info("Agent 决策: 触发 DSE 深度迭代")
                     return False, failure
 
                 if not loop_result.success or not loop_result.target_layer:
@@ -415,7 +413,7 @@ class FormaSynPipeline:
 
                 logger.info(
                     "Agent 决策: 从 %s 层恢复，动作: %s",
-                    loop_result.target_layer.value,
+                    loop_result.target_layer,
                     loop_result.actions_taken,
                 )
 
@@ -424,7 +422,7 @@ class FormaSynPipeline:
                     l1, l2, l3, golden_outputs, csr_data, variant_name,
                 )
                 if success:
-                    logger.info(f"从 {loop_result.target_layer.value} 恢复成功")
+                    logger.info(f"从 {loop_result.target_layer} 恢复成功")
                     return True, None
 
             logger.warning(f"达到最大恢复次数 {max_recover_attempts}")
@@ -442,7 +440,7 @@ class FormaSynPipeline:
         """根据失败阶段确定应该传递哪个 IR 给 Agent."""
         if failed_at in (FailureStage.L1_COMPILE, FailureStage.L1_NUMERIC):
             return ir_state.get("algo_hw")
-        if failed_at == FailureStage.L2_CSYNTH:
+        if failed_at == FailureStage.L2_YOSYS:
             return ir_state.get("schedule") or ir_state.get("algo_hw")
         return ir_state.get("schedule")
 
@@ -458,35 +456,28 @@ class FormaSynPipeline:
         csr_data: dict | None,
         variant_name: str,
     ) -> tuple[bool, FailureContext | None]:
-        """执行完整的 template → solver → mlc → codegen → verify 流程."""
+        """执行完整的 template → scheduler → memory → codegen → verify 流程."""
         intent = ir_state["intent"]
 
         # 1. 渲染 AlgoHWDialect
         algo_hw = self.engine.render(intent, math_dialect, quant_specs)
         ir_state["algo_hw"] = algo_hw
 
-        # 2. 求解 ScheduleDialect
-        try:
-            schedule = self.solver.solve(algo_hw)
-        except ResourceOverflowError as exc:
-            return False, FailureContext(
-                failed_at=FailureStage.L2_CSYNTH,
-                variant_id=variant_name,
-                summary=f"Roofline 求解失败: {exc}",
-            )
+        # 2. RTL 调度: AlgoHW → RTLScheduleDialect
+        schedule = self.scheduler.lower(algo_hw, self.config.hardware_constraints)
 
-        # 2.5. MLC Backend
-        schedule = self.mlc.compile(schedule, math_dialect)
+        # 3. 内存布局: BRAM bank 分配
+        schedule = assign_memory_layout(schedule, math_dialect)
         ir_state["schedule"] = schedule
 
-        # 3. 生成 HLS 代码 + 准备环境
-        prep_ok, prep_failure = self._codegen_and_prepare(
+        # 4. Verilog 代码生成 + testbench
+        codegen_ok, codegen_failure = self._codegen_and_prepare(
             ir_state, golden_outputs, csr_data, variant_name,
         )
-        if not prep_ok:
-            return False, prep_failure
+        if not codegen_ok:
+            return False, codegen_failure
 
-        # 4. L1 → L2 → L3
+        # 5. L1 → L2 → L3
         return self._verify(ir_state, l1, l2, l3, golden_outputs, csr_data, variant_name)
 
     def _codegen_and_prepare(
@@ -498,35 +489,35 @@ class FormaSynPipeline:
         *,
         force_fallback: bool | None = None,
     ) -> tuple[bool, FailureContext | None]:
-        """生成 HLS 代码并准备验证环境."""
+        """生成 Verilog 代码和 testbench."""
         schedule = ir_state["schedule"]
         if force_fallback is None:
             force_fallback = self.force_fallback
 
-        artifacts = self.codegen_agent.generate(
-            schedule,
-            example_name=self.config.name,
-            force_fallback=force_fallback,
-        )
-        ir_state["hls_cpp"] = artifacts.kernel_cpp
-        ir_state["hls_hdr"] = artifacts.kernel_h
+        try:
+            artifacts = self.codegen_agent.generate(
+                schedule,
+                example_name=self.config.name,
+                force_fallback=force_fallback,
+            )
+            ir_state["verilog_code"] = artifacts.kernel_v
+            ir_state["output_dir"] = artifacts.output_dir
 
-        pre_result = self.pre_checker.prepare_environment(
-            example_name=self.config.name,
-            variant_id=variant_name,
-            hls_cpp_code=artifacts.kernel_cpp,
-            golden_outputs=golden_outputs,
-            test_inputs=self.config.test_data,
-            csr_data=csr_data,
-        )
-        if not pre_result.ready:
+            # 生成 testbench
+            tb_path = self.tb_gen.write_testbench(
+                schedule, self.config.test_data, golden_outputs, artifacts.output_dir,
+            )
+            with open(tb_path) as f:
+                ir_state["testbench_sv"] = f.read()
+
+            return True, None
+
+        except Exception as e:
             return False, FailureContext(
                 failed_at=FailureStage.L1_COMPILE,
                 variant_id=variant_name,
-                summary=f"环境准备失败: {pre_result.error}",
+                summary=f"代码生成失败: {str(e)[:200]}",
             )
-        ir_state["prepared_dir"] = pre_result.output_dir
-        return True, None
 
     def _verify(
         self,
@@ -539,13 +530,13 @@ class FormaSynPipeline:
         variant_name: str,
     ) -> tuple[bool, FailureContext | None]:
         """运行 L1 → L2 → L3 验证流水线."""
-        hls_cpp = ir_state["hls_cpp"]
-        hls_hdr = ir_state["hls_hdr"]
-        prepared_dir = ir_state["prepared_dir"]
+        verilog_code = ir_state["verilog_code"]
+        testbench_sv = ir_state.get("testbench_sv", "")
 
+        # L1: Verilator / Icarus Verilog 功能仿真
         l1_result = l1.check(
-            hls_cpp, golden_outputs, self.config.test_data, variant_name,
-            csr_data=csr_data, prepared_dir=prepared_dir,
+            verilog_code, golden_outputs, self.config.test_data, variant_name,
+            testbench_sv=testbench_sv,
         )
         if not l1_result.passed:
             return False, l1_result.failure or FailureContext(
@@ -554,17 +545,19 @@ class FormaSynPipeline:
                 summary="L1 数值验证失败",
             )
 
-        l2_result = l2.check(hls_cpp, hls_hdr, variant_name, prepared_dir=prepared_dir)
+        # L2: Yosys 综合资源验证
+        l2_result = l2.check(verilog_code, variant_name)
         if not l2_result.passed:
             return False, l2_result.failure or FailureContext(
-                failed_at=FailureStage.L2_CSYNTH,
+                failed_at=FailureStage.L2_YOSYS,
                 variant_id=variant_name,
                 summary="L2 综合失败",
             )
 
+        # L3: 质量仿真
         l3_result = l3.check(
-            hls_cpp, variant_name, self.config.test_data,
-            hls_header_code=hls_hdr, csr_data=csr_data,
+            verilog_code, variant_name, self.config.test_data,
+            csr_data=csr_data,
         )
         if not l3_result.passed:
             return False, l3_result.failure or FailureContext(
@@ -587,39 +580,33 @@ class FormaSynPipeline:
         csr_data: dict | None,
         variant_name: str,
     ) -> tuple[bool, FailureContext | None]:
-        """从指定层重新执行: solver → mlc → codegen → verify."""
+        """从指定层重新执行: scheduler → memory → codegen → verify."""
         target = loop_result.target_layer
         new_ir = loop_result.new_ir
 
         try:
-            if target in (RecoveryLayer.TEMPLATE_ENGINE, RecoveryLayer.ROOFLINE_SOLVER):
-                # 需要重新求解 schedule
+            if target in ("dse", "schedule"):
+                # 需要重新调度
                 ir_state["algo_hw"] = new_ir
-                schedule = self.solver.solve(new_ir)
-                schedule = self.mlc.compile(schedule, math_dialect)
+                schedule = self.scheduler.lower(new_ir, self.config.hardware_constraints)
+                schedule = assign_memory_layout(schedule, math_dialect)
                 ir_state["schedule"] = schedule
             else:
-                # MLC_BACKEND / CODEGEN_AGENT: Agent 已修改 schedule
+                # codegen: Agent 已修改 schedule
                 ir_state["schedule"] = new_ir
 
-            # 重新生成代码 + 准备环境
-            prep_ok, prep_failure = self._codegen_and_prepare(
+            # 重新生成 Verilog + testbench
+            codegen_ok, codegen_failure = self._codegen_and_prepare(
                 ir_state, golden_outputs, csr_data, variant_name,
                 force_fallback=False,
             )
-            if not prep_ok:
-                return False, prep_failure
+            if not codegen_ok:
+                return False, codegen_failure
 
             return self._verify(ir_state, l1, l2, l3, golden_outputs, csr_data, variant_name)
 
-        except ResourceOverflowError as exc:
-            return False, FailureContext(
-                failed_at=FailureStage.L2_CSYNTH,
-                variant_id=variant_name,
-                summary=f"Roofline 求解失败: {exc}",
-            )
         except Exception as e:
-            logger.exception(f"从 {target.value} 恢复时发生异常")
+            logger.exception(f"从 {target} 恢复时发生异常")
             return False, FailureContext(
                 failed_at=FailureStage.L1_COMPILE,
                 variant_id=variant_name,
