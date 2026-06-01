@@ -94,7 +94,7 @@ class L2Checker:
             )
         except _YosysError as exc:
             result.failure = FailureContext(
-                failed_at=FailureStage.L2_CSYNTH,
+                failed_at=FailureStage.L2_YOSYS,
                 variant_id=variant_id,
                 raw_error=str(exc)[:2000],
                 summary="Yosys synthesis failed",

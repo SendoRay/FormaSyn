@@ -1,7 +1,7 @@
-"""Diagnostic extractor: HLS/Co-Sim reports -> high-level attribution text.
+"""Diagnostic extractor: RTL verification reports -> high-level attribution text.
 
-Parses raw error output from g++ compilation, Vitis HLS synthesis, and
-Co-Simulation, then produces structured failure summaries.
+Parses raw error output from g++ compilation, Verilator simulation, and
+Yosys synthesis, then produces structured failure summaries.
 
 数据类型：FailureContext, FailureStage
 辅助函数：diagnose_compile_error, diagnose_numeric_error,
@@ -23,9 +23,8 @@ class FailureStage(str, Enum):
     """Which verification stage the failure occurred at."""
     L1_COMPILE = "l1_compile"
     L1_NUMERIC = "l1_numeric"
-    L2_CSIM = "l2_csim"
-    L2_CSYNTH = "l2_csynth"
-    L3_COSIM = "l3_cosim"
+    L1_VERILATOR = "l1_verilator"
+    L2_YOSYS = "l2_yosys"
     L3_QUALITY = "l3_quality"
 
 
@@ -121,7 +120,7 @@ def diagnose_resource_error_with_ii(
         gaps.append(f"II: 实测 {achieved_ii}, 目标 {target_ii}")
 
     return FailureContext(
-        failed_at=FailureStage.L2_CSYNTH,
+        failed_at=FailureStage.L2_YOSYS,
         variant_id=variant_id,
         summary=summary,
         gap_description="; ".join(gaps) if gaps else "验证未通过",

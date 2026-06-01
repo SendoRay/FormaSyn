@@ -3,7 +3,7 @@
 核心职责：
 1. 接收所有验证阶段的失败信息 (FailureContext)
 2. 调用 LLM 智能分析失败原因
-3. 由 LLM 决策回退到哪一层 (template_engine, roofline_solver, mlc_backend, codegen_agent, dse_agent)
+3. 由 LLM 决策回退到哪一层 (template_engine, rtl_scheduler, memory_layout, codegen_agent, dse_agent)
 4. 输出结构化的恢复动作 (RecoveryAction)
 
 架构优势：
@@ -31,9 +31,9 @@ class RecoveryLayer(str, Enum):
     """回退目标层：决定将修改后的参数送回哪一层."""
 
     TEMPLATE_ENGINE = "template_engine"  # 量化参数、approx_method 调整
-    ROOFLINE_SOLVER = "roofline_solver"  # 并行度、调度参数调整
-    MLC_BACKEND = "mlc_backend"  # BRAM tiling/bank 调整
-    CODEGEN_AGENT = "codegen_agent"  # pragma 调整
+    RTL_SCHEDULER = "rtl_scheduler"  # 并行度、调度参数调整
+    MEMORY_LAYOUT = "memory_layout"  # BRAM tiling/bank 调整
+    CODEGEN_AGENT = "codegen_agent"  # pipeline stage 调整
     DSE_AGENT = "dse_agent"  # 触发新一轮 LLM 探索 (深度迭代)
 
 
@@ -75,7 +75,7 @@ class DiagnosticResult:
 # LLM Prompt 设计
 # ---------------------------------------------------------------------------
 
-_DIAGNOSTIC_SYSTEM_PROMPT = """You are an expert FPGA/HLS diagnostic and recovery decision agent.
+_DIAGNOSTIC_SYSTEM_PROMPT = """You are an expert FPGA/RTL diagnostic and recovery decision agent.
 
 Your task is to analyze verification failures and decide:
 1. **WHY** it failed (root cause analysis)
@@ -90,21 +90,21 @@ Your task is to analyze verification failures and decide:
    - Adjust: saturation protection (enable_saturation)
    - Use when: numerical accuracy issues, wrong algorithm choice
 
-2. `roofline_solver` - Scheduling layer
+2. `rtl_scheduler` - Scheduling layer
    - Adjust: parallelism degree (1, 2, 4, 8, 16...)
-   - Adjust: unroll factors
+   - Adjust: pipeline_stage count
    - Adjust: tile sizes
    - Use when: resource overflow (DSP/LUT), timing issues from parallelism
 
-3. `mlc_backend` - Memory banking layer  
+3. `memory_layout` - Memory banking layer
    - Adjust: BRAM bank allocation
-   - Adjust: memory tiling strategy
+   - Adjust: storage_type and memory tiling strategy
    - Use when: BRAM overflow, irregular access port conflicts
 
 4. `codegen_agent` - Code generation layer
-   - Adjust: pipeline II pragma
-   - Adjust: array partition type (none/cyclic/complete)
-   - Use when: timing closure issues, II not met
+   - Adjust: pipeline_stage configuration
+   - Adjust: exec_mode (combinational/pipelined/iterative)
+   - Use when: timing closure issues, pipeline not met
 
 5. `dse_agent` - High-level exploration layer
    - Trigger: new design space exploration
@@ -114,14 +114,14 @@ Your task is to analyze verification failures and decide:
 
 **Numerical Failures (L1_NUMERIC)**:
 - Sign error rate > 1% → relax quantization → `template_engine`
-- NMSE too high but sign OK → increase frac_bits → `template_engine`  
+- NMSE too high but sign OK → increase frac_bits → `template_engine`
 - Severe numerical issues → try different approx_method → `template_engine` or `dse_agent`
 
-**Resource Failures (L2_CSYNTH)**:
-- DSP overflow → reduce parallelism → `roofline_solver`
-- LUT overflow → reduce parallelism + bitwidth → `roofline_solver`
-- BRAM overflow → reduce tile_size or banks → `mlc_backend`
-- Timing/II not met → relax pragma → `codegen_agent`
+**Resource Failures (L2_YOSYS)**:
+- DSP overflow → reduce parallelism → `rtl_scheduler`
+- LUT overflow → reduce parallelism + bitwidth → `rtl_scheduler`
+- BRAM overflow → reduce tile_size or banks → `memory_layout`
+- Timing/pipeline not met → adjust pipeline → `codegen_agent`
 - Multiple resource violations → `dse_agent`
 
 **Quality Failures (L3_QUALITY)**:
@@ -143,14 +143,14 @@ Return ONLY a JSON object (no markdown, no explanations outside JSON):
   "gap_description": "Detailed explanation of what failed",
   "root_cause": "technical_root_cause_category",
   "recovery_decision": {
-    "target_layer": "template_engine|roofline_solver|mlc_backend|codegen_agent|dse_agent",
-    "action_type": "relax_quant|reduce_parallelism|adjust_tiling|tune_pragma|explore_new|regenerate_code",
+    "target_layer": "template_engine|rtl_scheduler|memory_layout|codegen_agent|dse_agent",
+    "action_type": "relax_quant|reduce_parallelism|adjust_tiling|adjust_pipeline|explore_new|regenerate_code",
     "params": {
       // Parameters specific to the action_type
       // e.g., for relax_quant: {"int_bits_increment": 2, "frac_bits_increment": 2}
       // e.g., for reduce_parallelism: {"parallelism_factor": 0.5}
       // e.g., for adjust_tiling: {"tile_size_factor": 0.5}
-      // e.g., for tune_pragma: {"pipeline_ii_increment": 1, "relax_array_partition": true}
+      // e.g., for adjust_pipeline: {"pipeline_stage_increment": 1, "exec_mode": "pipelined"}
       // e.g., for explore_new: {"suggestion": "Try min_sum instead of offset_min_sum"}
     },
     "rationale": "Detailed reasoning for this decision"
@@ -167,7 +167,7 @@ Return ONLY a JSON object (no markdown, no explanations outside JSON):
 
 1. **Prefer local fixes**: If a quick fix at a lower layer is likely to work, prefer it over going back to dse_agent
 2. **Escalate when needed**: If you've seen similar failures multiple times, or the gap is large, go to dse_agent
-3. **Consider dependencies**: Changing approx_method requires going through template_engine, which then flows through roofline_solver and codegen_agent
+3. **Consider dependencies**: Changing approx_method requires going through template_engine, which then flows through rtl_scheduler and codegen_agent
 4. **Resource vs Quality trade-off**: Be aggressive in reducing resources if quality is good; be conservative if quality is already marginal
 """
 
@@ -389,7 +389,7 @@ class AgentDiagnostic(BaseAgent):
         # 根据失败阶段分发
         if failure.failed_at == FailureStage.L1_NUMERIC:
             return self._rule_diagnose_l1(failure)
-        elif failure.failed_at == FailureStage.L2_CSYNTH:
+        elif failure.failed_at == FailureStage.L2_YOSYS:
             return self._rule_diagnose_l2(failure)
         elif failure.failed_at == FailureStage.L3_QUALITY:
             return self._rule_diagnose_l3(failure)
@@ -461,7 +461,7 @@ class AgentDiagnostic(BaseAgent):
                 failure=failure,
                 feedback_text=f"L2 资源失败: DSP 超限 ({usage['dsp']} > {budget['dsp']})",
                 recovery_action=RecoveryAction(
-                    layer=RecoveryLayer.ROOFLINE_SOLVER,
+                    layer=RecoveryLayer.RTL_SCHEDULER,
                     action_type="reduce_parallelism",
                     params={"parallelism_factor": 0.5},
                     rationale="DSP 超限，降低并行度",
@@ -474,7 +474,7 @@ class AgentDiagnostic(BaseAgent):
                 failure=failure,
                 feedback_text=f"L2 资源失败: BRAM 超限 ({usage['bram']} > {budget['bram']})",
                 recovery_action=RecoveryAction(
-                    layer=RecoveryLayer.MLC_BACKEND,
+                    layer=RecoveryLayer.MEMORY_LAYOUT,
                     action_type="adjust_tiling",
                     params={"tile_size_factor": 0.5},
                     rationale="BRAM 超限，调整 tiling",
@@ -489,9 +489,9 @@ class AgentDiagnostic(BaseAgent):
                 feedback_text="L2 时序失败: II 或时序不满足",
                 recovery_action=RecoveryAction(
                     layer=RecoveryLayer.CODEGEN_AGENT,
-                    action_type="tune_pragma",
-                    params={"pipeline_ii_increment": 1},
-                    rationale="时序不满足，放宽 pipeline",
+                    action_type="adjust_pipeline",
+                    params={"pipeline_stage_increment": 1},
+                    rationale="时序不满足，调整 pipeline stage",
                 ),
                 should_deep_loop=False,
             )

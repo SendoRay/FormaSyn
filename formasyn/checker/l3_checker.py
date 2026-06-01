@@ -1,9 +1,10 @@
-"""L3 Checker: Co-Simulation + communication link quality simulation.
+"""L3 Checker: Communication link quality simulation.
 
-Two sub-stages:
-  - L3a: Vitis HLS Co-Simulation (RTL waveform vs C++ behavior)
-  - L3b: Quality Simulation — compile HLS code to .so, call via ctypes,
-         dispatch to kernel_type-specific evaluator.
+L3b: Quality Simulation — compile generated code to .so, call via ctypes,
+     dispatch to kernel_type-specific evaluator.
+
+Note: L3a co-sim was removed because L1 is already cycle-accurate RTL
+simulation via Verilator, making a separate co-sim stage redundant.
 
 Quality metrics by kernel_type:
   - channel_coding → BER curve (multi-SNR sweep)
@@ -27,7 +28,6 @@ from .diagnostic import (
 )
 from .metrics import L3Result
 from .simulators import get_simulator
-from ..utils.hls_mock import vitis_available
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ SIMPLE_ARITHMETIC_TYPES = {"elementwise", "arithmetic", "generic"}
 
 
 class L3Checker:
-    """L3 Co-Simulation + quality simulation checker.
+    """L3 quality simulation checker.
 
     Args:
         kernel_type: Algorithm category for metric dispatch.
@@ -72,39 +72,24 @@ class L3Checker:
 
     def check(
         self,
-        hls_cpp_code: str,
+        verilog_code: str,
         variant_id: str,
         test_inputs: dict[str, list[float]],
         *,
-        hls_header_code: str | None = None,
         csr_data: Optional[dict[str, list[int]]] = None,
     ) -> L3Result:
         """Run L3 quality simulation.
 
-        Co-Sim (L3a) is skipped if Vitis HLS is not available.
-        Quality simulation (L3b) always runs via g++ .so compilation.
-
         Args:
-            hls_cpp_code: Generated HLS C++ source.
+            verilog_code: Generated Verilog source.
             variant_id: Variant identifier.
             test_inputs: Test input vectors.
-            hls_header_code: Optional kernel.h content.
             csr_data: Optional CSR data for irregular-access kernels.
 
         Returns:
             L3Result with quality metrics and pass/fail.
         """
         result = L3Result(variant_id=variant_id)
-
-        # L3a Co-Sim: 仅在 Vitis HLS 可用时运行
-        if vitis_available():
-            # TODO: 调用 vitis-run --mode hls --cosim 执行 RTL co-sim
-            logger.info("L3a Co-Sim: Vitis HLS 可用，但 co-sim 流程待实现")
-            result.cosim_passed = True
-        else:
-            logger.info("L3a Co-Sim 跳过: Vitis HLS 不可用")
-            result.cosim_passed = True  # 不阻塞质量仿真流程
-            result.cosim_skipped = True
 
         # 对于简单算术类型，跳过复杂的质量仿真
         if self._kernel_type in SIMPLE_ARITHMETIC_TYPES:
@@ -116,17 +101,16 @@ class L3Checker:
         # L3b Quality Sim - 使用 Simulator 分发
         simulator = self._simulator_class()
         quality_metrics = simulator.evaluate(
-            hls_cpp_code,
+            verilog_code,
             test_inputs,
             self._golden,
-            hls_header_code=hls_header_code,
             csr_data=csr_data,
         )
         result.quality_metrics = quality_metrics
 
         quality_ok = self._check_quality(quality_metrics)
         result.quality_passed = quality_ok
-        result.passed = result.cosim_passed and quality_ok
+        result.passed = quality_ok
 
         if not quality_ok:
             result.failure = diagnose_quality_error(
