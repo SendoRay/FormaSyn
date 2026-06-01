@@ -26,9 +26,6 @@ from .metrics import (
     SynthReport,
 )
 
-# Pre-checker
-from .pre_checker import PreChecker
-
 __all__ = [
     # Checkers
     "L1Checker",
@@ -49,6 +46,4 @@ __all__ = [
     "PreCheckResult",
     "QualityThresholds",
     "SynthReport",
-    # Pre-checker
-    "PreChecker",
 ]
