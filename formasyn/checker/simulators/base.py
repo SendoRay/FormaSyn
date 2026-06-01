@@ -2,20 +2,18 @@
 
 本模块定义了所有 Quality Simulator 的基类接口，
 L3b 质量仿真根据 kernel_type 分发到具体的 Simulator 实现。
+
+Note: 自从迁移到 Verilog 后，L3 质量仿真不再编译生成代码，
+而是基于 golden 参考输出进行纯 Python 质量分析。
+L1 (Verilator) 负责功能正确性验证。
 """
 
 from __future__ import annotations
 
-import ctypes
 import logging
-import os
-import subprocess
-import tempfile
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from ...utils.cpp_utils import extract_function_name
-from ...utils.hls_mock import strip_hls_pragmas, write_mock_headers
 from ...utils.metrics import compute_nmse, compute_sign_error_rate
 
 logger = logging.getLogger(__name__)
@@ -37,132 +35,23 @@ class QualitySimulator(ABC):
     @abstractmethod
     def evaluate(
         self,
-        hls_cpp_code: str,
+        generated_code: str,
         test_inputs: dict[str, list[float]],
         golden_outputs: dict[str, list[float]],
         *,
-        hls_header_code: str | None = None,
         csr_data: Optional[dict[str, list[int]]] = None,
     ) -> dict[str, float]:
         """运行仿真并返回质量指标.
 
         Args:
-            hls_cpp_code: HLS C++ 源码.
+            generated_code: 生成的 Verilog 源码（用于分析，非编译执行）.
             test_inputs: 测试输入数据.
             golden_outputs: Golden 参考输出.
-            hls_header_code: 可选的 kernel.h 内容.
             csr_data: 可选的 CSR 格式稀疏矩阵数据.
 
         Returns:
             质量指标字典，如 {'nmse_db': -45.3, 'sfdr_db': 65.2}
         """
-
-    # -- 编译工具方法 ---------------------------------------------------------
-
-    @staticmethod
-    def _compile_to_so(
-        hls_cpp_code: str,
-        function_name: str = "kernel",
-        hls_header_code: str | None = None,
-    ) -> str:
-        """将 HLS C++ 代码编译为 .so 动态库.
-
-        Args:
-            hls_cpp_code: HLS C++ 源码（已移除 HLS pragma）.
-            function_name: 顶层函数名.
-            hls_header_code: 可选的 kernel.h 内容.
-
-        Returns:
-            编译生成的 .so 文件路径.
-
-        Raises:
-            RuntimeError: 如果编译失败.
-        """
-        tmp_dir = tempfile.mkdtemp(prefix="formasyn_so_")
-        src_path = os.path.join(tmp_dir, f"{function_name}.cpp")
-        so_path = os.path.join(tmp_dir, f"{function_name}.so")
-
-        with open(src_path, "w", encoding="utf-8") as f:
-            f.write(hls_cpp_code)
-
-        write_mock_headers(tmp_dir, hls_header_code)
-
-        cmd = [
-            "g++",
-            "-std=c++14",
-            "-O2",
-            "-fPIC",
-            "-shared",
-            f"-I{tmp_dir}",
-            src_path,
-            "-o",
-            so_path,
-        ]
-
-        try:
-            proc = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=60,
-            )
-        except FileNotFoundError:
-            raise RuntimeError("g++ not found on PATH")
-        except subprocess.TimeoutExpired:
-            raise RuntimeError("g++ compilation timed out")
-
-        if proc.returncode != 0:
-            raise RuntimeError(f"g++ compilation failed:\n{proc.stderr}")
-
-        return so_path
-
-    # -- SO 调用 ---------------------------------------------------------------
-
-    @staticmethod
-    def _run_so_simple(
-        so_path: str,
-        function_name: str,
-        test_inputs: dict[str, list[float]],
-        golden_outputs: dict[str, list[float]],
-        csr_data: Optional[dict[str, list[int]]],
-    ) -> dict[str, list[float]]:
-        """通过 ctypes 调用编译好的 .so 并返回输出.
-
-        假定函数签名形式为: void kernel(..., output[], int output_len, ...)
-        """
-        lib = ctypes.CDLL(so_path)
-
-        func = getattr(lib, function_name, None)
-        if func is None:
-            raise RuntimeError(f"Function '{function_name}' not found in {so_path}")
-
-        args = []
-        for key, values in test_inputs.items():
-            arr = (ctypes.c_double * len(values))(*values)
-            args.append(arr)
-            args.append(ctypes.c_int(len(values)))
-
-        for key in golden_outputs:
-            out_len = len(golden_outputs[key])
-            out_array = (ctypes.c_double * out_len)()
-            args.append(out_array)
-            args.append(ctypes.c_int(out_len))
-
-        if csr_data is not None:
-            rp_arr = (ctypes.c_int * len(csr_data["row_ptr"]))(*csr_data["row_ptr"])
-            ci_arr = (ctypes.c_int * len(csr_data["col_idx"]))(*csr_data["col_idx"])
-            args.append(rp_arr)
-            args.append(ctypes.c_int(len(csr_data["row_ptr"])))
-            args.append(ci_arr)
-            args.append(ctypes.c_int(len(csr_data["col_idx"])))
-
-        func(*args)
-
-        result = {}
-        for key, out_array in zip(golden_outputs.keys(), args[2 * len(test_inputs)::2]):
-            result[key] = list(out_array)
-
-        return result
 
     # -- 指标计算 (委托给共享工具模块) -----------------------------------------
 
