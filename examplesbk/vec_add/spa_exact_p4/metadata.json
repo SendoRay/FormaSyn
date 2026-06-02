@@ -1,10 +1,17 @@
 {
   "variant_id": "spa_exact_p4",
   "example_name": "vec_add",
-  "function_name": "kernel",
+  "kernel_name": "vec_add",
+  "backend": "verilog",
   "model": "deepseek-v4-pro",
   "base_url": "https://api.deepseek.com/v1",
-  "generated_at_utc": "2026-05-19T10:00:44.848147+00:00",
+  "generated_at_utc": "2026-06-01T10:43:32.081311+00:00",
+  "resource_estimates": {
+    "estimated_luts": 200,
+    "estimated_ffs": 28,
+    "estimated_dsps": 0,
+    "estimated_brams": 0
+  },
   "schedule_summary": {
     "node_count": 3,
     "input_nodes": [
@@ -14,8 +21,8 @@
     "output_nodes": [
       "c"
     ],
-    "expected_ii": 4,
-    "total_dsp_estimate": 0,
-    "total_bram_estimate": 56
+    "total_pipeline_stages": 1,
+    "total_latency_cycles": 1,
+    "clock_period_ns": 5.0
   }
 }

@@ -1,0 +1,28 @@
+{
+  "variant_id": "spa_exact_p1",
+  "example_name": "ldpc_cnu",
+  "kernel_name": "ldpc_cnu",
+  "backend": "verilog",
+  "model": "deepseek-v4-pro",
+  "base_url": "https://api.deepseek.com/v1",
+  "generated_at_utc": "2026-06-01T10:20:26.844472+00:00",
+  "resource_estimates": {
+    "estimated_luts": 200,
+    "estimated_ffs": 21,
+    "estimated_dsps": 0,
+    "estimated_brams": 4
+  },
+  "schedule_summary": {
+    "node_count": 5,
+    "input_nodes": [
+      "msg_in"
+    ],
+    "output_nodes": [
+      "sign_out",
+      "min_out"
+    ],
+    "total_pipeline_stages": 2,
+    "total_latency_cycles": 2,
+    "clock_period_ns": 4.0
+  }
+}

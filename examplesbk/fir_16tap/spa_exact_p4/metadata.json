@@ -1,0 +1,27 @@
+{
+  "variant_id": "spa_exact_p4",
+  "example_name": "fir_16tap",
+  "kernel_name": "fir_16tap",
+  "backend": "verilog",
+  "model": "deepseek-v4-pro",
+  "base_url": "https://api.deepseek.com/v1",
+  "generated_at_utc": "2026-06-01T10:19:15.245825+00:00",
+  "resource_estimates": {
+    "estimated_luts": 600,
+    "estimated_ffs": 108,
+    "estimated_dsps": 8,
+    "estimated_brams": 0
+  },
+  "schedule_summary": {
+    "node_count": 4,
+    "input_nodes": [
+      "x_in"
+    ],
+    "output_nodes": [
+      "y_out"
+    ],
+    "total_pipeline_stages": 5,
+    "total_latency_cycles": 5,
+    "clock_period_ns": 3.33
+  }
+}
