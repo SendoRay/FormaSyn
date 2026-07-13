@@ -34,7 +34,11 @@ echo "==> [4/4] Verifying toolchain"
 status=0
 for t in verilator yosys nextpnr-ice40 icetime; do
   if command -v "$t" >/dev/null 2>&1; then
-    printf "  OK   %-14s %s\n" "$t" "$("$t" --version 2>&1 | head -1 || true)"
+    case "$t" in
+      icetime|icepack) info="$(command -v "$t")" ;;  # no --version flag
+      *) info="$("$t" --version 2>&1 | head -1 || true)" ;;
+    esac
+    printf "  OK   %-14s %s\n" "$t" "$info"
   else
     printf "  MISS %-14s (not on PATH)\n" "$t"; status=1
   fi

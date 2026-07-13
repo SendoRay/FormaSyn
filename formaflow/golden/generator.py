@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -128,7 +129,7 @@ class GoldenModelGenerator:
             raise FileNotFoundError(f"Golden model script not found: {script_path}")
 
         result = subprocess.run(
-            ["python", str(script_path), str(output_path), str(num_vectors)],
+            [sys.executable, str(script_path), str(output_path), str(num_vectors)],
             capture_output=True,
             text=True,
             timeout=60,
@@ -219,7 +220,7 @@ Use only numpy. No external dependencies beyond numpy."""
     def _validate_syntax(self, script_path: Path) -> bool:
         """Check Python syntax validity."""
         result = subprocess.run(
-            ["python", "-c", f"import ast; ast.parse(open('{script_path}').read())"],
+            [sys.executable, "-c", f"import ast; ast.parse(open('{script_path}').read())"],
             capture_output=True,
             text=True,
         )
