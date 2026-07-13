@@ -1,0 +1,199 @@
+# FormaFlow Full Sweep Experiment Configuration
+# Covers all 8 experiments across full CommFormaBench
+
+experiment_id: "full_sweep_v1"
+results_dir: "results"
+benchmark_dir: "benchmark"
+golden_dir: "golden_models"
+
+# Global settings
+repetitions: 5
+temperature: 0.7
+max_fix_iterations: 5
+max_pipeline_iterations: 3
+max_variants: 5
+
+# LLM backends to use
+backends:
+  - claude
+  - openai
+  - deepseek
+
+# Experiment definitions
+experiments:
+  exp1_passrate:
+    description: "End-to-end pass rate on full CommFormaBench"
+    kernel_filter: null  # all 217 kernels
+    backends: [claude, openai, deepseek]
+    repetitions: 5
+    ablation: null
+
+  exp2_sequential_bias:
+    description: "Formula input vs C-code input parallelism comparison"
+    kernel_filter:
+      - "fir_symmetric"
+      - "nco_cordic"
+      - "crc24"
+      - "fft_radix2"
+      - "ldpc_cn_minsum"
+      - "ofdm_mod"
+      - "qam64_llr"
+      - "polar_scl"
+      - "turbo_map"
+      - "mimo_4x4_zf"
+    backends: [claude, openai, deepseek]
+    repetitions: 5
+    # Additional: needs C-code input and ILP extraction
+    compare_inputs: [fvir, c_code, hls]
+
+  exp3_transform_discovery:
+    description: "LLM transform discovery ability evaluation"
+    kernel_filter:
+      - "fir_symmetric"        # known: preaddition
+      - "fir_transpose"        # known: retiming
+      - "nco_cordic"           # known: CORDIC shift
+      - "fft_radix4"           # known: mixed-radix
+      - "ldpc_cn_minsum"       # known: normalized min-sum
+      - "crc_parallel"         # known: M-bit parallel expansion
+      - "qam64_llr"            # known: piecewise linear
+      - "viterbi_acs"          # known: radix-4 ACS
+      - "polar_scl"            # known: path pruning
+      - "cordic_rotate"        # known: angle convergence
+      - "fir_cic"              # known: integrator-comb
+      - "fft_sdf"              # known: SDF pipeline
+      - "ldpc_layered"         # known: layered scheduling
+      - "turbo_window"         # known: sliding window
+      - "mimo_qrd"             # known: Givens rotation
+      - "dft_goertzel"         # known: single-bin optimization
+      - "lms_adaptive"         # known: sign-sign LMS
+      - "srrc_filter"          # known: polyphase decomposition
+      - "gold_sequence"        # known: preferred pair
+      - "dvbs2_ldpc"           # known: quasi-cyclic structure
+    backends: [claude, openai, deepseek]
+    repetitions: 5
+    max_variants: 10
+
+  exp4_fvir_vs_prompt:
+    description: "FVIR vs LaTeX prompt vs natural language description"
+    kernel_filter:
+      - "fir_symmetric"
+      - "nco_cordic"
+      - "crc24"
+      - "fft_radix2"
+      - "ldpc_cn_minsum"
+      - "ofdm_mod"
+      - "qam64_llr"
+      - "polar_scl"
+      - "turbo_map"
+      - "mimo_4x4_zf"
+      - "cordic_rotate"
+      - "fir_transpose"
+      - "viterbi_acs"
+      - "dft_goertzel"
+      - "dvbs2_ldpc"
+      - "lms_adaptive"
+      - "gold_sequence"
+      - "srrc_filter"
+      - "crc_parallel"
+      - "fft_sdf"
+    backends: [claude, openai, deepseek]
+    repetitions: 5
+    conditions:
+      - fvir: null              # normal pipeline
+      - latex_prompt:           # skip FVIR, feed LaTeX directly
+          ablation: {direct_prompt: true}
+      - natural_language:       # feed NL description
+          ablation: {direct_prompt: true, use_nl_description: true}
+
+  exp5_vs_hls:
+    description: "FormaFlow vs Vivado HLS comparison"
+    kernel_filter:
+      # Easy (★☆☆)
+      - "fir_symmetric"
+      - "nco_cordic"
+      - "crc24"
+      - "fir_direct"
+      - "complex_mult"
+      # Medium (★★☆)
+      - "fft_radix2"
+      - "ldpc_cn_minsum"
+      - "ofdm_mod"
+      - "qam64_llr"
+      - "fir_cic"
+      # Hard (★★★)
+      - "polar_scl"
+      - "turbo_map"
+      - "mimo_4x4_zf"
+      - "viterbi_acs"
+      - "ldpc_layered"
+    backends: [claude]  # compare best FormaFlow vs HLS
+    repetitions: 5
+    hls_reference: true  # flag to also run Vivado HLS
+
+  exp6_vs_handdesign:
+    description: "FormaFlow vs open-source hand-designed RTL"
+    kernel_filter:
+      - "fft_radix2"       # OpenCores FFT
+      - "fir_direct"       # OpenCores FIR
+      - "cordic_rotate"    # OpenCores CORDIC
+      - "viterbi_acs"      # OpenCores Viterbi
+      - "crc24"            # OpenCores CRC
+    backends: [claude]
+    repetitions: 5
+    reference_sources:
+      fft_radix2: "https://opencores.org/projects/fft"
+      fir_direct: "https://opencores.org/projects/fir"
+      cordic_rotate: "https://opencores.org/projects/cordic"
+
+  exp7_convergence:
+    description: "Iteration convergence analysis"
+    # Uses Exp-1 logs — no separate run needed
+    derived_from: "exp1_passrate"
+    analysis_only: true
+
+  exp8_ablation:
+    description: "Ablation study — remove components one at a time"
+    kernel_filter:
+      # 30 representative kernels across all difficulty levels
+      - "fir_symmetric"
+      - "nco_cordic"
+      - "crc24"
+      - "complex_mult"
+      - "fir_direct"
+      - "fir_transpose"
+      - "cordic_rotate"
+      - "fir_cic"
+      - "srrc_filter"
+      - "lms_adaptive"
+      - "fft_radix2"
+      - "fft_radix4"
+      - "fft_sdf"
+      - "dft_goertzel"
+      - "ofdm_mod"
+      - "qam64_llr"
+      - "ldpc_cn_minsum"
+      - "ldpc_layered"
+      - "polar_scl"
+      - "turbo_map"
+      - "viterbi_acs"
+      - "mimo_4x4_zf"
+      - "mimo_qrd"
+      - "gold_sequence"
+      - "dvbs2_ldpc"
+      - "crc_parallel"
+      - "mu_law"
+      - "adpcm"
+      - "pss_correlator"
+      - "gardner_ted"
+    backends: [claude]  # ablation on one model is sufficient
+    repetitions: 5
+    conditions:
+      - full: null
+      - no_transform:
+          ablation: {skip_transform: true}
+      - no_fvir:
+          ablation: {direct_prompt: true}
+      - no_verify_loop:
+          ablation: {skip_verify_loop: true}
+      - single_variant:
+          ablation: {max_variants: 1}
