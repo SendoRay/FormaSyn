@@ -1,0 +1,45 @@
+# ============================================================================
+# FormaSyn / formaflow  —  dependency manifest
+# ============================================================================
+# This file lists the PYTHON packages installable with pip. The pipeline ALSO
+# shells out to several SYSTEM tools that pip CANNOT install. Those are listed
+# in the SYSTEM REQUIREMENTS block below; run `scripts/setup_env.sh` to install
+# everything (system tools + these Python packages) in one shot.
+#
+# ----------------------------------------------------------------------------
+# SYSTEM REQUIREMENTS  (not pip-installable — install via Homebrew / Xcode)
+# ----------------------------------------------------------------------------
+#   verilator       RTL lint / compile / cycle-accurate simulation
+#                     -> brew install verilator          (invoked in verify_agent)
+#   yosys           logic synthesis + area (LUT/FF/DSP/BRAM) stats
+#                     -> brew install yosys               (invoked in verify_agent)
+#   nextpnr-ice40   place & route for real post-PnR timing (iCE40 target)
+#                     -> brew install nextpnr-ice40       (tiered Fmax: finalists)
+#   icetime         post-PnR static timing -> real Fmax (shipped with icestorm)
+#                     -> brew install icestorm            (tiered Fmax: finalists)
+#   C++ toolchain   required by Verilator `--build` (clang++ + make)
+#                     -> Xcode Command Line Tools: xcode-select --install
+#   python          golden-model runner is spawned as `python` (>=3.11)
+#                     -> ensure a `python` shim exists on PATH (see note below)
+#   claude  [opt]   ONLY for the ClaudeCode backend, which pipes to `claude -p`
+#                     -> install the Claude Code CLI if you use that backend
+#
+# NOTE: golden/generator.py spawns the reference model via bare `python`.
+#       macOS ships only `python3`, so either expose a `python` shim or run
+#       inside a venv whose bin/ provides `python` (recommended).
+# ----------------------------------------------------------------------------
+# PYTHON PACKAGES  (mirrors [project.dependencies] in pyproject.toml)
+# ----------------------------------------------------------------------------
+anthropic>=0.30.0
+openai>=1.30.0
+sympy>=1.12
+numpy>=1.26
+scipy>=1.12
+pandas>=2.2
+pyyaml>=6.0
+pydantic>=2.7
+
+# ----------------------------------------------------------------------------
+# DEV / TEST  (optional — install explicitly when developing)
+#   pip install pytest>=8.0 pytest-asyncio>=0.23 ruff>=0.4
+# ----------------------------------------------------------------------------
