@@ -21,9 +21,7 @@
 #                     -> Xcode Command Line Tools: xcode-select --install
 #   python          golden-model runner is spawned as `python` (>=3.11)
 #                     -> ensure a `python` shim exists on PATH (see note below)
-#   claude  [opt]   ONLY for the ClaudeCode backend, which pipes to `claude -p`
-#                     -> install the Claude Code CLI if you use that backend
-#
+
 # NOTE: golden/generator.py spawns the reference model via bare `python`.
 #       macOS ships only `python3`, so either expose a `python` shim or run
 #       inside a venv whose bin/ provides `python` (recommended).

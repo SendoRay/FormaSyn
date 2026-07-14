@@ -64,6 +64,30 @@ Return your answer with exactly two fenced code blocks:
 ```
 """
 
+_REFINE_PROMPT_TEMPLATE = """\
+Improve an existing Verilog design for the kernel `kernel_{kernel_id}`.
+
+## Goal
+{goal}
+
+## Current Verilog
+```verilog
+{prior_verilog}
+```
+
+## Feedback / diagnostics
+{feedback}
+
+## Constraints
+{constraints}
+
+## Source Formula (LaTeX)
+{source_latex}
+
+Return the improved design as EXACTLY ONE fenced ```verilog block. Keep the module \
+name `kernel_{kernel_id}`, preserve the same I/O port interface, and do not explain.
+"""
+
 
 def _format_ops(ops: tuple) -> str:
     """Format FVIR ops into a readable description for the prompt."""
@@ -171,3 +195,42 @@ class LLMCodegenAgent:
                 "transform_applied": variant.transform_applied,
             },
         )
+
+    def refine(self, variant: Variant, prior_verilog: str, feedback: str,
+               goal: str = "Fix the design so it passes verification.") -> GeneratedCode:
+        """Diagnostic-guided mutation: rewrite prior Verilog toward `goal`.
+
+        Used by the LoopEngine to repair failing parents or shrink passing ones.
+        The verify agent regenerates its own testbench, so an empty testbench is fine.
+        """
+        fvir = variant.fvir
+        prompt_body = _REFINE_PROMPT_TEMPLATE.format(
+            kernel_id=fvir.kernel_id,
+            goal=goal,
+            prior_verilog=prior_verilog,
+            feedback=feedback,
+            constraints=_format_constraints(fvir.constraints),
+            source_latex=fvir.source_latex,
+        )
+        messages = [
+            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "user", "content": prompt_body},
+        ]
+        logger.info("Refining variant %s (goal=%s)", variant.variant_id, goal[:48])
+        response = self._llm.complete(messages, temperature=0.5, max_tokens=8192)
+        verilog, testbench = _extract_code_blocks(response)
+        if not verilog:
+            logger.error("Empty Verilog from refine for variant %s", variant.variant_id)
+        return GeneratedCode(
+            variant_id=variant.variant_id,
+            verilog=verilog,
+            testbench=testbench,
+            generation_metadata={
+                "model_id": self._llm.model_id,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "temperature": 0.5,
+                "refine": True,
+                "goal": goal,
+            },
+        )
+

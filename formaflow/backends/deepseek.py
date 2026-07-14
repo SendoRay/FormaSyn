@@ -56,23 +56,29 @@ class DeepSeekBackend:
         schema: dict,
         temperature: float = 0.7,
     ) -> dict:
-        """Use json_schema response format for structured output."""
+        """Structured output via DeepSeek JSON mode.
+
+        DeepSeek supports response_format={"type": "json_object"} but not the
+        OpenAI-style json_schema, so we describe the schema in the prompt and
+        request a raw JSON object.
+        """
+        schema_msg = {
+            "role": "user",
+            "content": (
+                "Respond with ONLY a single JSON object (no markdown, no prose) "
+                "that conforms to this JSON Schema:\n" + json.dumps(schema)
+            ),
+        }
+        msgs = list(messages) + [schema_msg]
         for attempt in range(3):
             try:
                 logger.debug("DeepSeek complete_structured call (attempt %d), model=%s", attempt + 1, self._model)
                 response = self._client.chat.completions.create(
                     model=self._model,
-                    messages=messages,
+                    messages=msgs,
                     temperature=temperature,
                     max_tokens=4096,
-                    response_format={
-                        "type": "json_schema",
-                        "json_schema": {
-                            "name": "structured_output",
-                            "strict": True,
-                            "schema": schema,
-                        },
-                    },
+                    response_format={"type": "json_object"},
                 )
                 return json.loads(response.choices[0].message.content)
             except Exception as e:

@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import logging
 import re
+import shutil
 import subprocess
 import tempfile
 from pathlib import Path
@@ -379,6 +380,11 @@ class ToolVerifyAgent:
         vname = verilog_path.name
         tbname = tb_path.name
         obj_dir = work / "obj_dir"
+        # Always rebuild from scratch: a cached obj_dir can pin a removed
+        # VERILATOR_ROOT (e.g. after a Verilator upgrade), which makes every
+        # subsequent `make` fail on missing verilated.cpp/.h.
+        if obj_dir.exists():
+            shutil.rmtree(obj_dir, ignore_errors=True)
 
         # Lint
         lint_cmd = ["verilator", "--lint-only"] + _LINT_FLAGS + [vname]
@@ -512,7 +518,6 @@ class ToolVerifyAgent:
         ff = self._parse_stat(stat_section, r"(\d+)\s+SB_DFF\w*", sum_all=True)
         dsp = self._parse_stat(stat_section, r"(\d+)\s+SB_MAC16")
         bram = self._parse_stat(stat_section, r"(\d+)\s+SB_RAM\w*")
-        carry = self._parse_stat(stat_section, r"(\d+)\s+SB_CARRY")
 
         if lut == 0:
             lut = self._parse_stat(output, r"Number of cells:\s+(\d+)")
